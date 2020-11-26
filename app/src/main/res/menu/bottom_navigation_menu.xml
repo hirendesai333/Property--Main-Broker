@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/propertyList"
+        android:enabled="true"
+        android:icon="@drawable/ic_property_list"
+        android:title="List" />
+
+    <item
+        android:id="@+id/bidPropertyList"
+        android:enabled="true"
+        android:icon="@drawable/ic_bid"
+        android:title="Bid List" />
+
+    <item
+        android:id="@+id/placeholder"
+        android:title="" />
+
+    <item
+        android:id="@+id/upcomingJobList"
+        android:enabled="true"
+
+        android:title="Upcoming Job List" />
+
+    <item
+        android:id="@+id/completedJobList"
+        android:enabled="true"
+
+        android:title="Completed Job List" />
+
+</menu>
