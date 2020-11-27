@@ -11,11 +11,11 @@ import com.soboft.propertybroker.R
 import com.soboft.propertybroker.model.PropertyListModel
 import com.soboft.properybroker.listeners.OnPropertyClick
 
-class UpcomingBidsAdapter(
+class CompletedJobsAdapter(
     var list: ArrayList<PropertyListModel>,
     var onPropertyClick: OnPropertyClick
 ) :
-    RecyclerView.Adapter<UpcomingBidsAdapter.ViewHolder>() {
+    RecyclerView.Adapter<CompletedJobsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val propertyName: TextView = itemView.findViewById(R.id.name)
@@ -26,7 +26,7 @@ class UpcomingBidsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.home_property_bid_item, parent, false)
+                .inflate(R.layout.completed_jobs_single_item, parent, false)
         return ViewHolder(view)
     }
 

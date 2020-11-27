@@ -18,15 +18,15 @@
         android:title="" />
 
     <item
-        android:id="@+id/upcomingJobList"
+        android:id="@+id/completedJobs"
         android:enabled="true"
-        android:icon="@drawable/ic_bid"
-        android:title="Upcoming Job List" />
+        android:icon="@drawable/ic_job"
+        android:title="Completed Jobs" />
 
     <item
-        android:id="@+id/completedJobList"
+        android:id="@+id/profile"
         android:enabled="true"
-        android:icon="@drawable/ic_bid"
-        android:title="Completed Job List" />
+        android:icon="@drawable/ic_profile"
+        android:title="Profile" />
 
 </menu>
