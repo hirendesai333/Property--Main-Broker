@@ -1,12 +1,12 @@
-package com.soboft.propertybroker
+package com.soboft.propertybroker.ui.activities
 
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowInsets
 import android.view.WindowManager
 import at.favre.lib.dali.Dali
+import com.soboft.propertybroker.R
 import com.soboft.propertybroker.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -35,8 +35,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initializeViews() {
-        Dali.create(this).load(R.mipmap.splash_background).blurRadius(25).downScale(2).concurrent()
-            .reScale().into(binding.backgroundImage)
+//        Dali.create(this).load(R.mipmap.splash_background).blurRadius(25).downScale(2).concurrent()
+//            .reScale().into(binding.backgroundImage)
 
         binding.loginButton.apply {
             translationY = 300F

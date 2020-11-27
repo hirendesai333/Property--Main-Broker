@@ -1,4 +1,4 @@
-package com.soboft.propertybroker
+package com.soboft.propertybroker.ui.activities
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -6,7 +6,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Pair
-import android.view.WindowInsets
 import android.view.WindowManager
 import com.soboft.propertybroker.databinding.ActivitySplashScreenBinding
 import kotlinx.coroutines.*

@@ -20,13 +20,13 @@
     <item
         android:id="@+id/upcomingJobList"
         android:enabled="true"
-
+        android:icon="@drawable/ic_bid"
         android:title="Upcoming Job List" />
 
     <item
         android:id="@+id/completedJobList"
         android:enabled="true"
-
+        android:icon="@drawable/ic_bid"
         android:title="Completed Job List" />
 
 </menu>

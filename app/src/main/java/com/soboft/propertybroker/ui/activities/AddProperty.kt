@@ -1,4 +1,4 @@
-package com.soboft.propertybroker
+package com.soboft.propertybroker.ui.activities
 
 import android.app.Activity
 import android.app.Dialog
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.AmenitiesAdapter
 import com.soboft.propertybroker.databinding.ActivityAddPropertyBinding
 import com.soboft.propertybroker.model.AmenitiesModel

@@ -9,21 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PropertyMainBroker">
-        <activity android:name=".AddProperty" android:screenOrientation="portrait" />
-        <activity android:name=".LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SplashScreen"
+        <activity
+            android:name=".ui.activities.BidsList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.PropertyDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.AddProperty"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.SplashScreen"
             android:screenOrientation="portrait">
-
-            <!--
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
+            </intent-filter>-->
         </activity>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".ui.activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

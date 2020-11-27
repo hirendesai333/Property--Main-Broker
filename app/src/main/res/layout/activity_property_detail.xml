@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blue_green_background"
+    tools:context=".ui.activities.PropertyDetail">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        android:adjustViewBounds="true"
+        android:background="@mipmap/property"
+        android:scaleType="centerCrop" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom"
+        android:layout_below="@+id/image"
+        android:layout_marginTop="-35dp"
+        android:background="@drawable/top_corner_white_background"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Shivalik Shilp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                app:fontFamily="@font/nunito_sans_semibold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp">
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3 BHK"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_8sdp"
+                    app:chipBackgroundColor="@color/green_700" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1200 sqft"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_8sdp"
+                    app:chipBackgroundColor="@color/green_700" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/clientName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Client: Chirag Patel"
+                android:textColor="@color/green_700"
+                android:textSize="@dimen/_12ssp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:background="@drawable/blue_green_background">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/totalBids"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:text="Total bids: 48"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    app:fontFamily="@font/nunito_sans_semibold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/allBids"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:text="ALL BIDS"
+                    android:transitionName="all_bids"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    app:fontFamily="@font/nunito_sans_bold" />
+
+            </RelativeLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="About the space"
+                android:textColor="@color/purple_500"
+                android:textSize="@dimen/_11ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:text="With elegant infrastructure &amp; amenities, Shivalik Shilp is a place that is conductive for your business growth. Shivalik Shilp offers flexibility to its clients with well- decorated entrances &amp; lobbies. Being located at Iscon Cross Road, Shivalik Shilp has a plethora of location advantages."
+                android:textSize="@dimen/_11ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="Project Location"
+                android:textColor="@color/purple_500"
+                android:textSize="@dimen/_11ssp" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/map" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="Amenities"
+                android:textColor="@color/purple_500"
+                android:textSize="@dimen/_11ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:drawableStart="@drawable/ic_kitchen"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableTint="@color/green_700"
+                android:fontFamily="@font/nunito_sans"
+                android:gravity="center_vertical"
+                android:text="Kitchen"
+                android:textSize="@dimen/_9ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:drawableStart="@drawable/ic_bathroom"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableTint="@color/green_700"
+                android:fontFamily="@font/nunito_sans"
+                android:gravity="center_vertical"
+                android:text="Bathroom"
+                android:textSize="@dimen/_9ssp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:text="Visit on:\n21st march 2021"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            app:fontFamily="@font/nunito_sans_semibold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/jobStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:text="Create new job"
+            app:backgroundTint="@color/green_700" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
