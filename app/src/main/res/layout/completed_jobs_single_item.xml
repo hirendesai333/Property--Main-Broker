@@ -44,9 +44,9 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Client: Chirag Patel"
+                android:text="Total jobs: 15"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp" />
 
@@ -55,17 +55,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Assigned to:"
+                android:text="Last assigned to:"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
-                app:fontFamily="@font/nunito_sans_bold"
-                android:textColor="@color/green_700"
                 android:text="Sweet Home Estate"
-                android:textSize="@dimen/_12ssp" />
+                android:textColor="@color/green_700"
+                android:textSize="@dimen/_12ssp"
+                app:fontFamily="@font/nunito_sans_bold" />
 
         </LinearLayout>
 
