@@ -1,5 +1,6 @@
 package com.soboft.propertybroker.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -7,6 +8,8 @@ import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.CompletedJobsAdapter
 import com.soboft.propertybroker.databinding.CompletedJobsFragmentBinding
 import com.soboft.propertybroker.model.PropertyListModel
+import com.soboft.propertybroker.ui.activities.PropertyDetail
+import com.soboft.propertybroker.utils.Params
 import com.soboft.properybroker.listeners.OnPropertyClick
 
 class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnPropertyClick {
@@ -31,7 +34,10 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnProp
     }
 
     override fun onPropertyClick() {
-
+        Intent(activity, PropertyDetail::class.java).apply {
+            putExtra(Params.FROM, Params.COMPLETED_JOBS_FRAGMENT)
+            startActivity(this)
+        }
     }
 
 }

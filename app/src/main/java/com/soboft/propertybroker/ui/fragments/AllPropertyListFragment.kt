@@ -9,6 +9,7 @@ import com.soboft.propertybroker.adapters.AllPropertyListAdapter
 import com.soboft.propertybroker.databinding.FragmentAllPropertyListBinding
 import com.soboft.propertybroker.model.PropertyListModel
 import com.soboft.propertybroker.ui.activities.PropertyDetail
+import com.soboft.propertybroker.utils.Params
 import com.soboft.properybroker.listeners.OnPropertyClick
 
 class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), OnPropertyClick {
@@ -33,6 +34,9 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
     }
 
     override fun onPropertyClick() {
-        startActivity(Intent(activity, PropertyDetail::class.java))
+        Intent(activity, PropertyDetail::class.java).apply {
+            putExtra(Params.FROM, Params.ALL_PROPERTY_LIST_FRAGMENT)
+            startActivity(this)
+        }
     }
 }

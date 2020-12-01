@@ -2,11 +2,10 @@ package com.soboft.propertybroker.ui.activities
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
-import at.favre.lib.dali.Dali
-import com.soboft.propertybroker.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.soboft.propertybroker.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -30,14 +29,19 @@ class LoginActivity : AppCompatActivity() {
         initializeViews()
 
         binding.loginButton.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(this)
+            }
+        }
+
+        binding.register.setOnClickListener {
+            startActivity(Intent(this, SignUp::class.java))
         }
     }
 
     private fun initializeViews() {
-//        Dali.create(this).load(R.mipmap.splash_background).blurRadius(25).downScale(2).concurrent()
-//            .reScale().into(binding.backgroundImage)
-
         binding.loginButton.apply {
             translationY = 300F
             alpha = 0F
@@ -55,5 +59,9 @@ class LoginActivity : AppCompatActivity() {
             alpha = 0F
             animate().translationZ(0F).alpha(1F).setDuration(800).setStartDelay(300).start()
         }
+    }
+
+    override fun onBackPressed() {
+        ActivityCompat.finishAffinity(this)
     }
 }

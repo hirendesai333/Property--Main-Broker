@@ -81,6 +81,150 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Select Property Type"
+                    android:textSize="14sp" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Bunglow"
+                        android:textSize="13sp" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Apartment"
+                        android:textSize="13sp" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Pent-House"
+                        android:textSize="13sp" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Villa"
+                        android:textSize="13sp" />
+
+                </RadioGroup>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/light_grey" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Available for"
+                    android:textSize="14sp" />
+
+                <RadioGroup
+                    android:id="@+id/saleRentRG"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/sale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Sale"
+                        android:textSize="13sp" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/rent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Rent"
+                        android:textSize="13sp" />
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_bold"
+                        android:text="Price"
+                        android:textSize="14sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="15dp"
+                            android:layout_toStartOf="@+id/spinner"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="@font/nunito_sans_semibold"
+                            android:hint="Enter price"
+                            android:inputType="number"
+                            android:textSize="13sp" />
+
+                        <RelativeLayout
+                            android:id="@+id/spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/corner_grey_background">
+
+                            <Spinner
+                                android:id="@+id/monthYearSpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp" />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/light_grey" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="Propery"
                     android:textSize="14sp" />
 
@@ -120,6 +264,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/light_grey" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Notes"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:hint="Enter note"
+                    android:textSize="13sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/light_grey" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Remarks"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:hint="Enter remarks"
+                    android:textSize="13sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/light_grey" />
 
                 <RelativeLayout
@@ -129,22 +319,22 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/nunito_sans_bold"
                         android:text="Amenities"
-                        android:layout_centerVertical="true"
                         android:textSize="14sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/addAmenitites"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:fontFamily="@font/nunito_sans_bold"
                         android:text="Add Amenities"
-                        app:icon="@drawable/ic_add"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:layout_alignParentEnd="true"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        app:icon="@drawable/ic_add" />
 
                 </RelativeLayout>
 
@@ -277,15 +467,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:paddingStart="@dimen/_15sdp"
-                        android:paddingEnd="@dimen/_15sdp"
-                        android:paddingTop="@dimen/_8sdp"
-                        android:paddingBottom="@dimen/_8sdp"
                         android:background="@drawable/corner_grey_background"
                         android:drawableStart="@drawable/ic_clock"
                         android:drawablePadding="@dimen/_10sdp"
                         android:drawableTint="@color/grey"
                         android:fontFamily="@font/nunito_sans_bold"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_15sdp"
+                        android:paddingBottom="@dimen/_8sdp"
                         android:text="Select Time"
                         android:textSize="13sp" />
 
@@ -293,18 +483,18 @@
                         android:id="@+id/selectDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:paddingStart="@dimen/_15sdp"
-                        android:paddingEnd="@dimen/_15sdp"
-                        android:paddingTop="@dimen/_8sdp"
-                        android:paddingBottom="@dimen/_8sdp"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="5dp"
                         android:background="@drawable/corner_grey_background"
                         android:drawableStart="@drawable/ic_date"
                         android:drawablePadding="@dimen/_10sdp"
-                        android:gravity="center_vertical"
                         android:drawableTint="@color/grey"
                         android:fontFamily="@font/nunito_sans_bold"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_15sdp"
+                        android:paddingBottom="@dimen/_8sdp"
                         android:text="Select Date"
                         android:textSize="13sp" />
 

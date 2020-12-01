@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="Choose job timing"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
+        app:fontFamily="@font/nunito_sans_bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_15sdp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/selectTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/corner_grey_background"
+            android:drawableStart="@drawable/ic_clock"
+            android:drawablePadding="@dimen/_10sdp"
+            android:drawableTint="@color/grey"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_15sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="Select Time"
+            android:textSize="13sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/selectDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/corner_grey_background"
+            android:drawableStart="@drawable/ic_date"
+            android:drawablePadding="@dimen/_10sdp"
+            android:drawableTint="@color/grey"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_15sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="Select Date"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/createJob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:backgroundTint="@color/green_700"
+        android:fontFamily="@font/nunito_sans_semibold"
+        android:text="Create"
+        android:textSize="13sp" />
+
+
+</LinearLayout>

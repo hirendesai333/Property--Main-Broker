@@ -9,7 +9,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -29,6 +32,10 @@ class AddProperty : AppCompatActivity() {
     private lateinit var binding: ActivityAddPropertyBinding
     val REQUEST_CODE_SELECT_IMAGE = 1
 
+    internal var dropDownValue = arrayOf("Per Month", "Per Year")
+    var selectedDropDown: String = "Per Month"
+    private lateinit var dropDownAdapter: ArrayAdapter<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)
@@ -44,6 +51,38 @@ class AddProperty : AppCompatActivity() {
         binding.addImageFromGallery.setOnClickListener {
             selectImage()
         }
+
+        binding.saleRentRG.setOnCheckedChangeListener { radioGroup, i ->
+            when (i) {
+                R.id.sale -> {
+                    binding.spinner.visibility = View.GONE
+                }
+                R.id.rent -> {
+                    binding.spinner.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        dropDownAdapter = object :
+            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dropDownValue) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val v = super.getView(position, convertView, parent)
+                (v as TextView).textSize = 12.0F
+                return v
+            }
+
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val v = super.getDropDownView(position, convertView, parent)
+                (v as TextView).textSize = 12.0F
+                return v
+            }
+        }
+        binding.monthYearSpinner.adapter = dropDownAdapter
+
 
         binding.selectTime.setOnClickListener {
             val materialTimePicker = MaterialTimePicker.Builder()

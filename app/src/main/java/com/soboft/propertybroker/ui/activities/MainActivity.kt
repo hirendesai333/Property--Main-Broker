@@ -3,7 +3,7 @@ package com.soboft.propertybroker.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -31,8 +31,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddProperty::class.java))
         }
 
+    }
 
-
+    override fun onBackPressed() {
+        ActivityCompat.finishAffinity(this)
     }
 
 }

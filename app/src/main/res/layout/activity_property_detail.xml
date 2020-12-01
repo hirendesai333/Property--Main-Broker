@@ -78,12 +78,13 @@
                 android:textSize="@dimen/_12ssp" />
 
             <RelativeLayout
+                android:id="@+id/bidLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/blue_green_background"
                 android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp"
-                android:background="@drawable/blue_green_background">
+                android:paddingBottom="@dimen/_10sdp">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/totalBids"
@@ -103,12 +104,84 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:text="ALL BIDS"
-                    android:transitionName="all_bids"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp"
+                    android:transitionName="all_bids"
                     app:fontFamily="@font/nunito_sans_bold" />
 
             </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:text="Property type: "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:text="Bunglow"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:text="Available for: "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:text="Rent"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:text="Price: "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:text="10000 per month"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -176,7 +249,6 @@
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
                 android:drawableStart="@drawable/ic_bathroom"
                 android:drawablePadding="@dimen/_5sdp"
                 android:drawableTint="@color/green_700"
@@ -184,6 +256,43 @@
                 android:gravity="center_vertical"
                 android:text="Bathroom"
                 android:textSize="@dimen/_9ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Note"
+                android:textColor="@color/purple_500"
+                android:textSize="@dimen/_11ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:text="This is sample note about property"
+                android:textSize="@dimen/_11ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Remarks"
+                android:textColor="@color/purple_500"
+                android:textSize="@dimen/_11ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="This is sample remarks about property"
+                android:textSize="@dimen/_11ssp" />
 
         </LinearLayout>
 
@@ -211,7 +320,7 @@
             app:fontFamily="@font/nunito_sans_semibold" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/jobStatus"
+            android:id="@+id/newJob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
