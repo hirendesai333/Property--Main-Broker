@@ -37,14 +37,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/nunito_sans"
-                android:text="Visit on: 21st march 2021"
-                android:textSize="@dimen/_10ssp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:text="Client: Chirag Patel"
                 android:textColor="@color/black"
@@ -53,34 +45,35 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/nunito_sans"
-                android:text="Must show amenities:"
+                android:text="Bid: ₹1500"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:drawableStart="@drawable/ic_kitchen"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableTint="@color/green_700"
-                android:fontFamily="@font/nunito_sans"
-                android:gravity="center_vertical"
-                android:text="Kitchen"
-                android:textSize="@dimen/_9ssp" />
+                android:layout_marginTop="@dimen/_5sdp"
+                app:fontFamily="@font/nunito_sans"
+                android:text="Available for: Rent - ₹10000/month"
+                android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:drawableStart="@drawable/ic_bathroom"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableTint="@color/green_700"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_sans"
-                android:gravity="center_vertical"
-                android:text="Bathroom"
-                android:textSize="@dimen/_9ssp" />
+                android:text="Assigned to:"
+                android:textSize="@dimen/_10ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="Sweet Home Estate"
+                android:textColor="@color/green_700"
+                android:textSize="@dimen/_12ssp"
+                app:fontFamily="@font/nunito_sans_bold" />
 
         </LinearLayout>
 
@@ -96,13 +89,41 @@
         app:cardCornerRadius="@dimen/_12sdp"
         app:cardElevation="@dimen/_6sdp">
 
-        <ImageView
-            android:id="@+id/propertyBanner"
+        <RelativeLayout
             android:layout_width="@dimen/_130sdp"
-            android:layout_height="@dimen/_180sdp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/property" />
+            android:layout_height="@dimen/_180sdp">
+
+            <ImageView
+                android:id="@+id/propertyBanner"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="@dimen/_180sdp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/property" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_semibold"
+                    android:text="at 4:30 PM"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:background="@drawable/black_round_shape"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_8ssp" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+        </RelativeLayout>
+
 
     </androidx.cardview.widget.CardView>
 

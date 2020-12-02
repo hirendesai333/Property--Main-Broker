@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomAppBar"
-        android:layout_marginBottom="@dimen/_80sdp"
+        android:layout_marginBottom="@dimen/_65sdp"
         android:background="@color/white"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_nav_graph" />
@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="10dp"
-        app:fabCradleVerticalOffset="10dp">
+        app:fabCradleRoundedCornerRadius="20dp"
+        app:fabCradleVerticalOffset="0dp">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="Create new property"
         android:src="@drawable/ic_add"
+        app:fabSize="mini"
         app:layout_anchor="@id/bottomAppBar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

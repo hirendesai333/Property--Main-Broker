@@ -45,6 +45,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
+                app:fontFamily="@font/nunito_sans"
+                android:text="Available for: Sale - ₹10,00,000"
+                android:textSize="@dimen/_10ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:text="Client: Chirag Patel"
                 android:textColor="@color/black"

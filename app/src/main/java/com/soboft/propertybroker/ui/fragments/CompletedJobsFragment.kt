@@ -3,6 +3,7 @@ package com.soboft.propertybroker.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.CompletedJobsAdapter
@@ -17,6 +18,9 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnProp
     private var _binding: CompletedJobsFragmentBinding? = null
     private val binding get() = _binding!!
 
+    internal var dropDownValue = arrayOf("Sale", "Rent")
+    private lateinit var dropDownAdapter: ArrayAdapter<String>
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = CompletedJobsFragmentBinding.bind(view)
@@ -26,6 +30,13 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnProp
         list.add(PropertyListModel("Aditya Prime"))
         list.add(PropertyListModel("Saujanya 2"))
         binding.completedJobRv.adapter = CompletedJobsAdapter(list, this)
+
+        dropDownAdapter = object : ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            dropDownValue
+        ) {}
+        binding.filterSpinner.adapter = dropDownAdapter
     }
 
     override fun onDestroyView() {

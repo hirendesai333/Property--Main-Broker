@@ -1,7 +1,5 @@
 package com.soboft.propertybroker.utils
 
-import com.soboft.propertybroker.ui.fragments.AllPropertyListFragment
-
 class Params {
     companion object {
         const val ALL_PROPERTY_LIST_FRAGMENT = "ALL_PROPERTY_LIST_FRAGMENT"

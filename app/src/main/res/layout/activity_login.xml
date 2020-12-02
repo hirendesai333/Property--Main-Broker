@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="40dp"
-            android:text="PROPERTY BROKER"
+            android:text="PROPERTY AGENT"
             android:textColor="@android:color/black"
             android:textSize="25dp"
             android:textStyle="bold"
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="Hello..!"
+                    android:text="Sign In"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
                     android:textStyle="bold" />
