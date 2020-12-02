@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.fragments.ProfileFragment">
+    tools:context=".ui.activities.Profile">
 
     <LinearLayout
         android:id="@+id/top"
@@ -16,7 +15,7 @@
         <View
             android:id="@+id/topView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@color/purple_700" />
 
         <com.google.android.material.imageview.ShapeableImageView

@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.findNavController()
         binding.bottomNav.setupWithNavController(navController)
+        binding.bottomNav.getOrCreateBadge(R.id.settings).number = 2
         binding.bottomNav.background = null
 
         binding.fab.setOnClickListener {

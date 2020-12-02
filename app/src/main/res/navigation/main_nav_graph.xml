@@ -21,8 +21,8 @@
         android:label="Completed jobs fragment"
         tools:layout="@layout/completed_jobs_fragment" />
     <fragment
-        android:id="@+id/profile"
-        android:name="com.soboft.propertybroker.ui.fragments.ProfileFragment"
-        android:label="Profile fragment"
-        tools:layout="@layout/profile_fragment" />
+        android:id="@+id/settings"
+        android:name="com.soboft.propertybroker.ui.fragments.SettingsFragment"
+        android:label="Settings fragment"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
