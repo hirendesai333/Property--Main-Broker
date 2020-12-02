@@ -37,35 +37,79 @@
         android:orientation="vertical"
         android:padding="@dimen/_10sdp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose document type"
-            android:textColor="@color/purple_700"
-            android:textSize="@dimen/_13ssp"
-            app:fontFamily="@font/nunito_sans_bold" />
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Document Type"
+                android:textColor="@color/purple_700"
+                android:textSize="@dimen/_12ssp"
+                app:fontFamily="@font/nunito_sans_bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_3sdp">
+
+                <Spinner
+                    android:id="@+id/filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="match_parent"
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/green_700"
-                android:text="Image" />
+                android:layout_gravity="center_vertical"
+                android:text="Choose document"
+                android:textColor="@color/purple_700"
+                android:textSize="@dimen/_12ssp"
+                app:fontFamily="@font/nunito_sans_bold" />
 
-            <com.google.android.material.button.MaterialButton
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/green_700"
-                android:text="PDF" />
+                android:layout_marginStart="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/green_700"
+                    android:text="Image"
+                    android:textSize="@dimen/_8ssp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_8ssp"
+                    android:backgroundTint="@color/green_700"
+                    android:text="PDF" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

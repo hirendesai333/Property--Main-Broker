@@ -33,7 +33,7 @@
             android:layout_marginTop="@dimen/_8ssp"
             android:background="@drawable/corner_grey_background"
             android:padding="@dimen/_10sdp"
-            android:text="Bid Amount: Rs. 1500"
+            android:text="Bid Amount: $1500"
             android:textColor="@color/purple_700"
             android:textSize="@dimen/_11sdp"
             app:fontFamily="@font/nunito_sans" />

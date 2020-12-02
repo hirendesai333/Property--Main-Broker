@@ -44,6 +44,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
     private fun showFilterDialog() {
         val mDialog = Dialog(requireContext(), R.style.Theme_PropertyMainBroker)
         mDialog.setContentView(R.layout.filter_layout)
+        mDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
         val rangeSlider = mDialog.findViewById<RangeSlider>(R.id.rangeSlider)
         val startDate = mDialog.findViewById<TextView>(R.id.startDate)
@@ -69,7 +70,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
         rangeSlider.setLabelFormatter { value: Float ->
             val format = NumberFormat.getCurrencyInstance()
             format.maximumFractionDigits = 0
-            format.currency = Currency.getInstance("INR")
+            format.currency = Currency.getInstance("USD")
             format.format(value.toDouble())
         }
 

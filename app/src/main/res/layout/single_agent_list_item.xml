@@ -53,7 +53,7 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/corner_grey_background"
                 android:padding="@dimen/_8sdp"
-                android:text="Job Amount: Rs. 1500"
+                android:text="Job Amount: $1500"
                 android:textColor="@color/purple_700"
                 android:textSize="@dimen/_9sdp"
                 app:fontFamily="@font/nunito_sans" />
@@ -99,7 +99,7 @@
             android:drawablePadding="10dp"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
-            android:text="Visited Date: 2020-09-11"
+            android:text="Visited Date: 2020-09-11 @4:00 PM"
             android:textColor="@color/purple_700"
             android:textSize="@dimen/_8sdp"
             app:fontFamily="@font/nunito_sans" />

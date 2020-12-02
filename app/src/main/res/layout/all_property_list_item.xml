@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/nunito_sans"
-                android:text="Bid: ₹1500"
+                android:text="Bid: $1500"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:fontFamily="@font/nunito_sans"
-                android:text="Available for: Rent - ₹10000/month"
+                android:text="Available for: Rent - $10000/month"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView

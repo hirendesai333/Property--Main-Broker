@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/nunito_sans"
-                android:text="Visit on: 21st march 2021"
+                android:text="Visit on: 21st march 2021 @4:00 PM"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:fontFamily="@font/nunito_sans"
-                android:text="Available for: Sale - ₹10,00,000"
+                android:text="Available for: Sale - $10,00,000"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView

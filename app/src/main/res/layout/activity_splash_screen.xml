@@ -22,7 +22,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="40dp"
-        android:text="PROPERTY BROKER"
+        android:text="PROPERTY AGENT"
         android:textColor="@color/purple_700"
         android:textSize="20dp"
         android:textStyle="bold"

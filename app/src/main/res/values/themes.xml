@@ -30,4 +30,9 @@
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">@dimen/_10sdp</item>
     </style>
+
+    <style name="Theme.PropertyMainBroker.Slide">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
 </resources>

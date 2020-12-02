@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:fontFamily="@font/nunito_sans"
-                android:text="Available for: Rent - ₹10000/month"
+                android:text="Available for: Rent - $10000/month"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -55,14 +55,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Property status:"
+                android:text="Job status:"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:text="Sold"
+                android:text="Completed"
                 android:textColor="@color/green_700"
                 android:textSize="@dimen/_12ssp"
                 app:fontFamily="@font/nunito_sans_bold" />

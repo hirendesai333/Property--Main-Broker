@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:text="Bid amount: ₹1500"
+                    android:text="Bid amount: $1500"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans_semibold" />
@@ -210,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
-                    android:text="10000 per month"
+                    android:text="$10000 per month"
                     android:textSize="@dimen/_11ssp" />
 
             </LinearLayout>

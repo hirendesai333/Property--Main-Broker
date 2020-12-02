@@ -8,6 +8,7 @@
     tools:context=".ui.fragments.CompletedJobsFragment">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -16,10 +17,17 @@
         app:cardCornerRadius="@dimen/_8sdp"
         app:cardElevation="@dimen/_3sdp">
 
-        <Spinner
-            android:id="@+id/filterSpinner"
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_15sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_15sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="Filter"
+            android:textColor="@color/purple_700"
+            android:textSize="@dimen/_12ssp"
+            app:fontFamily="@font/nunito_sans_bold" />
 
     </com.google.android.material.card.MaterialCardView>
 

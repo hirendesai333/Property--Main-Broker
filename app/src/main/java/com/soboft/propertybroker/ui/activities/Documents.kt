@@ -1,6 +1,7 @@
 package com.soboft.propertybroker.ui.activities
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.soboft.propertybroker.adapters.DocumentsAdapter
 import com.soboft.propertybroker.databinding.ActivityDocumentsBinding
@@ -9,6 +10,9 @@ import com.soboft.propertybroker.model.DocumentsModel
 class Documents : AppCompatActivity() {
 
     private lateinit var binding: ActivityDocumentsBinding
+
+    internal var dropDownValue = arrayOf("SSN")
+    private lateinit var dropDownAdapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,5 +26,9 @@ class Documents : AppCompatActivity() {
         list.add(DocumentsModel("yes", "Land paper"))
         list.add(DocumentsModel("yes", "Owner document"))
         binding.documentRv.adapter = DocumentsAdapter(this, list = list)
+
+        dropDownAdapter = object :
+            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dropDownValue) {}
+        binding.filter.adapter = dropDownAdapter
     }
 }
