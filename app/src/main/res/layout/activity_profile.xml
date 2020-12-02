@@ -80,8 +80,8 @@
                 android:text="Verified"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
-                app:fontFamily="@font/nunito_sans_bold"
-                app:drawableTint="@color/green_700"/>
+                app:drawableTint="@color/green_700"
+                app:fontFamily="@font/nunito_sans_bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -103,6 +103,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="John"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
                         app:fontFamily="@font/nunito_sans" />
@@ -123,6 +124,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="Doe"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
                         app:fontFamily="@font/nunito_sans" />
@@ -143,6 +145,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="johndoe@gmail.com"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans" />
@@ -161,6 +164,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="John pvt ltd."
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans" />
@@ -179,6 +183,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="stree 1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans" />
@@ -204,6 +209,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="state 1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
                         app:fontFamily="@font/nunito_sans" />
@@ -224,6 +230,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="USA"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
                         app:fontFamily="@font/nunito_sans" />
