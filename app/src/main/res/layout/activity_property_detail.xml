@@ -7,20 +7,33 @@
     android:background="@drawable/blue_green_background"
     tools:context=".ui.activities.PropertyDetail">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image"
+    <RelativeLayout
+        android:id="@+id/topBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
-        android:adjustViewBounds="true"
-        android:background="@mipmap/property"
-        android:scaleType="centerCrop" />
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="Shivalik Shilp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:drawableStartCompat="@drawable/ic_arrow_back"
+            app:drawableTint="@color/white"
+            app:fontFamily="@font/nunito_sans_bold" />
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom"
-        android:layout_below="@+id/image"
-        android:layout_marginTop="-35dp"
+        android:layout_below="@+id/topBar"
         android:background="@drawable/top_corner_white_background"
         android:orientation="vertical"
         android:paddingTop="@dimen/_10sdp"
@@ -31,21 +44,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Shivalik Shilp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16ssp"
-                app:fontFamily="@font/nunito_sans_semibold" />
-
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_20sdp">
 
                 <com.google.android.material.chip.Chip

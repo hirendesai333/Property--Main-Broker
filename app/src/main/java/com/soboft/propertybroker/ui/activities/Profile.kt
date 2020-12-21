@@ -13,6 +13,9 @@ class Profile : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.title.setOnClickListener {
+            onBackPressed()
+        }
 
     }
 }

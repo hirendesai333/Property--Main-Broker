@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activities.MyCustomers">
+
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/_5sdp"
+            android:text="My Customers"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:drawableStartCompat="@drawable/ic_arrow_back"
+            app:fontFamily="@font/nunito_sans_bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/addNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/ic_add"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="New Customer"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp"
+            app:drawableTint="@color/green_700"
+            app:fontFamily="@font/nunito_sans_bold" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/customerRv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+</LinearLayout>

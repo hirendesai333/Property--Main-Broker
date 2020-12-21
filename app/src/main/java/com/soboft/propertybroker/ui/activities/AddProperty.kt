@@ -29,12 +29,16 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AddProperty : AppCompatActivity() {
+
     private lateinit var binding: ActivityAddPropertyBinding
     val REQUEST_CODE_SELECT_IMAGE = 1
 
     internal var dropDownValue = arrayOf("Per Month", "Per Year")
     var selectedDropDown: String = "Per Month"
     private lateinit var dropDownAdapter: ArrayAdapter<String>
+
+    internal var propertyListValue = arrayOf("Shivalik Shilp", "Aditya Prime", "Saujanya 2")
+    private lateinit var propertyListAdapterSpinner: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +86,26 @@ class AddProperty : AppCompatActivity() {
             }
         }
         binding.monthYearSpinner.adapter = dropDownAdapter
+
+        propertyListAdapterSpinner = object :
+            ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, propertyListValue) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val v = super.getView(position, convertView, parent)
+                (v as TextView).textSize = 12.0F
+                return v
+            }
+
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val v = super.getDropDownView(position, convertView, parent)
+                (v as TextView).textSize = 12.0F
+                return v
+            }
+        }
+        binding.propertySpinner.adapter = propertyListAdapterSpinner
 
 
         binding.selectTime.setOnClickListener {

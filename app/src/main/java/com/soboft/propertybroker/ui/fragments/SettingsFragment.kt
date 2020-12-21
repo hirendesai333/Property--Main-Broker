@@ -6,10 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.databinding.FragmentSettingsBinding
-import com.soboft.propertybroker.ui.activities.Documents
-import com.soboft.propertybroker.ui.activities.LoginActivity
-import com.soboft.propertybroker.ui.activities.Notification
-import com.soboft.propertybroker.ui.activities.Profile
+import com.soboft.propertybroker.ui.activities.*
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
@@ -42,6 +39,18 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         binding.documents.setOnClickListener {
             Intent(activity, Documents::class.java).apply {
+                startActivity(this)
+            }
+        }
+
+        binding.myCustomers.setOnClickListener {
+            Intent(activity, MyCustomers::class.java).apply {
+                startActivity(this)
+            }
+        }
+
+        binding.myProperties.setOnClickListener {
+            Intent(activity, MyProperties::class.java).apply {
                 startActivity(this)
             }
         }

@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PropertyMainBroker">
+        <activity android:name=".ui.activities.MyProperties"></activity>
+        <activity android:name=".ui.activities.MyCustomers" />
         <activity
             android:name=".ui.activities.Documents"
             android:screenOrientation="portrait" />

@@ -6,40 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.Profile">
 
-    <LinearLayout
-        android:id="@+id/top"
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:padding="@dimen/_10sdp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <View
-            android:id="@+id/topView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
-            android:background="@color/purple_700" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/_5sdp"
+            android:text="Profile"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:drawableStartCompat="@drawable/ic_arrow_back"
+            app:fontFamily="@font/nunito_sans_bold" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/ic_wave" />
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/ic_verified"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="Verified"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            app:drawableTint="@color/green_700"
+            app:fontFamily="@font/nunito_sans_bold" />
 
-    </LinearLayout>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:text="Profile"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_14ssp"
-        app:fontFamily="@font/nunito_sans_bold" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/top"
-        android:layout_marginTop="@dimen/_5sdp">
+        android:layout_below="@+id/topBar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,40 +53,34 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="@dimen/_75sdp"
-                android:layout_height="@dimen/_75sdp"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:src="@mipmap/user_profile" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="@dimen/_16sdp"
-                    android:layout_height="@dimen/_16sdp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:backgroundTint="@color/black"
-                    android:src="@drawable/ic_edit" />
-
-            </RelativeLayout>
-
-            <com.google.android.material.textview.MaterialTextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:drawableStart="@drawable/ic_verified"
-                android:drawablePadding="@dimen/_5sdp"
-                android:gravity="center"
-                android:text="Verified"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13ssp"
-                app:drawableTint="@color/green_700"
-                app:fontFamily="@font/nunito_sans_bold" />
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_75sdp"
+                    android:layout_height="@dimen/_75sdp"
+                    android:layout_gravity="center">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_70sdp"
+                        android:src="@mipmap/user_profile" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:backgroundTint="@color/black"
+                        android:src="@drawable/ic_edit" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -239,10 +238,90 @@
 
             </LinearLayout>
 
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:text="Preferred Language"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:fontFamily="@font/nunito_sans_bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="English"
+                    android:textSize="@dimen/_10sdp" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Spanish"
+                    android:textSize="@dimen/_10sdp" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hindi"
+                    android:textSize="@dimen/_10sdp" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:text="Preferred Location"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:fontFamily="@font/nunito_sans_bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chicago"
+                    android:textSize="@dimen/_10sdp" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Houston"
+                    android:textSize="@dimen/_10sdp" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="San Antonio"
+                    android:textSize="@dimen/_10sdp" />
+
+            </com.google.android.material.chip.ChipGroup>
+
             <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:text="Save"
                 app:backgroundTint="@color/green_700"

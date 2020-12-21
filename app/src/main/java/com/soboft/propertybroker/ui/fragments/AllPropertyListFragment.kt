@@ -38,7 +38,6 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
         binding.filter.setOnClickListener {
             showFilterDialog()
         }
-
     }
 
     private fun showFilterDialog() {

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.App.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_3sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_3sdp"
+    app:cardElevation="@dimen/_3sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingStart="@dimen/_10sdp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="John doe"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            app:fontFamily="@font/nunito_sans_bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="johndoe@gmail.com"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            app:drawableStartCompat="@drawable/ic_email"
+            app:drawableTint="@color/purple_500"
+            app:fontFamily="@font/nunito_sans" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="8956321450"
+            android:drawablePadding="@dimen/_5sdp"
+            android:textSize="@dimen/_10sdp"
+            app:drawableStartCompat="@drawable/ic_phone"
+            app:drawableTint="@color/purple_500"
+            android:textColor="@color/black"
+            app:fontFamily="@font/nunito_sans" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:id="@+id/edit"
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:drawablePadding="@dimen/_5sdp"
+                android:textSize="@dimen/_8sdp"
+                android:textColor="@color/green_700"
+                app:fontFamily="@font/nunito_sans_bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_alignParentEnd="true"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:id="@+id/delete"
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DELETE"
+                android:drawablePadding="@dimen/_5sdp"
+                android:textSize="@dimen/_8sdp"
+                android:textColor="@android:color/holo_red_dark"
+                app:fontFamily="@font/nunito_sans" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

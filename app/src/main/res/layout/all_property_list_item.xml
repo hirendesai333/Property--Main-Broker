@@ -1,131 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootLayout"
+    style="@style/Widget.App.CardView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_20sdp"
+    app:cardCornerRadius="@dimen/_12sdp"
+    app:cardElevation="@dimen/_3sdp">
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageCard"
-        android:layout_alignBottom="@+id/imageCard"
-        android:layout_marginStart="@dimen/_110sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        app:cardCornerRadius="@dimen/_12sdp"
-        app:cardElevation="@dimen/_12sdp">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:text="Shivalik Shilp"
+            android:textColor="@color/purple_700"
+            android:textSize="@dimen/_14ssp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:drawablePadding="@dimen/_3sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:text="USA"
+            app:drawableTint="@color/green_700"
+            android:textSize="@dimen/_10ssp"
+            app:drawableStartCompat="@drawable/ic_location" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/_10sdp"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Shivalik Shilp"
-                android:textColor="@color/purple_700"
-                android:textSize="@dimen/_14ssp" />
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:background="@drawable/right_grey_background"
+                android:orientation="vertical"
+                android:padding="@dimen/_4sdp">
 
-            <com.google.android.material.textview.MaterialTextView
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_3sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Date"
+                    app:drawableTint="@color/green_700"
+                    android:textSize="@dimen/_10ssp"
+                    app:drawableStartCompat="@drawable/ic_date" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="20/12/2020"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    app:fontFamily="@font/nunito_sans_semibold" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Client: Chirag Patel"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10ssp" />
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:background="@drawable/right_grey_background"
+                android:orientation="vertical"
+                android:padding="@dimen/_4sdp">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/nunito_sans"
-                android:text="Bid: $1500"
-                android:textSize="@dimen/_10ssp" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_3sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Time"
+                    app:drawableTint="@color/green_700"
+                    android:textSize="@dimen/_10ssp"
+                    app:drawableStartCompat="@drawable/ic_time" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                app:fontFamily="@font/nunito_sans"
-                android:text="Available for: Rent - $10000/month"
-                android:textSize="@dimen/_10ssp" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="12:30PM"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    app:fontFamily="@font/nunito_sans_semibold" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:fontFamily="@font/nunito_sans"
-                android:text="Assigned to:"
-                android:textSize="@dimen/_10ssp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:text="Sweet Home Estate"
-                android:textColor="@color/green_700"
-                android:textSize="@dimen/_12ssp"
-                app:fontFamily="@font/nunito_sans_bold" />
+            </LinearLayout>
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/imageCard"
-        android:layout_width="@dimen/_130sdp"
-        android:layout_height="@dimen/_180sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        app:cardCornerRadius="@dimen/_12sdp"
-        app:cardElevation="@dimen/_6sdp">
-
-        <RelativeLayout
-            android:layout_width="@dimen/_130sdp"
-            android:layout_height="@dimen/_180sdp">
-
-            <ImageView
-                android:id="@+id/propertyBanner"
-                android:layout_width="@dimen/_130sdp"
-                android:layout_height="@dimen/_180sdp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/property" />
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:layout_width="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_sans_semibold"
-                    android:text="at 4:30 PM"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_4sdp"
-                    android:background="@drawable/black_round_shape"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_8ssp" />
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
-
-        </RelativeLayout>
-
-
-    </androidx.cardview.widget.CardView>
-
-
-</RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
