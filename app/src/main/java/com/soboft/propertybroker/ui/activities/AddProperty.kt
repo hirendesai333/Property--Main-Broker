@@ -1,12 +1,11 @@
 package com.soboft.propertybroker.ui.activities
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.databinding.ActivityAddPropertyBinding
-import com.soboft.propertybroker.databinding.ActivityNewJobBinding
 
 class AddProperty : AppCompatActivity() {
     private lateinit var binding: ActivityAddPropertyBinding

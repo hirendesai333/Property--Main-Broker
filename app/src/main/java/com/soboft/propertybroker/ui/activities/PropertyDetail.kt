@@ -42,15 +42,15 @@ class PropertyDetail : AppCompatActivity() {
         when (parentActivity) {
             Params.ALL_PROPERTY_LIST_FRAGMENT -> {
                 binding.newJob.visibility = View.GONE
-                binding.bid.visibility = View.GONE
-                binding.bidLayout.visibility = View.GONE
+                binding.bid.visibility = View.VISIBLE
+                binding.bidLayout.visibility = View.VISIBLE
                 binding.assignedToLayout.visibility = View.VISIBLE
             }
             Params.ONGOING_JOBS_FRAGMENT -> {
                 binding.newJob.visibility = View.GONE
-                binding.bid.visibility = View.VISIBLE
-                binding.bidLayout.visibility = View.VISIBLE
-                binding.assignedToLayout.visibility = View.GONE
+                binding.bid.visibility = View.GONE
+                binding.bidLayout.visibility = View.GONE
+                binding.assignedToLayout.visibility = View.VISIBLE
             }
             else -> {
                 binding.newJob.visibility = View.VISIBLE
@@ -66,7 +66,7 @@ class PropertyDetail : AppCompatActivity() {
 
         binding.allBids.setOnClickListener {
             when (parentActivity) {
-                Params.ONGOING_JOBS_FRAGMENT -> {
+                Params.ALL_PROPERTY_LIST_FRAGMENT -> {
                     val intent = Intent(this, BidsList::class.java)
                     val options = ActivityOptions.makeSceneTransitionAnimation(
                         this,

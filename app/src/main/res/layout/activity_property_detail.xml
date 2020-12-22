@@ -75,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:text="Client: Chirag Patel"
                 android:textColor="@color/green_700"
@@ -84,7 +85,6 @@
                 android:id="@+id/bidLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/blue_green_background"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp">
@@ -118,7 +118,6 @@
                 android:id="@+id/assignedToLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/blue_green_background"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/_10sdp"
@@ -129,16 +128,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
-                    android:text="Assigned to: Sweet Home Property"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    app:fontFamily="@font/nunito_sans_semibold" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:text="Bid amount: $1500"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp"

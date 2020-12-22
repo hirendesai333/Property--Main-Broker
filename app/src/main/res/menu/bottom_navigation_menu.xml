@@ -5,13 +5,13 @@
         android:id="@+id/propertyList"
         android:enabled="true"
         android:icon="@drawable/ic_property_list"
-        android:title="Ongoing" />
+        android:title="Available Jobs" />
 
     <item
         android:id="@+id/bidPropertyList"
         android:enabled="true"
         android:icon="@drawable/ic_bid"
-        android:title="Bids" />
+        android:title="Ongoing Jobs" />
 
     <item
         android:id="@+id/placeholder"
