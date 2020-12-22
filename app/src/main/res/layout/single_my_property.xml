@@ -153,7 +153,7 @@
                 android:text="More Details"
                 android:textSize="@dimen/_8sdp" />
 
-            <com.google.android.material.button.MaterialButton
+            <!--<com.google.android.material.button.MaterialButton
                 android:id="@+id/edit"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
@@ -161,7 +161,7 @@
                 android:text="Edit"
                 android:textColor="@color/green_700"
                 android:textSize="@dimen/_8sdp"
-                app:fontFamily="@font/nunito_sans_bold" />
+                app:fontFamily="@font/nunito_sans_bold" />-->
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/delete"

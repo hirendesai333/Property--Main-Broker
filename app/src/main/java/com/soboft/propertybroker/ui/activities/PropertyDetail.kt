@@ -3,12 +3,17 @@ package com.soboft.propertybroker.ui.activities
 import android.app.ActivityOptions
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Pair
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.soboft.propertybroker.R
@@ -30,22 +35,33 @@ class PropertyDetail : AppCompatActivity() {
             intent.getStringExtra(Params.FROM)!!
         }
 
+        binding.title.setOnClickListener {
+            onBackPressed()
+        }
+
         when (parentActivity) {
             Params.ALL_PROPERTY_LIST_FRAGMENT -> {
                 binding.newJob.visibility = View.GONE
+                binding.bid.visibility = View.GONE
                 binding.bidLayout.visibility = View.GONE
                 binding.assignedToLayout.visibility = View.VISIBLE
             }
             Params.ONGOING_JOBS_FRAGMENT -> {
                 binding.newJob.visibility = View.GONE
+                binding.bid.visibility = View.VISIBLE
                 binding.bidLayout.visibility = View.VISIBLE
                 binding.assignedToLayout.visibility = View.GONE
             }
             else -> {
                 binding.newJob.visibility = View.VISIBLE
+                binding.bid.visibility = View.GONE
                 binding.bidLayout.visibility = View.VISIBLE
                 binding.assignedToLayout.visibility = View.GONE
             }
+        }
+
+        binding.bid.setOnClickListener {
+            showBidPopup()
         }
 
         binding.allBids.setOnClickListener {
@@ -73,6 +89,27 @@ class PropertyDetail : AppCompatActivity() {
             showNewJobPopup()
         }
 
+    }
+
+    private fun showBidPopup() {
+        val view: View = LayoutInflater.from(this)
+            .inflate(R.layout.bid_layout, null);
+
+        val dialog = MaterialAlertDialogBuilder(
+            this,
+            R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog
+        )
+            // Add customization options here
+            .setView(view)
+            .setBackground(ColorDrawable(Color.TRANSPARENT))
+            .create()
+
+        val bidButton: Button = view.findViewById(R.id.bid)
+        bidButton.setOnClickListener {
+            dialog.cancel()
+        }
+
+        dialog.show()
     }
 
     private fun showNewJobPopup() {

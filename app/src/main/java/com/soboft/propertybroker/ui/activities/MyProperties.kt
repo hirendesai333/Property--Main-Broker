@@ -1,5 +1,6 @@
-package com.soboft.propertybroker.ui.activities
+ package com.soboft.propertybroker.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.soboft.propertybroker.adapters.MyPropertiesAdapter
@@ -18,6 +19,11 @@ class MyProperties : AppCompatActivity() {
             onBackPressed()
         }
 
-        binding.myPropertiesRv.adapter = MyPropertiesAdapter()
+        binding.myPropertiesRv.adapter = MyPropertiesAdapter(this)
+
+        binding.addNew.setOnClickListener {
+            startActivity(Intent(this, AddProperty::class.java))
+        }
+
     }
 }

@@ -2,11 +2,13 @@ package com.soboft.propertybroker.ui.fragments
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.slider.RangeSlider
@@ -38,6 +40,19 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnProper
 
         binding.filter.setOnClickListener {
             showFilterDialog()
+        }
+
+        binding.assginedobs.setOnClickListener {
+            binding.assginedobs.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
+            binding.postedJobs.setBackgroundColor(Color.TRANSPARENT)
+
+        }
+
+        binding.postedJobs.setOnClickListener {
+            binding.assginedobs.setBackgroundColor(Color.TRANSPARENT)
+            binding.postedJobs.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
         }
 
     }

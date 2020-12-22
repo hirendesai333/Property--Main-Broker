@@ -1,8 +1,6 @@
 <resources>
-    <string name="app_name">Property Main Broker</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">Main Broker</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
     <array name="initial_slider_values">
         <item>100000.0</item>

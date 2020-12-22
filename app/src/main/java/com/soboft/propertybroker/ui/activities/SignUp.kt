@@ -22,4 +22,5 @@ class SignUp : AppCompatActivity() {
             onBackPressed()
         }
     }
+
 }
