@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.background = null
 
         binding.fab.setOnClickListener {
-            startActivity(Intent(this, AddNewJob::class.java))
+            startActivity(Intent(this, NewJob::class.java))
         }
 
     }

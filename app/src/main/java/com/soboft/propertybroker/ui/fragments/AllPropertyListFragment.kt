@@ -35,7 +35,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
         list.add(PropertyListModel("Shivalik Shilp"))
         list.add(PropertyListModel("Aditya Prime"))
         list.add(PropertyListModel("Saujanya 2"))
-        binding.upcomingJobs.adapter = AllPropertyListAdapter(list, this)
+        binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.OTHER_NEW_JOBS, list, this)
 
         binding.filter.setOnClickListener {
             showFilterDialog()
@@ -45,13 +45,14 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
             binding.otherJobs.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
             binding.myJobs.setBackgroundColor(Color.TRANSPARENT)
-
+            binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.OTHER_NEW_JOBS, list, this)
         }
 
         binding.myJobs.setOnClickListener {
             binding.otherJobs.setBackgroundColor(Color.TRANSPARENT)
             binding.myJobs.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
+            binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.MY_POSTED_JOBS, list, this)
         }
     }
 

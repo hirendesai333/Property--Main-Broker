@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PropertyMainBroker">
-        <activity android:name=".ui.activities.PropertyMoreDetails"></activity>
+        <activity android:name=".ui.activities.NewJob"></activity>
+        <activity android:name=".ui.activities.PropertyMoreDetails" />
         <activity android:name=".ui.activities.AddProperty" />
         <activity android:name=".ui.activities.MyProperties" />
         <activity android:name=".ui.activities.MyCustomers" />

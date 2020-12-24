@@ -19,7 +19,7 @@
             android:layout_alignParentStart="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_toLeftOf="@+id/filter"
             android:background="@drawable/rounded_tab_rootbar"
@@ -34,7 +34,7 @@
                 android:background="@drawable/rounded_users_tabbar"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="Other Jobs"
+                android:text="Available Jobs"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
@@ -46,7 +46,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="My Jobs"
+                android:text="My Posted Jobs"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 

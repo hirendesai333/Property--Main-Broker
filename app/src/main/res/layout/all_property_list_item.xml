@@ -27,15 +27,67 @@
             android:textSize="@dimen/_14ssp" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/postedBy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:drawablePadding="@dimen/_3sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:text="Posted by: Rudra Pvt Ltd."
+            android:textSize="@dimen/_10ssp" />
+
+        <LinearLayout
+            android:id="@+id/bidsOverview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Bids Overview: "
+                android:textSize="@dimen/_10ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans"
+                android:gravity="center"
+                android:text="Lowest $5"
+                android:textSize="@dimen/_10ssp"
+                app:drawableStartCompat="@drawable/ic_down_arrow"
+                app:drawableTint="@android:color/holo_red_dark" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Highest $100"
+                android:textSize="@dimen/_10ssp"
+                app:drawableStartCompat="@drawable/ic_up_arrow"
+                app:drawableTint="@android:color/holo_green_dark" />
+
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:drawablePadding="@dimen/_3sdp"
             android:fontFamily="@font/nunito_sans"
             android:text="USA"
-            app:drawableTint="@color/green_700"
             android:textSize="@dimen/_10ssp"
-            app:drawableStartCompat="@drawable/ic_location" />
+            app:drawableStartCompat="@drawable/ic_location"
+            app:drawableTint="@color/green_700" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,9 +110,9 @@
                     android:drawablePadding="@dimen/_3sdp"
                     android:fontFamily="@font/nunito_sans"
                     android:text="Date"
-                    app:drawableTint="@color/green_700"
                     android:textSize="@dimen/_10ssp"
-                    app:drawableStartCompat="@drawable/ic_date" />
+                    app:drawableStartCompat="@drawable/ic_date"
+                    app:drawableTint="@color/green_700" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
@@ -90,9 +142,9 @@
                     android:drawablePadding="@dimen/_3sdp"
                     android:fontFamily="@font/nunito_sans"
                     android:text="Time"
-                    app:drawableTint="@color/green_700"
                     android:textSize="@dimen/_10ssp"
-                    app:drawableStartCompat="@drawable/ic_time" />
+                    app:drawableStartCompat="@drawable/ic_time"
+                    app:drawableTint="@color/green_700" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
@@ -108,6 +160,16 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:drawablePadding="@dimen/_3sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:gravity="end"
+            android:text="Posted on: 18th dec 2020"
+            android:textSize="@dimen/_8ssp" />
 
     </LinearLayout>
 
