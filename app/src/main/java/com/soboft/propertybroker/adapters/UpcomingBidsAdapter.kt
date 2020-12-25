@@ -47,5 +47,10 @@ class UpcomingBidsAdapter(
         holder.rootLayout.setOnClickListener {
             onPropertyClick.onPropertyClick(currentItem)
         }
+        if (currentItem.jobStatus == 1) {
+            holder.jobStatus.text = "Job status: Started"
+        } else {
+            holder.jobStatus.text = "Job status: Yet To Start"
+        }
     }
 }

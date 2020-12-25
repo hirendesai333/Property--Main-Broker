@@ -3,16 +3,19 @@ package com.soboft.propertybroker.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
+import com.soboft.propertybroker.listeners.OnAgentListClick
 import com.soboft.propertybroker.model.BidListModel
 
-class CompletedAgentAdapter(var list: ArrayList<BidListModel>) :
+class CompletedAgentAdapter(var list: ArrayList<BidListModel>, var onAgentListClick: OnAgentListClick) :
     RecyclerView.Adapter<CompletedAgentAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.name)
+        val ratingLayout: LinearLayout = itemView.findViewById(R.id.ratingLayout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,5 +32,8 @@ class CompletedAgentAdapter(var list: ArrayList<BidListModel>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
         holder.name.text = currentItem.name
+        holder.ratingLayout.setOnClickListener {
+            onAgentListClick.onRatingClicked(currentItem)
+        }
     }
 }

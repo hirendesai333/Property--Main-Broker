@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.databinding.ActivityAddPropertyBinding
+import com.soboft.properybroker.utils.toast
 
 class AddProperty : AppCompatActivity() {
     private lateinit var binding: ActivityAddPropertyBinding
@@ -30,6 +31,10 @@ class AddProperty : AppCompatActivity() {
             binding.activeButton.setBackgroundColor(Color.TRANSPARENT)
             binding.inactivateButton.background =
                 ContextCompat.getDrawable(this, R.drawable.rounded_users_tabbar)
+        }
+
+        binding.createProperty.setOnClickListener {
+            toast("New property added successfully")
         }
 
     }

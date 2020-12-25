@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,8 @@ class AllPropertyListAdapter(
         val postedBy: TextView = itemView.findViewById(R.id.postedBy)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
         val bidsOverview: LinearLayout = itemView.findViewById(R.id.bidsOverview)
+        val isBidAdded: TextView = itemView.findViewById(R.id.isBidAdded)
+        val bidStatusLayout: RelativeLayout = itemView.findViewById(R.id.bidStatusLayout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,10 +44,18 @@ class AllPropertyListAdapter(
         val currentItem = list[position]
         if (from == Params.MY_POSTED_JOBS) {
             holder.postedBy.visibility = View.GONE
+            holder.bidStatusLayout.visibility = View.GONE
             holder.bidsOverview.visibility = View.VISIBLE
         } else {
             holder.bidsOverview.visibility = View.GONE
             holder.postedBy.visibility = View.VISIBLE
+            holder.bidStatusLayout.visibility = View.VISIBLE
+            if (currentItem.isBidAdded == 1) {
+                holder.isBidAdded.text = "Bid Added"
+                holder.isBidAdded.visibility = View.VISIBLE
+            } else {
+                holder.isBidAdded.visibility = View.GONE
+            }
         }
         holder.propertyName.text = currentItem.name
         holder.rootLayout.setOnClickListener {

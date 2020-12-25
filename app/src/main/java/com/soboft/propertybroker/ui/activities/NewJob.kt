@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.soboft.propertybroker.databinding.ActivityNewJob2Binding
+import com.soboft.properybroker.utils.toast
 
 class NewJob : AppCompatActivity() {
 
@@ -75,6 +76,10 @@ class NewJob : AppCompatActivity() {
             Intent(this, MyCustomers::class.java).apply {
                 startActivity(this)
             }
+        }
+
+        binding.createJob.setOnClickListener {
+            toast("New job created successfully")
         }
     }
 }
