@@ -29,21 +29,66 @@
             android:textColor="@color/purple_700"
             android:textSize="@dimen/_14ssp" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:drawablePadding="@dimen/_3sdp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="USA"
-            android:textSize="@dimen/_10ssp"
-            app:drawableStartCompat="@drawable/ic_location"
-            app:drawableTint="@color/green_700" />
+            android:layout_marginTop="@dimen/_7sdp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/postedBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/ratingLayout"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="By: Rudra Pvt Ltd."
+                android:textSize="@dimen/_10ssp" />
+
+            <LinearLayout
+                android:id="@+id/ratingLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_3sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Job Rating: "
+                    android:gravity="center_vertical"
+                    android:textColor="@color/green_700"
+                    android:textSize="@dimen/_10ssp" />
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:numStars="1"
+                    android:rating="1" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_3sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="4.8"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/green_700"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_7sdp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -111,6 +156,39 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/postDate"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="USA"
+                android:textSize="@dimen/_10ssp"
+                app:drawableStartCompat="@drawable/ic_location"
+                app:drawableTint="@color/green_700" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/postDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans"
+                android:gravity="end"
+                android:text="Posted on: 18th dec 2020"
+                android:textSize="@dimen/_8ssp" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

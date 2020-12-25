@@ -2,11 +2,12 @@ package com.soboft.propertybroker.ui.fragments
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.slider.RangeSlider
@@ -25,16 +26,34 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnProp
 
     private var _binding: CompletedJobsFragmentBinding? = null
     private val binding get() = _binding!!
+    val list = ArrayList<PropertyListModel>()
+    private var otherNewJobs = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = CompletedJobsFragmentBinding.bind(view)
 
-        val list = ArrayList<PropertyListModel>()
         list.add(PropertyListModel("Shivalik Shilp"))
         list.add(PropertyListModel("Aditya Prime"))
         list.add(PropertyListModel("Saujanya 2"))
-        binding.completedJobRv.adapter = CompletedJobsAdapter(list, this)
+
+        binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list, this)
+
+        binding.otherJobs.setOnClickListener {
+            otherNewJobs = true
+            binding.otherJobs.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
+            binding.myJobs.setBackgroundColor(Color.TRANSPARENT)
+            binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list, this)
+        }
+
+        binding.myJobs.setOnClickListener {
+            otherNewJobs = false
+            binding.otherJobs.setBackgroundColor(Color.TRANSPARENT)
+            binding.myJobs.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
+            binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_POSTED_COMPLETED_JOBS, list, this)
+        }
 
         binding.filter.setOnClickListener {
             showFilterDialog()
@@ -87,9 +106,15 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnProp
         _binding = null
     }
 
-    override fun onPropertyClick() {
+    override fun onPropertyClick(currentItem: PropertyListModel) {
         Intent(activity, PropertyDetail::class.java).apply {
+            putExtra("JobData", currentItem)
             putExtra(Params.FROM, Params.COMPLETED_JOBS_FRAGMENT)
+            if (otherNewJobs) {
+                putExtra(Params.SUB_FROM, Params.MY_COMPLETED_JOBS)
+            } else {
+                putExtra(Params.SUB_FROM, Params.MY_POSTED_COMPLETED_JOBS)
+            }
             startActivity(this)
         }
     }

@@ -75,15 +75,45 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
                 android:fontFamily="@font/nunito_sans_semibold"
                 android:text="Client: Chirag Patel"
                 android:textColor="@color/green_700"
                 android:textSize="@dimen/_12ssp" />
 
+            <LinearLayout
+                android:id="@+id/ratingBar"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/MyRating"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:rating="4.5"
+                    android:stepSize="0.1" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/ratingInText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:text="4.5"
+                    android:textColor="@color/purple_700"
+                    app:fontFamily="@font/nunito_sans" />
+
+            </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/bidLayout"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/blue_green_background"
                 android:paddingTop="@dimen/_10sdp"
@@ -120,11 +150,33 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/blue_green_background"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp"
-                android:visibility="gone">
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:visibility="visible">
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:text="Assigned To: Rudra Pvt Ltd."
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    app:fontFamily="@font/nunito_sans_semibold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bidAmountLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_green_background"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:visibility="visible">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/bidOriginalAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
@@ -349,7 +401,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:text="Create new job"
+            android:text="Start Job"
             android:textSize="@dimen/_10ssp"
             app:backgroundTint="@color/green_700" />
 

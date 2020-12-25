@@ -3,16 +3,16 @@ package com.soboft.propertybroker.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.model.PropertyListModel
+import com.soboft.propertybroker.utils.Params
 import com.soboft.properybroker.listeners.OnPropertyClick
 
 class UpcomingBidsAdapter(
+    var from: String,
     var list: ArrayList<PropertyListModel>,
     var onPropertyClick: OnPropertyClick
 ) :
@@ -20,6 +20,8 @@ class UpcomingBidsAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val propertyName: TextView = itemView.findViewById(R.id.name)
+        val assignTo: TextView = itemView.findViewById(R.id.assignTo)
+        val jobStatus: TextView = itemView.findViewById(R.id.jobStatus)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
     }
 
@@ -36,9 +38,14 @@ class UpcomingBidsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
+        if (from == Params.JOB_ASSIGN_TO_ME) {
+            holder.assignTo.visibility = View.GONE
+        } else {
+            holder.assignTo.visibility = View.VISIBLE
+        }
         holder.propertyName.text = currentItem.name
         holder.rootLayout.setOnClickListener {
-            onPropertyClick.onPropertyClick()
+            onPropertyClick.onPropertyClick(currentItem)
         }
     }
 }

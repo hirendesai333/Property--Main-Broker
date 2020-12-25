@@ -26,15 +26,16 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
 
     private var _binding: FragmentAllPropertyListBinding? = null
     private val binding get() = _binding!!
+    val list = ArrayList<PropertyListModel>()
+    var otherNewJobs = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentAllPropertyListBinding.bind(view)
 
-        val list = ArrayList<PropertyListModel>()
-        list.add(PropertyListModel("Shivalik Shilp"))
-        list.add(PropertyListModel("Aditya Prime"))
-        list.add(PropertyListModel("Saujanya 2"))
+        list.add(PropertyListModel("Shivalik Shilp", isBidAdded = 1))
+        list.add(PropertyListModel("Aditya Prime", isBidAdded = 0))
+        list.add(PropertyListModel("Saujanya 2", isBidAdded = 0))
         binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.OTHER_NEW_JOBS, list, this)
 
         binding.filter.setOnClickListener {
@@ -42,6 +43,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
         }
 
         binding.otherJobs.setOnClickListener {
+            otherNewJobs = true
             binding.otherJobs.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
             binding.myJobs.setBackgroundColor(Color.TRANSPARENT)
@@ -49,6 +51,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
         }
 
         binding.myJobs.setOnClickListener {
+            otherNewJobs = false
             binding.otherJobs.setBackgroundColor(Color.TRANSPARENT)
             binding.myJobs.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
@@ -101,9 +104,15 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
         _binding = null
     }
 
-    override fun onPropertyClick() {
+    override fun onPropertyClick(currentItem: PropertyListModel) {
         Intent(activity, PropertyDetail::class.java).apply {
+            putExtra("JobData", currentItem)
             putExtra(Params.FROM, Params.ALL_PROPERTY_LIST_FRAGMENT)
+            if (otherNewJobs) {
+                putExtra(Params.SUB_FROM, Params.OTHER_NEW_JOBS)
+            } else {
+                putExtra(Params.SUB_FROM, Params.MY_POSTED_JOBS)
+            }
             startActivity(this)
         }
     }

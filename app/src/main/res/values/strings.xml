@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Main Broker</string>
+    <string name="app_name">Agent</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <array name="initial_slider_values">

@@ -10,6 +10,7 @@ import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -18,45 +19,103 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.databinding.ActivityPropertyDetailBinding
+import com.soboft.propertybroker.model.PropertyListModel
 import com.soboft.propertybroker.utils.Params
 import java.util.*
 
 class PropertyDetail : AppCompatActivity() {
 
+    private val TAG = "PropertyDetail"
     private lateinit var binding: ActivityPropertyDetailBinding
     private var parentActivity: String? = null
+    private var subParent: String? = null
+    private var jobData: PropertyListModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPropertyDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        parentActivity = parentActivity.let {
-            intent.getStringExtra(Params.FROM)!!
-        }
-
         binding.title.setOnClickListener {
             onBackPressed()
         }
 
+        parentActivity = parentActivity.let {
+            intent.getStringExtra(Params.FROM)!!
+        }
+
+        jobData = jobData.let {
+            intent.getParcelableExtra<PropertyListModel>("JobData")!!
+        }
+
+        subParent = subParent.let {
+            intent.getStringExtra(Params.SUB_FROM)
+        }
+
         when (parentActivity) {
             Params.ALL_PROPERTY_LIST_FRAGMENT -> {
-                binding.newJob.visibility = View.GONE
-                binding.bid.visibility = View.VISIBLE
-                binding.bidLayout.visibility = View.VISIBLE
-                binding.assignedToLayout.visibility = View.VISIBLE
+                if (subParent == Params.OTHER_NEW_JOBS) {
+                    binding.newJob.visibility = View.GONE
+                    binding.bid.visibility = View.VISIBLE
+                    binding.bidLayout.visibility = View.VISIBLE
+                    binding.assignedToLayout.visibility = View.GONE
+                    if (jobData!!.isBidAdded == 1) {
+                        binding.bidAmountLayout.visibility = View.VISIBLE
+                        binding.bid.text = "Edit Bid"
+                    } else {
+                        binding.bidAmountLayout.visibility = View.GONE
+                        binding.bid.text = "Bid"
+                    }
+                } else {
+                    binding.newJob.visibility = View.GONE
+                    binding.bid.visibility = View.GONE
+                    binding.bidLayout.visibility = View.VISIBLE
+                    binding.assignedToLayout.visibility = View.GONE
+                    binding.bidAmountLayout.visibility = View.GONE
+                }
             }
             Params.ONGOING_JOBS_FRAGMENT -> {
-                binding.newJob.visibility = View.GONE
-                binding.bid.visibility = View.GONE
-                binding.bidLayout.visibility = View.GONE
-                binding.assignedToLayout.visibility = View.VISIBLE
+                if (subParent == Params.JOB_ASSIGN_TO_ME) {
+                    binding.newJob.visibility = View.VISIBLE
+                    binding.bid.visibility = View.GONE
+                    binding.bidLayout.visibility = View.GONE
+                    binding.assignedToLayout.visibility = View.GONE
+                    binding.bidAmountLayout.visibility = View.VISIBLE
+                    if (jobData!!.jobStatus == 0) {
+                        binding.newJob.text = "Start Job"
+                    } else if (jobData!!.jobStatus == 1) {
+                        binding.newJob.text = "Started"
+                    }
+                } else {
+                    binding.newJob.visibility = View.VISIBLE
+                    binding.bid.visibility = View.GONE
+                    binding.bidLayout.visibility = View.GONE
+                    binding.assignedToLayout.visibility = View.VISIBLE
+                    binding.bidAmountLayout.visibility = View.VISIBLE
+                    if (jobData!!.jobStatus == 0) {
+                        binding.newJob.text = "Yet To Start"
+                    } else if (jobData!!.jobStatus == 1) {
+                        binding.newJob.text = "Started"
+                    }
+                }
             }
             else -> {
-                binding.newJob.visibility = View.VISIBLE
-                binding.bid.visibility = View.GONE
-                binding.bidLayout.visibility = View.VISIBLE
-                binding.assignedToLayout.visibility = View.GONE
+                binding.ratingBar.visibility = View.VISIBLE
+                binding.totalBids.text = "Total Jobs: 48"
+                binding.allBids.text = "ASSIGNED AGENTS"
+                if (subParent == Params.MY_COMPLETED_JOBS) {
+                    binding.newJob.visibility = View.GONE
+                    binding.bid.visibility = View.GONE
+                    binding.bidLayout.visibility = View.GONE
+                    binding.assignedToLayout.visibility = View.GONE
+                    binding.bidAmountLayout.visibility = View.VISIBLE
+                } else {
+                    binding.newJob.visibility = View.GONE
+                    binding.bid.visibility = View.GONE
+                    binding.bidLayout.visibility = View.VISIBLE
+                    binding.assignedToLayout.visibility = View.VISIBLE
+                    binding.bidAmountLayout.visibility = View.VISIBLE
+                }
             }
         }
 
@@ -68,6 +127,7 @@ class PropertyDetail : AppCompatActivity() {
             when (parentActivity) {
                 Params.ALL_PROPERTY_LIST_FRAGMENT -> {
                     val intent = Intent(this, BidsList::class.java)
+                    intent.putExtra(Params.SUB_FROM, subParent)
                     val options = ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         Pair.create(binding.allBids, "all_bids"),
@@ -86,7 +146,19 @@ class PropertyDetail : AppCompatActivity() {
         }
 
         binding.newJob.setOnClickListener {
-            showNewJobPopup()
+            when (parentActivity) {
+                Params.ONGOING_JOBS_FRAGMENT -> {
+                    if (subParent == Params.JOB_ASSIGN_TO_ME) {
+                        if (jobData!!.jobStatus == 0) {
+                            jobData!!.jobStatus = 1
+                            binding.newJob.text = "Started"
+                        } else if (jobData!!.jobStatus == 1) {
+                            jobData!!.jobStatus = 2
+                            binding.newJob.text = "Completed"
+                        }
+                    }
+                }
+            }
         }
 
     }
@@ -99,13 +171,24 @@ class PropertyDetail : AppCompatActivity() {
             this,
             R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog
         )
-            // Add customization options here
             .setView(view)
             .setBackground(ColorDrawable(Color.TRANSPARENT))
             .create()
 
         val bidButton: Button = view.findViewById(R.id.bid)
+        val bidAmount: EditText = view.findViewById(R.id.bidAmount)
+        val description: EditText = view.findViewById(R.id.description)
+
+        if (jobData!!.isBidAdded == 1) {
+            bidAmount.setText("1500")
+        } else {
+            bidAmount.setText("")
+        }
+
         bidButton.setOnClickListener {
+            binding.bidAmountLayout.visibility = View.VISIBLE
+            binding.bid.text = "Edit Bid"
+            binding.bidOriginalAmount.text = "Bid amount: $${bidAmount.text.toString().trim()}"
             dialog.cancel()
         }
 

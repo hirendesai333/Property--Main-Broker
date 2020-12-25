@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_toEndOf="@+id/back"
-            android:text="AGENTS"
+            android:text="ASSIGNED AGENTS"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:transitionName="all_bids"

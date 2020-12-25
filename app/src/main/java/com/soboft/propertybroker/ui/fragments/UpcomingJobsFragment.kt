@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -27,32 +26,39 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnProper
 
     private var _binding: FragmentUpcomingJobsBinding? = null
     private val binding get() = _binding!!
+    val list = ArrayList<PropertyListModel>()
+    private var otherNewJobs = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentUpcomingJobsBinding.bind(view)
 
-        val list = ArrayList<PropertyListModel>()
-        list.add(PropertyListModel("Shivalik Shilp"))
-        list.add(PropertyListModel("Aditya Prime"))
-        list.add(PropertyListModel("Saujanya 2"))
-        binding.upcomingJobsRv.adapter = UpcomingBidsAdapter(list, this)
+        list.add(PropertyListModel("Shivalik Shilp", jobStatus = 0))
+        list.add(PropertyListModel("Aditya Prime", jobStatus = 1))
+        list.add(PropertyListModel("Saujanya 2", jobStatus = 0))
+
+        binding.upcomingJobsRv.adapter = UpcomingBidsAdapter(Params.JOB_ASSIGN_TO_ME, list, this)
 
         binding.filter.setOnClickListener {
             showFilterDialog()
         }
 
         binding.assginedobs.setOnClickListener {
+            otherNewJobs = true
             binding.assginedobs.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
             binding.postedJobs.setBackgroundColor(Color.TRANSPARENT)
-
+            binding.upcomingJobsRv.adapter =
+                UpcomingBidsAdapter(Params.JOB_ASSIGN_TO_ME, list, this)
         }
 
         binding.postedJobs.setOnClickListener {
+            otherNewJobs = false
             binding.assginedobs.setBackgroundColor(Color.TRANSPARENT)
             binding.postedJobs.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
+            binding.upcomingJobsRv.adapter =
+                UpcomingBidsAdapter(Params.MY_POSTED_ONGOING_JOBS, list, this)
         }
 
     }
@@ -102,9 +108,15 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnProper
         _binding = null
     }
 
-    override fun onPropertyClick() {
+    override fun onPropertyClick(currentItem: PropertyListModel) {
         Intent(activity, PropertyDetail::class.java).apply {
+            putExtra("JobData", currentItem)
             putExtra(Params.FROM, Params.ONGOING_JOBS_FRAGMENT)
+            if (otherNewJobs) {
+                putExtra(Params.SUB_FROM, Params.JOB_ASSIGN_TO_ME)
+            } else {
+                putExtra(Params.SUB_FROM, Params.MY_POSTED_ONGOING_JOBS)
+            }
             startActivity(this)
         }
     }

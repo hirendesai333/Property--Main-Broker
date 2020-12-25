@@ -48,7 +48,7 @@ class AllPropertyListAdapter(
         }
         holder.propertyName.text = currentItem.name
         holder.rootLayout.setOnClickListener {
-            onPropertyClick.onPropertyClick()
+            onPropertyClick.onPropertyClick(currentItem)
         }
     }
 
