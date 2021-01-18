@@ -3,16 +3,28 @@ package com.soboft.propertybroker.ui.activities
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.soboft.propertybroker.databinding.ActivityLoginBinding
+import com.soboft.propertybroker.network.Rare
+import com.soboft.propertybroker.network.ServiceApi
+import com.soboft.properybroker.utils.toast
+import kotlinx.coroutines.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
+    private val TAG = "LoginActivity"
+
+    private var viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -23,21 +35,52 @@ class LoginActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         initializeViews()
 
         binding.loginButton.setOnClickListener {
-            Intent(this, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(this)
-            }
+            loginDetails()
         }
 
         binding.register.setOnClickListener {
             startActivity(Intent(this, SignUp::class.java))
+        }
+    }
+
+    private fun loginDetails() {
+
+        val email = binding.emailID.text.toString()
+        val pass = binding.password.text.toString()
+
+        if (email.isNullOrEmpty() && pass.isNullOrEmpty())
+        {
+            toast("please enter email & Password")
+        }else{
+//                Intent(this, MainActivity::class.java).apply {
+//                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                    startActivity(this)
+            coroutineScope.launch {
+                try {
+                    val response = ServiceApi.retrofitService.login(
+                        Rare.login(email,pass.toInt())
+                    )
+                    if (response.isSuccessful){
+                        withContext(Dispatchers.Main){
+                            Log.d("login", response.code().toString())
+                            Log.d("login",response.body().toString())
+
+                            startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                        }
+                    }else{
+                        withContext(Dispatchers.Main){
+                            Log.d("login fail", response.code().toString())
+                        }
+                    }
+                }catch (e : Exception){
+                    Log.d(TAG, e.message.toString())
+                }
+            }
         }
     }
 
