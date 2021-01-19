@@ -8,7 +8,6 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.soboft.propertybroker.databinding.ActivityLoginBinding
-import com.soboft.propertybroker.network.Rare
 import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.properybroker.utils.toast
 import kotlinx.coroutines.*
@@ -63,7 +62,8 @@ class LoginActivity : AppCompatActivity() {
             coroutineScope.launch {
                 try {
                     val response = ServiceApi.retrofitService.login(
-                        Rare.login(email,pass.toInt())
+                        email,
+                        pass
                     )
                     if (response.isSuccessful){
                         withContext(Dispatchers.Main){

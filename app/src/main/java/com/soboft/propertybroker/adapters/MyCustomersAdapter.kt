@@ -1,33 +1,38 @@
 package com.soboft.propertybroker.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
+import com.soboft.propertybroker.databinding.SingleCustomerLayoutBinding
+import com.soboft.propertybroker.model.AllCustomerModel
+import com.soboft.propertybroker.model.Value
 
-class MyCustomersAdapter() :
-    RecyclerView.Adapter<MyCustomersAdapter.ViewHolder>() {
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.findViewById(R.id.name)
-    }
+class MyCustomersAdapter(var context: Context, var list : List<Value>) : RecyclerView.Adapter<MyCustomersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.single_customer_layout, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.single_customer_layout, parent, false)
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return list.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val currentItem = list[position]
-//        holder.message.text = currentItem.message
+        val views = holder.binding
+        val currentItem = list[position]
+        views.name.text = currentItem.customerName
+        views.email.text = currentItem.customerEmail
+        views.mobile.text = currentItem.phoneNumber
     }
 
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+     val binding = SingleCustomerLayoutBinding.bind(itemView)
+
+    }
 }
