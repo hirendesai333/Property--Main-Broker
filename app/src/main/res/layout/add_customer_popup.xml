@@ -36,6 +36,7 @@
             app:hintTextColor="@color/green_700">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/firstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="John"
@@ -57,6 +58,7 @@
             app:hintTextColor="@color/green_700">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Doe"
@@ -80,6 +82,7 @@
         app:hintTextColor="@color/green_700">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="johndoe@gmail.com"
@@ -101,6 +104,7 @@
         app:hintTextColor="@color/green_700">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="8956321450"

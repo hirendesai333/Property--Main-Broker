@@ -1,5 +1,6 @@
 package com.soboft.propertybroker.network
 
+import com.soboft.propertybroker.model.AddCustomerModel
 import com.soboft.propertybroker.model.AllCustomerModel
 import com.soboft.propertybroker.model.LoginModel
 import com.soboft.propertybroker.utils.Params
@@ -29,6 +30,10 @@ interface ApiKtService{
     @POST(GETCUSTOMERS)
     suspend fun getAllCustomer(@Field("userId") userId : Int) : Response<AllCustomerModel>
 
+    @FormUrlEncoded
+    @POST(ADDCUSTOMER)
+    suspend fun addCustomer(@Body data: Map<String, String>) : Response<AddCustomerModel>
+
 }
 
 object ServiceApi{
@@ -39,3 +44,4 @@ object ServiceApi{
 private const val LOGIN = "users/Users_Login"
 private const val SIGNUP = "users/Users_Upsert"
 private const val GETCUSTOMERS = "customerMaster/CustomerMaster_All"
+private const val ADDCUSTOMER = "customerMaster/CustomerMaster_Upsert"

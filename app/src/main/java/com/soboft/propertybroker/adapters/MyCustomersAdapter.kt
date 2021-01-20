@@ -28,6 +28,7 @@ class MyCustomersAdapter(var context: Context, var list : List<Value>) : Recycle
         views.name.text = currentItem.customerName
         views.email.text = currentItem.customerEmail
         views.mobile.text = currentItem.phoneNumber
+
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
