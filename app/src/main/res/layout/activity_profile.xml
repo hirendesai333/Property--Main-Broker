@@ -73,6 +73,7 @@
                         app:civ_border_color="@color/black"/>
 
                     <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/editPic"
                         android:layout_width="@dimen/_16sdp"
                         android:layout_height="@dimen/_16sdp"
                         android:layout_alignParentEnd="true"
@@ -210,7 +211,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/country"
                         android:layout_width="match_parent"
-                        android:editable="false"
+                        android:focusable="false"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"

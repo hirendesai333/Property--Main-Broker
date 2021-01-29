@@ -21,11 +21,8 @@ class AllCountryListAdapter(var context: Context, var list: List<Country>, var i
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val views = holder.binding
         val currentItem = list[position]
-
         views.name.text = currentItem.country.toString()
-
         views.name.setOnClickListener {
-
             itemClickListener.onItemClick(position,list[position])
         }
 

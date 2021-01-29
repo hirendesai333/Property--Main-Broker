@@ -19,11 +19,8 @@ class AllStateListAdapter(var context: Context, var list: List<State>, var itemC
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val views = holder.binding
         val currentItem = list[position]
-
         views.state.text = currentItem.state
-
         views.state.setOnClickListener {
-
             itemClickListener.onItemClick(position,list[position])
         }
 

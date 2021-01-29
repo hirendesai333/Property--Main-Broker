@@ -2,6 +2,8 @@ package com.soboft.propertybroker.network
 
 import com.soboft.propertybroker.model.*
 import com.soboft.propertybroker.utils.Params
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
@@ -58,10 +60,16 @@ interface ApiKtService{
 
     @POST(GETUSERLOCATION)
     suspend fun getUserLocation(@Query("userId") userId: Int, @Body data: Map<String, String>) : Response<AllUserLocationModel>
+
+    @Multipart
+    @POST(UPLOAD_PROFILE_PIC)
+    suspend fun uploadProfilePic(
+        @Part("id") id: RequestBody,
+        @Part files: MultipartBody.Part
+    ): Response<UserProfileModel>
 }
 
 object ServiceApi{
-
     val retrofitService : ApiKtService by lazy { retrofit.create(ApiKtService::class.java) }
 }
 
@@ -77,3 +85,4 @@ private const val GETCOUNTRY = "countryMaster/CountryMaster_All"
 private const val GETSTATE = "stateMaster/StateMaster_All"
 private const val GETUSERLANGUAGE = "userLanguages/UserLanguages_All"
 private const val GETUSERLOCATION = "userPreferedLocations/UserPreferedLocations_All"
+private const val UPLOAD_PROFILE_PIC = "users/Users_ProfileUpdate"

@@ -55,10 +55,9 @@ class LoginActivity : AppCompatActivity() {
         val email = binding.emailID.text.toString()
         val pass = binding.password.text.toString()
 
-        if (email.isNullOrEmpty() && pass.isNullOrEmpty())
-        {
+        if (email.isNullOrEmpty() && pass.isNullOrEmpty()) {
             toast("please enter email & Password")
-        }else{
+        } else {
 //                Intent(this, MainActivity::class.java).apply {
 //                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
 //                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -69,12 +68,12 @@ class LoginActivity : AppCompatActivity() {
                         email,
                         pass
                     )
-                    if (response.isSuccessful){
-                        withContext(Dispatchers.Main){
+                    if (response.isSuccessful) {
+                        withContext(Dispatchers.Main) {
                             Log.d("login", response.code().toString())
-                            Log.d("login",response.body().toString())
+                            Log.d("login", response.body().toString())
 
-                            startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
 
                             AppPreferences.setUserData(Params.UserId,response.body()!!.item!!.id.toString())
                             AppPreferences.setUserData(Params.UserTypeMasterId,response.body()!!.item!!.userTypeMasterId.toString())
@@ -83,12 +82,12 @@ class LoginActivity : AppCompatActivity() {
                             AppPreferences.setUserData(Params.MobileNumber,response.body()!!.item!!.phoneNumber.toString())
                             AppPreferences.setUserData(Params.ProfileUrl,response.body()!!.item!!.profileUrl.toString())
                         }
-                    }else{
-                        withContext(Dispatchers.Main){
+                    } else {
+                        withContext(Dispatchers.Main) {
                             Log.d("login fail", response.code().toString())
                         }
                     }
-                }catch (e : Exception){
+                } catch (e: Exception) {
                     Log.d(TAG, e.message.toString())
                 }
             }

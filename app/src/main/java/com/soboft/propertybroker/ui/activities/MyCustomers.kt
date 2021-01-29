@@ -179,6 +179,5 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
                 Log.d(TAG, e.message.toString())
             }
         }
-
     }
 }
