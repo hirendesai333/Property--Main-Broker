@@ -38,25 +38,6 @@
             android:orientation="vertical"
             android:padding="@dimen/_10sdp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:hint="House No:"
-                app:boxBackgroundColor="@color/white"
-                app:hintTextColor="@color/green_700">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:text="123"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
-                    app:fontFamily="@font/nunito_sans" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -68,6 +49,7 @@
                 app:hintTextColor="@color/green_700">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/propertyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="ABC"
@@ -87,9 +69,31 @@
                 app:hintTextColor="@color/green_700">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="stree 1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:fontFamily="@font/nunito_sans" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="Pincode"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="@color/green_700">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pincode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="383001"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans" />
@@ -106,17 +110,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:hint="State"
+                    android:hint="Country"
                     app:boxBackgroundColor="@color/white"
                     app:hintTextColor="@color/green_700">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="state 1"
+                        android:text="USA"
                         android:textColor="@color/black"
+                        android:editable="false"
                         android:textSize="@dimen/_12ssp"
                         app:fontFamily="@font/nunito_sans" />
 
@@ -126,22 +131,25 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:hint="Country"
+                    android:hint="State"
                     app:boxBackgroundColor="@color/white"
                     app:hintTextColor="@color/green_700">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/state"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="USA"
+                        android:text="state 1"
+                        android:editable="false"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
                         app:fontFamily="@font/nunito_sans" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
 
             </LinearLayout>
 

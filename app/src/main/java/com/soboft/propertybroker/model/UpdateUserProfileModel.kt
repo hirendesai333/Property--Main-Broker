@@ -3,7 +3,7 @@ package com.soboft.propertybroker.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class LoginModel(
+data class UpdateUserProfileModel(
     @JsonProperty("Code")
     val code: Int?,
     @JsonProperty("IsSuccessStatusCode")
@@ -11,12 +11,12 @@ data class LoginModel(
     @JsonProperty("IsValid")
     val isValid: Boolean?,
     @JsonProperty("Item")
-    val item: Item?,
+    val item: UpdateProfile?,
     @JsonProperty("Message")
     val message: String?
 )
 
-data class Item(
+data class UpdateProfile(
     @JsonProperty("Address")
     val address: Any?,
     @JsonProperty("AverageRatting")
@@ -44,7 +44,7 @@ data class Item(
     @JsonProperty("DeletedDateStr")
     val deletedDateStr: String?,
     @JsonProperty("DeviceToken")
-    val deviceToken: String?,
+    val deviceToken: Any?,
     @JsonProperty("DeviceTokenUpdate")
     val deviceTokenUpdate: Boolean?,
     @JsonProperty("Email")

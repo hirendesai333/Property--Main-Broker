@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/userLocation"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chicago"
+            android:textSize="@dimen/_10sdp" />
+
+<!--        <com.google.android.material.chip.Chip-->
+<!--            style="@style/CustomChipStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Houston"-->
+<!--            android:textSize="@dimen/_10sdp" />-->
+
+<!--        <com.google.android.material.chip.Chip-->
+<!--            style="@style/CustomChipStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="San Antonio"-->
+<!--            android:textSize="@dimen/_10sdp" />-->
+
+    </com.google.android.material.chip.ChipGroup>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

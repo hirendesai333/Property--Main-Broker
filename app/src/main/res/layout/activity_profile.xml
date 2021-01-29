@@ -60,14 +60,17 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="@dimen/_75sdp"
-                    android:layout_height="@dimen/_75sdp"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_gravity="center">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="@dimen/_70sdp"
-                        android:layout_height="@dimen/_70sdp"
-                        android:src="@mipmap/user_profile" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profileImage"
+                        android:layout_width="@dimen/_75sdp"
+                        android:layout_height="@dimen/_75sdp"
+                        android:src="@mipmap/user_profile"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="@color/black"/>
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="@dimen/_16sdp"
@@ -100,9 +103,9 @@
                     app:hintTextColor="@color/green_700">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/firstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="John"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
                         app:fontFamily="@font/nunito_sans" />
@@ -121,9 +124,9 @@
                     app:hintTextColor="@color/green_700">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Doe"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
                         app:fontFamily="@font/nunito_sans" />
@@ -142,9 +145,9 @@
                 app:hintTextColor="@color/green_700">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="johndoe@gmail.com"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans" />
@@ -161,9 +164,9 @@
                 app:hintTextColor="@color/green_700">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/companyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="John pvt ltd."
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans" />
@@ -180,9 +183,9 @@
                 app:hintTextColor="@color/green_700">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="stree 1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans" />
@@ -199,37 +202,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:hint="State"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintTextColor="@color/green_700">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="state 1"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp"
-                        app:fontFamily="@font/nunito_sans" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_weight="1"
                     android:hint="Country"
                     app:boxBackgroundColor="@color/white"
                     app:hintTextColor="@color/green_700">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/country"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        app:fontFamily="@font/nunito_sans" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:hint="State"
+                    app:boxBackgroundColor="@color/white"
+                    app:hintTextColor="@color/green_700">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/state"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="USA"
+                        android:editable="false"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
                         app:fontFamily="@font/nunito_sans" />
@@ -248,35 +253,11 @@
                 android:textSize="@dimen/_14ssp"
                 app:fontFamily="@font/nunito_sans_bold" />
 
-            <com.google.android.material.chip.ChipGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                app:singleSelection="true">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/userLanguageRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
-                <com.google.android.material.chip.Chip
-                    style="@style/CustomChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="English"
-                    android:textSize="@dimen/_10sdp" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/CustomChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Spanish"
-                    android:textSize="@dimen/_10sdp" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/CustomChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hindi"
-                    android:textSize="@dimen/_10sdp" />
-
-            </com.google.android.material.chip.ChipGroup>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -288,35 +269,10 @@
                 android:textSize="@dimen/_14ssp"
                 app:fontFamily="@font/nunito_sans_bold" />
 
-            <com.google.android.material.chip.ChipGroup
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userLocationRv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                app:singleSelection="true">
-
-                <com.google.android.material.chip.Chip
-                    style="@style/CustomChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chicago"
-                    android:textSize="@dimen/_10sdp" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/CustomChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Houston"
-                    android:textSize="@dimen/_10sdp" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/CustomChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="San Antonio"
-                    android:textSize="@dimen/_10sdp" />
-
-            </com.google.android.material.chip.ChipGroup>
+                android:layout_height="match_parent"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save"

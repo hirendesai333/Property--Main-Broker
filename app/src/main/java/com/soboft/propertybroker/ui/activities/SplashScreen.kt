@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Pair
 import android.view.WindowManager
 import com.soboft.propertybroker.databinding.ActivitySplashScreenBinding
+import com.soboft.propertybroker.utils.AppPreferences
+import com.soboft.propertybroker.utils.Params
 import kotlinx.coroutines.*
 
 class SplashScreen : AppCompatActivity() {
@@ -15,6 +17,8 @@ class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppPreferences.initialize(this.applicationContext)
+
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 //            window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -30,13 +34,22 @@ class SplashScreen : AppCompatActivity() {
         GlobalScope.launch {
             delay(2000L)
             withContext(Dispatchers.Main) {
-                val intent = Intent(this@SplashScreen, LoginActivity::class.java)
-                val options = ActivityOptions.makeSceneTransitionAnimation(
-                    this@SplashScreen,
-                    Pair.create(binding.logo, "app_logo"),
-                    Pair.create(binding.backgroundImage, "background_image")
-                )
-                startActivity(intent, options.toBundle())
+                if (AppPreferences.getUserData(Params.UserId).isNullOrEmpty()){
+
+                    val intent = Intent(this@SplashScreen, LoginActivity::class.java)
+                    val options = ActivityOptions.makeSceneTransitionAnimation(
+                        this@SplashScreen,
+                        Pair.create(binding.logo, "app_logo"),
+                        Pair.create(binding.backgroundImage, "background_image")
+                    )
+                    startActivity(intent, options.toBundle())
+
+                } else{
+
+                    val intent = Intent(this@SplashScreen,MainActivity::class.java)
+                    startActivity(intent)
+                }
+
             }
         }
     }

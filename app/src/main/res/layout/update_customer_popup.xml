@@ -12,7 +12,7 @@
         android:fontFamily="@font/nunito_sans_bold"
         android:gravity="center"
         android:padding="@dimen/_10sdp"
-        android:text="New Customer"
+        android:text="Update Customer"
         android:textColor="@color/white"
         android:textSize="@dimen/_14ssp" />
 
@@ -29,13 +29,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:layout_weight="1"
             android:hint="Full Name"
             app:boxBackgroundColor="@color/white"
             app:hintTextColor="@color/green_700">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/firstName"
+                android:id="@+id/updatefirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -56,7 +57,7 @@
 <!--            app:hintTextColor="@color/green_700">-->
 
 <!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                android:id="@+id/lastName"-->
+<!--                android:id="@+id/updatelastName"-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="wrap_content"-->
 <!--                android:textColor="@color/black"-->
@@ -79,7 +80,7 @@
         app:hintTextColor="@color/green_700">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailid"
+            android:id="@+id/updateemailid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -100,7 +101,7 @@
         app:hintTextColor="@color/green_700">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phone"
+            android:id="@+id/updatephone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -110,14 +111,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/add"
+        android:id="@+id/update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:text="Save"
+        android:text="Update"
         app:backgroundTint="@color/green_700"
         app:fontFamily="@font/nunito_sans_bold" />
 

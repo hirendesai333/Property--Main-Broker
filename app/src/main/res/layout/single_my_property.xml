@@ -29,7 +29,7 @@
             android:textSize="@dimen/_14ssp" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/email"
+            android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
@@ -66,6 +66,7 @@
                     android:textSize="@dimen/_10ssp" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/propertyType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_2sdp"
@@ -95,6 +96,7 @@
                     android:textSize="@dimen/_10ssp" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/avalibleForSale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_2sdp"
@@ -125,6 +127,7 @@
                     android:textSize="@dimen/_10ssp" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_2sdp"

@@ -1,5 +1,6 @@
 package com.soboft.propertybroker.adapters
 
+import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import com.soboft.propertybroker.databinding.SingleCustomerLayoutBinding
 import com.soboft.propertybroker.model.AllCustomerModel
 import com.soboft.propertybroker.model.Value
 
-class MyCustomersAdapter(var context: Context, var list : List<Value>) : RecyclerView.Adapter<MyCustomersAdapter.ViewHolder>() {
+class MyCustomersAdapter(var context: Context, var list : List<Value>, var itemClickListener: OnItemClickListener) : RecyclerView.Adapter<MyCustomersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.single_customer_layout, parent, false)
@@ -29,11 +30,17 @@ class MyCustomersAdapter(var context: Context, var list : List<Value>) : Recycle
         views.email.text = currentItem.customerEmail
         views.mobile.text = currentItem.phoneNumber
 
+        holder.binding.edit.setOnClickListener {
+            itemClickListener.onItemClick(position, list[position])
+        }
+
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
      val binding = SingleCustomerLayoutBinding.bind(itemView)
+    }
 
+    interface OnItemClickListener {
+        fun onItemClick(itemPosition: Int, data: Value)
     }
 }

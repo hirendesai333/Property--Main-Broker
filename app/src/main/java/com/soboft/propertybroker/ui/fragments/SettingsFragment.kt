@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.databinding.FragmentSettingsBinding
 import com.soboft.propertybroker.ui.activities.*
+import com.soboft.propertybroker.utils.AppPreferences
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
@@ -16,6 +17,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSettingsBinding.bind(view)
+
+        AppPreferences.initialize(this.requireContext())
 
         binding.profile.setOnClickListener {
             Intent(activity, Profile::class.java).apply {
@@ -33,6 +36,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             Intent(activity, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                AppPreferences.logOut()
                 startActivity(this)
             }
         }

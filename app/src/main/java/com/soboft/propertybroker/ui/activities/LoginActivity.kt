@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.soboft.propertybroker.databinding.ActivityLoginBinding
 import com.soboft.propertybroker.network.ServiceApi
+import com.soboft.propertybroker.utils.AppPreferences
+import com.soboft.propertybroker.utils.Params
 import com.soboft.properybroker.utils.toast
 import kotlinx.coroutines.*
 
@@ -24,6 +26,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        AppPreferences.initialize(this.applicationContext)
 
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -71,6 +75,13 @@ class LoginActivity : AppCompatActivity() {
                             Log.d("login",response.body().toString())
 
                             startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+
+                            AppPreferences.setUserData(Params.UserId,response.body()!!.item!!.id.toString())
+                            AppPreferences.setUserData(Params.UserTypeMasterId,response.body()!!.item!!.userTypeMasterId.toString())
+                            AppPreferences.setUserData(Params.Username,response.body()!!.item!!.userTypeName.toString())
+                            AppPreferences.setUserData(Params.Email,response.body()!!.item!!.email.toString())
+                            AppPreferences.setUserData(Params.MobileNumber,response.body()!!.item!!.phoneNumber.toString())
+                            AppPreferences.setUserData(Params.ProfileUrl,response.body()!!.item!!.profileUrl.toString())
                         }
                     }else{
                         withContext(Dispatchers.Main){
