@@ -4,30 +4,42 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.slider.RangeSlider
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.AllPropertyListAdapter
+import com.soboft.propertybroker.adapters.MyPropertiesAdapter
 import com.soboft.propertybroker.databinding.FragmentAllPropertyListBinding
+import com.soboft.propertybroker.model.AvailableJobs
 import com.soboft.propertybroker.model.PropertyListModel
+import com.soboft.propertybroker.model.Values
+import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.propertybroker.ui.activities.PropertyDetail
+import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
 import com.soboft.properybroker.listeners.OnPropertyClick
+import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), OnPropertyClick {
 
+    private val TAG : String = "AllPropertyListFragment"
     private var _binding: FragmentAllPropertyListBinding? = null
     private val binding get() = _binding!!
     val list = ArrayList<PropertyListModel>()
     var otherNewJobs = true
+
+    private var viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,7 +69,43 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
                 ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
             binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.MY_POSTED_JOBS, list, this)
         }
+
+//        getAllAvalibleJobs()
     }
+
+//    private fun getAllAvalibleJobs() {
+//        coroutineScope.launch {
+//            try {
+//
+//                val map = HashMap<String, String>()
+//                map["Offset"] = "0"
+//                map["Limit"] = "0"
+//                map["Page"] = "0"
+//                map["PageSize"] = "0"
+//                map["TotalCount"] = "0"
+//
+//                val response = ServiceApi.retrofitService.getAvailableJobs(
+//                    AppPreferences.getUserData(Params.UserId).toInt(),1,map
+//                )
+//                if (response.isSuccessful){
+//                    withContext(Dispatchers.Main){
+//
+//                        Log.d("getAvailableJobs", response.code().toString())
+//                        Log.d("getAvailableJobs",response.body().toString())
+//
+//                        val list : List<AvailableJobs> = response.body()!!.values!!
+//
+//                    }
+//                }else{
+//                    withContext(Dispatchers.Main){
+//                        Log.d(TAG, "something wrong")
+//                    }
+//                }
+//            }catch (e : Exception){
+//                Log.d(TAG, e.message.toString())
+//            }
+//        }
+//    }
 
     private fun showFilterDialog() {
         val mDialog = Dialog(requireContext(), R.style.Theme_PropertyMainBroker)

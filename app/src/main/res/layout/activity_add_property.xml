@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/_10sdp">
+            android:padding="@dimen/_8sdp">
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -52,7 +52,6 @@
                     android:id="@+id/propertyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ABC"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans" />
@@ -72,7 +71,6 @@
                     android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="stree 1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans" />
@@ -93,7 +91,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:text="383001"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:fontFamily="@font/nunito_sans" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="Price"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="@color/green_700">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:fontFamily="@font/nunito_sans" />
@@ -119,7 +136,6 @@
                         android:id="@+id/country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="USA"
                         android:textColor="@color/black"
                         android:editable="false"
                         android:textSize="@dimen/_12ssp"
@@ -142,7 +158,6 @@
                         android:id="@+id/state"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="state 1"
                         android:editable="false"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
@@ -150,8 +165,27 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-
             </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="City"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="@color/green_700">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    app:fontFamily="@font/nunito_sans" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -159,30 +193,20 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Property Type" />
 
-            <RadioGroup
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_3sdp">
 
-                <RadioButton
+                <Spinner
+                    android:id="@+id/propertyType"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Bunglow" />
+                    android:layout_height="wrap_content"/>
 
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Villa" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Apartment" />
-
-            </RadioGroup>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -190,24 +214,20 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Available For" />
 
-            <RadioGroup
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_3sdp">
 
-                <RadioButton
+                <Spinner
+                    android:id="@+id/availableFor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="For sale" />
+                    android:layout_height="wrap_content"/>
 
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="For rent" />
-
-            </RadioGroup>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="match_parent"

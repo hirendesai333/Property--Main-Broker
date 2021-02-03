@@ -5,34 +5,55 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import com.soboft.propertybroker.R
+import com.soboft.propertybroker.adapters.AllCityListAdapter
 import com.soboft.propertybroker.adapters.AllCountryListAdapter
 import com.soboft.propertybroker.adapters.AllStateListAdapter
 import com.soboft.propertybroker.databinding.ActivityAddPropertyBinding
-import com.soboft.propertybroker.model.Country
-import com.soboft.propertybroker.model.State
+import com.soboft.propertybroker.model.*
 import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
 import com.soboft.properybroker.utils.toast
 import kotlinx.coroutines.*
 
-class AddProperty : AppCompatActivity() , AllStateListAdapter.OnItemClickListner, AllCountryListAdapter.OnItemClickListener{
+class AddProperty : AppCompatActivity() , AllCountryListAdapter.OnItemClickListener,
+    AllStateListAdapter.OnItemClickListner,
+    AllCityListAdapter.OnItemClickListener{
     private lateinit var binding: ActivityAddPropertyBinding
 
     private val TAG = "AddProperty"
 
-    var PropertyTypeMasterId : Int = 9
-    var AvailableForMasterId : Int = 2
+    var propertyTypeId : Int = 0
+    var availableForId : Int = 0
 
     var countryId : Int = 0
+    var stateId : Int = 0
+    var cityId : Int = 0
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
+
+    private lateinit var countryDialog: Dialog
+    private lateinit var stateDialog: Dialog
+    private lateinit var cityDialog: Dialog
+
+    private lateinit var dropDownAdapter: ArrayAdapter<String>
+    private var dropdownlist : ArrayList<PropertyTypeList> = ArrayList()
+
+    private var availablePropertyList : ArrayList<AvailablePropertyList> = ArrayList()
+    private lateinit var availablePropertyAdapter : ArrayAdapter<String>
+
+    private lateinit var from: String
+    private lateinit var propertyId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +61,15 @@ class AddProperty : AppCompatActivity() , AllStateListAdapter.OnItemClickListner
         setContentView(binding.root)
 
         AppPreferences.initialize(this.applicationContext)
+
+        from = intent.getStringExtra("from")!!
+        propertyId = intent.getStringExtra("poropertyId")!!
+
+        if (from == "edit") {
+            // get property detail with property id
+            propertyDetails()
+            binding.createProperty.text = "Save"
+        }
 
         binding.title.setOnClickListener {
             onBackPressed()
@@ -65,22 +95,223 @@ class AddProperty : AppCompatActivity() , AllStateListAdapter.OnItemClickListner
             allCountry()
         }
 
-        binding.createProperty.setOnClickListener {
-//            toast("New property added successfully")
-            addNewProperty()
+        binding.city.setOnClickListener {
+            allCity()
         }
 
+        binding.createProperty.setOnClickListener {
+            if (from == "edit") {
+                updateProperty()
+            } else {
+                addNewProperty()
+            }
+        }
+
+        propertyTypeSpinner()
+        availablePropertySpinner()
+    }
+
+    private fun propertyDetails() {
+
+        coroutineScope.launch {
+            try {
+                val response = ServiceApi.retrofitService.getPropertyDetails(
+                    propertyId.toInt())
+
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        val  data = response.body()!!.item!!
+
+                        Log.d("propertyDetails", response.code().toString())
+                        Log.d("propertyDetails",response.body().toString())
+
+                        binding.propertyName.setText(data.propertyName).toString().trim()
+                        binding.address.setText((data.propertyAddress)).toString().trim()
+                        binding.pincode.setText(data.pincode).toString().trim()
+                        binding.price.setText(data.propertyPrice).toString().trim()
+                        binding.country.setText(data.countryName.toString())
+                        binding.state.setText(data.stateName.toString())
+                        binding.city.setText(data.cityName.toString())
+
+                        countryId = data.countryId!!
+                        stateId = data.stateId!!
+                        cityId = data.cityId!!
+
+                    }
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
+
+    private fun availablePropertySpinner() {
+
+        coroutineScope.launch {
+            try {
+                val map = HashMap<String,String>()
+                map["Offset"] =  "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.getAllAvailableProperty(
+                    AppPreferences.getUserData(Params.UserId).toInt(),map)
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("availableProperty", response.code().toString())
+                        Log.d("availableProperty",response.body().toString())
+
+                        availablePropertyList = response.body()?.values as ArrayList<AvailablePropertyList>
+
+                        val data : MutableList<String> = ArrayList()
+
+                        availablePropertyList.forEach {
+                            data.add(it.name.toString())
+                        }
+                        availablePropertyAdapter = object : ArrayAdapter<String>(this@AddProperty, android.R.layout.simple_list_item_1, data) {}
+                        binding.availableFor.adapter = availablePropertyAdapter
+
+                        binding.availableFor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+
+                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                availableForId = availablePropertyList[position].id!!.toInt()
+//                                toast("Selected : " + availablePropertyList[position].name)
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                                TODO("Not yet implemented")
+                            }
+
+                        }
+                    }
+
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
+
+    private fun propertyTypeSpinner() {
+
+        coroutineScope.launch {
+            try {
+                val map = HashMap<String,String>()
+                map["Offset"] =  "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.getAllPropertyType(
+                    AppPreferences.getUserData(Params.UserId).toInt(),map)
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("PropertyType", response.code().toString())
+                        Log.d("PropertyType",response.body().toString())
+
+                        dropdownlist = response.body()?.values as ArrayList<PropertyTypeList>
+                        
+                        val data : MutableList<String> = ArrayList()
+
+                        dropdownlist.forEach {
+                            data.add(it.name.toString())
+                        }
+
+                        dropDownAdapter = object : ArrayAdapter<String>(this@AddProperty, android.R.layout.simple_list_item_1, data) {}
+                        binding.propertyType.adapter = dropDownAdapter
+
+                        binding.propertyType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+
+                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                propertyTypeId = dropdownlist[position].id!!.toInt()
+//                                toast("Selected : " + dropdownlist[position].name)
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                                TODO("Not yet implemented")
+                            }
+
+                        }
+                    }
+
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
+
+    private fun allCity() {
+        cityDialog = Dialog(this,R.style.Theme_PropertyMainBroker)
+        cityDialog.setContentView(R.layout.city_popup)
+        cityDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+
+        val cityRecycler = cityDialog.findViewById<RecyclerView>(R.id.cityListRv)
+
+        cityList(cityRecycler)
+        cityDialog.show()
+    }
+
+    private fun cityList(cityRecycler: RecyclerView) {
+        coroutineScope.launch {
+            try {
+                val map = HashMap<String,String>()
+                map["Offset"] =  "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.getCity(map)
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("getCityList", response.code().toString())
+                        Log.d("getCityList",response.body().toString())
+
+                        val list : List<AllCity> = response.body()!!.values!!
+
+                        cityRecycler.adapter = AllCityListAdapter(this@AddProperty,list,this@AddProperty)
+                        cityRecycler.layoutManager = LinearLayoutManager(this@AddProperty)
+                    }
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
     }
 
     private fun allCountry() {
-        val mDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
-        mDialog.setContentView(R.layout.country_popup)
-        mDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+        countryDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
+        countryDialog.setContentView(R.layout.country_popup)
+        countryDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
-        val countryRecycler = mDialog.findViewById<RecyclerView>(R.id.CountryListRv)
+        val countryRecycler = countryDialog.findViewById<RecyclerView>(R.id.CountryListRv)
 
         countryList(countryRecycler)
-        mDialog.show()
+        countryDialog.show()
     }
 
     private fun countryList(recyclerView: RecyclerView) {
@@ -118,14 +349,14 @@ class AddProperty : AppCompatActivity() , AllStateListAdapter.OnItemClickListner
     }
 
     private fun allState() {
-        val mDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
-        mDialog.setContentView(R.layout.state_popup)
-        mDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+        stateDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
+        stateDialog.setContentView(R.layout.state_popup)
+        stateDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
-        val stateRecycler = mDialog.findViewById<RecyclerView>(R.id.StateListRv)
+        val stateRecycler = stateDialog.findViewById<RecyclerView>(R.id.StateListRv)
 
         stateList(stateRecycler)
-        mDialog.show()
+        stateDialog.show()
     }
 
     private fun stateList(recyclerView: RecyclerView) {
@@ -165,24 +396,23 @@ class AddProperty : AppCompatActivity() , AllStateListAdapter.OnItemClickListner
 
     private fun addNewProperty() {
         val propertyName = binding.propertyName.text.toString().trim()
-        val Address = binding.address.text.toString().trim()
-        val pincode = binding.pincode.text.toString().trim()
-        val state = binding.state.text.toString().trim()
-        val country = binding.country.text.toString().trim()
+        val address = binding.address.text.toString().trim()
+        val pinCode = binding.pincode.text.toString().trim()
+        val price = binding.price.text.toString().trim()
 
         coroutineScope.launch {
             try {
                 val data = HashMap<String,String>()
 
                 data["UserId"] = AppPreferences.getUserData(Params.UserId)
-                data["PropertyTypeMasterId"] =PropertyTypeMasterId.toString()
-                data["AvailableForMasterId"] = AvailableForMasterId.toString()
+                data["PropertyTypeMasterId"] = propertyTypeId.toString()
+                data["AvailableForMasterId"] = availableForId.toString()
                 data["PropertyName"] = propertyName
-                data["PropertyAddress"] = Address
-                data["PropertyPrice"] = "7999"
-                data["Pincode"] = pincode
-                data["CityId"] = "7"
-                data["StateId"] = "7"
+                data["PropertyAddress"] = address
+                data["PropertyPrice"] = price
+                data["PinCode"] = pinCode
+                data["CityId"] = cityId.toString()
+                data["StateId"] = stateId.toString()
                 data["CountryId"] = countryId.toString()
                 data["IsActive"] = "1"
 
@@ -194,7 +424,6 @@ class AddProperty : AppCompatActivity() , AllStateListAdapter.OnItemClickListner
                         Log.d("addNewProperty", response.body().toString())
 
                         toast("New property added successfully")
-                        finish()
 //                        startActivity(Intent(this@AddProperty,MyProperties::class.java))
                     }
                 } else {
@@ -208,20 +437,68 @@ class AddProperty : AppCompatActivity() , AllStateListAdapter.OnItemClickListner
         }
     }
 
-    override fun onItemClick(position: Int, data: State) {
-        println(position)
-        println(data.countryName)
+    private fun updateProperty() {
 
+        val propertyName = binding.propertyName.text.toString().trim()
+        val address = binding.address.text.toString().trim()
+        val pinCode = binding.pincode.text.toString().trim()
+        val price = binding.price.text.toString().trim()
+
+        coroutineScope.launch {
+            try {
+                val data = HashMap<String,String>()
+
+                data["UserId"] = AppPreferences.getUserData(Params.UserId)
+                data["Id"] = propertyId
+                data["PropertyTypeMasterId"] = propertyTypeId.toString()
+                data["AvailableForMasterId"] = availableForId.toString()
+                data["PropertyName"] = propertyName
+                data["PropertyAddress"] = address
+                data["PropertyPrice"] = price
+                data["PinCode"] = pinCode
+                data["CityId"] = cityId.toString()
+                data["StateId"] = stateId.toString()
+                data["CountryId"] = countryId.toString()
+                data["IsActive"] = "1"
+
+                val response = ServiceApi.retrofitService.updateProperty(data)
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+
+                        Log.d("updateProperty", response.code().toString())
+                        Log.d("updateProperty", response.body().toString())
+
+                        toast("Update Property successfully")
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
+
+    override fun onItemClick(position: Int, data: State) {
+        stateDialog.dismiss()
         toast("Selected" + data.state)
+        stateId = data.id!!.toInt()
         binding.state.setText(data.state)
     }
 
     override fun onItemClick(itemPosition: Int, data: Country) {
-        println(itemPosition)
-        println(data.id)
-
+        countryDialog.dismiss()
         toast("Selected " + data.country)
         countryId = data.id!!.toInt()
         binding.country.setText(data.country)
+    }
+
+    override fun onItemClick(itemPosition: Int, data: AllCity) {
+        cityDialog.dismiss()
+        toast("Selected" + data.city)
+        cityId = data.id!!.toInt()
+        binding.city.setText(data.city)
     }
 }

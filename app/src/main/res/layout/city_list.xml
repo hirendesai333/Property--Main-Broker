@@ -12,12 +12,12 @@
     android:padding="@dimen/_5sdp">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/state"
+        android:id="@+id/city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="State"
+        android:text="City"
         android:textColor="@color/black"
-        android:textSize="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
         app:fontFamily="@font/nunito_sans_bold" />
 
     <View

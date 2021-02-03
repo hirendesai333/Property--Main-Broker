@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -14,10 +15,14 @@ import com.google.android.material.slider.RangeSlider
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.CompletedJobsAdapter
 import com.soboft.propertybroker.databinding.CompletedJobsFragmentBinding
+import com.soboft.propertybroker.model.AvailableJobs
 import com.soboft.propertybroker.model.PropertyListModel
+import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.propertybroker.ui.activities.PropertyDetail
+import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
 import com.soboft.properybroker.listeners.OnPropertyClick
+import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,6 +33,10 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnProp
     private val binding get() = _binding!!
     val list = ArrayList<PropertyListModel>()
     private var otherNewJobs = true
+
+    private val TAG : String = "AllPropertyListFragment"
+    private var viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,6 +68,42 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnProp
             showFilterDialog()
         }
 
+        getAllAvalibleJobs()
+    }
+
+
+    private fun getAllAvalibleJobs() {
+        coroutineScope.launch {
+            try {
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.getAvailableJobs(
+                    AppPreferences.getUserData(Params.UserId).toInt(),1,map
+                )
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("getAvailableJobs", response.code().toString())
+                        Log.d("getAvailableJobs",response.body().toString())
+
+                        val list : List<AvailableJobs> = response.body()!!.values!!
+
+                    }
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
     }
 
     private fun showFilterDialog() {

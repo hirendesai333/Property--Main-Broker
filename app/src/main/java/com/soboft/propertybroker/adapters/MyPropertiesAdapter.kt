@@ -10,11 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.databinding.SingleMyPropertyBinding
+import com.soboft.propertybroker.model.State
 import com.soboft.propertybroker.model.Values
 import com.soboft.propertybroker.ui.activities.AddProperty
 import com.soboft.propertybroker.ui.activities.PropertyMoreDetails
 
-class MyPropertiesAdapter(var context: Context, var list: List<Values>) : RecyclerView.Adapter<MyPropertiesAdapter.ViewHolder>() {
+class MyPropertiesAdapter(var context: Context, var list: List<Values>, var itemClickListener : OnItemClickListner) : RecyclerView.Adapter<MyPropertiesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.single_my_property, parent, false)
@@ -38,10 +39,26 @@ class MyPropertiesAdapter(var context: Context, var list: List<Values>) : Recycl
         holder.binding.moreDetails.setOnClickListener {
             context.startActivity(Intent(context, PropertyMoreDetails::class.java))
         }
+
+        holder.binding.edit.setOnClickListener {
+            Intent(context, AddProperty::class.java).apply {
+                putExtra("poropertyId", currentItem.id.toString())
+                putExtra("from", "edit")
+                context.startActivity(this)
+            }
+        }
+
+        holder.binding.delete.setOnClickListener {
+            itemClickListener.onItemClick(position,list[position])
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = SingleMyPropertyBinding.bind(itemView)
+    }
+
+    interface OnItemClickListner{
+        fun onItemClick(position: Int, data : Values)
     }
 
 }

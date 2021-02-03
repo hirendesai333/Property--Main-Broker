@@ -219,29 +219,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:hint="State"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintTextColor="@color/green_700">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/state"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:editable="false"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp"
-                        app:fontFamily="@font/nunito_sans" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
             </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView

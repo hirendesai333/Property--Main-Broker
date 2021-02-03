@@ -1,8 +1,10 @@
  package com.soboft.propertybroker.ui.activities
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.soboft.propertybroker.adapters.MyCustomersAdapter
@@ -13,9 +15,10 @@ import com.soboft.propertybroker.model.Values
 import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
+import com.soboft.properybroker.utils.toast
 import kotlinx.coroutines.*
 
- class MyProperties : AppCompatActivity() {
+ class MyProperties : AppCompatActivity(),MyPropertiesAdapter.OnItemClickListner {
 
     lateinit var binding: ActivityMyPropertiesBinding
 
@@ -35,10 +38,12 @@ import kotlinx.coroutines.*
             onBackPressed()
         }
 
-//        binding.myPropertiesRv.adapter = MyPropertiesAdapter(this)
-
         binding.addNew.setOnClickListener {
-            startActivity(Intent(this, AddProperty::class.java))
+            Intent(this, AddProperty::class.java).apply {
+                putExtra("poropertyId", "0")
+                putExtra("from", "new")
+                startActivity(this)
+            }
         }
 
         getAllProperties()
@@ -47,8 +52,16 @@ import kotlinx.coroutines.*
     private fun getAllProperties() {
         coroutineScope.launch {
             try {
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
                 val response = ServiceApi.retrofitService.getAllProperties(
-                    AppPreferences.getUserData(Params.UserId).toInt()
+                    AppPreferences.getUserData(Params.UserId).toInt(),map
                 )
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
@@ -58,7 +71,7 @@ import kotlinx.coroutines.*
 
                         val list : List<Values> = response.body()!!.values!!
 
-                        binding.myPropertiesRv.adapter = MyPropertiesAdapter(this@MyProperties,list)
+                        binding.myPropertiesRv.adapter = MyPropertiesAdapter(this@MyProperties,list,this@MyProperties)
                         binding.myPropertiesRv.layoutManager = LinearLayoutManager(this@MyProperties)
 
                     }
@@ -72,4 +85,42 @@ import kotlinx.coroutines.*
             }
         }
     }
-}
+
+     private fun deleteProperty(data: Values) {
+         coroutineScope.launch {
+             try {
+                 val response = ServiceApi.retrofitService.deleteProperty(
+                     data.id!!
+                 )
+
+                 if (response.isSuccessful){
+                     withContext(Dispatchers.Main){
+
+                         Log.d("deleteProperty", response.code().toString())
+                         Log.d("deleteProperty", response.body().toString())
+
+                         toast("delete Property Successfully")
+                     }
+                 }else{
+                     withContext(Dispatchers.Main){
+                         Log.d(TAG, "Property not deleted ")
+                     }
+                 }
+             }catch (e : Exception){
+                 Log.d(TAG, e.message.toString())
+             }
+         }
+     }
+
+     override fun onItemClick(position: Int, data: Values) {
+         val builder = AlertDialog.Builder(this)
+         builder.setTitle("Are You Sure Delete!")
+         builder.setPositiveButton("YES") { dialogInterface: DialogInterface, i: Int ->
+             deleteProperty(data)
+         }
+         builder.setNegativeButton("NO") { dialogInterface: DialogInterface, i: Int ->
+             dialogInterface.dismiss()
+         }
+         builder.show()
+     }
+ }

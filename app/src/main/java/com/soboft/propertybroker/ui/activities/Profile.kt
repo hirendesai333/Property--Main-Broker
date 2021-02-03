@@ -34,8 +34,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
-class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener,
-    AllStateListAdapter.OnItemClickListner {
+class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityProfileBinding
 
@@ -48,7 +47,6 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener,
 
     private var filePath = ""
     private lateinit var countryDialog: Dialog
-    private lateinit var stateDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,10 +68,6 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener,
 
         binding.save.setOnClickListener {
             updateProfile()
-        }
-
-        binding.state.setOnClickListener {
-            allState()
         }
 
         binding.country.setOnClickListener {
@@ -258,50 +252,6 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener,
         }
     }
 
-    private fun allState() {
-        stateDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
-        stateDialog.setContentView(R.layout.state_popup)
-        stateDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
-
-        val stateRecycler = stateDialog.findViewById<RecyclerView>(R.id.StateListRv)
-
-        stateList(stateRecycler)
-        stateDialog.show()
-
-    }
-
-    private fun stateList(recyclerView: RecyclerView) {
-        coroutineScope.launch {
-            try {
-                val map = HashMap<String, String>()
-                map["Offset"] = "0"
-                map["Limit"] = "0"
-                map["Page"] = "0"
-                map["PageSize"] = "0"
-                map["TotalCount"] = "0"
-                val response = ServiceApi.retrofitService.getState(countryId, map)
-                if (response.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-
-                        Log.d("getStateList", response.code().toString())
-                        Log.d("getStateList", response.body().toString())
-
-                        val list: List<State> = response.body()!!.values!!
-
-                        recyclerView.adapter = AllStateListAdapter(this@Profile, list, this@Profile)
-                        recyclerView.layoutManager = LinearLayoutManager(this@Profile)
-
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Log.d(TAG, "something wrong")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.d(TAG, e.message.toString())
-            }
-        }
-    }
 
     private fun allCountry() {
         countryDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
@@ -447,12 +397,6 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener,
 
     override fun onItemClick(itemPosition: Int, data: Country) {
         countryDialog.dismiss()
-        countryId = data.id!!.toInt()
         binding.country.setText(data.country)
-    }
-
-    override fun onItemClick(position: Int, data: State) {
-        stateDialog.dismiss()
-        binding.state.setText(data.state)
     }
 }
