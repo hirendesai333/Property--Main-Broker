@@ -9,20 +9,22 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
-import com.soboft.propertybroker.model.PropertyListModel
+import com.soboft.propertybroker.model.AvailableJobs
 import com.soboft.propertybroker.utils.Params
-import com.soboft.properybroker.listeners.OnPropertyClick
+import com.soboft.propertybroker.listeners.OnNewJobsClick
 
 class AllPropertyListAdapter(
     var from: String,
-    var list: ArrayList<PropertyListModel>,
-    var onPropertyClick: OnPropertyClick
+    var list: List<AvailableJobs>,
+    var onPropertyClick: OnNewJobsClick
 ) :
     RecyclerView.Adapter<AllPropertyListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val propertyName: TextView = itemView.findViewById(R.id.name)
         val postedBy: TextView = itemView.findViewById(R.id.postedBy)
+        val date : TextView = itemView.findViewById(R.id.date)
+        val time : TextView = itemView.findViewById(R.id.time)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
         val bidsOverview: LinearLayout = itemView.findViewById(R.id.bidsOverview)
         val isBidAdded: TextView = itemView.findViewById(R.id.isBidAdded)
@@ -30,9 +32,7 @@ class AllPropertyListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.all_property_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.all_property_list_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -50,16 +50,20 @@ class AllPropertyListAdapter(
             holder.bidsOverview.visibility = View.GONE
             holder.postedBy.visibility = View.VISIBLE
             holder.bidStatusLayout.visibility = View.VISIBLE
-            if (currentItem.isBidAdded == 1) {
-                holder.isBidAdded.text = "Bid Added"
-                holder.isBidAdded.visibility = View.VISIBLE
-            } else {
-                holder.isBidAdded.visibility = View.GONE
-            }
+//            if (currentItem.isBidAdded == 1) {
+//                holder.isBidAdded.text = "Bid Added"
+//                holder.isBidAdded.visibility = View.VISIBLE
+//            } else {
+//                holder.isBidAdded.visibility = View.GONE
+//            }
         }
-        holder.propertyName.text = currentItem.name
+        holder.propertyName.text = currentItem.customerName
+        holder.date.text = currentItem.jobVisitingDate
+        holder.time.text = currentItem.jobVisitingTime
+        holder.isBidAdded.text = currentItem.statusName
+
         holder.rootLayout.setOnClickListener {
-            onPropertyClick.onPropertyClick(currentItem)
+            onPropertyClick.onNewJobsClick(currentItem)
         }
     }
 

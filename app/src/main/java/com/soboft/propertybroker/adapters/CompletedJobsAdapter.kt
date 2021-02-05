@@ -8,23 +8,12 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
-import com.soboft.propertybroker.model.PropertyListModel
+import com.soboft.propertybroker.model.AllCompletedJobsList
 import com.soboft.propertybroker.utils.Params
-import com.soboft.properybroker.listeners.OnPropertyClick
+import com.soboft.propertybroker.listeners.OnCompletedJobClick
 
-class CompletedJobsAdapter(
-    var from: String,
-    var list: ArrayList<PropertyListModel>,
-    var onPropertyClick: OnPropertyClick
-) :
+class CompletedJobsAdapter(var from: String, var list: List<AllCompletedJobsList>, var onPropertyClick: OnCompletedJobClick) :
     RecyclerView.Adapter<CompletedJobsAdapter.ViewHolder>() {
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val propertyName: TextView = itemView.findViewById(R.id.name)
-        val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
-        val postedBy: TextView = itemView.findViewById(R.id.postedBy)
-        val ratingLayout: LinearLayout = itemView.findViewById(R.id.ratingLayout)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -44,9 +33,22 @@ class CompletedJobsAdapter(
         } else {
             holder.postedBy.text = "To: Rudra Pvt Ltd."
         }
-        holder.propertyName.text = currentItem.name
+        holder.propertyName.text = currentItem.userName
+        holder.date.text = currentItem.jobVisitingDate
+        holder.time.text = currentItem.jobVisitingTime
+        holder.rating.text = currentItem.averageRatting.toString()
         holder.rootLayout.setOnClickListener {
-            onPropertyClick.onPropertyClick(currentItem)
+            onPropertyClick.onCompletedJobsClick(currentItem)
         }
+    }
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val propertyName: TextView = itemView.findViewById(R.id.name)
+        val date : TextView = itemView.findViewById(R.id.date)
+        val time : TextView = itemView.findViewById(R.id.time)
+        val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
+        val postedBy: TextView = itemView.findViewById(R.id.postedBy)
+        val ratingLayout: LinearLayout = itemView.findViewById(R.id.ratingLayout)
+        val rating : TextView = itemView.findViewById(R.id.myRating)
     }
 }

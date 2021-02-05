@@ -1,9 +1,27 @@
-package com.soboft.properybroker.listeners
+package com.soboft.propertybroker.listeners
 
-import com.soboft.propertybroker.model.PropertyListModel
+import com.soboft.propertybroker.model.*
 
-interface OnPropertyClick {
+interface OnNewJobsClick {
+    fun onNewJobsClick(currentItem: AvailableJobs)
+}
 
-    fun onPropertyClick(currentItem: PropertyListModel)
+interface OnGoingClick{
+    fun onGoingClick(currentItem : AssignedJobList)
+}
 
+interface OnCompletedJobClick {
+    fun onCompletedJobsClick(currentItem: AllCompletedJobsList)
+}
+
+interface OnJobPropertyClick{
+    fun onJobPropertyClick(currentItem : JobPropertyList)
+}
+
+interface OnGoingJobPropertyClick{
+    fun onGoingJobPropertyClick(currentItem : JobPropertyList)
+}
+
+interface OnCompletedJobPropertyClick{
+    fun onCompletedJobPropertyClick(currentItem : JobPropertyList)
 }

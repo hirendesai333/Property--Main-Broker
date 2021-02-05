@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".utils.AgentApplication"
@@ -12,10 +12,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PropertyMainBroker">
+        android:theme="@style/Theme.PropertyMainBroker"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.activities.CompletedJobDetails"></activity>
+        <activity android:name=".ui.activities.OnGoingJobDetails" />
+        <activity android:name=".ui.activities.NewJobDetails" />
         <activity
             android:name=".ui.activities.NewJob"
             android:screenOrientation="portrait" />

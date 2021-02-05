@@ -10,32 +10,27 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.slider.RangeSlider
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.AllPropertyListAdapter
-import com.soboft.propertybroker.adapters.MyPropertiesAdapter
 import com.soboft.propertybroker.databinding.FragmentAllPropertyListBinding
 import com.soboft.propertybroker.model.AvailableJobs
-import com.soboft.propertybroker.model.PropertyListModel
-import com.soboft.propertybroker.model.Values
 import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.propertybroker.ui.activities.PropertyDetail
 import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
-import com.soboft.properybroker.listeners.OnPropertyClick
+import com.soboft.propertybroker.listeners.OnNewJobsClick
+import com.soboft.propertybroker.ui.activities.NewJobDetails
 import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
-class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), OnPropertyClick {
+class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), OnNewJobsClick {
 
     private val TAG : String = "AllPropertyListFragment"
     private var _binding: FragmentAllPropertyListBinding? = null
     private val binding get() = _binding!!
-    val list = ArrayList<PropertyListModel>()
     var otherNewJobs = true
 
     private var viewModelJob = Job()
@@ -45,10 +40,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentAllPropertyListBinding.bind(view)
 
-        list.add(PropertyListModel("Shivalik Shilp", isBidAdded = 1))
-        list.add(PropertyListModel("Aditya Prime", isBidAdded = 0))
-        list.add(PropertyListModel("Saujanya 2", isBidAdded = 0))
-        binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.OTHER_NEW_JOBS, list, this)
+        getAllAvailableJobs()
 
         binding.filter.setOnClickListener {
             showFilterDialog()
@@ -56,56 +48,91 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
 
         binding.otherJobs.setOnClickListener {
             otherNewJobs = true
-            binding.otherJobs.background =
-                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
+            binding.otherJobs.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
             binding.myJobs.setBackgroundColor(Color.TRANSPARENT)
-            binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.OTHER_NEW_JOBS, list, this)
+            getAllAvailableJobs()
         }
 
         binding.myJobs.setOnClickListener {
             otherNewJobs = false
             binding.otherJobs.setBackgroundColor(Color.TRANSPARENT)
-            binding.myJobs.background =
-                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
-            binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.MY_POSTED_JOBS, list, this)
+            binding.myJobs.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
+            getMyPostedJobs()
         }
 
-//        getAllAvalibleJobs()
     }
 
-//    private fun getAllAvalibleJobs() {
-//        coroutineScope.launch {
-//            try {
-//
-//                val map = HashMap<String, String>()
-//                map["Offset"] = "0"
-//                map["Limit"] = "0"
-//                map["Page"] = "0"
-//                map["PageSize"] = "0"
-//                map["TotalCount"] = "0"
-//
-//                val response = ServiceApi.retrofitService.getAvailableJobs(
-//                    AppPreferences.getUserData(Params.UserId).toInt(),1,map
-//                )
-//                if (response.isSuccessful){
-//                    withContext(Dispatchers.Main){
-//
-//                        Log.d("getAvailableJobs", response.code().toString())
-//                        Log.d("getAvailableJobs",response.body().toString())
-//
-//                        val list : List<AvailableJobs> = response.body()!!.values!!
-//
-//                    }
-//                }else{
-//                    withContext(Dispatchers.Main){
-//                        Log.d(TAG, "something wrong")
-//                    }
-//                }
-//            }catch (e : Exception){
-//                Log.d(TAG, e.message.toString())
-//            }
-//        }
-//    }
+    private fun getMyPostedJobs() {
+        coroutineScope.launch {
+            try {
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.getNewJobs(
+                    AppPreferences.getUserData(Params.UserId).toInt(),2,map
+                )
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("getMyPostedJobs", response.code().toString())
+                        Log.d("getMyPostedJobs",response.body().toString())
+
+                        val list : List<AvailableJobs> = response.body()!!.values!!
+
+                        binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.MY_POSTED_JOBS, list, this@AllPropertyListFragment)
+
+                    }
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
+
+    private fun getAllAvailableJobs() {
+        coroutineScope.launch {
+            try {
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.getNewJobs(
+                    AppPreferences.getUserData(Params.UserId).toInt(),1,map
+                )
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("getAvailableJobs", response.code().toString())
+                        Log.d("getAvailableJobs",response.body().toString())
+
+                        val list : List<AvailableJobs> = response.body()!!.values!!
+
+                        binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.OTHER_NEW_JOBS, list, this@AllPropertyListFragment)
+
+                    }
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
 
     private fun showFilterDialog() {
         val mDialog = Dialog(requireContext(), R.style.Theme_PropertyMainBroker)
@@ -152,9 +179,9 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
         _binding = null
     }
 
-    override fun onPropertyClick(currentItem: PropertyListModel) {
-        Intent(activity, PropertyDetail::class.java).apply {
-            putExtra("JobData", currentItem)
+    override fun onNewJobsClick(currentItem: AvailableJobs) {
+        Intent(activity, NewJobDetails::class.java).apply {
+            putExtra("JobData", currentItem.id.toString())
             putExtra(Params.FROM, Params.ALL_PROPERTY_LIST_FRAGMENT)
             if (otherNewJobs) {
                 putExtra(Params.SUB_FROM, Params.OTHER_NEW_JOBS)

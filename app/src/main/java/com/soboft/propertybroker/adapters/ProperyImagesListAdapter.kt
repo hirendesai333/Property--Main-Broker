@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.model.PropertyImageModel
 import com.soboft.propertybroker.model.PropertyListModel
-import com.soboft.properybroker.listeners.OnPropertyClick
 
 class ProperyImagesListAdapter(val list: ArrayList<PropertyImageModel>) :
     RecyclerView.Adapter<ProperyImagesListAdapter.ViewHolder>() {

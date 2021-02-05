@@ -80,6 +80,11 @@ class NewJob : AppCompatActivity() {
 
         binding.createJob.setOnClickListener {
             toast("New job created successfully")
+            createNewJob()
         }
+    }
+
+    private fun createNewJob() {
+        // TODO: 05-02-2021
     }
 }

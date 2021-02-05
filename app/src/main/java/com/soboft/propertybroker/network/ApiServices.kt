@@ -85,10 +85,37 @@ interface ApiKtService{
         @Part files: MultipartBody.Part
     ): Response<UserProfileModel>
 
-    @POST(GETAVALIBLEJOBS)
-    suspend fun getAvailableJobs(@Query("userId") userId: Int,
-                                 @Query("statusMasterId") statusMasterId : Int,
+    @POST(GETNEWJOBS)
+    suspend fun getNewJobs(@Query("userId") userId: Int,
+                                 @Query("StatusMasterId") statusMasterId : Int,
                                  @Body data: Map<String, String>) : Response<AllAvalibleJobsModel>
+
+    @POST(GETONGOINGJOBS)
+    suspend fun getOnGoingJobs(@Query("userId") userId: Int,
+                                @Query("StatusMasterId") statusMasterId: Int,
+                                @Query("AvailableJobsOnly") boolean: Boolean,
+                                @Body data: Map<String, String>) : Response<AllAssignedJobModel>
+
+    @POST(GETONGOINGJOBSASSIGNED)
+    suspend fun getOnGoingJobsAssigned(@Query("StatusMasterId") statusMasterId: Int,
+                                       @Query("AvailableJobsOnly") boolean: Boolean,
+                                       @Query("AssignedUserId") assignedUserId: Int,
+                                       @Body data: Map<String, String>) : Response<AllAssignedJobModel>
+
+    @POST(GETCOMPLETEDJOBS)
+    suspend fun getCompletedJobs(@Query("userId") userId: Int,
+                                @Query("StatusMasterId") statusMasterId : Int,
+                                @Query("AvailableJobsOnly") boolean: Boolean,
+                                @Body data: Map<String, String>) : Response<AllCompletedJobsModel>
+
+    @POST(GETCOMPLETEDJOBSFORCompleted)
+    suspend fun getCompletedForJobs(@Query("StatusMasterId") statusMasterId : Int,
+                                    @Query("AssignedUserId") assignedUserId : Int,
+                                    @Body data: Map<String, String>) : Response<AllCompletedJobsModel>
+
+    @POST(GETJOBPROPERTY)
+    suspend fun getJobProperty(@Query("JobId") jobId : Int,
+                                @Body data: Map<String, String>) : Response<JobPropertyModel>
 }
 
 object ServiceApi{
@@ -114,4 +141,9 @@ private const val GETCITY = "cityMaster/CityMaster_All"
 private const val GETUSERLANGUAGE = "userLanguages/UserLanguages_All"
 private const val GETUSERLOCATION = "userPreferedLocations/UserPreferedLocations_All"
 private const val UPLOAD_PROFILE_PIC = "users/Users_ProfileUpdate"
-private const val GETAVALIBLEJOBS = "jobs/Jobs_All"
+private const val GETNEWJOBS = "jobs/Jobs_All"
+private const val GETONGOINGJOBS = "jobs/Jobs_All"
+private const val GETCOMPLETEDJOBS = "jobs/Jobs_All"
+private const val GETCOMPLETEDJOBSFORCompleted = "jobs/Jobs_All"
+private const val GETONGOINGJOBSASSIGNED = "jobs/Jobs_All"
+private const val GETJOBPROPERTY = "jobs/JobProperty_All"

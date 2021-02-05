@@ -40,13 +40,13 @@ class PropertyDetail : AppCompatActivity() {
             onBackPressed()
         }
 
-        parentActivity = parentActivity.let {
-            intent.getStringExtra(Params.FROM)!!
-        }
+//        parentActivity = parentActivity.let {
+//            intent.getStringExtra(Params.FROM)!!
+//        }
 
-        jobData = jobData.let {
-            intent.getParcelableExtra<PropertyListModel>("JobData")!!
-        }
+//        jobData = jobData.let {
+//            intent.getParcelableExtra<PropertyListModel>("JobData")!!
+//        }
 
         subParent = subParent.let {
             intent.getStringExtra(Params.SUB_FROM)

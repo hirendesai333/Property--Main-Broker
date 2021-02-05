@@ -15,26 +15,27 @@ import com.google.android.material.slider.RangeSlider
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.CompletedJobsAdapter
 import com.soboft.propertybroker.databinding.CompletedJobsFragmentBinding
-import com.soboft.propertybroker.model.AvailableJobs
-import com.soboft.propertybroker.model.PropertyListModel
+import com.soboft.propertybroker.model.AllCompletedJobsList
 import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.propertybroker.ui.activities.PropertyDetail
 import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
-import com.soboft.properybroker.listeners.OnPropertyClick
+import com.soboft.propertybroker.listeners.OnCompletedJobClick
+import com.soboft.propertybroker.ui.activities.CompletedJobDetails
 import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
-class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnPropertyClick {
+
+class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnCompletedJobClick {
 
     private var _binding: CompletedJobsFragmentBinding? = null
     private val binding get() = _binding!!
-    val list = ArrayList<PropertyListModel>()
+//    val list = ArrayList<PropertyListModel>()
     private var otherNewJobs = true
 
-    private val TAG : String = "AllPropertyListFragment"
+    private val TAG : String = "CompletedJobsFragment"
+
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
@@ -42,37 +43,34 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnProp
         super.onViewCreated(view, savedInstanceState)
         _binding = CompletedJobsFragmentBinding.bind(view)
 
-        list.add(PropertyListModel("Shivalik Shilp"))
-        list.add(PropertyListModel("Aditya Prime"))
-        list.add(PropertyListModel("Saujanya 2"))
-
-        binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list, this)
+//        list.add(PropertyListModel("Shivalik Shilp"))
+//        list.add(PropertyListModel("Aditya Prime"))
+//        list.add(PropertyListModel("Saujanya 2"))
+          getAssignedJob()
+//        binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list, this)
 
         binding.otherJobs.setOnClickListener {
             otherNewJobs = true
-            binding.otherJobs.background =
-                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
+            binding.otherJobs.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
             binding.myJobs.setBackgroundColor(Color.TRANSPARENT)
-            binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list, this)
+            getAssignedJob()
+//            binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list, this)
         }
 
         binding.myJobs.setOnClickListener {
             otherNewJobs = false
             binding.otherJobs.setBackgroundColor(Color.TRANSPARENT)
-            binding.myJobs.background =
-                ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
-            binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_POSTED_COMPLETED_JOBS, list, this)
+            binding.myJobs.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
+            getAllCompletedJobs()
+//            binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_POSTED_COMPLETED_JOBS, list, this)
         }
 
         binding.filter.setOnClickListener {
             showFilterDialog()
         }
-
-        getAllAvalibleJobs()
     }
 
-
-    private fun getAllAvalibleJobs() {
+    private fun getAssignedJob() {
         coroutineScope.launch {
             try {
 
@@ -83,17 +81,55 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnProp
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getAvailableJobs(
-                    AppPreferences.getUserData(Params.UserId).toInt(),1,map
+                val response = ServiceApi.retrofitService.getCompletedForJobs(
+                    3,2,map
                 )
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
 
-                        Log.d("getAvailableJobs", response.code().toString())
-                        Log.d("getAvailableJobs",response.body().toString())
+                        Log.d("getCompletedJob", response.code().toString())
+                        Log.d("getCompletedJob",response.body().toString())
 
-                        val list : List<AvailableJobs> = response.body()!!.values!!
+                        val list : List<AllCompletedJobsList> = response.body()!!.values!!
 
+                        binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list, this@CompletedJobsFragment)
+
+                    }
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
+
+
+    private fun getAllCompletedJobs() {
+        coroutineScope.launch {
+            try {
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.getCompletedJobs(
+                    AppPreferences.getUserData(Params.UserId).toInt(),3,false,map
+                )
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("getCompletedJobs", response.code().toString())
+                        Log.d("getCompletedJobs",response.body().toString())
+
+                        val list : List<AllCompletedJobsList> = response.body()!!.values!!
+
+                        binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_POSTED_COMPLETED_JOBS,list,this@CompletedJobsFragment)
                     }
                 }else{
                     withContext(Dispatchers.Main){
@@ -151,9 +187,9 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnProp
         _binding = null
     }
 
-    override fun onPropertyClick(currentItem: PropertyListModel) {
-        Intent(activity, PropertyDetail::class.java).apply {
-            putExtra("JobData", currentItem)
+    override fun onCompletedJobsClick(currentItem: AllCompletedJobsList) {
+        Intent(activity, CompletedJobDetails::class.java).apply {
+            putExtra("CompletedJob", currentItem.id.toString())
             putExtra(Params.FROM, Params.COMPLETED_JOBS_FRAGMENT)
             if (otherNewJobs) {
                 putExtra(Params.SUB_FROM, Params.MY_COMPLETED_JOBS)
