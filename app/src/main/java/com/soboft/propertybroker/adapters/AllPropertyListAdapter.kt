@@ -25,6 +25,8 @@ class AllPropertyListAdapter(
         val postedBy: TextView = itemView.findViewById(R.id.postedBy)
         val date : TextView = itemView.findViewById(R.id.date)
         val time : TextView = itemView.findViewById(R.id.time)
+        val lowBid : TextView = itemView.findViewById(R.id.lowBid)
+        val highBid : TextView = itemView.findViewById(R.id.highBid)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
         val bidsOverview: LinearLayout = itemView.findViewById(R.id.bidsOverview)
         val isBidAdded: TextView = itemView.findViewById(R.id.isBidAdded)
@@ -58,6 +60,8 @@ class AllPropertyListAdapter(
 //            }
         }
         holder.propertyName.text = currentItem.customerName
+        holder.lowBid.text = currentItem.lowestBid.toString()
+        holder.highBid.text = currentItem.highestBid.toString()
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
         holder.isBidAdded.text = currentItem.statusName

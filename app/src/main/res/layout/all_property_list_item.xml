@@ -78,6 +78,7 @@
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lowBid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
@@ -91,6 +92,7 @@
                 app:drawableTint="@android:color/holo_red_dark" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/highBid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"

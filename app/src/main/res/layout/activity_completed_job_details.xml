@@ -1,10 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.activities.CompletedJobDetails">
+
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/_5sdp"
+            android:text="Completed Job Property"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:drawableStartCompat="@drawable/ic_arrow_back"
+            app:fontFamily="@font/nunito_sans_bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/allBidPropertyDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="All Bid Property"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp"
+            app:fontFamily="@font/nunito_sans_bold" />
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/completedJobProperty"
@@ -13,4 +47,4 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

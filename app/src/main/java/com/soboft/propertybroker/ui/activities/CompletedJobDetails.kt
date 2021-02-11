@@ -13,6 +13,8 @@ import com.soboft.propertybroker.listeners.OnCompletedJobClick
 import com.soboft.propertybroker.listeners.OnCompletedJobPropertyClick
 import com.soboft.propertybroker.model.JobPropertyList
 import com.soboft.propertybroker.network.ServiceApi
+import com.soboft.propertybroker.utils.AppPreferences
+import com.soboft.propertybroker.utils.Params
 import kotlinx.coroutines.*
 import java.util.HashMap
 
@@ -34,6 +36,14 @@ class CompletedJobDetails : AppCompatActivity() , OnCompletedJobPropertyClick{
 
         jobId = intent.getStringExtra("CompletedJob")!!
 
+        binding.allBidPropertyDetails.setOnClickListener {
+            val intent =  Intent(this,AllJobPropertyBidList::class.java)
+            intent.putExtra("job",jobId)
+            startActivity(intent)
+        }
+
+        binding.title.setOnClickListener { onBackPressed() }
+
         getCompletedJob()
     }
 
@@ -47,7 +57,7 @@ class CompletedJobDetails : AppCompatActivity() , OnCompletedJobPropertyClick{
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getJobProperty(jobId.toInt(),map)
+                val response = ServiceApi.retrofitService.getJobProperty(jobId.toInt(),AppPreferences.getUserData(Params.UserId).toInt(),map)
 
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){

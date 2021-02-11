@@ -19,7 +19,7 @@
         android:paddingTop="@dimen/_10sdp">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/name"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Angle broking"
@@ -28,7 +28,7 @@
             app:fontFamily="@font/nunito_sans_bold" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/bidAmount"
+            android:id="@+id/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8ssp"
@@ -47,6 +47,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/accept"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -55,6 +56,7 @@
                 app:fontFamily="@font/nunito_sans_bold"/>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/reject"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

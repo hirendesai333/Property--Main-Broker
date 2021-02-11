@@ -54,6 +54,18 @@
 
         </RelativeLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/agent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:drawableTint="@color/ultra_light_grey"
+            android:text="Agent"
+            android:layout_gravity="end"
+            android:textSize="@dimen/_10ssp"
+            app:backgroundTint="@color/green_700" />
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

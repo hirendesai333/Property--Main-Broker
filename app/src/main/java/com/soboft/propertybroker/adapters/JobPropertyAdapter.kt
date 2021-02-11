@@ -4,10 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
-import com.soboft.propertybroker.databinding.JobPropertyLtemBinding
-import com.soboft.propertybroker.listeners.OnCompletedJobClick
 import com.soboft.propertybroker.listeners.OnJobPropertyClick
 import com.soboft.propertybroker.model.JobPropertyList
 
@@ -15,7 +17,10 @@ class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> ,
     : RecyclerView.Adapter<JobPropertyAdapter.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val binding = JobPropertyLtemBinding.bind(itemView)
+        val name: TextView = itemView.findViewById(R.id.name)
+        val address: TextView = itemView.findViewById(R.id.address)
+        val propertyType :TextView = itemView.findViewById(R.id.propertyType)
+        val bid : Button = itemView.findViewById(R.id.bidding)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,14 +29,24 @@ class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> ,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val view = holder.binding
         val currentItem = list[position]
 
-        view.name.text = currentItem.propertyName
-        view.address.text = currentItem.propertyAddress
-        view.propertyType.text = currentItem.propertyTypeName
+        holder.name.text = currentItem.propertyName
+        holder.address.text = currentItem.propertyAddress
+        holder.propertyType.text = currentItem.propertyTypeName
 
-        view.rootLayout.setOnClickListener {
+//        holder.name.setOnClickListener {
+//            onJobPropertyClick.onJobPropertyClick(currentItem)
+//        }
+
+        if (currentItem.bidAmount!!.toInt() > 0) {
+                holder.bid.text = "Bid"
+                holder.bid.visibility = View.VISIBLE
+        } else {
+            holder.bid.visibility = View.GONE
+        }
+
+        holder.bid.setOnClickListener {
             onJobPropertyClick.onJobPropertyClick(currentItem)
         }
 

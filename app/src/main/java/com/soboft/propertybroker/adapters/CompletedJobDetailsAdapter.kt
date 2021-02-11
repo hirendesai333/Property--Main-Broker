@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
+import com.soboft.propertybroker.databinding.CompletedJobItemBinding
 import com.soboft.propertybroker.databinding.JobPropertyLtemBinding
 import com.soboft.propertybroker.listeners.OnCompletedJobClick
 import com.soboft.propertybroker.listeners.OnCompletedJobPropertyClick
@@ -15,7 +16,7 @@ class CompletedJobDetailsAdapter(var context: Context,var list: List<JobProperty
     : RecyclerView.Adapter<CompletedJobDetailsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val binding = JobPropertyLtemBinding.bind(itemView)
+        val binding = CompletedJobItemBinding.bind(itemView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

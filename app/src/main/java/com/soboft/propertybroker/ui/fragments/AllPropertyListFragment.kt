@@ -74,7 +74,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getNewJobs(
-                    AppPreferences.getUserData(Params.UserId).toInt(),2,map
+                    AppPreferences.getUserData(Params.UserId).toInt(),1,false,map
                 )
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
@@ -110,7 +110,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getNewJobs(
-                    AppPreferences.getUserData(Params.UserId).toInt(),1,map
+                    AppPreferences.getUserData(Params.UserId).toInt(),1,true,map
                 )
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
@@ -180,15 +180,20 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
     }
 
     override fun onNewJobsClick(currentItem: AvailableJobs) {
-        Intent(activity, NewJobDetails::class.java).apply {
-            putExtra("JobData", currentItem.id.toString())
-            putExtra(Params.FROM, Params.ALL_PROPERTY_LIST_FRAGMENT)
-            if (otherNewJobs) {
-                putExtra(Params.SUB_FROM, Params.OTHER_NEW_JOBS)
-            } else {
-                putExtra(Params.SUB_FROM, Params.MY_POSTED_JOBS)
-            }
-            startActivity(this)
-        }
+//        Intent(activity, NewJobDetails::class.java).apply {
+//            putExtra("JobData", currentItem.id.toString())
+//            putExtra(Params.FROM, Params.ALL_PROPERTY_LIST_FRAGMENT)
+//            if (otherNewJobs) {
+//                putExtra(Params.SUB_FROM, Params.OTHER_NEW_JOBS)
+//            } else {
+//                putExtra(Params.SUB_FROM, Params.MY_POSTED_JOBS)
+//            }
+//            startActivity(this)
+//        }
+
+        val intent = Intent(activity,NewJobDetails::class.java)
+        intent.putExtra("JobData",currentItem.id.toString())
+        intent.putExtra(Params.FROM,Params.ALL_PROPERTY_LIST_FRAGMENT)
+        startActivity(intent)
     }
 }

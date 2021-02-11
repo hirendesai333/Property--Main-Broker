@@ -3,7 +3,7 @@ package com.soboft.propertybroker.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class JobPropertyModel(
+data class JobPropertyBidAllModel(
     @JsonProperty("IsOffsetProvided")
     val isOffsetProvided: Boolean?,
     @JsonProperty("IsPageProvided")
@@ -25,38 +25,38 @@ data class JobPropertyModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<JobPropertyList>?
+    val values: List<JobPropertyBidAllList>?
 )
 
-data class JobPropertyList(
-    @JsonProperty("AvailableForMasterId")
-    val availableForMasterId: Int?,
-    @JsonProperty("AvailableForMasterName")
-    val availableForMasterName: String?,
-    @JsonProperty("BidAmount")
-    val bidAmount: Double?,
-    @JsonProperty("BidNote")
-    val bidNote: String?,
-    @JsonProperty("City")
-    val city: Any?,
-    @JsonProperty("CityId")
-    val cityId: Int?,
-    @JsonProperty("Country")
-    val country: String?,
-    @JsonProperty("CountryId")
-    val countryId: Int?,
+data class JobPropertyBidAllList(
+    @JsonProperty("Amount")
+    val amount: Int?,
+    @JsonProperty("AvailableFor")
+    val availableFor: String?,
+    @JsonProperty("CityName")
+    val cityName: String?,
+    @JsonProperty("CountryName")
+    val countryName: String?,
     @JsonProperty("CreatedBy")
     val createdBy: Int?,
     @JsonProperty("CreatedDate")
     val createdDate: String?,
     @JsonProperty("CreatedDateStr")
     val createdDateStr: String?,
+    @JsonProperty("HouseNo")
+    val houseNo: Any?,
     @JsonProperty("Id")
     val id: Int?,
+    @JsonProperty("JobCreateUserEmail")
+    val jobCreateUserEmail: String?,
+    @JsonProperty("JobCreateUserName")
+    val jobCreateUserName: String?,
     @JsonProperty("JobId")
     val jobId: Int?,
-    @JsonProperty("JobPropertyBidId")
-    val jobPropertyBidId: Int?,
+    @JsonProperty("JobNo")
+    val jobNo: String?,
+    @JsonProperty("JobPropertyId")
+    val jobPropertyId: Int?,
     @JsonProperty("Note")
     val note: String?,
     @JsonProperty("Pincode")
@@ -73,26 +73,36 @@ data class JobPropertyList(
     val propertyName: String?,
     @JsonProperty("PropertyPrice")
     val propertyPrice: String?,
-    @JsonProperty("PropertyTypeMasterId")
-    val propertyTypeMasterId: Int?,
-    @JsonProperty("PropertyTypeName")
-    val propertyTypeName: String?,
-    @JsonProperty("Rating")
-    val rating: Double?,
-    @JsonProperty("RatingBy")
-    val ratingBy: Int?,
-    @JsonProperty("Review")
-    val review: String?,
-    @JsonProperty("State")
-    val state: Any?,
-    @JsonProperty("StateId")
-    val stateId: Int?,
+    @JsonProperty("PropertyType")
+    val propertyType: String?,
+    @JsonProperty("StateName")
+    val stateName: String?,
+    @JsonProperty("TotalAmount")
+    val totalAmount: Int?,
+    @JsonProperty("TotalProperty")
+    val totalProperty: Int?,
+    @JsonProperty("TotalPropertyBid")
+    val totalPropertyBid: Int?,
     @JsonProperty("UpdatedBy")
     val updatedBy: Int?,
     @JsonProperty("UpdatedDate")
     val updatedDate: String?,
     @JsonProperty("UpdatedDateStr")
     val updatedDateStr: String?,
+    @JsonProperty("UserAverageRating")
+    val userAverageRating: Int?,
+    @JsonProperty("UserEmail")
+    val userEmail: Any?,
     @JsonProperty("UserId")
-    val userId: Int?
+    val userId: Int?,
+    @JsonProperty("UserName")
+    val userName: Any?,
+    @JsonProperty("UserPhoneNumber")
+    val userPhoneNumber: Any?,
+    @JsonProperty("UserProfileUrl")
+    val userProfileUrl: Any?,
+    @JsonProperty("UserProfileUrlStr")
+    val userProfileUrlStr: String?,
+    @JsonProperty("UserTotalRating")
+    val userTotalRating: Int?
 )

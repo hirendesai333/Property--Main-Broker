@@ -88,6 +88,7 @@ interface ApiKtService{
     @POST(GETNEWJOBS)
     suspend fun getNewJobs(@Query("userId") userId: Int,
                                  @Query("StatusMasterId") statusMasterId : Int,
+                                 @Query("AvailableJobsOnly") availableJobs: Boolean,
                                  @Body data: Map<String, String>) : Response<AllAvalibleJobsModel>
 
     @POST(GETONGOINGJOBS)
@@ -115,7 +116,16 @@ interface ApiKtService{
 
     @POST(GETJOBPROPERTY)
     suspend fun getJobProperty(@Query("JobId") jobId : Int,
+                               @Query("UserId") userId: Int,
                                 @Body data: Map<String, String>) : Response<JobPropertyModel>
+
+    @POST(GETJOBBID)
+    suspend fun jobPropertyBid(@Body data: Map<String, String>) : Response<JobPropertyBidModel>
+
+    @POST(JOBPROPERTYBIDALL)
+    suspend fun getJobPropertyBidAll(@Query("userId") userId: Int,
+                                    @Query("JobId") jobId: Int,
+                                    @Body data: Map<String, String>) : Response<JobPropertyBidAllModel>
 }
 
 object ServiceApi{
@@ -147,3 +157,5 @@ private const val GETCOMPLETEDJOBS = "jobs/Jobs_All"
 private const val GETCOMPLETEDJOBSFORCompleted = "jobs/Jobs_All"
 private const val GETONGOINGJOBSASSIGNED = "jobs/Jobs_All"
 private const val GETJOBPROPERTY = "jobs/JobProperty_All"
+private const val GETJOBBID = "jobPropertyBid/JobPropertyBid_Upsert"
+private const val JOBPROPERTYBIDALL = "jobPropertyBid/JobPropertyBid_All"

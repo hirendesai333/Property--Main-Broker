@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.databinding.JobPropertyLtemBinding
+import com.soboft.propertybroker.databinding.OngoingJobItemBinding
 import com.soboft.propertybroker.listeners.OnGoingJobPropertyClick
 import com.soboft.propertybroker.model.JobPropertyList
 
@@ -14,7 +15,7 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>, v
     : RecyclerView.Adapter<OnGoingJobAdapter.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val binding = JobPropertyLtemBinding.bind(itemView)
+        val binding = OngoingJobItemBinding.bind(itemView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,7 +31,11 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>, v
         view.address.text = currentItem.propertyAddress
         view.propertyType.text = currentItem.propertyTypeName
 
-        view.rootLayout.setOnClickListener {
+//        view.rootLayout.setOnClickListener {
+//            onGoingJobPropertyClick.onGoingJobPropertyClick(currentItem)
+//        }
+
+        holder.binding.agent.setOnClickListener {
             onGoingJobPropertyClick.onGoingJobPropertyClick(currentItem)
         }
 

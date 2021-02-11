@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.App.CardView"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="@dimen/_12sdp"
+    app:cardElevation="@dimen/_3sdp">
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_8sdp"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:fontFamily="@font/nunito_sans_bold"
+            android:id="@+id/name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Job Property Bid All"
+            android:textColor="@color/purple_700"
+            android:textSize="@dimen/_14ssp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:fontFamily="@font/nunito_sans_bold"
+            android:id="@+id/propertyType"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:text="Job Property Bid"
+            android:textSize="@dimen/_10sdp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:drawablePadding="@dimen/_3sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:id="@+id/address"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:text="Address"
+            android:textSize="@dimen/_10ssp" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
