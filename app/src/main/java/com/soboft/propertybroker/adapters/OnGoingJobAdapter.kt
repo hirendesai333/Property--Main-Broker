@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
-import com.soboft.propertybroker.databinding.JobPropertyLtemBinding
 import com.soboft.propertybroker.databinding.OngoingJobItemBinding
 import com.soboft.propertybroker.listeners.OnGoingJobPropertyClick
 import com.soboft.propertybroker.model.JobPropertyList
@@ -31,14 +30,9 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>, v
         view.address.text = currentItem.propertyAddress
         view.propertyType.text = currentItem.propertyTypeName
 
-//        view.rootLayout.setOnClickListener {
-//            onGoingJobPropertyClick.onGoingJobPropertyClick(currentItem)
-//        }
-
-        holder.binding.agent.setOnClickListener {
+        view.rootLayout.setOnClickListener {
             onGoingJobPropertyClick.onGoingJobPropertyClick(currentItem)
         }
-
     }
 
     override fun getItemCount(): Int {

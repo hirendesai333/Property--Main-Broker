@@ -29,7 +29,6 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
     private val TAG : String = "UpcomingJobsFragment"
     private var _binding: FragmentUpcomingJobsBinding? = null
     private val binding get() = _binding!!
-//    val list = ArrayList<PropertyListModel>()
     private var otherNewJobs = true
 
     private var viewModelJob = Job()
@@ -39,11 +38,6 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentUpcomingJobsBinding.bind(view)
 
-//        list.add(PropertyListModel("Shivalik Shilp", jobStatus = 0))
-//        list.add(PropertyListModel("Aditya Prime", jobStatus = 1))
-//        list.add(PropertyListModel("Saujanya 2", jobStatus = 0))
-
-//        binding.upcomingJobsRv.adapter = UpcomingBidsAdapter(Params.JOB_ASSIGN_TO_ME, list, this)
         getAssignedJobs()
 
         binding.filter.setOnClickListener {
@@ -55,7 +49,6 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
             binding.assignJobs.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
             binding.postedJobs.setBackgroundColor(Color.TRANSPARENT)
             getAssignedJobs()
-//            binding.upcomingJobsRv.adapter = UpcomingBidsAdapter(Params.JOB_ASSIGN_TO_ME, list, this)
         }
 
         binding.postedJobs.setOnClickListener {
@@ -63,7 +56,6 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
             binding.assignJobs.setBackgroundColor(Color.TRANSPARENT)
             binding.postedJobs.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
             getMyPostedJob()
-//            binding.upcomingJobsRv.adapter = UpcomingBidsAdapter(Params.MY_POSTED_ONGOING_JOBS, list, this)
         }
 
     }

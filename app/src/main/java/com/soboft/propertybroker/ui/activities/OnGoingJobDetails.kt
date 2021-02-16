@@ -6,15 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.soboft.propertybroker.R
-import com.soboft.propertybroker.adapters.JobPropertyAdapter
 import com.soboft.propertybroker.adapters.OnGoingJobAdapter
-import com.soboft.propertybroker.databinding.ActivityNewJobDetailsBinding
 import com.soboft.propertybroker.databinding.ActivityOnGoingJobDetailsBinding
 import com.soboft.propertybroker.listeners.OnGoingJobPropertyClick
 import com.soboft.propertybroker.model.JobPropertyList
@@ -90,55 +82,8 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobPropertyClick {
     }
 
     override fun onGoingJobPropertyClick(currentItem: JobPropertyList) {
-//        val intent =  Intent(this,PropertyDetail::class.java)
-//        startActivity(intent)
-
-        val view: View = LayoutInflater.from(this).inflate(R.layout.single_bid_list_item,null);
-
-        val dialog = MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
-            .setView(view)
-            .setBackground(ColorDrawable(Color.TRANSPARENT))
-            .create()
-
-        val acceptBtn = view.findViewById<Button>(R.id.accept)
-        val rejectBtn = view.findViewById<Button>(R.id.reject)
-//        val bidAmount = view.findViewById<EditText>(R.id.amount)
-//        val title = view.findViewById<EditText>(R.id.title)
-
-        acceptBtn.setOnClickListener {
-            dialog.cancel()
-            bidPopup(currentItem)
-        }
-
-        dialog.show()
-    }
-
-    private fun bidPopup(currentItem: JobPropertyList) {
-        coroutineScope.launch {
-            try {
-
-                val map = HashMap<String,String>()
-                map["Id"] = currentItem.jobPropertyBidId.toString()
-                map["JobPropertyId"] = currentItem.id.toString()
-                map["UserId"] = AppPreferences.getUserData(Params.UserId)
-
-                val response = ServiceApi.retrofitService.jobPropertyBid(map)
-                if (response.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-
-                        Log.d("bid Popup", response.code().toString())
-                        Log.d("bid Popup", response.body().toString())
-
-                        toast("Bid Accepted Successfully")
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Log.d(TAG, "something wrong")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.d(TAG, e.message.toString())
-            }
-        }
+        val intent =  Intent(this,PropertyDetail::class.java)
+        intent.putExtra("propertyMasterId",currentItem.propertyMasterId.toString())
+        startActivity(intent)
     }
 }

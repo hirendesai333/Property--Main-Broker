@@ -29,22 +29,22 @@
             android:textColor="@color/purple_700"
             android:textSize="@dimen/_14ssp" />
 
-<!--        <com.google.android.material.textview.MaterialTextView-->
-<!--            android:id="@+id/jobStatus"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/bid_dialog_border"-->
-<!--            android:drawablePadding="@dimen/_3sdp"-->
-<!--            android:fontFamily="@font/nunito_sans"-->
-<!--            android:paddingStart="@dimen/_7sdp"-->
-<!--            android:paddingTop="@dimen/_4sdp"-->
-<!--            android:layout_marginTop="@dimen/_4sdp"-->
-<!--            android:paddingEnd="@dimen/_7sdp"-->
-<!--            android:layout_gravity="start"-->
-<!--            android:paddingBottom="@dimen/_4sdp"-->
-<!--            android:text="Job status: Completed"-->
-<!--            android:textColor="@color/green_700"-->
-<!--            android:textSize="@dimen/_10ssp" />-->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/jobStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bid_dialog_border"
+            android:drawablePadding="@dimen/_3sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:paddingStart="@dimen/_7sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_7sdp"
+            android:layout_gravity="start"
+            android:paddingBottom="@dimen/_4sdp"
+            android:text="Job status: Completed"
+            android:textColor="@color/green_700"
+            android:textSize="@dimen/_10ssp" />
 
 
         <RelativeLayout

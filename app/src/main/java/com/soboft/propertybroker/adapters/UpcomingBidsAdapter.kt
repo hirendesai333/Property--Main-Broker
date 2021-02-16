@@ -20,10 +20,12 @@ class UpcomingBidsAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val propertyName: TextView = itemView.findViewById(R.id.name)
-        val assignTo: TextView = itemView.findViewById(R.id.assignTo)
+        val assignTo: TextView = itemView.findViewById(R.id.assignName)
+        val assignPhone: TextView = itemView.findViewById(R.id.assignPhone)
         val time : TextView = itemView.findViewById(R.id.time)
         val date : TextView = itemView.findViewById(R.id.date)
         val jobStatus: TextView = itemView.findViewById(R.id.jobStatus)
+        val phone : TextView = itemView.findViewById(R.id.phone)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
     }
 
@@ -42,13 +44,18 @@ class UpcomingBidsAdapter(
         val currentItem = list[position]
         if (from == Params.JOB_ASSIGN_TO_ME) {
             holder.assignTo.visibility = View.GONE
+            holder.assignPhone.visibility = View.GONE
         } else {
             holder.assignTo.visibility = View.VISIBLE
+            holder.assignPhone.visibility = View.VISIBLE
+            holder.assignTo.text = currentItem.assignedUserName
+            holder.assignPhone.text = currentItem.assignedPhoneNumber
         }
         holder.propertyName.text = currentItem.userName
         holder.jobStatus.text = currentItem.statusName
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
+        holder.phone.text = currentItem.agentCodePhone
 
         holder.rootLayout.setOnClickListener {
             onPropertyClick.onGoingClick(currentItem)

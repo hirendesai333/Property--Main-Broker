@@ -58,6 +58,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 startActivity(this)
             }
         }
+
+        binding.dashBoard.setOnClickListener {
+            Intent(activity, Dashboard::class.java).apply {
+                startActivity(this)
+            }
+        }
     }
 
     override fun onDestroyView() {

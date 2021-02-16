@@ -31,7 +31,6 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnComp
 
     private var _binding: CompletedJobsFragmentBinding? = null
     private val binding get() = _binding!!
-//    val list = ArrayList<PropertyListModel>()
     private var otherNewJobs = true
 
     private val TAG : String = "CompletedJobsFragment"
@@ -43,18 +42,13 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnComp
         super.onViewCreated(view, savedInstanceState)
         _binding = CompletedJobsFragmentBinding.bind(view)
 
-//        list.add(PropertyListModel("Shivalik Shilp"))
-//        list.add(PropertyListModel("Aditya Prime"))
-//        list.add(PropertyListModel("Saujanya 2"))
           getAssignedJob()
-//        binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list, this)
 
         binding.otherJobs.setOnClickListener {
             otherNewJobs = true
             binding.otherJobs.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
             binding.myJobs.setBackgroundColor(Color.TRANSPARENT)
             getAssignedJob()
-//            binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list, this)
         }
 
         binding.myJobs.setOnClickListener {
@@ -62,7 +56,6 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnComp
             binding.otherJobs.setBackgroundColor(Color.TRANSPARENT)
             binding.myJobs.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_users_tabbar)
             getAllCompletedJobs()
-//            binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_POSTED_COMPLETED_JOBS, list, this)
         }
 
         binding.filter.setOnClickListener {

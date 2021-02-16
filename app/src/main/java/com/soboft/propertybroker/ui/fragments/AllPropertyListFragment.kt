@@ -13,20 +13,22 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.slider.RangeSlider
 import com.soboft.propertybroker.R
+import com.soboft.propertybroker.adapters.AllMyPostedJobsAdapter
 import com.soboft.propertybroker.adapters.AllPropertyListAdapter
 import com.soboft.propertybroker.databinding.FragmentAllPropertyListBinding
 import com.soboft.propertybroker.model.AvailableJobs
 import com.soboft.propertybroker.network.ServiceApi
-import com.soboft.propertybroker.ui.activities.PropertyDetail
 import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
 import com.soboft.propertybroker.listeners.OnNewJobsClick
+import com.soboft.propertybroker.model.MyPostedJobsList
+import com.soboft.propertybroker.ui.activities.MyPostedJobDetails
 import com.soboft.propertybroker.ui.activities.NewJobDetails
 import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.util.*
 
-class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), OnNewJobsClick {
+class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), OnNewJobsClick, AllMyPostedJobsAdapter.OnItemClickListener {
 
     private val TAG : String = "AllPropertyListFragment"
     private var _binding: FragmentAllPropertyListBinding? = null
@@ -73,7 +75,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getNewJobs(
+                val response = ServiceApi.retrofitService.getNewMyPostedJobs(
                     AppPreferences.getUserData(Params.UserId).toInt(),1,false,map
                 )
                 if (response.isSuccessful){
@@ -82,9 +84,9 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
                         Log.d("getMyPostedJobs", response.code().toString())
                         Log.d("getMyPostedJobs",response.body().toString())
 
-                        val list : List<AvailableJobs> = response.body()!!.values!!
+                        val list : List<MyPostedJobsList> = response.body()!!.values!!
 
-                        binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.MY_POSTED_JOBS, list, this@AllPropertyListFragment)
+                        binding.upcomingJobs.adapter = AllMyPostedJobsAdapter(Params.MY_POSTED_JOBS, list,this@AllPropertyListFragment)
 
                     }
                 }else{
@@ -109,7 +111,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getNewJobs(
+                val response = ServiceApi.retrofitService.getNewAvailableJobs(
                     AppPreferences.getUserData(Params.UserId).toInt(),1,true,map
                 )
                 if (response.isSuccessful){
@@ -193,6 +195,14 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
 
         val intent = Intent(activity,NewJobDetails::class.java)
         intent.putExtra("JobData",currentItem.id.toString())
+        intent.putExtra(Params.FROM,Params.ALL_PROPERTY_LIST_FRAGMENT)
+        startActivity(intent)
+    }
+
+    override fun onItemClick(itemPosition: Int, data: MyPostedJobsList) {
+
+        val intent = Intent(activity,MyPostedJobDetails::class.java)
+        intent.putExtra("PostData",data.id.toString())
         intent.putExtra(Params.FROM,Params.ALL_PROPERTY_LIST_FRAGMENT)
         startActivity(intent)
     }

@@ -83,6 +83,7 @@ class CompletedJobDetails : AppCompatActivity() , OnCompletedJobPropertyClick{
 
     override fun onCompletedJobPropertyClick(currentItem: JobPropertyList) {
         val intent =  Intent(this,PropertyDetail::class.java)
+        intent.putExtra("propertyMasterId",currentItem.propertyMasterId.toString())
         startActivity(intent)
     }
 }

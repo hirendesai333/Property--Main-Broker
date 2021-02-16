@@ -37,6 +37,7 @@ class CompletedJobsAdapter(var from: String, var list: List<AllCompletedJobsList
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
         holder.rating.text = currentItem.averageRatting.toString()
+        holder.jobstatus.text = currentItem.statusName
         holder.rootLayout.setOnClickListener {
             onPropertyClick.onCompletedJobsClick(currentItem)
         }
@@ -48,6 +49,7 @@ class CompletedJobsAdapter(var from: String, var list: List<AllCompletedJobsList
         val time : TextView = itemView.findViewById(R.id.time)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
         val postedBy: TextView = itemView.findViewById(R.id.postedBy)
+        val jobstatus : TextView = itemView.findViewById(R.id.jobStatus)
         val ratingLayout: LinearLayout = itemView.findViewById(R.id.ratingLayout)
         val rating : TextView = itemView.findViewById(R.id.myRating)
     }

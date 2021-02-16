@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +19,15 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.soboft.propertybroker.R
+import com.soboft.propertybroker.adapters.MyPostedJobDetailsAdapter
 import com.soboft.propertybroker.databinding.ActivityPropertyDetailBinding
+import com.soboft.propertybroker.model.JobPropertyDetails
+import com.soboft.propertybroker.model.JobPropertyList
 import com.soboft.propertybroker.model.PropertyListModel
+import com.soboft.propertybroker.network.ServiceApi
+import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
+import kotlinx.coroutines.*
 import java.util.*
 
 class PropertyDetail : AppCompatActivity() {
@@ -31,6 +38,11 @@ class PropertyDetail : AppCompatActivity() {
     private var subParent: String? = null
     private var jobData: PropertyListModel? = null
 
+    private var viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
+
+    private lateinit var propertyId : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPropertyDetailBinding.inflate(layoutInflater)
@@ -39,6 +51,10 @@ class PropertyDetail : AppCompatActivity() {
         binding.title.setOnClickListener {
             onBackPressed()
         }
+
+        propertyId = intent.getStringExtra("propertyMasterId")!!
+
+        getJobPropertyDetails()
 
 //        parentActivity = parentActivity.let {
 //            intent.getStringExtra(Params.FROM)!!
@@ -120,7 +136,7 @@ class PropertyDetail : AppCompatActivity() {
         }
 
         binding.bid.setOnClickListener {
-            showBidPopup()
+//            showBidPopup()
         }
 
         binding.allBids.setOnClickListener {
@@ -161,6 +177,33 @@ class PropertyDetail : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun getJobPropertyDetails() {
+        coroutineScope.launch {
+            try {
+
+                val response = ServiceApi.retrofitService.getJobPropertyDetails(propertyId.toInt())
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("getJobPropertyDetail", response.code().toString())
+                        Log.d("getJobPropertyDetail", response.body().toString())
+
+//                        val list : String = response.body()!!.item!!.propertyDetailMasterName.toString()
+
+//                        binding.myPostedJobRv.adapter = MyPostedJobDetailsAdapter(this@MyPostedJobDetails,list,this@MyPostedJobDetails)
+                        binding.title.text = response.body()!!.item!!.propertyDetailMasterName.toString()
+                    }
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
     }
 
     private fun showBidPopup() {

@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PropertyMainBroker"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activities.AllJobPropertyBidList"></activity>
+        <activity android:name=".ui.activities.Dashboard"></activity>
+        <activity android:name=".ui.activities.MyPostedJobDetails" />
+        <activity android:name=".ui.activities.AllJobPropertyBidList" />
         <activity android:name=".ui.activities.CompletedJobDetails" />
         <activity android:name=".ui.activities.OnGoingJobDetails" />
         <activity android:name=".ui.activities.NewJobDetails" />

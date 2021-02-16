@@ -99,12 +99,6 @@ class NewJobDetails : AppCompatActivity(), OnJobPropertyClick {
     }
 
     override fun onJobPropertyClick(currentItem: JobPropertyList) {
-//        Intent(this, PropertyDetail::class.java).apply {
-//            putExtra("JobProperty", currentItem.id.toString())
-//            startActivity(this)
-//        }
-//        val intent =  Intent(this,PropertyDetail::class.java)
-//        startActivity(intent)
 
           showBidPopup(currentItem)
     }

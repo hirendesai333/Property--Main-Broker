@@ -17,8 +17,7 @@ class AllPropertyListAdapter(
     var from: String,
     var list: List<AvailableJobs>,
     var onPropertyClick: OnNewJobsClick
-) :
-    RecyclerView.Adapter<AllPropertyListAdapter.ViewHolder>() {
+    ) : RecyclerView.Adapter<AllPropertyListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val propertyName: TextView = itemView.findViewById(R.id.name)

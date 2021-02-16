@@ -6,20 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
-import com.soboft.propertybroker.listeners.OnJobPropertyClick
 import com.soboft.propertybroker.model.JobPropertyList
 import com.soboft.propertybroker.ui.activities.PropertyDetail
 
-class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> , var onJobPropertyClick: OnJobPropertyClick)
-    : RecyclerView.Adapter<JobPropertyAdapter.ViewHolder>() {
+class MyPostedJobDetailsAdapter(var context: Context, var list : List<JobPropertyList>, var itemClickListener : OnItemClickListener)
+    : RecyclerView.Adapter<MyPostedJobDetailsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.job_property_ltem,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.my_posted_job_details_item,parent,false)
         return ViewHolder(view)
     }
 
@@ -30,23 +27,13 @@ class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> ,
         holder.address.text = currentItem.propertyAddress
         holder.propertyType.text = currentItem.propertyTypeName
 
-//        holder.name.setOnClickListener {
-//            onJobPropertyClick.onJobPropertyClick(currentItem)
-//        }
-
-//        if (currentItem.bidAmount!!.toInt() > 0) {
-//                holder.bid.text = "Bid"
-//                holder.bid.visibility = View.VISIBLE
-//        } else {
-//            holder.bid.visibility = View.GONE
-//        }
-
-        holder.bid.setOnClickListener {
-            onJobPropertyClick.onJobPropertyClick(currentItem)
+        holder.agent.setOnClickListener {
+            itemClickListener.onItemClick(position,list[position])
         }
 
         holder.name.setOnClickListener {
-           val intent =  Intent(context, PropertyDetail::class.java)
+
+            val intent =  Intent(context, PropertyDetail::class.java)
             intent.putExtra("propertyMasterId", currentItem.propertyMasterId.toString())
             context.startActivity(intent)
         }
@@ -57,9 +44,14 @@ class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> ,
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+
         val name: TextView = itemView.findViewById(R.id.name)
         val address: TextView = itemView.findViewById(R.id.address)
-        val propertyType :TextView = itemView.findViewById(R.id.propertyType)
-        val bid : Button = itemView.findViewById(R.id.bidding)
+        val propertyType : TextView = itemView.findViewById(R.id.propertyType)
+        val agent : Button = itemView.findViewById(R.id.agent)
+    }
+
+    interface OnItemClickListener{
+        fun onItemClick(itemPosition : Int,data : JobPropertyList)
     }
 }

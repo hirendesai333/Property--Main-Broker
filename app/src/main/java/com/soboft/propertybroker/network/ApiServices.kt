@@ -85,11 +85,17 @@ interface ApiKtService{
         @Part files: MultipartBody.Part
     ): Response<UserProfileModel>
 
-    @POST(GETNEWJOBS)
-    suspend fun getNewJobs(@Query("userId") userId: Int,
+    @POST(GETNEWAVAILABLEJOBS)
+    suspend fun getNewAvailableJobs(@Query("userId") userId: Int,
                                  @Query("StatusMasterId") statusMasterId : Int,
                                  @Query("AvailableJobsOnly") availableJobs: Boolean,
                                  @Body data: Map<String, String>) : Response<AllAvalibleJobsModel>
+
+    @POST(GETNEWMYPOSTEDJOBS)
+    suspend fun getNewMyPostedJobs(@Query("userId") userId: Int,
+                                    @Query("StatusMasterId") statusMasterId : Int,
+                                    @Query("AvailableJobsOnly") availableJobs: Boolean,
+                                    @Body data: Map<String, String>) : Response<NewMyJobPostedModel>
 
     @POST(GETONGOINGJOBS)
     suspend fun getOnGoingJobs(@Query("userId") userId: Int,
@@ -126,6 +132,14 @@ interface ApiKtService{
     suspend fun getJobPropertyBidAll(@Query("userId") userId: Int,
                                     @Query("JobId") jobId: Int,
                                     @Body data: Map<String, String>) : Response<JobPropertyBidAllModel>
+
+    @POST(JOBASSIGN)
+    suspend fun getJobAssignUserId(@Query("Id") Id: Int,
+                                   @Query("AssignedUserId") assignedUserId: Int)
+                                    : Response<JobAssignedModel>
+
+    @POST(PROPERTYDETAILS)
+    suspend fun getJobPropertyDetails(@Query("Id") propertyDetailsId : Int) : Response<JobPropertyDetailsModel>
 }
 
 object ServiceApi{
@@ -151,7 +165,8 @@ private const val GETCITY = "cityMaster/CityMaster_All"
 private const val GETUSERLANGUAGE = "userLanguages/UserLanguages_All"
 private const val GETUSERLOCATION = "userPreferedLocations/UserPreferedLocations_All"
 private const val UPLOAD_PROFILE_PIC = "users/Users_ProfileUpdate"
-private const val GETNEWJOBS = "jobs/Jobs_All"
+private const val GETNEWAVAILABLEJOBS = "jobs/Jobs_All"
+private const val GETNEWMYPOSTEDJOBS = "jobs/Jobs_All"
 private const val GETONGOINGJOBS = "jobs/Jobs_All"
 private const val GETCOMPLETEDJOBS = "jobs/Jobs_All"
 private const val GETCOMPLETEDJOBSFORCompleted = "jobs/Jobs_All"
@@ -159,3 +174,5 @@ private const val GETONGOINGJOBSASSIGNED = "jobs/Jobs_All"
 private const val GETJOBPROPERTY = "jobs/JobProperty_All"
 private const val GETJOBBID = "jobPropertyBid/JobPropertyBid_Upsert"
 private const val JOBPROPERTYBIDALL = "jobPropertyBid/JobPropertyBid_All"
+private const val JOBASSIGN = "jobs/Jobs_AssignedUserId"
+private const val PROPERTYDETAILS = "propertyDetails/PropertyDetails_ById"
