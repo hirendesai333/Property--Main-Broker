@@ -1,8 +1,10 @@
 package com.soboft.propertybroker.ui.fragments
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.databinding.FragmentSettingsBinding
@@ -33,12 +35,21 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         binding.logout.setOnClickListener {
-            Intent(activity, LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                AppPreferences.logOut()
-                startActivity(this)
+            val builder = activity?.let { it1 -> AlertDialog.Builder(it1) }
+            builder?.setTitle("Are you sure you want to LogOut!!")
+            builder?.setPositiveButton("YES") { dialogInterface: DialogInterface, i: Int ->
+                Intent(activity, LoginActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    AppPreferences.logOut()
+                    startActivity(this)
+                }
+                dialogInterface.dismiss()
             }
+            builder?.setNegativeButton("NO") { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.dismiss()
+            }
+            builder?.show()
         }
 
         binding.documents.setOnClickListener {

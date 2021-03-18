@@ -61,7 +61,7 @@
                 android:layout_toStartOf="@+id/ratingLayout"
                 android:drawablePadding="@dimen/_3sdp"
                 android:fontFamily="@font/nunito_sans"
-                android:text="To: Rudra Pvt Ltd."
+                android:text="By: Rudra Pvt Ltd."
                 android:textSize="@dimen/_10ssp" />
 
             <LinearLayout

@@ -13,40 +13,40 @@
     app:cardCornerRadius="@dimen/_12sdp"
     app:cardElevation="@dimen/_3sdp">
 
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:id="@+id/assignName"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:fontFamily="@font/nunito_sans"-->
+<!--            android:text="Kaushik Raval"-->
+<!--            android:textColor="@color/purple_700"-->
+<!--            android:textSize="@dimen/_14sdp" />-->
+
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:id="@+id/assignPhone"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:layout_marginTop="@dimen/_3sdp"-->
+<!--            android:fontFamily="@font/nunito_sans"-->
+<!--            android:text="+91 8200657814"-->
+<!--            android:textColor="@color/purple_700"-->
+<!--            android:textSize="@dimen/_8sdp" />-->
+
+<!--    </LinearLayout>-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_8sdp"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:orientation="vertical">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/assignName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_sans"
-                android:textColor="@color/purple_700"
-                android:text="Kaushik Raval"
-                android:layout_gravity="end"
-                android:textSize="@dimen/_14sdp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/assignPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_sans"
-                android:text="+91 8200657814"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:layout_gravity="end"
-                android:textColor="@color/purple_700"
-                android:textSize="@dimen/_8sdp" />
-
-        </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/name"
@@ -55,20 +55,18 @@
             android:fontFamily="@font/nunito_sans_semibold"
             android:text="Shivalik Shilp"
             android:textColor="@color/purple_700"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_14sdp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans"
-            android:text="+8200657814"
             android:layout_marginTop="@dimen/_5sdp"
-            android:drawableStart="@drawable/ic_phone"
-            android:drawableTint="@color/purple_700"
             android:drawablePadding="@dimen/_2sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:text="8200657814"
             android:textColor="@color/purple_700"
-            android:textSize="@dimen/_10sdp" />
+            android:textSize="@dimen/_9sdp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -213,7 +211,6 @@
                 android:textSize="@dimen/_8ssp" />
 
         </RelativeLayout>
-
 
 
     </LinearLayout>

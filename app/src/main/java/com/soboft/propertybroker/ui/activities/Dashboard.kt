@@ -19,10 +19,10 @@ class Dashboard : AppCompatActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
 
-    private val TAG = "Dashboard"
-
-    private var jobs = arrayListOf("New Job","Ongoing Job","Completed Job")
-    private var data = arrayListOf(8,2,5)
+//    private val TAG = "Dashboard"
+//
+//    private var jobs = arrayListOf("New Job","Ongoing Job","Completed Job")
+//    private var data = arrayListOf(8,2,5)
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -32,18 +32,20 @@ class Dashboard : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initPieChart()
+//        initPieChart()
     }
 
-    private fun initPieChart() {
-        val pie : Pie = AnyChart.pie()
-        val list : ArrayList<DataEntry> = ArrayList()
-
-//        for (i in jobs){
-//            list[ValueDataEntry[jobs[i])]
-//        }
-
-        pie.data(list)
-        binding.pieChart.setChart(pie)
-    }
+//    private fun initPieChart() {
+//        val pie : Pie = AnyChart.pie()
+//        val list : ArrayList<DataEntry> = ArrayList()
+//
+////        for (i in jobs){
+////            list[ValueDataEntry[jobs[i])]
+////        }
+//
+//        // TODO: 16-02-2021
+//
+//        pie.data(list)
+//        binding.pieChart.setChart(pie)
+//    }
 }

@@ -20,7 +20,7 @@ class AllUserLanguageAdapter(var context: Context,var list: List<UserLanguage>) 
        val views = holder.binding
        val currentItem = list[position]
 
-        views.userLanguage.setText(currentItem.languageName).toString()
+        views.userLanguage.text = currentItem.languageName
     }
 
     override fun getItemCount(): Int {

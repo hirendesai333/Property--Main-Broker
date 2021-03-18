@@ -52,9 +52,9 @@ data class AvailableJobs(
     @JsonProperty("AvailalityName")
     val availalityName: Any?,
     @JsonProperty("AverageRatting")
-    val averageRatting: Double?,
+    val averageRatting: Int?,
     @JsonProperty("BidAmount")
-    val bidAmount: Double?,
+    val bidAmount: Int?,
     @JsonProperty("BidNotes")
     val bidNotes: Any?,
     @JsonProperty("CityId")
@@ -92,11 +92,13 @@ data class AvailableJobs(
     @JsonProperty("FromVisitingTime")
     val fromVisitingTime: Any?,
     @JsonProperty("HighestBid")
-    val highestBid: Double?,
+    val highestBid: Int?,
     @JsonProperty("Id")
     val id: Int?,
     @JsonProperty("JobBidId")
     val jobBidId: Int?,
+    @JsonProperty("JobId")
+    val jobId: Int?,
     @JsonProperty("JobLanguages")
     val jobLanguages: String?,
     @JsonProperty("JobNo")
@@ -104,15 +106,17 @@ data class AvailableJobs(
     @JsonProperty("jobProperty")
     val jobProperty: List<Any>?,
     @JsonProperty("JobRatting")
-    val jobRatting: Double?,
+    val jobRatting: Int?,
     @JsonProperty("JobReview")
     val jobReview: Any?,
+    @JsonProperty("JobStatus")
+    val jobStatus: Any?,
     @JsonProperty("JobVisitingDate")
     val jobVisitingDate: String?,
     @JsonProperty("JobVisitingTime")
     val jobVisitingTime: String?,
     @JsonProperty("LowestBid")
-    val lowestBid: Double?,
+    val lowestBid: Int?,
     @JsonProperty("ProperTypeMasterName")
     val properTypeMasterName: Any?,
     @JsonProperty("PropertyAddress")
@@ -125,10 +129,16 @@ data class AvailableJobs(
     val propertyMasterId: Int?,
     @JsonProperty("PropertyName")
     val propertyName: Any?,
+    @JsonProperty("PropertyNote")
+    val propertyNote: Any?,
     @JsonProperty("PropertyNotes")
     val propertyNotes: Any?,
     @JsonProperty("PropertyPrice")
-    val propertyPrice: Double?,
+    val propertyPrice: Int?,
+    @JsonProperty("PropertyRating")
+    val propertyRating: Any?,
+    @JsonProperty("PropertyReview")
+    val propertyReview: Any?,
     @JsonProperty("PropertyTypeMasterId")
     val propertyTypeMasterId: Int?,
     @JsonProperty("Remarks")
@@ -148,11 +158,11 @@ data class AvailableJobs(
     @JsonProperty("ToVisitingTime")
     val toVisitingTime: Any?,
     @JsonProperty("TotalBids")
-    val totalBids: Double?,
+    val totalBids: Int?,
     @JsonProperty("TotalNoOfRatings")
-    val totalNoOfRatings: Double?,
+    val totalNoOfRatings: Int?,
     @JsonProperty("TotalProperty")
-    val totalProperty: Double?,
+    val totalProperty: Int?,
     @JsonProperty("UpdatedBy")
     val updatedBy: Int?,
     @JsonProperty("UpdatedDate")
@@ -178,4 +188,3 @@ data class AvailableJobs(
     @JsonProperty("VistingTime")
     val vistingTime: Any?
 )
-

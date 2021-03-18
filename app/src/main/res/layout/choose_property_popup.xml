@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="Select Property"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/top_bar"
+        android:id="@+id/PropertyRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+
+    <RelativeLayout
+        android:id="@+id/bottomPricingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#F2F2F7">
+
+        <com.google.android.material.button.MaterialButton
+            app:backgroundTint="@color/green_700"
+            android:id="@+id/btnCheckedItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"
+            android:text="Add Property"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp" />
+
+    </RelativeLayout>
+<!--    <Button-->
+<!--        android:id="@+id/btnCheckedItems"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:textAppearance="?android:textAppearanceMedium"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:text="Add Property"/>-->
+
+</RelativeLayout>

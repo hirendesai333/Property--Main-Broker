@@ -72,7 +72,6 @@ import kotlinx.coroutines.*
                         val list : List<Values> = response.body()!!.values!!
 
                         binding.myPropertiesRv.adapter = MyPropertiesAdapter(this@MyProperties,list,this@MyProperties)
-                        binding.myPropertiesRv.layoutManager = LinearLayoutManager(this@MyProperties)
 
                     }
                 }else{
@@ -99,7 +98,9 @@ import kotlinx.coroutines.*
                          Log.d("deleteProperty", response.code().toString())
                          Log.d("deleteProperty", response.body().toString())
 
-                         toast("delete Property Successfully")
+                         toast("Delete Property Successfully")
+                         startActivity(Intent(this@MyProperties,MyProperties::class.java))
+                         finish()
                      }
                  }else{
                      withContext(Dispatchers.Main){

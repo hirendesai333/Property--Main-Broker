@@ -13,11 +13,15 @@ import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
 import com.soboft.properybroker.utils.toast
 import kotlinx.coroutines.*
+import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private val TAG = "LoginActivity"
+
+    var regex = "[A-Z0-9a-z]+([._%+-][A-Z0-9a-z]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+    var pattern : Pattern = Pattern.compile(regex)
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -55,13 +59,21 @@ class LoginActivity : AppCompatActivity() {
         val email = binding.emailID.text.toString()
         val pass = binding.password.text.toString()
 
-        if (email.isNullOrEmpty() && pass.isNullOrEmpty()) {
-            toast("please enter email & Password")
-        } else {
-//                Intent(this, MainActivity::class.java).apply {
-//                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                    startActivity(this)
+        if (email.isEmpty()) {
+            binding.emailID.error = "Please Enter Email"
+            binding.emailID.requestFocus()
+        }else if (!pattern.matcher(email).matches()){
+            binding.emailID.error = "Invalid Email"
+            binding.emailID.requestFocus()
+        }else if (pass.isEmpty()){
+            binding.password.error = "Please Enter Password"
+            binding.password.requestFocus()
+//        }else if (pass.length >= 8){
+//            binding.password.error = "Password Should be 8 or more Character"
+//            binding.password.requestFocus()
+//        }
+        }else {
+
             coroutineScope.launch {
                 try {
                     val response = ServiceApi.retrofitService.login(
@@ -72,6 +84,8 @@ class LoginActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main) {
                             Log.d("login", response.code().toString())
                             Log.d("login", response.body().toString())
+
+                            toast("Login Success")
 
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
 
@@ -89,6 +103,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } catch (e: Exception) {
                     Log.d(TAG, e.message.toString())
+                    toast("Please Enter Valid Email & Password")
                 }
             }
         }

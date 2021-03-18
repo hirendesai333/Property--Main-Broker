@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.model.JobPropertyList
@@ -31,8 +32,7 @@ class MyPostedJobDetailsAdapter(var context: Context, var list : List<JobPropert
             itemClickListener.onItemClick(position,list[position])
         }
 
-        holder.name.setOnClickListener {
-
+        holder.rootLayout.setOnClickListener {
             val intent =  Intent(context, PropertyDetail::class.java)
             intent.putExtra("propertyMasterId", currentItem.propertyMasterId.toString())
             context.startActivity(intent)
@@ -49,6 +49,7 @@ class MyPostedJobDetailsAdapter(var context: Context, var list : List<JobPropert
         val address: TextView = itemView.findViewById(R.id.address)
         val propertyType : TextView = itemView.findViewById(R.id.propertyType)
         val agent : Button = itemView.findViewById(R.id.agent)
+        val rootLayout : CardView = itemView.findViewById(R.id.rootLayout)
     }
 
     interface OnItemClickListener{

@@ -45,7 +45,7 @@ class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> ,
             onJobPropertyClick.onJobPropertyClick(currentItem)
         }
 
-        holder.name.setOnClickListener {
+        holder.rootLayout.setOnClickListener {
            val intent =  Intent(context, PropertyDetail::class.java)
             intent.putExtra("propertyMasterId", currentItem.propertyMasterId.toString())
             context.startActivity(intent)
@@ -61,5 +61,6 @@ class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> ,
         val address: TextView = itemView.findViewById(R.id.address)
         val propertyType :TextView = itemView.findViewById(R.id.propertyType)
         val bid : Button = itemView.findViewById(R.id.bidding)
+        val rootLayout : CardView = itemView.findViewById(R.id.rootLayout)
     }
 }

@@ -2,6 +2,7 @@ package com.soboft.propertybroker.ui.activities
 
 import android.Manifest
 import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -20,8 +21,10 @@ import com.soboft.propertybroker.adapters.AllUserLanguageAdapter
 import com.soboft.propertybroker.adapters.AllUserLocationAdapter
 import com.soboft.propertybroker.databinding.ActivityProfileBinding
 import com.soboft.propertybroker.model.Country
+import com.soboft.propertybroker.model.Ittem
 import com.soboft.propertybroker.model.State
 import com.soboft.propertybroker.network.ServiceApi
+import com.soboft.propertybroker.ui.fragments.SettingsFragment
 import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.MediaLoader
 import com.soboft.propertybroker.utils.Params
@@ -33,6 +36,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.util.regex.Pattern
 
 class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
 
@@ -41,6 +45,11 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
     private val TAG = "UserProfile"
 
     var countryId: Int = 0
+
+    private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
+
+    var regex = "[A-Z0-9a-z]+([._%+-][A-Z0-9a-z]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+    var pattern = Pattern.compile(regex)
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -68,6 +77,7 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
 
         binding.save.setOnClickListener {
             updateProfile()
+            updateLanguage()
         }
 
         binding.country.setOnClickListener {
@@ -85,6 +95,10 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
         getUserProfile()
         getUserLanguage()
         getUserLocation()
+    }
+
+    private fun updateLanguage() {
+        //todo update language
     }
 
     private fun setupPermissions() {
@@ -237,8 +251,7 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
                         val list = response.body()!!.values!!
 
                         binding.userLanguageRv.adapter = AllUserLanguageAdapter(this@Profile, list)
-                        binding.userLanguageRv.layoutManager =
-                            LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
+                        binding.userLanguageRv.layoutManager = LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
                     }
 
                 } else {
@@ -307,35 +320,55 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
         val companyName = binding.companyName.text.toString().trim()
         val address = binding.address.text.toString().trim()
 
-        coroutineScope.launch {
-            try {
-                val map = HashMap<String, String>()
-                map["Id"] = AppPreferences.getUserData(Params.UserId)
-                map["UserTypeMasterId"] = AppPreferences.getUserData(Params.UserTypeMasterId)
-                map["FirstName"] = firstName
-                map["LastName"] = lastName
-                map["CompanyName"] = companyName
-                map["Email"] = email
-                map["CountryId"] = countryId.toString()
-                map["Address"] = address
-                map["PhoneNumber"] = AppPreferences.getUserData(Params.MobileNumber)
-                Log.d(TAG, "updateProfile: ${Gson().toJson(map)}")
-                val response = ServiceApi.retrofitService.updateUserProfile(map)
-                if (response.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-                        Log.d("updateProfile", response.code().toString())
-                        Log.d("updateProfile", response.body().toString())
-                        toast(response.body()!!.message!!)
+        if (firstName.isEmpty()){
+            binding.firstName.error = "Field Can't be Empty"
+            binding.firstName.requestFocus()
+        } else if (lastName.isEmpty()) {
+            binding.lastName.error = "Field Can't be Empty"
+            binding.lastName.requestFocus()
+        }else if (email.isEmpty()) {
+            binding.email.error = "Field Can't be Empty"
+            binding.email.requestFocus()
+        }else if (!pattern.matcher(email).matches()){
+            binding.email.error = "Invalid Email"
+            binding.email.requestFocus()
+        }else if (companyName.isEmpty()) {
+            binding.companyName.error = "Field Can't be Empty"
+            binding.companyName.requestFocus()
+        }else if(address.isEmpty()){
+            binding.address.error = "Field Can't be Empty"
+            binding.address.requestFocus()
+        }else {
+            coroutineScope.launch {
+                try {
+                    val map = HashMap<String, String>()
+                    map["Id"] = AppPreferences.getUserData(Params.UserId)
+                    map["UserTypeMasterId"] = AppPreferences.getUserData(Params.UserTypeMasterId)
+                    map["FirstName"] = firstName
+                    map["LastName"] = lastName
+                    map["CompanyName"] = companyName
+                    map["Email"] = email
+                    map["CountryId"] = countryId.toString()
+                    map["Address"] = address
+                    map["PhoneNumber"] = AppPreferences.getUserData(Params.MobileNumber)
+                    Log.d(TAG, "updateProfile: ${Gson().toJson(map)}")
+                    val response = ServiceApi.retrofitService.updateUserProfile(map)
+                    if (response.isSuccessful) {
+                        withContext(Dispatchers.Main) {
+                            Log.d("updateProfile", response.code().toString())
+                            Log.d("updateProfile", response.body().toString())
+                            toast(response.body()!!.message!!)
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Log.d(TAG, "something wrong")
+                            Log.d("updateProfile", response.code().toString())
+                            Log.d("updateProfile", response.body().toString())
+                        }
                     }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Log.d(TAG, "something wrong")
-                        Log.d("updateProfile", response.code().toString())
-                        Log.d("updateProfile", response.body().toString())
-                    }
+                } catch (e: Exception) {
+                    Log.d(TAG, e.message.toString())
                 }
-            } catch (e: Exception) {
-                Log.d(TAG, e.message.toString())
             }
         }
     }

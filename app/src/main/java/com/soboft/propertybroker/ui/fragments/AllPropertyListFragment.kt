@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.slider.RangeSlider
+import com.polyak.iconswitch.IconSwitch
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.AllMyPostedJobsAdapter
 import com.soboft.propertybroker.adapters.AllPropertyListAdapter
@@ -20,7 +21,6 @@ import com.soboft.propertybroker.model.AvailableJobs
 import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
-import com.soboft.propertybroker.listeners.OnNewJobsClick
 import com.soboft.propertybroker.model.MyPostedJobsList
 import com.soboft.propertybroker.ui.activities.MyPostedJobDetails
 import com.soboft.propertybroker.ui.activities.NewJobDetails
@@ -28,7 +28,7 @@ import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.util.*
 
-class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), OnNewJobsClick, AllMyPostedJobsAdapter.OnItemClickListener {
+class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), AllPropertyListAdapter.OnNewJobsClick, AllMyPostedJobsAdapter.OnItemClickListener {
 
     private val TAG : String = "AllPropertyListFragment"
     private var _binding: FragmentAllPropertyListBinding? = null
@@ -42,11 +42,11 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentAllPropertyListBinding.bind(view)
 
-        getAllAvailableJobs()
-
         binding.filter.setOnClickListener {
             showFilterDialog()
         }
+
+        getAllAvailableJobs()
 
         binding.otherJobs.setOnClickListener {
             otherNewJobs = true
@@ -62,6 +62,53 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
             getMyPostedJobs()
         }
 
+        switchListToMap()
+    }
+
+    private fun switchListToMap() {
+        binding.iconSwitch.setCheckedChangeListener { current ->
+            when(current?.name){
+                IconSwitch.Checked.RIGHT.toString()->{
+                    getMapLocation()
+                }
+                else->{
+                    
+                    getAllAvailableJobs()
+                }
+            }
+        }
+    }
+
+    private fun getMapLocation() {
+        coroutineScope.launch {
+            try {
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.getMapLocation(
+                    AppPreferences.getUserData(Params.UserId).toInt(),map
+                )
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("getMapLocation", response.code().toString())
+                        Log.d("getMapLocation",response.body().toString())
+
+                    }
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG,"something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
     }
 
     private fun getMyPostedJobs() {
@@ -91,7 +138,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
                     }
                 }else{
                     withContext(Dispatchers.Main){
-                        Log.d(TAG, "something wrong")
+                        Log.d(TAG,"something wrong")
                     }
                 }
             }catch (e : Exception){
@@ -181,7 +228,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
         _binding = null
     }
 
-    override fun onNewJobsClick(currentItem: AvailableJobs) {
+    override fun onNewJobsClick(position: Int,currentItem: AvailableJobs) {
 //        Intent(activity, NewJobDetails::class.java).apply {
 //            putExtra("JobData", currentItem.id.toString())
 //            putExtra(Params.FROM, Params.ALL_PROPERTY_LIST_FRAGMENT)
@@ -195,7 +242,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
 
         val intent = Intent(activity,NewJobDetails::class.java)
         intent.putExtra("JobData",currentItem.id.toString())
-        intent.putExtra(Params.FROM,Params.ALL_PROPERTY_LIST_FRAGMENT)
+        intent.putExtra(Params.SUB_FROM,Params.OTHER_NEW_JOBS)
         startActivity(intent)
     }
 
@@ -203,7 +250,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list), O
 
         val intent = Intent(activity,MyPostedJobDetails::class.java)
         intent.putExtra("PostData",data.id.toString())
-        intent.putExtra(Params.FROM,Params.ALL_PROPERTY_LIST_FRAGMENT)
+        intent.putExtra(Params.SUB_FROM,Params.MY_POSTED_JOBS)
         startActivity(intent)
     }
 }

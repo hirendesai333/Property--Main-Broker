@@ -11,6 +11,7 @@
     app:cardCornerRadius="@dimen/_12sdp"
     app:cardElevation="@dimen/_3sdp">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,6 +54,44 @@
                 android:textSize="@dimen/_10ssp" />
 
         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:drawableTint="@color/ultra_light_grey"
+            android:text="Review"
+            android:layout_weight="0.5"
+            android:textSize="@dimen/_10ssp"
+            app:backgroundTint="@color/green_700" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_7sdp"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:paddingEnd="@dimen/_7sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingStart="@dimen/_7sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:background="@drawable/bid_dialog_border"
+            android:maxLines="1"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:text="MARK AS : SHOWN"
+            android:textColor="@color/green_700"
+            android:textSize="@dimen/_10sdp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

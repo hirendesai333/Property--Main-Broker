@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.JobPropertyAdapter
@@ -68,8 +69,7 @@ class MyPostedJobDetails : AppCompatActivity(), MyPostedJobDetailsAdapter.OnItem
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getJobProperty(jobId.toInt(),
-                    AppPreferences.getUserData(Params.UserId).toInt(),
-                    map)
+                    AppPreferences.getUserData(Params.UserId).toInt(), map)
 
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
@@ -98,12 +98,20 @@ class MyPostedJobDetails : AppCompatActivity(), MyPostedJobDetailsAdapter.OnItem
         agentPopupDialog.setContentView(R.layout.single_bid_list_item)
         agentPopupDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
+        val title = agentPopupDialog.findViewById<TextView>(R.id.title)
+        val amount = agentPopupDialog.findViewById<TextView>(R.id.amount)
+
+
+        title.text = data.propertyName.toString()
+        amount.text = data.propertyPrice.toString()
+
         val acceptBtn = agentPopupDialog.findViewById<Button>(R.id.accept)
         val rejectBtn = agentPopupDialog.findViewById<Button>(R.id.reject)
 
         acceptBtn.setOnClickListener {
             agentPopupDialog.cancel()
-            agentPopup(data)
+//            agentPopup(data)
+            Log.d(TAG, "onItemClick: "+ data.toString())
         }
 
         rejectBtn.setOnClickListener { agentPopupDialog.cancel() }

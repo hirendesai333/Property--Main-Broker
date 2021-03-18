@@ -11,17 +11,11 @@ import com.soboft.propertybroker.model.AssignedJobList
 import com.soboft.propertybroker.utils.Params
 import com.soboft.propertybroker.listeners.OnGoingClick
 
-class UpcomingBidsAdapter(
-    var from: String,
-    var list: List<AssignedJobList>,
-    var onPropertyClick: OnGoingClick
-) :
+class UpcomingBidsAdapter(var from: String, var list: List<AssignedJobList>, var onPropertyClick: OnGoingClick) :
     RecyclerView.Adapter<UpcomingBidsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val propertyName: TextView = itemView.findViewById(R.id.name)
-        val assignTo: TextView = itemView.findViewById(R.id.assignName)
-        val assignPhone: TextView = itemView.findViewById(R.id.assignPhone)
         val time : TextView = itemView.findViewById(R.id.time)
         val date : TextView = itemView.findViewById(R.id.date)
         val jobStatus: TextView = itemView.findViewById(R.id.jobStatus)
@@ -30,9 +24,8 @@ class UpcomingBidsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.home_property_bid_item, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.home_property_bid_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -42,20 +35,22 @@ class UpcomingBidsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
-        if (from == Params.JOB_ASSIGN_TO_ME) {
-            holder.assignTo.visibility = View.GONE
-            holder.assignPhone.visibility = View.GONE
-        } else {
-            holder.assignTo.visibility = View.VISIBLE
-            holder.assignPhone.visibility = View.VISIBLE
-            holder.assignTo.text = currentItem.assignedUserName
-            holder.assignPhone.text = currentItem.assignedPhoneNumber
-        }
+//        if (from == Params.JOB_ASSIGN_TO_ME) {
+//            holder.assignTo.visibility = View.GONE
+//            holder.assignPhone.visibility = View.GONE
+//
+//        } else {
+//
+//            holder.assignTo.visibility = View.VISIBLE
+//            holder.assignPhone.visibility = View.VISIBLE
+//            holder.assignTo.text = currentItem.assignedUserName
+//            holder.assignPhone.text = currentItem.assignedPhoneNumber
+//        }
         holder.propertyName.text = currentItem.userName
         holder.jobStatus.text = currentItem.statusName
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
-        holder.phone.text = currentItem.agentCodePhone
+        holder.phone.text = currentItem.customerPhoneNumber
 
         holder.rootLayout.setOnClickListener {
             onPropertyClick.onGoingClick(currentItem)

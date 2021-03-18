@@ -3,7 +3,7 @@ package com.soboft.propertybroker.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class AllCompletedJobsModel(
+data class OngoingMyPostedJobModel(
     @JsonProperty("IsOffsetProvided")
     val isOffsetProvided: Boolean?,
     @JsonProperty("IsPageProvided")
@@ -25,26 +25,26 @@ data class AllCompletedJobsModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<AllCompletedJobsList>?
+    val values: List<OngoingMyPostedJobList>?
 )
 
-data class AllCompletedJobsList(
+data class OngoingMyPostedJobList(
     @JsonProperty("AgentCodePhone")
     val agentCodePhone: String?,
     @JsonProperty("AssignedCountryCode")
     val assignedCountryCode: Any?,
     @JsonProperty("AssignedPhoneNumber")
-    val assignedPhoneNumber: String?,
+    val assignedPhoneNumber: Any?,
     @JsonProperty("AssignedProfileUrl")
-    val assignedProfileUrl: String?,
+    val assignedProfileUrl: Any?,
     @JsonProperty("AssignedProfileUrlStr")
     val assignedProfileUrlStr: String?,
     @JsonProperty("AssignedUserEmail")
-    val assignedUserEmail: String?,
+    val assignedUserEmail: Any?,
     @JsonProperty("AssignedUserId")
     val assignedUserId: Int?,
     @JsonProperty("AssignedUserName")
-    val assignedUserName: String?,
+    val assignedUserName: Any?,
     @JsonProperty("AvailableForMasterId")
     val availableForMasterId: Int?,
     @JsonProperty("AvailableJobsOnly")

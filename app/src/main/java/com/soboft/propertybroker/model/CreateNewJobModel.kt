@@ -3,48 +3,36 @@ package com.soboft.propertybroker.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class AllCompletedJobsModel(
-    @JsonProperty("IsOffsetProvided")
-    val isOffsetProvided: Boolean?,
-    @JsonProperty("IsPageProvided")
-    val isPageProvided: Boolean?,
-    @JsonProperty("Limit")
-    val limit: Int?,
-    @JsonProperty("Offset")
-    val offset: Int?,
-    @JsonProperty("Page")
-    val page: Int?,
-    @JsonProperty("PageSize")
-    val pageSize: Int?,
-    @JsonProperty("SortBy")
-    val sortBy: String?,
-    @JsonProperty("SortDirection")
-    val sortDirection: Any?,
-    @JsonProperty("TotalCount")
-    val totalCount: Int?,
-    @JsonProperty("TotalRecords")
-    val totalRecords: Int?,
-    @JsonProperty("Values")
-    val values: List<AllCompletedJobsList>?
+data class CreateNewJobModel(
+    @JsonProperty("Code")
+    val code: Int?,
+    @JsonProperty("IsSuccessStatusCode")
+    val isSuccessStatusCode: Boolean?,
+    @JsonProperty("IsValid")
+    val isValid: Boolean?,
+    @JsonProperty("Item")
+    val item: CreateJob?,
+    @JsonProperty("Message")
+    val message: String?
 )
 
-data class AllCompletedJobsList(
+data class CreateJob(
     @JsonProperty("AgentCodePhone")
     val agentCodePhone: String?,
     @JsonProperty("AssignedCountryCode")
     val assignedCountryCode: Any?,
     @JsonProperty("AssignedPhoneNumber")
-    val assignedPhoneNumber: String?,
+    val assignedPhoneNumber: Any?,
     @JsonProperty("AssignedProfileUrl")
-    val assignedProfileUrl: String?,
+    val assignedProfileUrl: Any?,
     @JsonProperty("AssignedProfileUrlStr")
     val assignedProfileUrlStr: String?,
     @JsonProperty("AssignedUserEmail")
-    val assignedUserEmail: String?,
+    val assignedUserEmail: Any?,
     @JsonProperty("AssignedUserId")
     val assignedUserId: Int?,
     @JsonProperty("AssignedUserName")
-    val assignedUserName: String?,
+    val assignedUserName: Any?,
     @JsonProperty("AvailableForMasterId")
     val availableForMasterId: Int?,
     @JsonProperty("AvailableJobsOnly")
@@ -74,13 +62,13 @@ data class AllCompletedJobsList(
     @JsonProperty("CustomerCountryCode")
     val customerCountryCode: Int?,
     @JsonProperty("CustomerEmail")
-    val customerEmail: String?,
+    val customerEmail: Any?,
     @JsonProperty("CustomerMasterId")
     val customerMasterId: Int?,
     @JsonProperty("CustomerName")
-    val customerName: String?,
+    val customerName: Any?,
     @JsonProperty("CustomerPhoneNumber")
-    val customerPhoneNumber: String?,
+    val customerPhoneNumber: Any?,
     @JsonProperty("DeletedBy")
     val deletedBy: Int?,
     @JsonProperty("DeletedDate")
@@ -150,7 +138,7 @@ data class AllCompletedJobsList(
     @JsonProperty("StatusMasterId")
     val statusMasterId: Int?,
     @JsonProperty("StatusName")
-    val statusName: String?,
+    val statusName: Any?,
     @JsonProperty("SubAgentCodePhone")
     val subAgentCodePhone: String?,
     @JsonProperty("ToVisitingDate")
@@ -172,15 +160,15 @@ data class AllCompletedJobsList(
     @JsonProperty("UserCountryCode")
     val userCountryCode: Any?,
     @JsonProperty("UserEmail")
-    val userEmail: String?,
+    val userEmail: Any?,
     @JsonProperty("UserId")
     val userId: Int?,
     @JsonProperty("UserName")
-    val userName: String?,
+    val userName: Any?,
     @JsonProperty("UserPhoneNumber")
-    val userPhoneNumber: String?,
+    val userPhoneNumber: Any?,
     @JsonProperty("UserProfileUrl")
-    val userProfileUrl: String?,
+    val userProfileUrl: Any?,
     @JsonProperty("UserProfileUrlStr")
     val userProfileUrlStr: String?,
     @JsonProperty("VisitingDate")

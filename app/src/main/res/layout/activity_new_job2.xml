@@ -76,9 +76,11 @@
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:background="@drawable/corner_grey_background">
 
-                        <Spinner
+                        <TextView
                             android:id="@+id/propertySpinner"
                             android:layout_width="match_parent"
+                            android:padding="@dimen/_3sdp"
+                            android:text="Select Property"
                             android:layout_height="wrap_content" />
 
                     </RelativeLayout>
@@ -211,12 +213,13 @@
                                 app:drawableTint="@color/purple_700" />
 
                             <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/date"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:fontFamily="@font/nunito_sans"
-                                android:text="20/12/2020"
+                                android:text="2020/12/20"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10ssp"
                                 app:fontFamily="@font/nunito_sans_semibold" />
@@ -243,12 +246,13 @@
                                 app:drawableTint="@color/purple_700" />
 
                             <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/time"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:fontFamily="@font/nunito_sans"
-                                android:text="12:30PM"
+                                android:text="12:30 PM"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10ssp"
                                 app:fontFamily="@font/nunito_sans_semibold" />
@@ -385,13 +389,13 @@
     </androidx.core.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/createJob"
+        android:id="@+id/createNewJob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/nunito_sans_semibold"
-        android:text="Creat a new job"
+        android:text="Create a new job"
         android:textSize="13sp" />
 
 </RelativeLayout>

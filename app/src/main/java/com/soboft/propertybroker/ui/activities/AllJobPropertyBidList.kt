@@ -24,14 +24,14 @@ class AllJobPropertyBidList : AppCompatActivity() {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
-    lateinit var jobID : String
+    private lateinit var jobId : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAllJobPropertyBidListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        jobID = intent.getStringExtra("job")!!
+        jobId = intent.getStringExtra("job")!!
 
         allJobPropertyBid()
     }
@@ -47,9 +47,7 @@ class AllJobPropertyBidList : AppCompatActivity() {
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getJobPropertyBidAll(
-                    AppPreferences.getUserData(Params.UserId).toInt(),
-                    jobID.toInt(),
-                    map)
+                    AppPreferences.getUserData(Params.UserId).toInt(), jobId.toInt(), map)
 
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){

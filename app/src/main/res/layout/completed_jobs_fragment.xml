@@ -33,7 +33,7 @@
                 android:background="@drawable/rounded_users_tabbar"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="My Completed Jobs"
+                android:text="Assigned Jobs"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 

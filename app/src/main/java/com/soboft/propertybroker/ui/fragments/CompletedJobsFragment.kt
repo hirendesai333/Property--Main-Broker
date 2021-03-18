@@ -14,20 +14,21 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.slider.RangeSlider
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.CompletedJobsAdapter
+import com.soboft.propertybroker.adapters.MyCompletedJobsAdapter
 import com.soboft.propertybroker.databinding.CompletedJobsFragmentBinding
 import com.soboft.propertybroker.model.AllCompletedJobsList
 import com.soboft.propertybroker.network.ServiceApi
-import com.soboft.propertybroker.ui.activities.PropertyDetail
 import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
 import com.soboft.propertybroker.listeners.OnCompletedJobClick
+import com.soboft.propertybroker.model.CompletedJobsAssignList
 import com.soboft.propertybroker.ui.activities.CompletedJobDetails
 import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.util.*
 
 
-class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnCompletedJobClick {
+class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnCompletedJobClick , MyCompletedJobsAdapter.OnItemClickListener {
 
     private var _binding: CompletedJobsFragmentBinding? = null
     private val binding get() = _binding!!
@@ -74,18 +75,18 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnComp
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getCompletedForJobs(
+                val response = ServiceApi.retrofitService.getCompletedJobs(
                     3,2,map
                 )
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
 
-                        Log.d("getCompletedJob", response.code().toString())
-                        Log.d("getCompletedJob",response.body().toString())
+                        Log.d("MY_COMPLETED_JOBS", response.code().toString())
+                        Log.d("MY_COMPLETED_JOBS",response.body().toString())
 
-                        val list : List<AllCompletedJobsList> = response.body()!!.values!!
+                        val list : List<CompletedJobsAssignList> = response.body()!!.values!!
 
-                        binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list, this@CompletedJobsFragment)
+                        binding.completedJobRv.adapter = MyCompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list,this@CompletedJobsFragment)
 
                     }
                 }else{
@@ -111,7 +112,7 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnComp
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getCompletedJobs(
+                val response = ServiceApi.retrofitService.getCompletedMyPostedJobs(
                     AppPreferences.getUserData(Params.UserId).toInt(),3,false,map
                 )
                 if (response.isSuccessful){
@@ -181,16 +182,28 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), OnComp
     }
 
     override fun onCompletedJobsClick(currentItem: AllCompletedJobsList) {
-        Intent(activity, CompletedJobDetails::class.java).apply {
-            putExtra("CompletedJob", currentItem.id.toString())
-            putExtra(Params.FROM, Params.COMPLETED_JOBS_FRAGMENT)
-            if (otherNewJobs) {
-                putExtra(Params.SUB_FROM, Params.MY_COMPLETED_JOBS)
-            } else {
-                putExtra(Params.SUB_FROM, Params.MY_POSTED_COMPLETED_JOBS)
-            }
-            startActivity(this)
-        }
+//        Intent(activity, CompletedJobDetails::class.java).apply {
+//            putExtra("CompletedJob", currentItem.id.toString())
+//            putExtra(Params.FROM, Params.COMPLETED_JOBS_FRAGMENT)
+//            if (otherNewJobs) {
+//                putExtra(Params.SUB_FROM, Params.MY_COMPLETED_JOBS)
+//            } else {
+//                putExtra(Params.SUB_FROM, Params.MY_POSTED_COMPLETED_JOBS)
+//            }
+//            startActivity(this)
+//        }
+
+        val intent = Intent(activity, CompletedJobDetails::class.java)
+        intent.putExtra("CompletedJob",currentItem.id.toString())
+        intent.putExtra(Params.SUB_FROM,Params.MY_POSTED_COMPLETED_JOBS)
+        startActivity(intent)
+    }
+
+    override fun onItemClick(itemPosition: Int, data: CompletedJobsAssignList) {
+        val intent = Intent(activity, CompletedJobDetails::class.java)
+        intent.putExtra("CompletedJob",data.id.toString())
+        intent.putExtra(Params.SUB_FROM,Params.MY_COMPLETED_JOBS)
+        startActivity(intent)
     }
 
 }

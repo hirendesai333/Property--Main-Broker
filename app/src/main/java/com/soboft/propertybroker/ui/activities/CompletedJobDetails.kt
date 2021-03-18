@@ -1,9 +1,11 @@
 package com.soboft.propertybroker.ui.activities
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.CompletedJobDetailsAdapter
 import com.soboft.propertybroker.adapters.OnGoingJobAdapter
@@ -15,6 +17,7 @@ import com.soboft.propertybroker.model.JobPropertyList
 import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
+import com.soboft.properybroker.utils.toast
 import kotlinx.coroutines.*
 import java.util.HashMap
 
@@ -25,6 +28,7 @@ class CompletedJobDetails : AppCompatActivity() , OnCompletedJobPropertyClick{
     private val TAG = "CompletedJobDetails"
 
     private lateinit var jobId: String
+    private val statusMasterId : Int = 4
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -82,8 +86,45 @@ class CompletedJobDetails : AppCompatActivity() , OnCompletedJobPropertyClick{
     }
 
     override fun onCompletedJobPropertyClick(currentItem: JobPropertyList) {
-        val intent =  Intent(this,PropertyDetail::class.java)
-        intent.putExtra("propertyMasterId",currentItem.propertyMasterId.toString())
-        startActivity(intent)
+        markPropertyAsCompleted(currentItem)
+    }
+
+    private fun markPropertyAsCompleted(currentItem: JobPropertyList) {
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Are You Sure Mark As Completed!")
+        builder.setPositiveButton("YES") { dialogInterface: DialogInterface, i: Int ->
+            completedMarked(currentItem)
+        }
+        builder.setNegativeButton("NO") { dialogInterface: DialogInterface, i: Int ->
+            dialogInterface.dismiss()
+        }
+        builder.show()
+    }
+
+    private fun completedMarked(currentItem: JobPropertyList) {
+        coroutineScope.launch {
+            try {
+                val response = ServiceApi.retrofitService.markJobPropertyStatus(
+                    jobId.toInt(),
+                    statusMasterId
+                )
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("Mark Completed Property", response.code().toString())
+                        Log.d("Mark CompletedProperty", response.body().toString())
+
+                        toast("Complete Property  Marked  Successfully")
+                    }
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong ")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
     }
 }

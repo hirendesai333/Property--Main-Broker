@@ -4,12 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.databinding.JobPropertyAllBidListBinding
 import com.soboft.propertybroker.model.JobPropertyBidAllList
+import org.w3c.dom.Text
 
-class JobPropertyBidAllAdapter(context: Context,var list: List<JobPropertyBidAllList>)
+class JobPropertyBidAllAdapter(var context: Context,var list: List<JobPropertyBidAllList>)
     : RecyclerView.Adapter<JobPropertyBidAllAdapter.ViewHolder>() {
 
 
@@ -19,12 +21,11 @@ class JobPropertyBidAllAdapter(context: Context,var list: List<JobPropertyBidAll
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       val itemView = holder.binding
        val currentItem = list[position]
 
-        itemView.name.text = currentItem.amount.toString()
-        itemView.propertyType.text = currentItem.note.toString()
-        itemView.address.text = currentItem.propertyAddress
+        holder.name.text = currentItem.amount.toString()
+        holder.propertyType.text = currentItem.note.toString()
+        holder.address.text = currentItem.propertyAddress.toString()
     }
 
     override fun getItemCount(): Int {
@@ -33,6 +34,8 @@ class JobPropertyBidAllAdapter(context: Context,var list: List<JobPropertyBidAll
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
-        val binding = JobPropertyAllBidListBinding.bind(itemView)
+        val name : TextView = itemView.findViewById(R.id.name)
+        val propertyType : TextView = itemView.findViewById(R.id.propertyType)
+        val address : TextView = itemView.findViewById(R.id.add)
     }
 }

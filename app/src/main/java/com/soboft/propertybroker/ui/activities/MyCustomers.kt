@@ -1,6 +1,7 @@
 package com.soboft.propertybroker.ui.activities
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -16,12 +17,16 @@ import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.propertybroker.utils.AppPreferences
 import com.soboft.propertybroker.utils.Params
 import kotlinx.coroutines.*
+import java.util.regex.Pattern
 
 class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener {
 
     lateinit var binding: ActivityMyCustomersBinding
 
     private val TAG = "MyCustomerActivity"
+
+    var regex = "[A-Z0-9a-z]+([._%+-][A-Z0-9a-z]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+    var pattern = Pattern.compile(regex)
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -36,6 +41,8 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
         binding.addNew.setOnClickListener {
             addNewCustomer()
         }
+
+        binding.title.setOnClickListener { onBackPressed() }
 
         getCustomer()
     }
@@ -83,9 +90,27 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
             val email = mDialog.findViewById<TextInputEditText>(R.id.emailid).text.toString().trim()
             val phone = mDialog.findViewById<TextInputEditText>(R.id.phone).text.toString().trim()
 
-            Toast.makeText(this, "Added New Customer..", Toast.LENGTH_SHORT).show()
-            addNewCustomerApi(name,email,phone)
-            mDialog.dismiss()
+            if (name.isEmpty()){
+                mDialog.findViewById<TextInputEditText>(R.id.firstName).error = "Field Can't be Empty"
+                mDialog.findViewById<TextInputEditText>(R.id.firstName).requestFocus()
+            } else if (email.isEmpty()) {
+                mDialog.findViewById<TextInputEditText>(R.id.emailid).error = "Field Can't be Empty"
+                mDialog.findViewById<TextInputEditText>(R.id.emailid).requestFocus()
+            }else if(!pattern.matcher(email).matches()){
+                mDialog.findViewById<TextInputEditText>(R.id.emailid).error = "Invalid Email"
+                mDialog.findViewById<TextInputEditText>(R.id.emailid).requestFocus()
+            }else if(phone.isEmpty()){
+                mDialog.findViewById<TextInputEditText>(R.id.phone).error = "Field Can't be Empty"
+                mDialog.findViewById<TextInputEditText>(R.id.phone).requestFocus()
+            }
+            else if(phone.length < 10){
+                mDialog.findViewById<TextInputEditText>(R.id.phone).error = "Invalid Number"
+                mDialog.findViewById<TextInputEditText>(R.id.phone).requestFocus()
+            }else {
+                Toast.makeText(this, "Added New Customer..", Toast.LENGTH_SHORT).show()
+                addNewCustomerApi(name, email, phone)
+                mDialog.dismiss()
+            }
         }
 
     }
@@ -108,6 +133,8 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
                         Log.d("addNewCustomer", response.code().toString())
                         Log.d("addNewCustomer", response.body().toString())
 
+                        startActivity(Intent(this@MyCustomers,MyCustomers::class.java))
+                        finish()
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -128,9 +155,6 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
         val tvFirstName = mDialog.findViewById<TextInputEditText>(R.id.updatefirstName)
         val tvEmail = mDialog.findViewById<TextInputEditText>(R.id.updateemailid)
         val tvPhone = mDialog.findViewById<TextInputEditText>(R.id.updatephone)
-
-//        println(itemPosition)
-//        println(data.id)
 
         tvFirstName?.setText(data.customerName)
         tvEmail?.setText(data.customerEmail)
@@ -169,6 +193,8 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
                         Log.d("updateCustomer", response.code().toString())
                         Log.d("updateCustomer", response.body().toString())
 
+                        startActivity(Intent(this@MyCustomers,MyCustomers::class.java))
+                        finish()
                     }
                 } else {
                     withContext(Dispatchers.Main) {

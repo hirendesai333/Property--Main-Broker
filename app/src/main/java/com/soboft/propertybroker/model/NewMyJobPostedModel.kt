@@ -97,6 +97,8 @@ data class MyPostedJobsList(
     val id: Int?,
     @JsonProperty("JobBidId")
     val jobBidId: Int?,
+    @JsonProperty("JobId")
+    val jobId: Int?,
     @JsonProperty("JobLanguages")
     val jobLanguages: String?,
     @JsonProperty("JobNo")
@@ -107,6 +109,8 @@ data class MyPostedJobsList(
     val jobRatting: Int?,
     @JsonProperty("JobReview")
     val jobReview: Any?,
+    @JsonProperty("JobStatus")
+    val jobStatus: Any?,
     @JsonProperty("JobVisitingDate")
     val jobVisitingDate: String?,
     @JsonProperty("JobVisitingTime")
@@ -125,10 +129,16 @@ data class MyPostedJobsList(
     val propertyMasterId: Int?,
     @JsonProperty("PropertyName")
     val propertyName: Any?,
+    @JsonProperty("PropertyNote")
+    val propertyNote: Any?,
     @JsonProperty("PropertyNotes")
     val propertyNotes: Any?,
     @JsonProperty("PropertyPrice")
     val propertyPrice: Int?,
+    @JsonProperty("PropertyRating")
+    val propertyRating: Any?,
+    @JsonProperty("PropertyReview")
+    val propertyReview: Any?,
     @JsonProperty("PropertyTypeMasterId")
     val propertyTypeMasterId: Int?,
     @JsonProperty("Remarks")

@@ -62,49 +62,49 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/bidsOverview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/bidsOverview"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:drawablePadding="@dimen/_3sdp"
-                android:fontFamily="@font/nunito_sans"
-                android:text="Bids Overview: "
-                android:textSize="@dimen/_10ssp" />
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/_5sdp"-->
+<!--                android:drawablePadding="@dimen/_3sdp"-->
+<!--                android:fontFamily="@font/nunito_sans"-->
+<!--                android:text="Bids Overview: "-->
+<!--                android:textSize="@dimen/_10ssp" />-->
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/lowBid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:drawablePadding="@dimen/_3sdp"
-                android:fontFamily="@font/nunito_sans"
-                android:gravity="center"
-                android:text="Lowest $5"
-                android:textSize="@dimen/_10ssp"
-                app:drawableStartCompat="@drawable/ic_down_arrow"
-                app:drawableTint="@android:color/holo_red_dark" />
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/lowBid"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/_5sdp"-->
+<!--                android:layout_marginTop="@dimen/_5sdp"-->
+<!--                android:drawablePadding="@dimen/_3sdp"-->
+<!--                android:fontFamily="@font/nunito_sans"-->
+<!--                android:gravity="center"-->
+<!--                android:text="Lowest $5"-->
+<!--                android:textSize="@dimen/_10ssp"-->
+<!--                app:drawableStartCompat="@drawable/ic_down_arrow"-->
+<!--                app:drawableTint="@android:color/holo_red_dark" />-->
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/highBid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:drawablePadding="@dimen/_3sdp"
-                android:fontFamily="@font/nunito_sans"
-                android:text="Highest $100"
-                android:textSize="@dimen/_10ssp"
-                app:drawableStartCompat="@drawable/ic_up_arrow"
-                app:drawableTint="@android:color/holo_green_dark" />
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/highBid"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/_5sdp"-->
+<!--                android:layout_marginTop="@dimen/_5sdp"-->
+<!--                android:drawablePadding="@dimen/_3sdp"-->
+<!--                android:fontFamily="@font/nunito_sans"-->
+<!--                android:text="Highest $100"-->
+<!--                android:textSize="@dimen/_10ssp"-->
+<!--                app:drawableStartCompat="@drawable/ic_up_arrow"-->
+<!--                app:drawableTint="@android:color/holo_green_dark" />-->
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -3,7 +3,7 @@ package com.soboft.propertybroker.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class AllCompletedJobsModel(
+data class CompletedJobsAssignModel(
     @JsonProperty("IsOffsetProvided")
     val isOffsetProvided: Boolean?,
     @JsonProperty("IsPageProvided")
@@ -25,10 +25,10 @@ data class AllCompletedJobsModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<AllCompletedJobsList>?
+    val values: List<CompletedJobsAssignList>?
 )
 
-data class AllCompletedJobsList(
+data class CompletedJobsAssignList(
     @JsonProperty("AgentCodePhone")
     val agentCodePhone: String?,
     @JsonProperty("AssignedCountryCode")

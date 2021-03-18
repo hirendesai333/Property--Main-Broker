@@ -21,7 +21,6 @@ import com.google.android.material.timepicker.TimeFormat
 import com.soboft.propertybroker.R
 import com.soboft.propertybroker.adapters.MyPostedJobDetailsAdapter
 import com.soboft.propertybroker.databinding.ActivityPropertyDetailBinding
-import com.soboft.propertybroker.model.JobPropertyDetails
 import com.soboft.propertybroker.model.JobPropertyList
 import com.soboft.propertybroker.model.PropertyListModel
 import com.soboft.propertybroker.network.ServiceApi
@@ -193,7 +192,12 @@ class PropertyDetail : AppCompatActivity() {
 //                        val list : String = response.body()!!.item!!.propertyDetailMasterName.toString()
 
 //                        binding.myPostedJobRv.adapter = MyPostedJobDetailsAdapter(this@MyPostedJobDetails,list,this@MyPostedJobDetails)
-                        binding.title.text = response.body()!!.item!!.propertyDetailMasterName.toString()
+                        binding.title.text = response.body()!!.item!!.propertyName.toString()
+                        binding.clientName.text = response.body()!!.item!!.fullName.toString()
+                        binding.propertyType.text = response.body()!!.item!!.propertyType.toString()
+                        binding.availableFor.text = response.body()!!.item!!.availableFor.toString()
+                        binding.price.text = response.body()!!.item!!.propertyPrice.toString()
+                        binding.notes.text = response.body()!!.item!!.propertyNotes.toString()
                     }
                 }else{
                     withContext(Dispatchers.Main){

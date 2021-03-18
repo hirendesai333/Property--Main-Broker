@@ -52,6 +52,7 @@
                 android:layout_marginEnd="@dimen/_20sdp">
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/roomType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="3 BHK"
@@ -60,6 +61,7 @@
                     app:chipBackgroundColor="@color/green_700" />
 
                 <com.google.android.material.chip.Chip
+                    android:id="@+id/roomSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1200 sqft"
@@ -202,6 +204,7 @@
                     android:textSize="@dimen/_11ssp" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/propertyType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
@@ -226,6 +229,7 @@
                     android:textSize="@dimen/_11ssp" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/availableFor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
@@ -250,6 +254,7 @@
                     android:textSize="@dimen/_11ssp" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
@@ -343,6 +348,7 @@
                 android:textSize="@dimen/_11ssp" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
@@ -361,6 +367,7 @@
                 android:textSize="@dimen/_11ssp" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/remark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"

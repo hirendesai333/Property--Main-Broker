@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.slider.RangeSlider
 import com.soboft.propertybroker.R
+import com.soboft.propertybroker.adapters.UpComingMyPostedJobAdapter
 import com.soboft.propertybroker.adapters.UpcomingBidsAdapter
 import com.soboft.propertybroker.databinding.FragmentUpcomingJobsBinding
 import com.soboft.propertybroker.model.AssignedJobList
@@ -20,12 +21,15 @@ import com.soboft.propertybroker.network.ServiceApi
 import com.soboft.propertybroker.ui.activities.PropertyDetail
 import com.soboft.propertybroker.utils.Params
 import com.soboft.propertybroker.listeners.OnGoingClick
+import com.soboft.propertybroker.model.OngoingMyPostedJobList
+import com.soboft.propertybroker.ui.activities.NewJobDetails
 import com.soboft.propertybroker.ui.activities.OnGoingJobDetails
+import com.soboft.propertybroker.utils.AppPreferences
 import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.util.*
 
-class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingClick {
+class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingClick , UpComingMyPostedJobAdapter.OnMyPostedJobClick {
     private val TAG : String = "UpcomingJobsFragment"
     private var _binding: FragmentUpcomingJobsBinding? = null
     private val binding get() = _binding!!
@@ -72,17 +76,17 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getOnGoingJobs(
-                    2,2,false,map
+                    AppPreferences.getUserData(Params.UserId).toInt(),2,false,map
                 )
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
 
-                        Log.d("getAssignedJob", response.code().toString())
-                        Log.d("getAssignedJob",response.body().toString())
+                        Log.d("getOngoingMyPostedJob", response.code().toString())
+                        Log.d("getOngoingMyPostedJob",response.body().toString())
 
-                        val list : List<AssignedJobList> = response.body()!!.values!!
+                        val list : List<OngoingMyPostedJobList> = response.body()!!.values!!
 
-                        binding.upcomingJobsRv.adapter = UpcomingBidsAdapter(Params.MY_POSTED_ONGOING_JOBS, list, this@UpcomingJobsFragment)
+                        binding.upcomingJobsRv.adapter = UpComingMyPostedJobAdapter(Params.MY_POSTED_ONGOING_JOBS, list,this@UpcomingJobsFragment)
 
                     }
                 }else{
@@ -91,7 +95,7 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
                     }
                 }
             }catch (e : Exception){
-                Log.d(TAG, e.message.toString())
+                Log.d("getOngoingMyPostedJob", e.message.toString())
             }
         }
 
@@ -128,7 +132,7 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
                     }
                 }
             }catch (e : Exception){
-                Log.d(TAG, e.message.toString())
+                Log.d("getOngoingAssignedJob", e.message.toString())
             }
         }
     }
@@ -179,15 +183,28 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
     }
 
     override fun onGoingClick(currentItem: AssignedJobList) {
-        Intent(activity, OnGoingJobDetails::class.java).apply {
-            putExtra("OnGoingData", currentItem.id.toString())
-            putExtra(Params.FROM, Params.ONGOING_JOBS_FRAGMENT)
-            if (otherNewJobs) {
-                putExtra(Params.SUB_FROM, Params.JOB_ASSIGN_TO_ME)
-            } else {
-                putExtra(Params.SUB_FROM, Params.MY_POSTED_ONGOING_JOBS)
-            }
-            startActivity(this)
-        }
+//        Intent(activity, OnGoingJobDetails::class.java).apply {
+//            putExtra("OnGoingData", currentItem.id.toString())
+//            putExtra(Params.FROM, Params.ONGOING_JOBS_FRAGMENT)
+//            if (otherNewJobs) {
+//                putExtra(Params.SUB_FROM, Params.JOB_ASSIGN_TO_ME)
+//            } else {
+//                putExtra(Params.SUB_FROM, Params.MY_POSTED_ONGOING_JOBS)
+//            }
+//            startActivity(this)
+//        }
+
+        val intent = Intent(activity, OnGoingJobDetails::class.java)
+        intent.putExtra("OnGoingData",currentItem.id.toString())
+        intent.putExtra(Params.SUB_FROM,Params.JOB_ASSIGN_TO_ME)
+        startActivity(intent)
+    }
+
+    override fun onMyPostedClick(position: Int, currentItem: OngoingMyPostedJobList) {
+
+        val intent = Intent(activity, OnGoingJobDetails::class.java)
+        intent.putExtra("OnGoingData",currentItem.id.toString())
+        intent.putExtra(Params.SUB_FROM,Params.MY_POSTED_ONGOING_JOBS)
+        startActivity(intent)
     }
 }

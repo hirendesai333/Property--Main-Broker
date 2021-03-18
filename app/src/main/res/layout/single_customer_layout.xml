@@ -71,18 +71,18 @@
                 android:textColor="@color/green_700"
                 app:fontFamily="@font/nunito_sans_bold" />
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_alignParentEnd="true"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:id="@+id/delete"
-                android:layout_gravity="end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DELETE"
-                android:drawablePadding="@dimen/_5sdp"
-                android:textSize="@dimen/_8sdp"
-                android:textColor="@android:color/holo_red_dark"
-                app:fontFamily="@font/nunito_sans" />
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                style="@style/Widget.MaterialComponents.Button.TextButton"-->
+<!--                android:id="@+id/delete"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="DELETE"-->
+<!--                android:drawablePadding="@dimen/_5sdp"-->
+<!--                android:textSize="@dimen/_8sdp"-->
+<!--                android:textColor="@android:color/holo_red_dark"-->
+<!--                app:fontFamily="@font/nunito_sans" />-->
 
         </LinearLayout>
 

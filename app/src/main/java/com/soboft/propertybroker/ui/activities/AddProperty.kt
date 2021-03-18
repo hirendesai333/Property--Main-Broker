@@ -424,7 +424,8 @@ class AddProperty : AppCompatActivity() , AllCountryListAdapter.OnItemClickListe
                         Log.d("addNewProperty", response.body().toString())
 
                         toast("New property added successfully")
-//                        startActivity(Intent(this@AddProperty,MyProperties::class.java))
+                        startActivity(Intent(this@AddProperty,MyProperties::class.java))
+                        finish()
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -469,6 +470,8 @@ class AddProperty : AppCompatActivity() , AllCountryListAdapter.OnItemClickListe
                         Log.d("updateProperty", response.body().toString())
 
                         toast("Update Property successfully")
+                        startActivity(Intent(this@AddProperty,MyProperties::class.java))
+                        finish()
                     }
                 } else {
                     withContext(Dispatchers.Main) {
