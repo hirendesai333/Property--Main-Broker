@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.soboft.propertybroker"
+        applicationId "com.illopen.agent"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1

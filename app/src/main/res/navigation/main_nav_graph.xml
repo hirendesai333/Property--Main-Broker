@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/propertyList"
-        android:name="com.soboft.propertybroker.ui.fragments.AllPropertyListFragment"
+        android:name="com.illopen.agent.ui.fragments.AllPropertyListFragment"
         android:label="fragment_all_property_list"
         tools:layout="@layout/fragment_all_property_list" />
     <fragment
         android:id="@+id/bidPropertyList"
-        android:name="com.soboft.propertybroker.ui.fragments.UpcomingJobsFragment"
+        android:name="com.illopen.agent.ui.fragments.UpcomingJobsFragment"
         android:label="fragment_upcoming_jobs"
         tools:layout="@layout/fragment_upcoming_jobs" />
     <fragment
         android:id="@+id/completedJobs"
-        android:name="com.soboft.propertybroker.ui.fragments.CompletedJobsFragment"
+        android:name="com.illopen.agent.ui.fragments.CompletedJobsFragment"
         android:label="Completed jobs fragment"
         tools:layout="@layout/completed_jobs_fragment" />
     <fragment
         android:id="@+id/settings"
-        android:name="com.soboft.propertybroker.ui.fragments.SettingsFragment"
+        android:name="com.illopen.agent.ui.fragments.SettingsFragment"
         android:label="Settings fragment"
         tools:layout="@layout/fragment_settings" />
 </navigation>
