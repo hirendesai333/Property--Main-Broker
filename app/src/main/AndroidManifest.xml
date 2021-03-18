@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.illopen.agent.utils.AgentApplication"
+        android:name=".utils.AgentApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,56 +16,57 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PropertyMainBroker"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.illopen.agent.ui.activities.Dashboard"></activity>
-        <activity android:name="com.illopen.agent.ui.activities.MyPostedJobDetails" />
-        <activity android:name="com.illopen.agent.ui.activities.AllJobPropertyBidList" />
-        <activity android:name="com.illopen.agent.ui.activities.CompletedJobDetails" />
-        <activity android:name="com.illopen.agent.ui.activities.OnGoingJobDetails" />
-        <activity android:name="com.illopen.agent.ui.activities.NewJobDetails" />
+        <activity android:name=".ui.activities.JobsPropertyOnMap"></activity>
+        <activity android:name=".ui.activities.Dashboard" />
+        <activity android:name=".ui.activities.MyPostedJobDetails" />
+        <activity android:name=".ui.activities.AllJobPropertyBidList" />
+        <activity android:name=".ui.activities.CompletedJobDetails" />
+        <activity android:name=".ui.activities.OnGoingJobDetails" />
+        <activity android:name=".ui.activities.NewJobDetails" />
         <activity
-            android:name="com.illopen.agent.ui.activities.NewJob"
+            android:name=".ui.activities.NewJob"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.PropertyMoreDetails"
+            android:name=".ui.activities.PropertyMoreDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.AddProperty"
+            android:name=".ui.activities.AddProperty"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.MyProperties"
+            android:name=".ui.activities.MyProperties"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.MyCustomers"
+            android:name=".ui.activities.MyCustomers"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.Documents"
+            android:name=".ui.activities.Documents"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.Notification"
+            android:name=".ui.activities.Notification"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.Profile"
+            android:name=".ui.activities.Profile"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.SignUp"
+            android:name=".ui.activities.SignUp"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.AgentListCompletedActivity"
+            android:name=".ui.activities.AgentListCompletedActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.BidsList"
+            android:name=".ui.activities.BidsList"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.PropertyDetail"
+            android:name=".ui.activities.PropertyDetail"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.AddNewJob"
+            android:name=".ui.activities.AddNewJob"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.illopen.agent.ui.activities.SplashScreen"
+            android:name=".ui.activities.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -74,7 +75,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.illopen.agent.ui.activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
 
@@ -86,6 +87,10 @@
              </intent-filter>
             -->
         </activity>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyD-sMnTTKBOBWZ6kjaBkPNw-vYda45rYy4" />
     </application>
 
 </manifest>

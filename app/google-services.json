@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "948357836818",
+    "project_id": "illopen",
+    "storage_bucket": "illopen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948357836818:android:a648c87917c0d56a5428cb",
+        "android_client_info": {
+          "package_name": "com.illopen.agent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948357836818-c3h5nt0bllquq756ag3hkkh9vk7740gn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-sMnTTKBOBWZ6kjaBkPNw-vYda45rYy4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948357836818-c3h5nt0bllquq756ag3hkkh9vk7740gn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -104,11 +105,14 @@ dependencies {
     implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
 
     //google gms service
-    implementation 'com.google.android.gms:play-services:12.0.1'
 
     //country selection by code
     implementation 'com.hbb20:ccp:2.4.5'
 
     //icon switch
     implementation 'com.polyak:icon-switch:1.0.0'
+    implementation platform('com.google.firebase:firebase-bom:26.7.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }

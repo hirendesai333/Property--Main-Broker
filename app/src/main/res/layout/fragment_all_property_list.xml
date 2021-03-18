@@ -58,9 +58,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_gravity="end"
-            android:layout_marginBottom="@dimen/_2sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             app:cardCornerRadius="@dimen/_8sdp"
             app:cardElevation="@dimen/_3sdp">
 
@@ -82,13 +82,13 @@
             android:id="@+id/icon_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_alignEnd="@id/filter"
-            app:isw_icon_size="@dimen/_12sdp"
             android:layout_below="@id/filter"
+            android:layout_alignEnd="@id/filter"
+            android:layout_marginTop="@dimen/_5sdp"
             app:isw_icon_left="@drawable/ic_menu_24"
             app:isw_icon_right="@drawable/ic_location_24"
-            app:isw_thumb_color_left="@color/purple_700"/>
+            app:isw_icon_size="@dimen/_12sdp"
+            app:isw_thumb_color_left="@color/purple_700" />
 
     </RelativeLayout>
 
@@ -96,13 +96,16 @@
         android:id="@+id/upcomingJobs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-<!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:id="@+id/map"-->
-<!--        android:visibility="gone"-->
-<!--        android:name="com.google.android.gms.maps.SupportMapFragment" />-->
+
+
+    <!--    <androidx.fragment.app.FragmentContainerView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:id="@+id/map"-->
+    <!--        android:visibility="gone"-->
+    <!--        android:name="com.google.android.gms.maps.SupportMapFragment" />-->
 
 </LinearLayout>
