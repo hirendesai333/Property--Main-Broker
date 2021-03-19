@@ -2,7 +2,9 @@ package com.illopen.agent.network
 
 import com.illopen.agent.model.*
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
@@ -13,6 +15,11 @@ private const val BASE_URL = "http://realestateapi.lamproskids.com/api/"
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(JacksonConverterFactory.create())
     .baseUrl(BASE_URL)
+    .client(
+        OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .build()
+    )
     .build()
 
 interface ApiKtService{
@@ -135,6 +142,10 @@ interface ApiKtService{
                                     @Query("JobId") jobId: Int,
                                     @Body data: Map<String, String>) : Response<JobPropertyBidAllModel>
 
+    @POST(JOB_PROPERTY_ALL_BIDS)
+    suspend fun getJobAllBids(@Query("JobId") jobId: Int,
+                              @Body data: Map<String, String>) : Response<AllJobBidResponseModel>
+
     @POST(JOBASSIGN)
     suspend fun getJobAssignUserId(@Query("Id") Id: Int,
                                    @Query("AssignedUserId") assignedUserId: Int) : Response<Any>
@@ -194,6 +205,7 @@ private const val GETONGOINGJOBSASSIGNED = "jobs/Jobs_All"
 private const val GETJOBPROPERTY = "jobs/JobProperty_All"
 private const val GETJOBBID = "jobPropertyBid/JobPropertyBid_Upsert"
 private const val JOBPROPERTYBIDALL = "jobPropertyBid/JobPropertyBid_All"
+private const val JOB_PROPERTY_ALL_BIDS = "jobPropertyBid/JobPropertyBid_AllDistinctAgent"
 private const val JOBASSIGN = "jobs/Jobs_AssignedUserId"
 private const val PROPERTYDETAILS = "propertyMaster/PropertyMaster_ById"
 private const val JOBPROPERTYUPDATESHOWN = "jobs/JobProperty_UpdateAfterPropertyShown"

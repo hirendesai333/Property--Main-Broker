@@ -1,8 +1,11 @@
 package com.illopen.agent.adapters
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -20,16 +23,18 @@ class AllMyPostedJobsAdapter(var from: String,var list: List<MyPostedJobsList>,v
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
-
         holder.propertyName.text = currentItem.customerName
-        holder.lowBid.text = currentItem.lowestBid.toString()
-        holder.highBid.text = currentItem.highestBid.toString()
+        holder.lowBid.text = "Lowest $" + currentItem.lowestBid.toString()
+        holder.highBid.text = "Highest $" + currentItem.highestBid.toString()
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
-//        holder.isBidAdded.text = currentItem.statusName
-
+        holder.postDate.text = "Posted on: " + currentItem.createdDateStr
+        holder.totalProperty.text = "Total Property: " + currentItem.totalProperty
         holder.rootLayout.setOnClickListener {
             itemClickListener.onItemClick(position,list[position])
+        }
+        holder.call.setOnClickListener {
+            itemClickListener.onCallClick(position,list[position])
         }
     }
 
@@ -38,20 +43,20 @@ class AllMyPostedJobsAdapter(var from: String,var list: List<MyPostedJobsList>,v
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-
         val propertyName: TextView = itemView.findViewById(R.id.title)
-//        val postedBy: TextView = itemView.findViewById(R.id.postedBy)
         val date : TextView = itemView.findViewById(R.id.date)
         val time : TextView = itemView.findViewById(R.id.time)
         val lowBid : TextView = itemView.findViewById(R.id.lowBid)
         val highBid : TextView = itemView.findViewById(R.id.highBid)
+        val postDate : TextView = itemView.findViewById(R.id.postDate)
+        val totalProperty : TextView = itemView.findViewById(R.id.totalProperty)
+        val call : ImageView = itemView.findViewById(R.id.call)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
-//        val bidsOverview: LinearLayout = itemView.findViewById(R.id.bidsOverview)
-//        val bidStatusLayout: RelativeLayout = itemView.findViewById(R.id.bidStatusLayout)
     }
 
     interface OnItemClickListener{
         fun onItemClick(itemPosition : Int,data : MyPostedJobsList)
+        fun onCallClick(itemPosition : Int,data : MyPostedJobsList)
     }
 
 }

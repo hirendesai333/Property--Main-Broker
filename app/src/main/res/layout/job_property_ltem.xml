@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Widget.App.CardView"
     android:id="@+id/rootLayout"
+    style="@style/Widget.App.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/_10sdp"
@@ -30,36 +30,54 @@
             android:id="@+id/propertyType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_bold"
             android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/nunito_sans_bold"
             android:text="Job Property"
             android:textSize="@dimen/_10sdp" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:drawablePadding="@dimen/_3sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:text="Address"
+            android:textSize="@dimen/_10ssp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/address"
-                android:layout_width="match_parent"
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:drawablePadding="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/nunito_sans"
-                android:text="Address"
-                android:textSize="@dimen/_10ssp" />
+                android:drawablePadding="@dimen/_3sdp"
+                app:fontFamily="@font/nunito_sans_bold"
+                android:text="Price: $00"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bidding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:drawableStart="@drawable/ic_bid"
+                android:drawableTint="@color/ultra_light_grey"
+                android:text="Make Bid"
+                android:textSize="@dimen/_10ssp"
+                app:backgroundTint="@color/green_700" />
+
+        </RelativeLayout>
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bidding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:drawableLeft="@drawable/ic_bid"
-            android:drawableTint="@color/ultra_light_grey"
-            android:text="Make Bid"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_gravity="end"
-            android:textSize="@dimen/_10ssp"
-            app:backgroundTint="@color/green_700" />
-
-        </LinearLayout>
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

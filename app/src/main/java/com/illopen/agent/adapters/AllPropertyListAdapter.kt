@@ -17,14 +17,12 @@ class AllPropertyListAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val propertyName: TextView = itemView.findViewById(R.id.name)
-        val postedBy: TextView = itemView.findViewById(R.id.postedBy)
+        val postDate: TextView = itemView.findViewById(R.id.postDate)
         val date : TextView = itemView.findViewById(R.id.date)
         val time : TextView = itemView.findViewById(R.id.time)
-//        val lowBid : TextView = itemView.findViewById(R.id.lowBid)
-//        val highBid : TextView = itemView.findViewById(R.id.highBid)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
-//        val bidsOverview: LinearLayout = itemView.findViewById(R.id.bidsOverview)
         val isBidAdded: TextView = itemView.findViewById(R.id.isBidAdded)
+        val totalProperty: TextView = itemView.findViewById(R.id.totalProperty)
         val bidStatusLayout: RelativeLayout = itemView.findViewById(R.id.bidStatusLayout)
     }
 
@@ -39,28 +37,12 @@ class AllPropertyListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
-//        if (from == Params.MY_POSTED_JOBS) {
-//            holder.postedBy.visibility = View.GONE
-//            holder.bidStatusLayout.visibility = View.GONE
-//            holder.bidsOverview.visibility = View.VISIBLE
-//        } else {
-//            holder.bidsOverview.visibility = View.GONE
-//            holder.postedBy.visibility = View.VISIBLE
-//            holder.bidStatusLayout.visibility = View.VISIBLE
-//            if (currentItem.isBidAdded == 1) {
-//                holder.isBidAdded.text = "Bid Added"
-//                holder.isBidAdded.visibility = View.VISIBLE
-//            } else {
-//                holder.isBidAdded.visibility = View.GONE
-//            }
-//        }
         holder.propertyName.text = currentItem.customerName
-//        holder.lowBid.text = currentItem.lowestBid.toString()
-//        holder.highBid.text = currentItem.highestBid.toString()
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
         holder.isBidAdded.text = currentItem.statusName
-
+        holder.postDate.text = "Posted on: ${currentItem.createdDateStr}"
+        holder.totalProperty.text = "Total Property: ${currentItem.totalProperty}"
         holder.rootLayout.setOnClickListener {
             onPropertyClick.onNewJobsClick(position,list[position])
         }

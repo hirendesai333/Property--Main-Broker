@@ -3,6 +3,7 @@ package com.illopen.agent.ui.fragments
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -92,7 +93,6 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
     }
 
 
-
     private fun getMyPostedJobs() {
         coroutineScope.launch {
             try {
@@ -108,17 +108,16 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
-
-                        Log.d("getMyPostedJobs", response.code().toString())
-                        Log.d("getMyPostedJobs", response.body().toString())
-
                         val list: List<MyPostedJobsList> = response.body()!!.values!!
-
-                        binding.upcomingJobs.adapter = AllMyPostedJobsAdapter(
-                            Params.MY_POSTED_JOBS,
-                            list,
-                            this@AllPropertyListFragment
-                        )
+                        if (list.isNotEmpty()) {
+                            binding.upcomingJobs.adapter = AllMyPostedJobsAdapter(
+                                Params.MY_POSTED_JOBS,
+                                list,
+                                this@AllPropertyListFragment
+                            )
+                        } else {
+                            // no jobs found
+                        }
 
                     }
                 } else {
@@ -141,24 +140,23 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
                 map["Page"] = "0"
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
-
                 val response = ServiceApi.retrofitService.getNewAvailableJobs(
                     AppPreferences.getUserData(Params.UserId).toInt(), 1, true, map
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
-
                         Log.d("getAvailableJobs", response.code().toString())
                         Log.d("getAvailableJobs", response.body().toString())
-
                         val list: List<AvailableJobs> = response.body()!!.values!!
-
-                        binding.upcomingJobs.adapter = AllPropertyListAdapter(
-                            Params.OTHER_NEW_JOBS,
-                            list,
-                            this@AllPropertyListFragment
-                        )
-
+                        if (list.size > 0) {
+                            binding.upcomingJobs.adapter = AllPropertyListAdapter(
+                                Params.OTHER_NEW_JOBS,
+                                list,
+                                this@AllPropertyListFragment
+                            )
+                        } else {
+                            // no jobs found
+                        }
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -217,17 +215,6 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
     }
 
     override fun onNewJobsClick(position: Int, currentItem: AvailableJobs) {
-//        Intent(activity, NewJobDetails::class.java).apply {
-//            putExtra("JobData", currentItem.id.toString())
-//            putExtra(Params.FROM, Params.ALL_PROPERTY_LIST_FRAGMENT)
-//            if (otherNewJobs) {
-//                putExtra(Params.SUB_FROM, Params.OTHER_NEW_JOBS)
-//            } else {
-//                putExtra(Params.SUB_FROM, Params.MY_POSTED_JOBS)
-//            }
-//            startActivity(this)
-//        }
-
         val intent = Intent(activity, NewJobDetails::class.java)
         intent.putExtra("JobData", currentItem.id.toString())
         intent.putExtra(Params.SUB_FROM, Params.OTHER_NEW_JOBS)
@@ -235,11 +222,17 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
     }
 
     override fun onItemClick(itemPosition: Int, data: MyPostedJobsList) {
-
         val intent = Intent(activity, MyPostedJobDetails::class.java)
         intent.putExtra("PostData", data.id.toString())
         intent.putExtra(Params.SUB_FROM, Params.MY_POSTED_JOBS)
         startActivity(intent)
+    }
+
+    override fun onCallClick(itemPosition: Int, data: MyPostedJobsList) {
+        Intent(Intent.ACTION_CALL).apply {
+            setData(Uri.parse(data.userPhoneNumber))
+            startActivity(this)
+        }
     }
 
 }

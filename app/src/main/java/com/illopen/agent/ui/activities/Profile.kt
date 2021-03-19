@@ -28,8 +28,11 @@ import com.yanzhenjie.album.Album
 import com.yanzhenjie.album.AlbumConfig
 import kotlinx.coroutines.*
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.regex.Pattern
 
@@ -142,25 +145,28 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
         val imageToBeUploaded = File(filePath)
         coroutineScope.launch {
             try {
-                val rbcustomerid =
+                /*val rbcustomerid =
                     RequestBody.create(
                         MediaType.parse("text/plain"),
                         AppPreferences.getUserData(Params.UserId)
-                    )
-                val requestFile =
+                    )*/
+                val rbcustomerid = AppPreferences.getUserData(Params.UserId).toRequestBody("text/plain".toMediaTypeOrNull())
+                val requestFile = MultipartBody.Part.createFormData("Files", "${System.currentTimeMillis()}.png",
+                    File(filePath).asRequestBody("multipart/form-data".toMediaTypeOrNull()))
+                /*val requestFile =
                     RequestBody.create(
                         MediaType.parse("multipart/form-data"),
                         imageToBeUploaded
-                    )
-                val imageRequest =
+                    )*/
+                /*val imageRequest =
                     MultipartBody.Part.createFormData(
                         "Files",
                         "${System.currentTimeMillis()}.png",
                         requestFile
-                    )
+                    )*/
                 val response = ServiceApi.retrofitService.uploadProfilePic(
                     rbcustomerid,
-                    imageRequest
+                    requestFile
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {

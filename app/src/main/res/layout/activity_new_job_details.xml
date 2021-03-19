@@ -36,6 +36,7 @@
             android:text="All Bid Property"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
+            android:visibility="gone"
             app:fontFamily="@font/nunito_sans_bold" />
 
     </RelativeLayout>

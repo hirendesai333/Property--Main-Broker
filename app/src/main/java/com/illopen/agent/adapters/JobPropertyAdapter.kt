@@ -25,24 +25,17 @@ class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> ,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
-
         holder.name.text = currentItem.propertyName
-        holder.address.text = currentItem.propertyAddress
-        holder.propertyType.text = currentItem.propertyTypeName
-
-//        holder.name.setOnClickListener {
-//            onJobPropertyClick.onJobPropertyClick(currentItem)
-//        }
-
-//        if (currentItem.bidAmount!!.toInt() > 0) {
-//                holder.bid.text = "Bid"
-//                holder.bid.visibility = View.VISIBLE
-//        } else {
-//            holder.bid.visibility = View.GONE
-//        }
-
+        holder.address.text = "Address: " + currentItem.propertyAddress
+        holder.propertyType.text = "Type: " + currentItem.propertyTypeName
+        holder.price.text = "Price: $" + currentItem.propertyPrice
         holder.bid.setOnClickListener {
             onJobPropertyClick.onJobPropertyClick(currentItem)
+        }
+        if (currentItem.bidAmount!! > 0) {
+            holder.bid.text = "Update Bid"
+        } else {
+            holder.bid.text = "Make Bid"
         }
 
         holder.rootLayout.setOnClickListener {
@@ -60,6 +53,7 @@ class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> ,
         val name: TextView = itemView.findViewById(R.id.name)
         val address: TextView = itemView.findViewById(R.id.address)
         val propertyType :TextView = itemView.findViewById(R.id.propertyType)
+        val price :TextView = itemView.findViewById(R.id.price)
         val bid : Button = itemView.findViewById(R.id.bidding)
         val rootLayout : CardView = itemView.findViewById(R.id.rootLayout)
     }

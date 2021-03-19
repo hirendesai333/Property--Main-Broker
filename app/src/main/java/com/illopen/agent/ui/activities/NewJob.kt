@@ -23,7 +23,9 @@ import com.illopen.properybroker.utils.toast
 import kotlinx.android.synthetic.main.activity_new_job2.*
 import kotlinx.coroutines.*
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -299,7 +301,8 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                 jsonObject.put("data", json)
                 Log.d("createJob", json.toString())
 
-                val body = RequestBody.create(MediaType.parse("application/json"), json.toString())
+//                val body = RequestBody.create(MediaType.parse("application/json"), json.toString())
+                val body = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
                 val response = ServiceApi.retrofitService.createJob(body)
 
                 if (response.isSuccessful) {

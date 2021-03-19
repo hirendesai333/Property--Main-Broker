@@ -13,11 +13,15 @@ import com.illopen.agent.R
 import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.ui.activities.PropertyDetail
 
-class MyPostedJobDetailsAdapter(var context: Context, var list : List<JobPropertyList>, var itemClickListener : OnItemClickListener)
-    : RecyclerView.Adapter<MyPostedJobDetailsAdapter.ViewHolder>() {
+class MyPostedJobDetailsAdapter(
+    var context: Context,
+    var list: List<JobPropertyList>,
+    var itemClickListener: OnItemClickListener
+) : RecyclerView.Adapter<MyPostedJobDetailsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.my_posted_job_details_item,parent,false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.my_posted_job_details_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -25,15 +29,18 @@ class MyPostedJobDetailsAdapter(var context: Context, var list : List<JobPropert
         val currentItem = list[position]
 
         holder.name.text = currentItem.propertyName
-        holder.address.text = currentItem.propertyAddress
-        holder.propertyType.text = currentItem.propertyTypeName
+        holder.availableFor.text = "Available for: " + currentItem.propertyName
+        holder.price.text = "Price: $" + currentItem.propertyPrice
+        holder.address.text =
+            "Address: ${currentItem.propertyAddress}, ${currentItem.city}, ${currentItem.state}, ${currentItem.country} - ${currentItem.pincode}"
+        holder.propertyType.text = "Property type: " + currentItem.propertyTypeName
 
         holder.agent.setOnClickListener {
-            itemClickListener.onItemClick(position,list[position])
+            itemClickListener.onItemClick(position, list[position])
         }
 
         holder.rootLayout.setOnClickListener {
-            val intent =  Intent(context, PropertyDetail::class.java)
+            val intent = Intent(context, PropertyDetail::class.java)
             intent.putExtra("propertyMasterId", currentItem.propertyMasterId.toString())
             context.startActivity(intent)
         }
@@ -43,16 +50,18 @@ class MyPostedJobDetailsAdapter(var context: Context, var list : List<JobPropert
         return list.size
     }
 
-    class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val name: TextView = itemView.findViewById(R.id.name)
+        val price: TextView = itemView.findViewById(R.id.price)
+        val availableFor: TextView = itemView.findViewById(R.id.availableFor)
         val address: TextView = itemView.findViewById(R.id.address)
-        val propertyType : TextView = itemView.findViewById(R.id.propertyType)
-        val agent : Button = itemView.findViewById(R.id.agent)
-        val rootLayout : CardView = itemView.findViewById(R.id.rootLayout)
+        val propertyType: TextView = itemView.findViewById(R.id.propertyType)
+        val agent: Button = itemView.findViewById(R.id.agent)
+        val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
     }
 
-    interface OnItemClickListener{
-        fun onItemClick(itemPosition : Int,data : JobPropertyList)
+    interface OnItemClickListener {
+        fun onItemClick(itemPosition: Int, data: JobPropertyList)
     }
 }

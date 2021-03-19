@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import com.illopen.agent.adapters.JobPropertyBidAllAdapter
 import com.illopen.agent.databinding.ActivityAllJobPropertyBidListBinding
+import com.illopen.agent.model.AllJobBidResponseModel
+import com.illopen.agent.model.JobBidValue
 import com.illopen.agent.model.JobPropertyBidAllList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
@@ -27,6 +29,10 @@ class AllJobPropertyBidList : AppCompatActivity() {
         binding = ActivityAllJobPropertyBidListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.title.setOnClickListener {
+            onBackPressed()
+        }
+
         jobId = intent.getStringExtra("job")!!
 
         allJobPropertyBid()
@@ -41,9 +47,7 @@ class AllJobPropertyBidList : AppCompatActivity() {
                 map["Page"] = "0"
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
-
-                val response = ServiceApi.retrofitService.getJobPropertyBidAll(
-                    AppPreferences.getUserData(Params.UserId).toInt(), jobId.toInt(), map)
+                val response = ServiceApi.retrofitService.getJobAllBids(jobId.toInt(), map)
 
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
@@ -51,9 +55,13 @@ class AllJobPropertyBidList : AppCompatActivity() {
                         Log.d("allJobPropertyBidList", response.code().toString())
                         Log.d("allJobPropertyBidList", response.body().toString())
 
-                        val list : List<JobPropertyBidAllList> = response.body()!!.values!!
-
-                        binding.allBidProperty.adapter = JobPropertyBidAllAdapter(this@AllJobPropertyBidList,list)
+                        val list : List<JobBidValue> = response.body()!!.values!!
+                        if (list.isNotEmpty()) {
+                            binding.allBidProperty.adapter =
+                                JobPropertyBidAllAdapter(this@AllJobPropertyBidList, list)
+                        } else {
+                            // no bids found
+                        }
 
                     }
                 }else{

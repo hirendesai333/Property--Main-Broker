@@ -9,6 +9,7 @@ import com.hbb20.CountryCodePicker
 import com.illopen.agent.R
 import com.illopen.agent.databinding.ActivitySignUpBinding
 import com.illopen.agent.network.ServiceApi
+import com.illopen.agent.utils.ProgressDialog
 import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
 import java.util.regex.Pattern
@@ -18,6 +19,7 @@ class SignUp : AppCompatActivity() , CountryCodePicker.OnCountryChangeListener{
     private val TAG = "SignUpActivity"
 
     private lateinit var binding: ActivitySignUpBinding
+    private lateinit var progressDialog: ProgressDialog
 
     private var countryPicker : CountryCodePicker? = null
     private var countryCode : String? = null
@@ -36,6 +38,8 @@ class SignUp : AppCompatActivity() , CountryCodePicker.OnCountryChangeListener{
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        progressDialog = ProgressDialog(this)
 
         binding.registerButton.setOnClickListener {
             signUpDetails()
@@ -56,7 +60,6 @@ class SignUp : AppCompatActivity() , CountryCodePicker.OnCountryChangeListener{
         val email = binding.emailID.text.toString().trim()
         val password = binding.password.text.toString().trim()
         val phoneNumber = binding.phone.text.toString().trim()
-
         if (firstName.isEmpty()){
             binding.firstName.error = "Please Enter First Name"
             binding.firstName.requestFocus()
@@ -86,9 +89,9 @@ class SignUp : AppCompatActivity() , CountryCodePicker.OnCountryChangeListener{
             binding.phone.requestFocus()
         }
         else {
+            progressDialog.dialog.show()
             coroutineScope.launch {
                 try {
-
                     val map = HashMap<String,String>()
                     map["UserTypeMasterId"] = userTypeMasterId.toString()
                     map["FirstName"] = firstName
@@ -102,21 +105,26 @@ class SignUp : AppCompatActivity() , CountryCodePicker.OnCountryChangeListener{
                     val response = ServiceApi.retrofitService.signup(map)
                     if (response.isSuccessful) {
                         withContext(Dispatchers.Main) {
-
-                            Log.d("SignUp", response.code().toString())
-                            Log.d("SignUp", response.body().toString())
-
-                            toast("SignUp Success")
-                            startActivity(Intent(this@SignUp,LoginActivity::class.java))
+                            if (response.code() == 200) {
+                                Log.d("SignUp", response.code().toString())
+                                Log.d("SignUp", response.body().toString())
+                                toast("SignUp Success")
+                                startActivity(Intent(this@SignUp, LoginActivity::class.java))
+                            } else {
+                                toast("Please try again")
+                            }
+                            progressDialog.dialog.dismiss()
                         }
                     } else {
                         withContext(Dispatchers.Main) {
                             Log.d("SignUp fail", response.code().toString())
                             toast("please enter all details")
+                            progressDialog.dialog.dismiss()
                         }
                     }
                 } catch (e: Exception) {
                     Log.d(TAG, e.message.toString())
+                    progressDialog.dialog.dismiss()
                 }
             }
         }

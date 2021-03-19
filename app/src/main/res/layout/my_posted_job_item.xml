@@ -17,17 +17,35 @@
         android:layout_margin="@dimen/_10sdp"
         android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/title"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_bold"
-            android:text="Shivalik Shilp"
-            android:textColor="@color/purple_700"
-            android:textSize="@dimen/_14ssp" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_toStartOf="@+id/call"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="Shivalik Shilp"
+                android:textColor="@color/purple_700"
+                android:textSize="@dimen/_14ssp" />
+
+            <ImageView
+                android:id="@+id/call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="@color/purple_700"
+                android:src="@drawable/ic_call" />
+
+        </RelativeLayout>
+
 
         <LinearLayout
             android:id="@+id/bidsOverview"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -35,7 +53,6 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:drawablePadding="@dimen/_3sdp"
                 android:fontFamily="@font/nunito_sans"
                 android:text="Bids Overview: "
@@ -46,7 +63,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:drawablePadding="@dimen/_3sdp"
                 android:fontFamily="@font/nunito_sans"
                 android:gravity="center"
@@ -60,7 +76,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:drawablePadding="@dimen/_3sdp"
                 android:fontFamily="@font/nunito_sans"
                 android:text="Highest $100"
@@ -150,19 +165,13 @@
             android:layout_marginTop="@dimen/_7sdp">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/location"
-                android:layout_width="match_parent"
+                android:id="@+id/totalProperty"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_toStartOf="@+id/postDate"
-                android:drawablePadding="@dimen/_3sdp"
                 android:fontFamily="@font/nunito_sans"
                 android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="USA"
-                android:textSize="@dimen/_10ssp"
-                app:drawableStartCompat="@drawable/ic_location"
-                app:drawableTint="@color/green_700" />
+                android:text="Total  Property: 0"
+                android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/postDate"

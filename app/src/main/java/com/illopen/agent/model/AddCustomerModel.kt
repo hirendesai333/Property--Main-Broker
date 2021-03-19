@@ -1,6 +1,5 @@
 package com.illopen.agent.model
 
-
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class AddCustomerModel(

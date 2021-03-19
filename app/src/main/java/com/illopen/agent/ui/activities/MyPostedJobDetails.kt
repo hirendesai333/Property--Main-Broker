@@ -42,7 +42,6 @@ class MyPostedJobDetails : AppCompatActivity(), MyPostedJobDetailsAdapter.OnItem
         getMyPostedJobProperty()
 
         binding.addAllBid.setOnClickListener {
-
             val intent =  Intent(this,AllJobPropertyBidList::class.java)
             intent.putExtra("job",jobId)
             startActivity(intent)
