@@ -12,11 +12,14 @@ import com.illopen.agent.R
 import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.ui.activities.PropertyDetail
 
-class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>, var onGoingJobPropertyClick: JobPropertyClick)
+class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>,
+                        var onGoingJobReviewClick: JobPropertyReviewClick, var onGoingJobMarkClick : JobPropertyMarkClick)
     : RecyclerView.Adapter<OnGoingJobAdapter.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val name : TextView = itemView.findViewById(R.id.name)
+        val availableFor : TextView = itemView.findViewById(R.id.availableFor)
+        val price : TextView = itemView.findViewById(R.id.price)
         val propertyType : TextView = itemView.findViewById(R.id.propertyType)
         val address : TextView = itemView.findViewById(R.id.address)
         val mark : TextView = itemView.findViewById(R.id.mark)
@@ -32,19 +35,21 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>, v
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
 
-        if (currentItem.review.isNullOrEmpty()){
-
-            holder.mark.visibility = View.GONE
-            holder.review.visibility = View.GONE
-        }else{
-
-            holder.review.visibility = View.VISIBLE
-            holder.mark.visibility = View.VISIBLE
-        }
+//        if (currentItem.review.isNullOrEmpty()){
+//
+//            holder.mark.visibility = View.GONE
+//            holder.review.visibility = View.GONE
+//        }else{
+//
+//            holder.review.visibility = View.VISIBLE
+//            holder.mark.visibility = View.VISIBLE
+//        }
 
         holder.name.text = currentItem.propertyName
-        holder.address.text = currentItem.propertyAddress
-        holder.propertyType.text = currentItem.propertyTypeName
+        holder.availableFor.text = "Available for: " + currentItem.availableForMasterName
+        holder.price.text = "Price: $" + currentItem.propertyPrice
+        holder.address.text = "Address: " + currentItem.propertyAddress
+        holder.propertyType.text = "Property type: " + currentItem.propertyTypeName
 
         holder.rootLayout.setOnClickListener {
             val intent =  Intent(context, PropertyDetail::class.java)
@@ -53,11 +58,11 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>, v
         }
 
         holder.review.setOnClickListener {
-            onGoingJobPropertyClick.onGoingJobPropertyClick(position,list[position])
+            onGoingJobReviewClick.onGoingJobReviewClick(position,list[position])
         }
 
         holder.mark.setOnClickListener {
-            onGoingJobPropertyClick.onGoingJobPropertyClick(position,list[position])
+            onGoingJobMarkClick.onGoingJobMarkClick(position,list[position])
         }
     }
 
@@ -65,7 +70,11 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>, v
         return list.size
     }
 
-    interface JobPropertyClick{
-        fun onGoingJobPropertyClick(position: Int,currentItem : JobPropertyList)
+    interface JobPropertyReviewClick{
+        fun onGoingJobReviewClick(position: Int,currentItem : JobPropertyList)
+    }
+
+    interface JobPropertyMarkClick{
+        fun onGoingJobMarkClick(position: Int,currentItem : JobPropertyList)
     }
 }

@@ -22,7 +22,7 @@ import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
 import java.util.HashMap
 
-class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyClick {
+class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMarkClick,OnGoingJobAdapter.JobPropertyReviewClick {
 
     private lateinit var binding: ActivityOnGoingJobDetailsBinding
 
@@ -73,7 +73,8 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyClic
 
                         val list : List<JobPropertyList> = response.body()!!.values!!
 
-                        binding.onGoingJobProperty.adapter = OnGoingJobAdapter(this@OnGoingJobDetails,list,this@OnGoingJobDetails)
+                        binding.onGoingJobProperty.adapter = OnGoingJobAdapter(this@OnGoingJobDetails,list,
+                            this@OnGoingJobDetails,this@OnGoingJobDetails)
 
                     }
                 }else{
@@ -88,29 +89,7 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyClic
 
     }
 
-    override fun onGoingJobPropertyClick(position : Int, currentItem: JobPropertyList) {
-
-        reviewPopup = Dialog(this, R.style.Theme_PropertyMainBroker)
-        reviewPopup.setContentView(R.layout.job_property_review_popup)
-        reviewPopup.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
-
-        reviewPopup.show()
-
-        reviewPopup.findViewById<Button>(R.id.btnReview).setOnClickListener {
-
-            val rating = reviewPopup.findViewById<RatingBar>(R.id.rating)
-            val review = reviewPopup.findViewById<TextInputEditText>(R.id.edtReview).text.toString().trim()
-            val note = reviewPopup.findViewById<TextInputEditText>(R.id.note).text.toString().trim()
-
-            Toast.makeText(this, "Submit Review Successful..", Toast.LENGTH_SHORT).show()
-            addReviewPopup(rating,review,note,currentItem)
-            reviewPopup.dismiss()
-        }
-
-        markProperty()
-    }
-
-    private fun markProperty() {
+    override fun onGoingJobMarkClick(position: Int, currentItem: JobPropertyList) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Are You Sure Mark This Property!!")
         builder.setPositiveButton("YES") { dialogInterface: DialogInterface, i: Int ->
@@ -150,6 +129,25 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyClic
         }
     }
 
+    override fun onGoingJobReviewClick(position: Int, currentItem: JobPropertyList) {
+        reviewPopup = Dialog(this, R.style.Theme_PropertyMainBroker)
+        reviewPopup.setContentView(R.layout.job_property_review_popup)
+        reviewPopup.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+
+        reviewPopup.show()
+
+        reviewPopup.findViewById<Button>(R.id.btnReview).setOnClickListener {
+
+            val rating = reviewPopup.findViewById<RatingBar>(R.id.rating)
+            val review = reviewPopup.findViewById<TextInputEditText>(R.id.edtReview).text.toString().trim()
+            val note = reviewPopup.findViewById<TextInputEditText>(R.id.note).text.toString().trim()
+
+            Toast.makeText(this, "Submit Review Successful..", Toast.LENGTH_SHORT).show()
+            addReviewPopup(rating,review,note,currentItem)
+            reviewPopup.dismiss()
+        }
+    }
+
     private fun addReviewPopup(rating: RatingBar, review: String, note: String,currentItem: JobPropertyList) {
 
         coroutineScope.launch {
@@ -178,6 +176,5 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyClic
                 Log.d(TAG, e.message.toString())
             }
         }
-
     }
 }

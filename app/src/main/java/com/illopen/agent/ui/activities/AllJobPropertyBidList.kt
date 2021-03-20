@@ -6,11 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
-import com.illopen.agent.adapters.AllCityListAdapter
+import com.illopen.agent.adapters.AgentBidPropertyListAdapter
 import com.illopen.agent.adapters.JobPropertyBidAllAdapter
 import com.illopen.agent.databinding.ActivityAllJobPropertyBidListBinding
 import com.illopen.agent.model.*
@@ -95,8 +93,8 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
         val amount = agentPopupDialog.findViewById<TextView>(R.id.amount)
 
 
-        title.text = data.propertyName.toString()
-        amount.text = data.propertyPrice.toString()
+        title.text = data.userName.toString()
+        amount.text = data.amount.toString()
 
         val acceptBtn = agentPopupDialog.findViewById<Button>(R.id.accept)
         val rejectBtn = agentPopupDialog.findViewById<Button>(R.id.reject)
@@ -116,7 +114,7 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
         coroutineScope.launch {
             try {
 
-                val response = ServiceApi.retrofitService.getJobAssignUserId(jobId.toInt(),data.id!!.toInt())
+                val response = ServiceApi.retrofitService.getJobAssignUserId(jobId.toInt(),data.userId!!.toInt())
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
@@ -143,12 +141,12 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
         agentShowProperty.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
         val bidDetailsRv = agentShowProperty.findViewById<RecyclerView>(R.id.agentBidDetails)
+        agentBidDetailsList(bidDetailsRv,data)
 
-        agentBidDetailsList(bidDetailsRv)
-
+        agentShowProperty.show()
     }
 
-    private fun agentBidDetailsList(bidDetailsRv: RecyclerView?) {
+    private fun agentBidDetailsList(bidDetailsRv: RecyclerView?,data: JobBidValue) {
 
         coroutineScope.launch {
             try {
@@ -159,16 +157,17 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getCity(map)
+                val response = ServiceApi.retrofitService.getJobProperty(jobId.toInt(),
+                    data.userId!!.toInt(),map)
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
 
                         Log.d("getBidDetails", response.code().toString())
                         Log.d("getBidDetails",response.body().toString())
 
-//                        val list : List<> = response.body()!!.values!!
-//
-//                        bidDetailsRv.adapter = AllCityListAdapter(this@AddProperty,list,this@AddProperty)
+                        val list : List<JobPropertyList> = response.body()!!.values!!
+
+                        bidDetailsRv!!.adapter = AgentBidPropertyListAdapter(this@AllJobPropertyBidList,list)
                     }
                 }else{
                     withContext(Dispatchers.Main){

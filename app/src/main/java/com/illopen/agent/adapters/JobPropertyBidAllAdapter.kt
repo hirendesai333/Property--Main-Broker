@@ -25,8 +25,8 @@ class JobPropertyBidAllAdapter(var context: Context, var list: List<JobBidValue>
             name.text = currentItem.userName.toString()
             price.text = "Bid Amount: $" + currentItem.amount.toString()
             totalProperty.text = "Total Bid Property: ${currentItem.totalPropertyBid}/${currentItem.totalProperty}"
-            propertyType.text = currentItem.note.toString()
-            add.text = currentItem.propertyAddress.toString()
+//            propertyType.text = currentItem.note.toString()
+//            add.text = currentItem.propertyAddress.toString()
         }
 
         holder.binding.agentAssign.setOnClickListener {
