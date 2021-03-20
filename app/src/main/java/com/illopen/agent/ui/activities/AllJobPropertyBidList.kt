@@ -139,7 +139,7 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
     override fun onEyePropertyClick(itemPosition: Int, data: JobBidValue) {
 
         agentShowProperty = Dialog(this, R.style.Theme_PropertyMainBroker)
-        agentShowProperty.setContentView(R.layout.single_bid_list_item)
+        agentShowProperty.setContentView(R.layout.bid_details_popup)
         agentShowProperty.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
         val bidDetailsRv = agentShowProperty.findViewById<RecyclerView>(R.id.agentBidDetails)
