@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PropertyMainBroker"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activities.JobsPropertyOnMap"></activity>
+        <activity android:name=".ui.activities.JobsPropertyOnMap"/>
         <activity android:name=".ui.activities.Dashboard" />
         <activity android:name=".ui.activities.MyPostedJobDetails" />
         <activity android:name=".ui.activities.AllJobPropertyBidList" />
@@ -91,6 +91,7 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyD-sMnTTKBOBWZ6kjaBkPNw-vYda45rYy4" />
+
     </application>
 
 </manifest>

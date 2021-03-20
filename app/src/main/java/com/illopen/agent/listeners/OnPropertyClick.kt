@@ -14,7 +14,3 @@ interface OnCompletedJobClick {
 interface OnJobPropertyClick{
     fun onJobPropertyClick(currentItem : JobPropertyList)
 }
-
-interface OnCompletedJobPropertyClick{
-    fun onCompletedJobPropertyClick(currentItem : JobPropertyList)
-}

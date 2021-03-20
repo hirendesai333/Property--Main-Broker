@@ -33,7 +33,7 @@
                 android:textColor="@color/purple_700"
                 android:fontFamily="@font/nunito_sans"
                 android:text="Posted by: Rudra Pvt Ltd."
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_14sdp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/isBidAdded"

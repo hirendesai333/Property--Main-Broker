@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="Bid Details Property"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/agentBidDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

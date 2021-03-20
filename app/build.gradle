@@ -111,9 +111,10 @@ dependencies {
 
     //icon switch
     implementation 'com.polyak:icon-switch:1.0.0'
+
+    //firebase service
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 }

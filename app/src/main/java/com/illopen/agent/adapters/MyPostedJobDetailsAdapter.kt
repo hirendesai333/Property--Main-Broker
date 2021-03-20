@@ -16,7 +16,7 @@ import com.illopen.agent.ui.activities.PropertyDetail
 class MyPostedJobDetailsAdapter(
     var context: Context,
     var list: List<JobPropertyList>,
-    var itemClickListener: OnItemClickListener
+//    var itemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<MyPostedJobDetailsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,9 +35,9 @@ class MyPostedJobDetailsAdapter(
             "Address: ${currentItem.propertyAddress}, ${currentItem.city}, ${currentItem.state}, ${currentItem.country} - ${currentItem.pincode}"
         holder.propertyType.text = "Property type: " + currentItem.propertyTypeName
 
-        holder.agent.setOnClickListener {
-            itemClickListener.onItemClick(position, list[position])
-        }
+//        holder.agent.setOnClickListener {
+//            itemClickListener.onItemClick(position, list[position])
+//        }
 
         holder.rootLayout.setOnClickListener {
             val intent = Intent(context, PropertyDetail::class.java)
@@ -61,7 +61,7 @@ class MyPostedJobDetailsAdapter(
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(itemPosition: Int, data: JobPropertyList)
-    }
+//    interface OnItemClickListener {
+//        fun onItemClick(itemPosition: Int, data: JobPropertyList)
+//    }
 }

@@ -99,13 +99,4 @@
         android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-
-
-    <!--    <androidx.fragment.app.FragmentContainerView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:id="@+id/map"-->
-    <!--        android:visibility="gone"-->
-    <!--        android:name="com.google.android.gms.maps.SupportMapFragment" />-->
-
 </LinearLayout>

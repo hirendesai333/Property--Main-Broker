@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.databinding.CompletedJobItemBinding
-import com.illopen.agent.listeners.OnCompletedJobPropertyClick
 import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.ui.activities.PropertyDetail
 
@@ -46,5 +45,9 @@ class CompletedJobDetailsAdapter(var context: Context,var list: List<JobProperty
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    interface OnCompletedJobPropertyClick{
+        fun onCompletedJobPropertyClick(currentItem : JobPropertyList)
     }
 }

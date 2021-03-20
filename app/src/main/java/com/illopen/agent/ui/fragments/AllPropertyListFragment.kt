@@ -85,7 +85,6 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
                     }
                 }
                 else -> {
-
                     getAllAvailableJobs()
                 }
             }

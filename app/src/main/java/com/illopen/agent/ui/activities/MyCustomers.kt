@@ -1,5 +1,6 @@
 package com.illopen.agent.ui.activities
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -78,6 +79,7 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
 
     }
 
+    @SuppressLint("CutPasteId")
     private fun addNewCustomer() {
         val mDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
         mDialog.setContentView(R.layout.add_customer_popup)

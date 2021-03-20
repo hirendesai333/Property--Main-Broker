@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/_10sdp"
-    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_8sdp"
     android:layout_marginEnd="@dimen/_10sdp"
     app:cardCornerRadius="@dimen/_12sdp"
     app:cardElevation="@dimen/_3sdp">
@@ -16,22 +16,40 @@
         android:layout_margin="@dimen/_8sdp"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:fontFamily="@font/nunito_sans_bold"
             android:text="Job Property Bid All"
             android:textColor="@color/purple_700"
             android:textSize="@dimen/_14ssp" />
 
+            <ImageView
+                android:id="@+id/allBidPropertyShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/ic_eyes"
+                android:backgroundTint="@color/purple_500"/>
+
+        </RelativeLayout>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/propertyType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/nunito_sans_bold"
             android:text="Job Property Bid"
+            android:textColor="@color/black"
             android:textSize="@dimen/_10sdp" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -39,11 +57,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
             android:drawablePadding="@dimen/_3sdp"
             android:fontFamily="@font/nunito_sans"
+            android:textColor="@color/black"
             android:text="Address"
             android:textSize="@dimen/_10ssp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/totalProperty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:text="Total Bid Property: "
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="Price : 00"
+                app:fontFamily="@font/nunito_sans_bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/agentAssign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:drawableTint="@color/ultra_light_grey"
+                android:text="Assign"
+                android:textSize="@dimen/_10ssp"
+                app:backgroundTint="@color/green_700" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

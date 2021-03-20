@@ -8,7 +8,6 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import com.illopen.agent.adapters.CompletedJobDetailsAdapter
 import com.illopen.agent.databinding.ActivityCompletedJobDetailsBinding
-import com.illopen.agent.listeners.OnCompletedJobPropertyClick
 import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
@@ -17,7 +16,7 @@ import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
 import java.util.HashMap
 
-class CompletedJobDetails : AppCompatActivity() , OnCompletedJobPropertyClick{
+class CompletedJobDetails : AppCompatActivity() , CompletedJobDetailsAdapter.OnCompletedJobPropertyClick{
 
     private lateinit var binding: ActivityCompletedJobDetailsBinding
 

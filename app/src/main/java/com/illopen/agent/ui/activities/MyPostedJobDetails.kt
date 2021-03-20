@@ -18,7 +18,7 @@ import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
 import java.util.HashMap
 
-class MyPostedJobDetails : AppCompatActivity(), MyPostedJobDetailsAdapter.OnItemClickListener {
+class MyPostedJobDetails : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyPostedJobDetailsBinding
 
@@ -72,7 +72,7 @@ class MyPostedJobDetails : AppCompatActivity(), MyPostedJobDetailsAdapter.OnItem
 
                         val list : List<JobPropertyList> = response.body()!!.values!!
 
-                        binding.myPostedJobRv.adapter = MyPostedJobDetailsAdapter(this@MyPostedJobDetails,list,this@MyPostedJobDetails)
+                        binding.myPostedJobRv.adapter = MyPostedJobDetailsAdapter(this@MyPostedJobDetails,list)
                     }
                 }else{
                     withContext(Dispatchers.Main){
@@ -85,54 +85,54 @@ class MyPostedJobDetails : AppCompatActivity(), MyPostedJobDetailsAdapter.OnItem
         }
     }
 
-    override fun onItemClick(itemPosition: Int, data: JobPropertyList) {
+//    override fun onItemClick(itemPosition: Int, data: JobPropertyList) {
+//
+//        agentPopupDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
+//        agentPopupDialog.setContentView(R.layout.single_bid_list_item)
+//        agentPopupDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+//
+//        val title = agentPopupDialog.findViewById<TextView>(R.id.title)
+//        val amount = agentPopupDialog.findViewById<TextView>(R.id.amount)
+//
+//
+//        title.text = data.propertyName.toString()
+//        amount.text = data.propertyPrice.toString()
+//
+//        val acceptBtn = agentPopupDialog.findViewById<Button>(R.id.accept)
+//        val rejectBtn = agentPopupDialog.findViewById<Button>(R.id.reject)
+//
+//        acceptBtn.setOnClickListener {
+//            agentPopupDialog.cancel()
+////            agentPopup(data)
+//            Log.d(TAG, "onItemClick: "+ data.toString())
+//        }
+//
+//        rejectBtn.setOnClickListener { agentPopupDialog.cancel() }
+//
+//        agentPopupDialog.show()
+//    }
 
-        agentPopupDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
-        agentPopupDialog.setContentView(R.layout.single_bid_list_item)
-        agentPopupDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
-
-        val title = agentPopupDialog.findViewById<TextView>(R.id.title)
-        val amount = agentPopupDialog.findViewById<TextView>(R.id.amount)
-
-
-        title.text = data.propertyName.toString()
-        amount.text = data.propertyPrice.toString()
-
-        val acceptBtn = agentPopupDialog.findViewById<Button>(R.id.accept)
-        val rejectBtn = agentPopupDialog.findViewById<Button>(R.id.reject)
-
-        acceptBtn.setOnClickListener {
-            agentPopupDialog.cancel()
-//            agentPopup(data)
-            Log.d(TAG, "onItemClick: "+ data.toString())
-        }
-
-        rejectBtn.setOnClickListener { agentPopupDialog.cancel() }
-
-        agentPopupDialog.show()
-    }
-
-    private fun agentPopup(data: JobPropertyList) {
-        coroutineScope.launch {
-            try {
-
-                val response = ServiceApi.retrofitService.getJobAssignUserId(jobId.toInt(),data.id!!.toInt())
-                if (response.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-
-                        Log.d("Assigned Agent Details", response.code().toString())
-                        Log.d("Assigned Agent Details", response.body().toString())
-
-                        toast("Job Assigned User Updated Successfully")
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Log.d(TAG, "something wrong")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.d(TAG, e.message.toString())
-            }
-        }
-    }
+//    private fun agentPopup(data: JobPropertyList) {
+//        coroutineScope.launch {
+//            try {
+//
+//                val response = ServiceApi.retrofitService.getJobAssignUserId(jobId.toInt(),data.id!!.toInt())
+//                if (response.isSuccessful) {
+//                    withContext(Dispatchers.Main) {
+//
+//                        Log.d("Assigned Agent Details", response.code().toString())
+//                        Log.d("Assigned Agent Details", response.body().toString())
+//
+//                        toast("Job Assigned User Updated Successfully")
+//                    }
+//                } else {
+//                    withContext(Dispatchers.Main) {
+//                        Log.d(TAG, "something wrong")
+//                    }
+//                }
+//            } catch (e: Exception) {
+//                Log.d(TAG, e.message.toString())
+//            }
+//        }
+//    }
 }
