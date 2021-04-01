@@ -15,15 +15,18 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
+            android:drawablePadding="@dimen/_5sdp"
             android:gravity="center"
             android:text="My Documents"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_arrow_back"
             app:fontFamily="@font/nunito_sans" />
 
     </RelativeLayout>
@@ -63,9 +66,9 @@
                 app:cardElevation="@dimen/_3sdp">
 
                 <Spinner
-                    android:id="@+id/filter"
+                    android:id="@+id/docTypeSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -93,21 +96,23 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/green_700"
                     android:text="Image"
-                    android:textSize="@dimen/_8ssp"/>
+                    android:textSize="@dimen/_8ssp" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pdf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:textSize="@dimen/_8ssp"
                     android:backgroundTint="@color/green_700"
-                    android:text="PDF" />
+                    android:text="PDF"
+                    android:textSize="@dimen/_8ssp" />
 
             </LinearLayout>
 

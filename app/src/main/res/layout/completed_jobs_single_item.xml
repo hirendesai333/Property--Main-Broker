@@ -20,31 +20,67 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/name"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Shivalik Shilp"
-            android:textColor="@color/purple_700"
-            android:textSize="@dimen/_14ssp" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Shivalik Shilp"
+                android:textColor="@color/purple_700"
+                android:textSize="@dimen/_14ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/markCompleted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bid_dialog_border"
+                android:fontFamily="@font/nunito_sans"
+                android:padding="@dimen/_4sdp"
+                android:paddingStart="@dimen/_7sdp"
+                android:paddingEnd="@dimen/_7sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:text="Mark As: Completed"
+                android:textColor="@color/purple_500"
+                android:textSize="@dimen/_10ssp" />
+
+        </RelativeLayout>
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/jobStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bid_dialog_border"
-            android:drawablePadding="@dimen/_3sdp"
             android:fontFamily="@font/nunito_sans"
-            android:paddingStart="@dimen/_7sdp"
-            android:paddingTop="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:paddingEnd="@dimen/_7sdp"
+            android:padding="@dimen/_4sdp"
             android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:paddingStart="@dimen/_7sdp"
+            android:paddingEnd="@dimen/_7sdp"
             android:paddingBottom="@dimen/_4sdp"
             android:text="Job status: Completed"
             android:textColor="@color/green_700"
             android:textSize="@dimen/_10ssp" />
+
+        <!--        <com.google.android.material.textview.MaterialTextView-->
+        <!--            android:id="@+id/markCompleted"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:padding="@dimen/_4sdp"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_centerVertical="true"-->
+        <!--            android:paddingBottom="@dimen/_4sdp"-->
+        <!--            android:fontFamily="@font/nunito_sans_bold"-->
+        <!--            android:background="@drawable/bid_dialog_border"-->
+        <!--            android:text="MARK AS : Completed"-->
+        <!--            android:textColor="@color/green_700"-->
+        <!--            android:textSize="@dimen/_10sdp" />-->
 
 
         <RelativeLayout
@@ -76,8 +112,8 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/_3sdp"
                     android:fontFamily="@font/nunito_sans"
-                    android:text="Job Rating: "
                     android:gravity="center_vertical"
+                    android:text="Job Rating: "
                     android:textColor="@color/green_700"
                     android:textSize="@dimen/_10ssp" />
 
@@ -95,8 +131,8 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/_3sdp"
                     android:fontFamily="@font/nunito_sans"
-                    android:text="4.8"
                     android:gravity="center_vertical"
+                    android:text="4.8"
                     android:textColor="@color/green_700"
                     android:textSize="@dimen/_10ssp" />
 
@@ -184,18 +220,15 @@
             android:layout_marginTop="@dimen/_7sdp">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/totalProperty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_toStartOf="@+id/postDate"
-                android:drawablePadding="@dimen/_3sdp"
                 android:fontFamily="@font/nunito_sans"
                 android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="USA"
-                android:textSize="@dimen/_10ssp"
-                app:drawableStartCompat="@drawable/ic_location"
-                app:drawableTint="@color/green_700" />
+                android:text="Total property: 1"
+                android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/postDate"

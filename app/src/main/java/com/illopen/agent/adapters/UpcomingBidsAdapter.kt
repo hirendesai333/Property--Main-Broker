@@ -17,6 +17,8 @@ class UpcomingBidsAdapter(var from: String, var list: List<AssignedJobList>, var
         val propertyName: TextView = itemView.findViewById(R.id.name)
         val time : TextView = itemView.findViewById(R.id.time)
         val date : TextView = itemView.findViewById(R.id.date)
+        val created : TextView = itemView.findViewById(R.id.postDate)
+        val totalProperty : TextView = itemView.findViewById(R.id.totalProperty)
         val jobStatus: TextView = itemView.findViewById(R.id.jobStatus)
         val phone : TextView = itemView.findViewById(R.id.phone)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
@@ -48,7 +50,9 @@ class UpcomingBidsAdapter(var from: String, var list: List<AssignedJobList>, var
         holder.propertyName.text = currentItem.userName
         holder.jobStatus.text = currentItem.statusName
         holder.date.text = currentItem.jobVisitingDate
+        holder.created.text = "Posted on: " + currentItem.createdDateStr
         holder.time.text = currentItem.jobVisitingTime
+        holder.totalProperty.text = "Total Property: " + currentItem.totalProperty.toString()
         holder.phone.text = currentItem.customerPhoneNumber
 
         holder.rootLayout.setOnClickListener {

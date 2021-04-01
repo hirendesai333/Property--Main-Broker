@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activities.OnGoingJobDetails">
+    tools:context=".ui.activities.AllJobPropertyBidList">
 
     <RelativeLayout
         android:id="@+id/topBar"
@@ -19,29 +19,16 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:drawablePadding="@dimen/_5sdp"
-            android:text="Ongoing Job"
+            android:text="Completed Agent Bids"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             app:drawableStartCompat="@drawable/ic_arrow_back"
             app:fontFamily="@font/nunito_sans_bold" />
 
-<!--        <com.google.android.material.textview.MaterialTextView-->
-<!--            android:id="@+id/allJobBid"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:gravity="center"-->
-<!--            android:text="All Bid Property"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="@dimen/_12ssp"-->
-<!--            app:fontFamily="@font/nunito_sans_bold" />-->
-
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/onGoingJobProperty"
+        android:id="@+id/completedBidProperty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

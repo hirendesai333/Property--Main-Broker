@@ -72,7 +72,11 @@ class MyPostedJobDetails : AppCompatActivity() {
 
                         val list : List<JobPropertyList> = response.body()!!.values!!
 
-                        binding.myPostedJobRv.adapter = MyPostedJobDetailsAdapter(this@MyPostedJobDetails,list)
+                        if (list.isNotEmpty()){
+                            binding.myPostedJobRv.adapter = MyPostedJobDetailsAdapter(this@MyPostedJobDetails,list)
+                        }else{
+                            //no property
+                        }
                     }
                 }else{
                     withContext(Dispatchers.Main){

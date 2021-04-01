@@ -6,18 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
+import com.illopen.agent.databinding.CompletedMypostedJobBidItemBinding
 import com.illopen.agent.databinding.JobPropertyAllBidListBinding
 import com.illopen.agent.model.JobBidValue
 
-class JobPropertyBidAllAdapter(var context: Context, var list: List<JobBidValue>
-    ,var itemClickListener : OnItemClickListener
-    ,var itemClick : OnPropertyShowClick) :
-    RecyclerView.Adapter<JobPropertyBidAllAdapter.ViewHolder>() {
-
+class CompletedMyPostedJobBidAdapter(var context: Context,var list: List<JobBidValue>,var itemClick : OnPropertyShowClick)
+    : RecyclerView.Adapter<CompletedMyPostedJobBidAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.job_property_all_bid_list, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.completed_myposted_job_bid_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -31,12 +28,8 @@ class JobPropertyBidAllAdapter(var context: Context, var list: List<JobBidValue>
 //            add.text = currentItem.propertyAddress.toString()
         }
 
-        holder.binding.agentAssign.setOnClickListener {
-            itemClickListener.onItemClick(position, list[position])
-        }
-
         holder.binding.allBidPropertyShow.setOnClickListener {
-           itemClick.onEyePropertyClick(position,list[position])
+            itemClick.onEyePropertyClick(position,list[position])
         }
     }
 
@@ -44,15 +37,12 @@ class JobPropertyBidAllAdapter(var context: Context, var list: List<JobBidValue>
         return list.size
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = JobPropertyAllBidListBinding.bind(itemView)
-    }
-
-    interface OnItemClickListener {
-        fun onItemClick(itemPosition: Int, data: JobBidValue)
+    class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+        val binding = CompletedMypostedJobBidItemBinding.bind(itemView)
     }
 
     interface OnPropertyShowClick{
         fun onEyePropertyClick(itemPosition: Int, data: JobBidValue)
     }
+
 }

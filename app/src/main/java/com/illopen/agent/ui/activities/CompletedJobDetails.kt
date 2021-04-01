@@ -16,14 +16,13 @@ import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
 import java.util.HashMap
 
-class CompletedJobDetails : AppCompatActivity() , CompletedJobDetailsAdapter.OnCompletedJobPropertyClick{
+class CompletedJobDetails : AppCompatActivity(){
 
     private lateinit var binding: ActivityCompletedJobDetailsBinding
 
     private val TAG = "CompletedJobDetails"
 
     private lateinit var jobId: String
-    private val statusMasterId : Int = 4
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -33,10 +32,10 @@ class CompletedJobDetails : AppCompatActivity() , CompletedJobDetailsAdapter.OnC
         binding = ActivityCompletedJobDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        jobId = intent.getStringExtra("CompletedJob")!!
+        jobId = intent.getStringExtra("CompletedMyPostedJob")!!
 
         binding.allBidPropertyDetails.setOnClickListener {
-            val intent =  Intent(this,AllJobPropertyBidList::class.java)
+            val intent =  Intent(this,CompletedJobBidList::class.java)
             intent.putExtra("job",jobId)
             startActivity(intent)
         }
@@ -56,7 +55,8 @@ class CompletedJobDetails : AppCompatActivity() , CompletedJobDetailsAdapter.OnC
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getJobProperty(jobId.toInt(),AppPreferences.getUserData(Params.UserId).toInt(),map)
+                val response = ServiceApi.retrofitService.getJobProperty(jobId.toInt(),
+                    AppPreferences.getUserData(Params.UserId).toInt(),map)
 
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
@@ -66,7 +66,7 @@ class CompletedJobDetails : AppCompatActivity() , CompletedJobDetailsAdapter.OnC
 
                         val list : List<JobPropertyList> = response.body()!!.values!!
 
-                        binding.completedJobProperty.adapter = CompletedJobDetailsAdapter(this@CompletedJobDetails,list,this@CompletedJobDetails)
+                        binding.completedJobProperty.adapter = CompletedJobDetailsAdapter(this@CompletedJobDetails,list)
 
                     }
                 }else{
@@ -80,46 +80,47 @@ class CompletedJobDetails : AppCompatActivity() , CompletedJobDetailsAdapter.OnC
         }
     }
 
-    override fun onCompletedJobPropertyClick(currentItem: JobPropertyList) {
-        markPropertyAsCompleted(currentItem)
-    }
-
-    private fun markPropertyAsCompleted(currentItem: JobPropertyList) {
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Are You Sure Mark As Completed!")
-        builder.setPositiveButton("YES") { dialogInterface: DialogInterface, i: Int ->
-            completedMarked(currentItem)
-        }
-        builder.setNegativeButton("NO") { dialogInterface: DialogInterface, i: Int ->
-            dialogInterface.dismiss()
-        }
-        builder.show()
-    }
-
-    private fun completedMarked(currentItem: JobPropertyList) {
-        coroutineScope.launch {
-            try {
-                val response = ServiceApi.retrofitService.markJobPropertyStatus(
-                    jobId.toInt(),
-                    statusMasterId
-                )
-                if (response.isSuccessful){
-                    withContext(Dispatchers.Main){
-
-                        Log.d("Mark Completed Property", response.code().toString())
-                        Log.d("Mark CompletedProperty", response.body().toString())
-
-                        toast("Complete Property  Marked  Successfully")
-                    }
-                }else{
-                    withContext(Dispatchers.Main){
-                        Log.d(TAG, "something wrong ")
-                    }
-                }
-            }catch (e : Exception){
-                Log.d(TAG, e.message.toString())
-            }
-        }
-    }
+//    override fun onCompletedJobPropertyClick(currentItem: JobPropertyList) {
+//        markPropertyAsCompleted()
+//    }
+//
+//    private fun markPropertyAsCompleted() {
+//
+//        val builder = AlertDialog.Builder(this)
+//        builder.setTitle("Are You Sure Mark As Completed!")
+//        builder.setPositiveButton("YES") { dialogInterface: DialogInterface, i: Int ->
+//            completedMarked()
+//            dialogInterface.dismiss()
+//        }
+//        builder.setNegativeButton("NO") { dialogInterface: DialogInterface, i: Int ->
+//            dialogInterface.dismiss()
+//        }
+//        builder.show()
+//    }
+//
+//    private fun completedMarked() {
+//        coroutineScope.launch {
+//            try {
+//                val response = ServiceApi.retrofitService.markJobPropertyStatus(
+//                    jobId.toInt(),
+//                    4
+//                )
+//                if (response.isSuccessful){
+//                    withContext(Dispatchers.Main){
+//
+//                        Log.d("Mark Completed Property", response.code().toString())
+//                        Log.d("Mark CompletedProperty", response.body().toString())
+//
+//                        toast("Complete Property  Marked  Successfully")
+//                    }
+//                }else{
+//                    withContext(Dispatchers.Main){
+//                        Log.d(TAG, "something wrong ")
+//                    }
+//                }
+//            }catch (e : Exception){
+//                Log.d(TAG, e.message.toString())
+//            }
+//        }
+//    }
 }

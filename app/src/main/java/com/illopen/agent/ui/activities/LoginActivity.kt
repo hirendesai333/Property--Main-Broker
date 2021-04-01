@@ -1,12 +1,17 @@
 package com.illopen.agent.ui.activities
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.illopen.agent.R
 import com.illopen.agent.databinding.ActivityLoginBinding
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
@@ -28,6 +33,10 @@ class LoginActivity : AppCompatActivity() {
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
+
+    private lateinit var forgotPassPopUp : Dialog
+
+    var loginType : Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +64,70 @@ class LoginActivity : AppCompatActivity() {
 
         binding.register.setOnClickListener {
             startActivity(Intent(this, SignUp::class.java))
+        }
+
+        binding.forgotPassword.setOnClickListener {
+            forgotPasswordPopUp()
+        }
+    }
+
+    private fun forgotPasswordPopUp() {
+
+        forgotPassPopUp = Dialog(this, R.style.Theme_PropertyMainBroker)
+        forgotPassPopUp.setContentView(R.layout.forgot_password_popup)
+        forgotPassPopUp.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+
+
+        val emailForgotPassword: TextInputEditText = forgotPassPopUp.findViewById(R.id.emailIdForgotPassword)
+        val verifyEmail: TextView = forgotPassPopUp.findViewById(R.id.verifyEmail)
+        val emailInputLayout: TextInputLayout = forgotPassPopUp.findViewById(R.id.emailInputLayout)
+
+        forgotPassPopUp.show()
+
+        verifyEmail.setOnClickListener {
+            if (emailForgotPassword.text.toString().trim().isEmpty()) {
+                emailInputLayout.error = "Please enter Email ID"
+            } else {
+                forgotPasswordAPI(emailForgotPassword.text.toString().trim(),forgotPassPopUp)
+            }
+        }
+    }
+
+    private fun forgotPasswordAPI(emailID: String,dialog: Dialog) {
+        progressDialog.dialog.show()
+        coroutineScope.launch {
+            try {
+
+                val response = ServiceApi.retrofitService.forgotPassword(
+                    emailID,
+                    true
+                )
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+
+                        Log.d("Forgot-Password", response.code().toString())
+                        Log.d("Forgot-Password", response.body().toString())
+
+                        if (response.code() == 200){
+                            toast("Reset Password Successfully")
+                            dialog.dismiss()
+                        }else{
+                            toast("Please try again")
+                        }
+                        progressDialog.dialog.dismiss()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                        progressDialog.dialog.dismiss()
+                    }
+                }
+
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+                toast("Please try again")
+                progressDialog.dialog.dismiss()
+            }
         }
     }
 

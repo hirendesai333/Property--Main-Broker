@@ -4,37 +4,33 @@ import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.adapters.AgentBidPropertyListAdapter
-import com.illopen.agent.adapters.JobPropertyBidAllAdapter
-import com.illopen.agent.databinding.ActivityAllJobPropertyBidListBinding
-import com.illopen.agent.model.*
+import com.illopen.agent.adapters.CompletedMyPostedJobBidAdapter
+import com.illopen.agent.databinding.ActivityCompletedJobBidListBinding
+import com.illopen.agent.model.JobBidValue
+import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.network.ServiceApi
-import com.illopen.agent.utils.AppPreferences
-import com.illopen.agent.utils.Params
-import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
 import java.util.HashMap
 
-class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnItemClickListener, JobPropertyBidAllAdapter.OnPropertyShowClick {
-    private lateinit var binding: ActivityAllJobPropertyBidListBinding
+class CompletedJobBidList : AppCompatActivity() , CompletedMyPostedJobBidAdapter.OnPropertyShowClick {
 
-    private val TAG = "AllJobPropertyBidList"
+    private lateinit var binding: ActivityCompletedJobBidListBinding
+
+    private val TAG = "CompletedJobBidList"
+
+    private lateinit var agentShowProperty : Dialog
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
     private lateinit var jobId : String
 
-    private lateinit var agentPopupDialog : Dialog
-    private lateinit var agentShowProperty : Dialog
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAllJobPropertyBidListBinding.inflate(layoutInflater)
+        binding = ActivityCompletedJobBidListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.title.setOnClickListener {
@@ -43,10 +39,10 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
 
         jobId = intent.getStringExtra("job")!!
 
-        allJobPropertyBid()
+        completedJobPropertyBid()
     }
 
-    private fun allJobPropertyBid() {
+    private fun completedJobPropertyBid() {
         coroutineScope.launch {
             try {
                 val map = HashMap<String, String>()
@@ -65,9 +61,8 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
 
                         val list : List<JobBidValue> = response.body()!!.values!!
                         if (list.isNotEmpty()) {
-                            binding.allBidProperty.adapter =
-                                JobPropertyBidAllAdapter(this@AllJobPropertyBidList, list,
-                                    this@AllJobPropertyBidList,this@AllJobPropertyBidList)
+                            binding.completedBidProperty.adapter =
+                                CompletedMyPostedJobBidAdapter(this@CompletedJobBidList, list,this@CompletedJobBidList)
                         } else {
                             // no bids found
                         }
@@ -84,70 +79,18 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
         }
     }
 
-    override fun onItemClick(itemPosition: Int, data: JobBidValue) {
-
-        agentPopupDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
-        agentPopupDialog.setContentView(R.layout.single_bid_list_item)
-        agentPopupDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
-
-        val title = agentPopupDialog.findViewById<TextView>(R.id.title)
-        val amount = agentPopupDialog.findViewById<TextView>(R.id.amount)
-
-
-        title.text = data.userName.toString()
-        amount.text = data.amount.toString()
-
-        val acceptBtn = agentPopupDialog.findViewById<Button>(R.id.accept)
-        val rejectBtn = agentPopupDialog.findViewById<Button>(R.id.reject)
-
-        acceptBtn.setOnClickListener {
-            agentPopupDialog.cancel()
-            agentPopup(data)
-            Log.d(TAG, "onItemClick: $data")
-        }
-
-        rejectBtn.setOnClickListener { agentPopupDialog.cancel() }
-
-        agentPopupDialog.show()
-    }
-
-    private fun agentPopup(data: JobBidValue) {
-        coroutineScope.launch {
-            try {
-
-                val response = ServiceApi.retrofitService.getJobAssignUserId(jobId.toInt(),data.userId!!.toInt())
-                if (response.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-
-                        Log.d("Assigned Agent Details", response.code().toString())
-                        Log.d("Assigned Agent Details", response.body().toString())
-
-                        toast("Job Assigned User Updated Successfully")
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Log.d(TAG, "something wrong")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.d(TAG, e.message.toString())
-            }
-        }
-    }
-
     override fun onEyePropertyClick(itemPosition: Int, data: JobBidValue) {
-
         agentShowProperty = Dialog(this, R.style.Theme_PropertyMainBroker)
         agentShowProperty.setContentView(R.layout.bid_details_popup)
         agentShowProperty.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
         val bidDetailsRv = agentShowProperty.findViewById<RecyclerView>(R.id.agentBidDetails)
-        agentBidDetailsList(bidDetailsRv,data)
+        completedBidDetailsList(bidDetailsRv,data)
 
         agentShowProperty.show()
     }
 
-    private fun agentBidDetailsList(bidDetailsRv: RecyclerView?,data: JobBidValue) {
+    private fun completedBidDetailsList(bidDetailsRv: RecyclerView?, data: JobBidValue) {
 
         coroutineScope.launch {
             try {
@@ -168,7 +111,7 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
 
                         val list : List<JobPropertyList> = response.body()!!.values!!
 
-                        bidDetailsRv!!.adapter = AgentBidPropertyListAdapter(this@AllJobPropertyBidList,list)
+                        bidDetailsRv!!.adapter = AgentBidPropertyListAdapter(this@CompletedJobBidList,list)
                     }
                 }else{
                     withContext(Dispatchers.Main){

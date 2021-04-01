@@ -147,7 +147,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
                         Log.d("getAvailableJobs", response.code().toString())
                         Log.d("getAvailableJobs", response.body().toString())
                         val list: List<AvailableJobs> = response.body()!!.values!!
-                        if (list.size > 0) {
+                        if (list.isNotEmpty()) {
                             binding.upcomingJobs.adapter = AllPropertyListAdapter(
                                 Params.OTHER_NEW_JOBS,
                                 list,

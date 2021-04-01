@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.illopen.agent.R
 import com.illopen.agent.databinding.FragmentSettingsBinding
 import com.illopen.agent.ui.activities.*
@@ -35,8 +36,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         binding.logout.setOnClickListener {
-            val builder = activity?.let { it1 -> AlertDialog.Builder(it1) }
-            builder?.setTitle("Are you sure you want to LogOut!!")
+            val builder = activity?.let { it1 -> MaterialAlertDialogBuilder(it1) }
+            builder?.setTitle("LogOut")
+            builder?.setMessage("Are you sure you want to LogOut!!")
             builder?.setPositiveButton("YES") { dialogInterface: DialogInterface, i: Int ->
                 Intent(activity, LoginActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -72,6 +74,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         binding.dashBoard.setOnClickListener {
             Intent(activity, Dashboard::class.java).apply {
+                startActivity(this)
+            }
+        }
+
+        binding.changePass.setOnClickListener {
+            Intent(activity, ChangePassword::class.java).apply {
                 startActivity(this)
             }
         }

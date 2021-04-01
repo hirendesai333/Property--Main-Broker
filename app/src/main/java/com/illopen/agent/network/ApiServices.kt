@@ -30,7 +30,15 @@ interface ApiKtService{
                       @Field("password") password : String) : Response<LoginModel>
 
     @POST(SIGNUP)
-    suspend fun signup(@Body data : Map<String,String>) : Response<Any>
+    suspend fun signUp(@Body data : Map<String,String>) : Response<Any>
+
+    @FormUrlEncoded
+    @POST(LOGIN)
+    suspend fun forgotPassword(@Field("Email") Email: String,
+                               @Field("LoginType") LoginType : Boolean) : Response<LoginModel>
+
+    @POST(CHANGE_PASSWORD)
+    suspend fun changePassword(@Query("Type") Type : Int, @Body data: Map<String, String>) : Response<Any>
 
     @FormUrlEncoded
     @POST(GETCUSTOMERS)
@@ -70,7 +78,7 @@ interface ApiKtService{
     suspend fun updateUserProfile(@Body data: Map<String, String>) : Response<UpdateUserProfileModel>
 
     @POST(GETCOUNTRY)
-    suspend fun getCountry(@Query("search") userId: Int, @Body data: Map<String, String>) : Response<AllCountryModel>
+    suspend fun getCountry(@Body data: Map<String, String>) : Response<AllCountryModel>
 
     @POST(GETSTATE)
     suspend fun getState(@Query("CountryId") userId: Int, @Body data: Map<String, String>) : Response<AllStateListModel>
@@ -89,10 +97,7 @@ interface ApiKtService{
 
     @Multipart
     @POST(UPLOAD_PROFILE_PIC)
-    suspend fun uploadProfilePic(
-        @Part("id") id: RequestBody,
-        @Part files: MultipartBody.Part
-    ): Response<UserProfileModel>
+    suspend fun uploadProfilePic(@Part("id") id: RequestBody, @Part files: MultipartBody.Part): Response<UserProfileModel>
 
     @POST(GETNEWAVAILABLEJOBS)
     suspend fun getNewAvailableJobs(@Query("userId") userId: Int,
@@ -119,7 +124,7 @@ interface ApiKtService{
                                        @Body data: Map<String, String>) : Response<AllAssignedJobModel>
 
     @POST(GETCOMPLETEDJOBSFORCompleted)
-    suspend fun getCompletedJobs(@Query("StatusMasterId") statusMasterId : Int,
+    suspend fun getAssignedCompletedJobs(@Query("StatusMasterId") statusMasterId : Int,
                                  @Query("AssignedUserId") assignedUserId : Int,
                                  @Body data: Map<String, String>) : Response<CompletedJobsAssignModel>
 
@@ -167,8 +172,23 @@ interface ApiKtService{
     suspend fun getAllJobLang(@Body data: Map<String, String>) : Response<AllJobLanguageModel>
 
     @POST(AVAILABLEMAPLOCATION)
-    suspend fun getMapLocation(@Query("userId")userId: Int,@Body data: Map<String, String>) : Response<MapViewDetailsModel>
+    suspend fun getMapLocation(@Query("userId") userId: Int,@Body data: Map<String, String>) : Response<MapViewDetailsModel>
 
+    @POST(USER_DOCUMENT_ALL)
+    suspend fun getUserAllDocuments(@Query("userId") userId: Int,@Body data: Map<String, String>) : Response<UserAllDocumentsModel>
+
+    @POST(USER_DOCUMENT_DELETE)
+    suspend fun deleteUserDoc(@Query("Id") Id : Int, @Query("DeletedBy") deleteBy : Int) : Response<Any>
+
+    @Multipart
+    @POST(USER_DOCUMENT_INSERT)
+    suspend fun uploadDocument(@Part("UserId") userId: Int,
+                               @Part("DocumentMasterId") documentMasterId : Int,
+                               @Part files: MultipartBody.Part): Response<UserDocumentInsertModel>
+
+    @POST(USER_DOCUMENT_TYPE)
+    suspend fun getDocumentType(@Query("UserTypeMasterId") userTypeMasterId : Int,
+                                @Body data: Map<String, String>) : Response<UserDocumentTypeModel>
 }
 
 object ServiceApi{
@@ -177,6 +197,7 @@ object ServiceApi{
 
 private const val LOGIN = "users/Users_Login"
 private const val SIGNUP = "users/Users_Upsert"
+private const val CHANGE_PASSWORD = "users/Users_ChangePassword"
 private const val GETCUSTOMERS = "customerMaster/CustomerMaster_All"
 private const val ADDCUSTOMER = "customerMaster/CustomerMaster_Upsert"
 private const val UPDATECUSTOMER = "customerMaster/CustomerMaster_Upsert"
@@ -213,3 +234,7 @@ private const val MARKASPROPERTYSTATUS = "jobs/Jobs_UpdateStatus"
 private const val CREATEJOB = "jobs/Jobs_Upsert"
 private const val JOBLANGUAGEAll = "languageMaster/LanguageMaster_All"
 private const val AVAILABLEMAPLOCATION = "jobs/Jobs_ViewDetailsByUserId"
+private const val USER_DOCUMENT_ALL = "userDocuments/UserDocuments_All"
+private const val USER_DOCUMENT_DELETE = "userDocuments/UserDocuments_Delete"
+private const val USER_DOCUMENT_INSERT = "userDocuments/UserDocuments_Upsert"
+private const val USER_DOCUMENT_TYPE = "documentMaster/DocumentMaster_All"

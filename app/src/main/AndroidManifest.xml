@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,12 +19,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PropertyMainBroker"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activities.JobsPropertyOnMap"/>
+        <activity android:name=".ui.activities.ChangePassword"/>
+        <activity android:name=".ui.activities.CompletedJobBidList" />
+        <activity android:name=".ui.activities.CompletedJobAssignDetails" />
+        <activity android:name=".ui.activities.JobsPropertyOnMap" />
         <activity android:name=".ui.activities.Dashboard" />
         <activity android:name=".ui.activities.MyPostedJobDetails" />
         <activity android:name=".ui.activities.AllJobPropertyBidList" />
         <activity android:name=".ui.activities.CompletedJobDetails" />
         <activity android:name=".ui.activities.OnGoingJobDetails" />
+        <activity android:name=".ui.activities.OnGoingMyPostedJobDetails" />
+        <activity android:name=".ui.activities.OnGoingPropertyBidList" />
         <activity android:name=".ui.activities.NewJobDetails" />
         <activity
             android:name=".ui.activities.NewJob"
@@ -91,7 +99,6 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyD-sMnTTKBOBWZ6kjaBkPNw-vYda45rYy4" />
-
     </application>
 
 </manifest>

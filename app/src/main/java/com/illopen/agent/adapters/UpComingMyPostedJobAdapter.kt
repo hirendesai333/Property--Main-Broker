@@ -16,8 +16,7 @@ class UpComingMyPostedJobAdapter(var from : String, var list: List<OngoingMyPost
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.ongoing_mypostedjob_list, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.ongoing_mypostedjob_list, parent, false)
         return ViewHolder(view)
     }
 
@@ -38,6 +37,8 @@ class UpComingMyPostedJobAdapter(var from : String, var list: List<OngoingMyPost
         holder.jobStatus.text = currentItem.statusName
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
+        holder.created.text = "Posted on: " + currentItem.createdDateStr
+        holder.totalProperty.text = "Total Property: " + currentItem.totalProperty.toString()
         holder.phone.text = currentItem.customerPhoneNumber
 
         holder.rootLayout.setOnClickListener {
@@ -55,6 +56,8 @@ class UpComingMyPostedJobAdapter(var from : String, var list: List<OngoingMyPost
         val assignPhone: TextView = itemView.findViewById(R.id.assignPhone)
         val time : TextView = itemView.findViewById(R.id.time)
         val date : TextView = itemView.findViewById(R.id.date)
+        val created : TextView = itemView.findViewById(R.id.postDate)
+        val totalProperty : TextView = itemView.findViewById(R.id.totalProperty)
         val jobStatus: TextView = itemView.findViewById(R.id.jobStatus)
         val phone : TextView = itemView.findViewById(R.id.phone)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)

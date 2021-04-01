@@ -12,38 +12,26 @@ import com.illopen.agent.R
 import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.ui.activities.PropertyDetail
 
-class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>,
-                        var onGoingJobReviewClick: JobPropertyReviewClick, var onGoingJobMarkClick : JobPropertyMarkClick)
-    : RecyclerView.Adapter<OnGoingJobAdapter.ViewHolder>() {
+class OnGoingMyPostedJobsAdapter (var context: Context, var list : List<JobPropertyList>)
+: RecyclerView.Adapter<OnGoingMyPostedJobsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+
         val name : TextView = itemView.findViewById(R.id.name)
         val availableFor : TextView = itemView.findViewById(R.id.availableFor)
         val price : TextView = itemView.findViewById(R.id.price)
         val propertyType : TextView = itemView.findViewById(R.id.propertyType)
         val address : TextView = itemView.findViewById(R.id.address)
-        val mark : TextView = itemView.findViewById(R.id.mark)
-        val review : TextView = itemView.findViewById(R.id.review)
         val rootLayout : CardView = itemView.findViewById(R.id.rootLayout)
-    }
 
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.ongoing_job_item,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.ongoing_my_posted_jobs_item,parent,false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
-
-//        if (currentItem.review.isNullOrEmpty()){
-//
-//            holder.mark.visibility = View.GONE
-//            holder.review.visibility = View.GONE
-//        }else{
-//
-//            holder.review.visibility = View.VISIBLE
-//            holder.mark.visibility = View.VISIBLE
-//        }
 
         holder.name.text = currentItem.propertyName
         holder.availableFor.text = "Available for: " + currentItem.availableForMasterName
@@ -56,31 +44,9 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>,
             intent.putExtra("propertyMasterId",currentItem.propertyMasterId.toString())
             context.startActivity(intent)
         }
-
-        holder.review.setOnClickListener {
-            onGoingJobReviewClick.onGoingJobReviewClick(position,list[position])
-        }
-
-        if (currentItem.review.isNullOrEmpty()) {
-            holder.review.text = "Review"
-        } else {
-            holder.review.text = "Update Review"
-        }
-
-        holder.mark.setOnClickListener {
-            onGoingJobMarkClick.onGoingJobMarkClick(position,list[position])
-        }
     }
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-    interface JobPropertyReviewClick{
-        fun onGoingJobReviewClick(position: Int,currentItem : JobPropertyList)
-    }
-
-    interface JobPropertyMarkClick{
-        fun onGoingJobMarkClick(position: Int,currentItem : JobPropertyList)
     }
 }

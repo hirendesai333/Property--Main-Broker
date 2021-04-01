@@ -22,6 +22,7 @@ import com.illopen.agent.utils.Params
 import com.illopen.agent.listeners.OnGoingClick
 import com.illopen.agent.model.OngoingMyPostedJobList
 import com.illopen.agent.ui.activities.OnGoingJobDetails
+import com.illopen.agent.ui.activities.OnGoingMyPostedJobDetails
 import com.illopen.agent.utils.AppPreferences
 import kotlinx.coroutines.*
 import java.text.NumberFormat
@@ -200,8 +201,8 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
 
     override fun onMyPostedClick(position: Int, currentItem: OngoingMyPostedJobList) {
 
-        val intent = Intent(activity, OnGoingJobDetails::class.java)
-        intent.putExtra("OnGoingData",currentItem.id.toString())
+        val intent = Intent(activity, OnGoingMyPostedJobDetails::class.java)
+        intent.putExtra("OnGoingMyPostedData",currentItem.id.toString())
         intent.putExtra(Params.SUB_FROM,Params.MY_POSTED_ONGOING_JOBS)
         startActivity(intent)
     }

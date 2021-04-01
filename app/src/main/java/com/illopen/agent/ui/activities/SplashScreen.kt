@@ -34,7 +34,7 @@ class SplashScreen : AppCompatActivity() {
         GlobalScope.launch {
             delay(2000L)
             withContext(Dispatchers.Main) {
-                if (AppPreferences.getUserData(Params.UserId).isNullOrEmpty()){
+                if (AppPreferences.getUserData(Params.UserId).isEmpty()){
 
                     val intent = Intent(this@SplashScreen, LoginActivity::class.java)
                     val options = ActivityOptions.makeSceneTransitionAnimation(

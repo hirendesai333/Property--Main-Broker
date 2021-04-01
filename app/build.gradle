@@ -104,17 +104,17 @@ dependencies {
     //rating library
     implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
 
-    //google gms service
-
-    //country selection by code
-    implementation 'com.hbb20:ccp:2.4.5'
-
     //icon switch
     implementation 'com.polyak:icon-switch:1.0.0'
+
+    //image upload
+    implementation 'com.droidninja:filepicker:2.2.5'
 
     //firebase service
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 }

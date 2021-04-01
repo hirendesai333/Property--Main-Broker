@@ -1,11 +1,14 @@
 package com.illopen.agent.ui.activities
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import com.illopen.agent.adapters.OnGoingMyPostedJobsAdapter
-import com.illopen.agent.databinding.ActivityOnGoingMyPostedJobDetailsBinding
+import com.illopen.agent.R
+import com.illopen.agent.adapters.CompletedJobAssignDetailsAdapter
+import com.illopen.agent.adapters.CompletedJobDetailsAdapter
+import com.illopen.agent.databinding.ActivityCompletedJobAssignDetailsBinding
+import com.illopen.agent.databinding.ActivityCompletedJobDetailsBinding
 import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
@@ -13,36 +16,37 @@ import com.illopen.agent.utils.Params
 import kotlinx.coroutines.*
 import java.util.HashMap
 
-class OnGoingMyPostedJobDetails : AppCompatActivity() {
+class CompletedJobAssignDetails : AppCompatActivity() {
 
-    private lateinit var binding: ActivityOnGoingMyPostedJobDetailsBinding
+    private lateinit var binding: ActivityCompletedJobAssignDetailsBinding
 
-    private val TAG = "OnGoing_MyPosted_Job_Details"
+    private val TAG = "CompletedJobAssignDetails"
 
     private lateinit var jobId: String
+    private val statusMasterId : Int = 4
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOnGoingMyPostedJobDetailsBinding.inflate(layoutInflater)
+        binding = ActivityCompletedJobAssignDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        jobId = intent.getStringExtra("OnGoingMyPostedData")!!
+        jobId = intent.getStringExtra("CompletedAssignJob")!!
 
-        getOnGoingMyPostedJobProperty()
-
-        binding.allBidDetails.setOnClickListener {
-            val intent =  Intent(this,OnGoingPropertyBidList::class.java)
-            intent.putExtra("job",jobId)
-            startActivity(intent)
-        }
+//        binding.allBidPropertyDetails.setOnClickListener {
+//            val intent =  Intent(this,AllJobPropertyBidList::class.java)
+//            intent.putExtra("job",jobId)
+//            startActivity(intent)
+//        }
 
         binding.title.setOnClickListener { onBackPressed() }
+
+        getCompletedJobAssign()
     }
 
-    private fun getOnGoingMyPostedJobProperty() {
+    private fun getCompletedJobAssign() {
         coroutineScope.launch {
             try {
                 val map = HashMap<String, String>()
@@ -58,13 +62,12 @@ class OnGoingMyPostedJobDetails : AppCompatActivity() {
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
 
-                        Log.d("getMyPostedJobProperty", response.code().toString())
-                        Log.d("getMyPostedJobProperty", response.body().toString())
+                        Log.d("getCompletedJob", response.code().toString())
+                        Log.d("getCompletedJob", response.body().toString())
 
                         val list : List<JobPropertyList> = response.body()!!.values!!
 
-                        binding.ongoingMyPostedJobRv.adapter = OnGoingMyPostedJobsAdapter(this@OnGoingMyPostedJobDetails,list)
-
+                        binding.completedJobProperty.adapter = CompletedJobAssignDetailsAdapter(this@CompletedJobAssignDetails,list)
                     }
                 }else{
                     withContext(Dispatchers.Main){
@@ -75,6 +78,5 @@ class OnGoingMyPostedJobDetails : AppCompatActivity() {
                 Log.d(TAG, e.message.toString())
             }
         }
-
     }
 }

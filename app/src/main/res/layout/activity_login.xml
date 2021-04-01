@@ -124,6 +124,19 @@
                     android:layout_marginBottom="15dp"
                     android:inputType="textPassword" />
 
+                <TextView
+                    android:id="@+id/forgotPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:padding="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:textStyle="bold"
+                    android:textColor="@color/green_700"
+                    android:textSize="@dimen/_10sdp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="Forgot Password?" />
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

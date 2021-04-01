@@ -10,12 +10,14 @@ import android.widget.Button
 import android.widget.RatingBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.illopen.agent.R
 import com.illopen.agent.adapters.OnGoingJobAdapter
 import com.illopen.agent.databinding.ActivityOnGoingJobDetailsBinding
 import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.network.ServiceApi
+import com.illopen.agent.ui.fragments.UpcomingJobsFragment
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.Params
 import com.illopen.properybroker.utils.toast
@@ -44,11 +46,11 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
 
         getOnGoingJobProperty()
 
-        binding.allJobBid.setOnClickListener {
-            val intent =  Intent(this,AllJobPropertyBidList::class.java)
-            intent.putExtra("job",jobId)
-            startActivity(intent)
-        }
+//        binding.allJobBid.setOnClickListener {
+//            val intent =  Intent(this,AllJobPropertyBidList::class.java)
+//            intent.putExtra("job",jobId)
+//            startActivity(intent)
+//        }
 
         binding.title.setOnClickListener { onBackPressed() }
     }
@@ -73,9 +75,12 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
 
                         val list : List<JobPropertyList> = response.body()!!.values!!
 
-                        binding.onGoingJobProperty.adapter = OnGoingJobAdapter(this@OnGoingJobDetails,list,
-                            this@OnGoingJobDetails,this@OnGoingJobDetails)
-
+                        if (list.isNotEmpty()){
+                            binding.onGoingJobProperty.adapter = OnGoingJobAdapter(this@OnGoingJobDetails,list,
+                                this@OnGoingJobDetails,this@OnGoingJobDetails)
+                        }else{
+                            // no property found
+                        }
                     }
                 }else{
                     withContext(Dispatchers.Main){
@@ -90,16 +95,25 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
     }
 
     override fun onGoingJobMarkClick(position: Int, currentItem: JobPropertyList) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Are You Sure Mark This Property!!")
-        builder.setPositiveButton("YES") { dialogInterface: DialogInterface, i: Int ->
+
+        if (currentItem.review.isNullOrEmpty()){
+                toast("Please Review the Property To Change The Job Status!!")
+            }else{
+
+            val builder = MaterialAlertDialogBuilder(this)
+            builder.setTitle("Are You Sure ?")
+            builder.setMessage("Are You Sure Mark This Property!!")
+            builder.setPositiveButton("Yes, do it!") { dialogInterface: DialogInterface, i: Int ->
+
             marked()
             dialogInterface.dismiss()
+            }
+
+            builder.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.dismiss()
+            }
+            builder.show()
         }
-        builder.setNegativeButton("NO") { dialogInterface: DialogInterface, i: Int ->
-            dialogInterface.dismiss()
-        }
-        builder.show()
     }
 
     private fun marked() {
@@ -116,7 +130,12 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
                         Log.d("MarkProperty", response.code().toString())
                         Log.d("MarkProperty", response.body().toString())
 
-                        toast("Marked Property Successfully")
+                        if (response.code() == 200){
+                            toast("Marked Property Successfully")
+                        }else{
+                            //not marked
+                        }
+
                     }
                 }else{
                     withContext(Dispatchers.Main){
@@ -130,11 +149,10 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
     }
 
     override fun onGoingJobReviewClick(position: Int, currentItem: JobPropertyList) {
+
         reviewPopup = Dialog(this, R.style.Theme_PropertyMainBroker)
         reviewPopup.setContentView(R.layout.job_property_review_popup)
         reviewPopup.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
-
-        reviewPopup.show()
 
         reviewPopup.findViewById<Button>(R.id.btnReview).setOnClickListener {
 
@@ -142,10 +160,14 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
             val review = reviewPopup.findViewById<TextInputEditText>(R.id.edtReview).text.toString().trim()
             val note = reviewPopup.findViewById<TextInputEditText>(R.id.note).text.toString().trim()
 
-            Toast.makeText(this, "Submit Review Successful..", Toast.LENGTH_SHORT).show()
-            addReviewPopup(rating,review,note,currentItem)
-            reviewPopup.dismiss()
+            if (review.isNotEmpty()){
+                addReviewPopup(rating,review,note,currentItem)
+                reviewPopup.dismiss()
+            }else{
+                toast("Please enter review")
+            }
         }
+        reviewPopup.show()
     }
 
     private fun addReviewPopup(rating: RatingBar, review: String, note: String,currentItem: JobPropertyList) {
@@ -161,9 +183,6 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
                 val response = ServiceApi.retrofitService.jobPropertyUpdateShown(data)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
-
-                        Log.d("Review Details", response.code().toString())
-                        Log.d("Review Details", response.body().toString())
 
                         toast("Review Submit Successfully")
                     }

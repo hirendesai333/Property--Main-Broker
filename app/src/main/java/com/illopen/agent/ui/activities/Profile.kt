@@ -286,9 +286,7 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getCountry(
-                    AppPreferences.getUserData(Params.UserId).toInt(), map
-                )
+                val response = ServiceApi.retrofitService.getCountry(map)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 

@@ -3,36 +3,40 @@ package com.illopen.agent.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import com.hbb20.CountryCodePicker
-import com.illopen.agent.R
 import com.illopen.agent.databinding.ActivitySignUpBinding
+import com.illopen.agent.model.Country
+import com.illopen.agent.model.DocumentTypeList
 import com.illopen.agent.network.ServiceApi
+import com.illopen.agent.utils.AppPreferences
+import com.illopen.agent.utils.Params
 import com.illopen.agent.utils.ProgressDialog
 import com.illopen.properybroker.utils.toast
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.coroutines.*
 import java.util.regex.Pattern
 
-class SignUp : AppCompatActivity() , CountryCodePicker.OnCountryChangeListener{
+class SignUp : AppCompatActivity(){
 
     private val TAG = "SignUpActivity"
 
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var progressDialog: ProgressDialog
 
-    private var countryPicker : CountryCodePicker? = null
-    private var countryCode : String? = null
-    private var countryName : String? = null
-
     var regex = "[A-Z0-9a-z]+([._%+-][A-Z0-9a-z]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
     var pattern : Pattern = Pattern.compile(regex)
 
-//    private var countryID : Int = 0
     private val userTypeMasterId : Int = 2
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
+
+    private var countryList: ArrayList<Country> = ArrayList()
+    private lateinit var userDropDownAdapter: ArrayAdapter<String>
+    private var countrySelectedID : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +53,66 @@ class SignUp : AppCompatActivity() , CountryCodePicker.OnCountryChangeListener{
             onBackPressed()
         }
 
-        countryPicker = findViewById(R.id.country_code_picker)
-        countryPicker!!.setOnCountryChangeListener(this)
+        countrySelectSpinner()
+    }
+
+    private fun countrySelectSpinner() {
+        coroutineScope.launch {
+            try {
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.getCountry(map)
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+
+                        Log.d("countrySelectSpinner", response.code().toString())
+                        Log.d("countrySelectSpinner", response.body().toString())
+
+                        countryList = response.body()?.values as ArrayList<Country>
+
+                        val data: MutableList<String> = ArrayList()
+
+                        countryList.forEach {
+                            data.add(it.country.toString())
+                        }
+
+                        userDropDownAdapter = object : ArrayAdapter<String>(
+                            this@SignUp,
+                            android.R.layout.simple_list_item_1, data
+                        ) {}
+                        binding.countrySpinner.adapter = userDropDownAdapter
+
+                        binding.countrySpinner.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>?, view: View?,
+                                    position: Int, id: Long
+                                ) {
+                                    countrySelectedID = countryList[position].id!!.toInt()
+                                    toast("Selected : " + countryList[position].country)
+                                }
+
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+                                    //nothing select code
+                            }
+                        }
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+            }
+        }
     }
 
     private fun signUpDetails() {
@@ -78,13 +140,13 @@ class SignUp : AppCompatActivity() , CountryCodePicker.OnCountryChangeListener{
         }else if (password.isEmpty ()){
             binding.password.error = "Please Enter Password"
             binding.password.requestFocus()
-        }else if (password.length <= 8){
+        }else if (password.length < 8){
             binding.password.error = "Password Should be 8 or more Character"
             binding.password.requestFocus()
         }else if(phoneNumber.isEmpty()){
             binding.phone.error = "Please Enter Number"
             binding.phone.requestFocus()
-        }else if(phoneNumber.length <= 10){
+        }else if(phoneNumber.length < 10){
             binding.phone.error = "Invalid Number"
             binding.phone.requestFocus()
         }
@@ -99,10 +161,10 @@ class SignUp : AppCompatActivity() , CountryCodePicker.OnCountryChangeListener{
                     map["CompanyName"] = companyName
                     map["Email"] = email
                     map["Password"] = password
-                    map["CountryId"] = "1"
+                    map["CountryId"] = countrySelectedID.toString()
                     map["PhoneNumber"] = phoneNumber
 
-                    val response = ServiceApi.retrofitService.signup(map)
+                    val response = ServiceApi.retrofitService.signUp(map)
                     if (response.isSuccessful) {
                         withContext(Dispatchers.Main) {
                             if (response.code() == 200) {
@@ -128,13 +190,5 @@ class SignUp : AppCompatActivity() , CountryCodePicker.OnCountryChangeListener{
                 }
             }
         }
-    }
-
-    override fun onCountrySelected() {
-        countryCode = countryPicker!!.selectedCountryCode
-        countryName = countryPicker!!.selectedCountryName
-
-//        Toast.makeText(this, "Country Code $countryCode",Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, "Country Name $countryName",Toast.LENGTH_SHORT).show()
     }
 }

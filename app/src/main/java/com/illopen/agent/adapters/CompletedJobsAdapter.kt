@@ -8,10 +8,12 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
-import com.illopen.agent.model.AllCompletedJobsList
-import com.illopen.agent.listeners.OnCompletedJobClick
+import com.illopen.agent.model.CompletedMyPostedJobsList
+import com.illopen.agent.model.JobPropertyList
 
-class CompletedJobsAdapter(var from: String, var list: List<AllCompletedJobsList>, var onPropertyClick: OnCompletedJobClick) :
+class CompletedJobsAdapter(var from: String, var list: List<CompletedMyPostedJobsList>,
+                           var onPropertyClick: OnCompletedJobClick,
+                           var markerClick : OnMarkerClick ) :
     RecyclerView.Adapter<CompletedJobsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,10 +33,22 @@ class CompletedJobsAdapter(var from: String, var list: List<AllCompletedJobsList
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
         holder.rating.text = currentItem.averageRatting.toString()
-        holder.jobstatus.text = currentItem.statusName
+        holder.jobStatus.text = currentItem.statusName
+        holder.createdDate.text = "Posted on: " + currentItem.createdDateStr
+        holder.totalProperty.text = "Total Property: " + currentItem.totalProperty.toString()
 
         holder.rootLayout.setOnClickListener {
             onPropertyClick.onCompletedJobsClick(currentItem)
+        }
+
+        holder.markedCompleted.setOnClickListener {
+            markerClick.onCompletedMarkerClick(currentItem)
+        }
+
+        if (currentItem.statusMasterId!! > 3){
+            holder.markedCompleted.text = "Completed Job"
+        }else{
+            holder.markedCompleted.text = "Mark As: Completed "
         }
     }
 
@@ -42,10 +56,21 @@ class CompletedJobsAdapter(var from: String, var list: List<AllCompletedJobsList
         val propertyName: TextView = itemView.findViewById(R.id.name)
         val date : TextView = itemView.findViewById(R.id.date)
         val time : TextView = itemView.findViewById(R.id.time)
+        val createdDate : TextView = itemView.findViewById(R.id.postDate)
+        val totalProperty : TextView = itemView.findViewById(R.id.totalProperty)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
 //        val postedBy: TextView = itemView.findViewById(R.id.postedBy)
-        val jobstatus : TextView = itemView.findViewById(R.id.jobStatus)
+        val jobStatus : TextView = itemView.findViewById(R.id.jobStatus)
+        val markedCompleted : TextView = itemView.findViewById(R.id.markCompleted)
         val ratingLayout: LinearLayout = itemView.findViewById(R.id.ratingLayout)
         val rating : TextView = itemView.findViewById(R.id.myRating)
+    }
+
+    interface OnCompletedJobClick {
+        fun onCompletedJobsClick(currentItem: CompletedMyPostedJobsList)
+    }
+
+    interface OnMarkerClick{
+        fun onCompletedMarkerClick(currentItem : CompletedMyPostedJobsList)
     }
 }

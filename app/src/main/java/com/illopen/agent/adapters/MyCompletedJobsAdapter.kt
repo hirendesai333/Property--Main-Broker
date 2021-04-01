@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.model.CompletedJobsAssignList
 
-class MyCompletedJobsAdapter(var from: String, var list: List<CompletedJobsAssignList>, var itemClickListener : OnItemClickListener)
+class MyCompletedJobsAdapter(var from: String, var list: List<CompletedJobsAssignList>, var itemClickListener : OnCompletedAssignClickListener)
     : RecyclerView.Adapter<MyCompletedJobsAdapter.ViewHolder>() {
 
 
@@ -28,6 +28,8 @@ class MyCompletedJobsAdapter(var from: String, var list: List<CompletedJobsAssig
         holder.time.text = currentItem.jobVisitingTime
         holder.rating.text = currentItem.averageRatting.toString()
         holder.jobstatus.text = currentItem.statusName
+        holder.postDate.text = "Posted on: " + currentItem.createdDateStr
+        holder.totalProperty.text = "Total Property: " + currentItem.totalProperty.toString()
 
         holder.rootLayout.setOnClickListener {
             itemClickListener.onItemClick(position,list[position])
@@ -43,13 +45,15 @@ class MyCompletedJobsAdapter(var from: String, var list: List<CompletedJobsAssig
         val propertyName: TextView = itemView.findViewById(R.id.name)
         val date : TextView = itemView.findViewById(R.id.date)
         val time : TextView = itemView.findViewById(R.id.time)
+        val postDate : TextView = itemView.findViewById(R.id.postDate)
+        val totalProperty : TextView = itemView.findViewById(R.id.totalProperty)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
         val jobstatus : TextView = itemView.findViewById(R.id.jobStatus)
         val ratingLayout: LinearLayout = itemView.findViewById(R.id.ratingLayout)
         val rating : TextView = itemView.findViewById(R.id.myRating)
     }
 
-    interface OnItemClickListener{
+    interface OnCompletedAssignClickListener{
         fun onItemClick(itemPosition : Int,data : CompletedJobsAssignList)
     }
 }

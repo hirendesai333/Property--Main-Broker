@@ -22,7 +22,9 @@ import com.illopen.agent.utils.Params
 import com.illopen.properybroker.utils.toast
 import kotlinx.android.synthetic.main.activity_new_job2.*
 import kotlinx.coroutines.*
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
@@ -45,10 +47,10 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
     private lateinit var propertyDialog: Dialog
 
     private lateinit var selectedDate: String
-    private lateinit var selectedTime : String
+    private lateinit var selectedTime: String
 
-    lateinit var timePicker : TimePickerDialog
-    lateinit var datePicker : DatePickerDialog
+    lateinit var timePicker: TimePickerDialog
+    lateinit var datePicker: DatePickerDialog
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -95,9 +97,11 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
 //            picker.show(supportFragmentManager, picker.toString())
 //            picker.addOnPositiveButtonClickListener { binding.date.text = (picker.headerText) }
 
-            datePicker = DatePickerDialog(this,
+            datePicker = DatePickerDialog(
+                this,
                 { view, year, monthOfYear, dayOfMonth ->
-                    selectedDate = year.toString() + "/" + (monthOfYear + 1).toString() + "/" + dayOfMonth.toString()
+                    selectedDate =
+                        year.toString() + "/" + (monthOfYear + 1).toString() + "/" + dayOfMonth.toString()
                     binding.date.text = selectedDate
                 },
                 year,
@@ -114,15 +118,18 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
             val hour = now.get(Calendar.HOUR_OF_DAY)
             val min = now.get(Calendar.MINUTE)
 
-            timePicker = TimePickerDialog(this,
-                { view, hourOfDay, minute -> selectedTime =
-                    String.format("%d:%d", hourOfDay, minute)
+            timePicker = TimePickerDialog(
+                this,
+                { view, hourOfDay, minute ->
+                    selectedTime =
+                        String.format("%d:%d", hourOfDay, minute)
                     binding.time.text = selectedTime
                 },
                 hour,
                 min,
-                false)
-                timePicker.show()
+                false
+            )
+            timePicker.show()
 
 
 //            materialTimePicker.show(supportFragmentManager, "Select Time")
@@ -178,6 +185,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
             }
         }
     }
+
     private fun chooseCustomer() {
         coroutineScope.launch {
             try {
@@ -272,7 +280,8 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                         Log.d("PropertyType", response.body().toString())
 
                         val list: List<Values> = response.body()!!.values!!
-                        propertyRecycler!!.adapter = ChoosePropertyAdapter(this@NewJob, list, this@NewJob)
+                        propertyRecycler!!.adapter =
+                            ChoosePropertyAdapter(this@NewJob, list, this@NewJob)
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -303,7 +312,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                 jsonObject.put("data", json)
                 Log.d("createJob", json.toString())
 
-                val body = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
+                val body = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
                 val response = ServiceApi.retrofitService.createJob(body)
 
                 if (response.isSuccessful) {
@@ -336,7 +345,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
             val jsonObject = JSONObject()
             jsonObject.put("PropertyMasterId", selectedList[i].toInt())
             propertyArray.put(jsonObject)
-            toast("Selected :")
+            toast("Selected : ")
         }
     }
 }

@@ -7,23 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
-import com.illopen.agent.databinding.CompletedJobItemBinding
+import com.illopen.agent.databinding.CompletedJobAssignItemBinding
 import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.ui.activities.PropertyDetail
 
-class CompletedJobDetailsAdapter(var context: Context,var list: List<JobPropertyList>)
-    : RecyclerView.Adapter<CompletedJobDetailsAdapter.ViewHolder>() {
-
-    class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val binding = CompletedJobItemBinding.bind(itemView)
-    }
+class CompletedJobAssignDetailsAdapter(var context: Context, var list: List<JobPropertyList>)
+    : RecyclerView.Adapter<CompletedJobAssignDetailsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.completed_job_item,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.completed_job_assign_item,parent,false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val view = holder.binding
         val currentItem = list[position]
 
@@ -38,18 +35,13 @@ class CompletedJobDetailsAdapter(var context: Context,var list: List<JobProperty
             intent.putExtra("propertyMasterId",currentItem.propertyMasterId.toString())
             context.startActivity(intent)
         }
-
-//        view.markCompleted.setOnClickListener {
-//            onCompletedJobPropertyClick.onCompletedJobPropertyClick(currentItem)
-//        }
-
     }
 
     override fun getItemCount(): Int {
-        return list.size
+      return list.size
     }
 
-//    interface OnCompletedJobPropertyClick{
-//        fun onCompletedJobPropertyClick(currentItem : JobPropertyList)
-//    }
+    class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+        val binding = CompletedJobAssignItemBinding.bind(itemView)
+    }
 }

@@ -11,10 +11,11 @@
     app:cardCornerRadius="@dimen/_12sdp"
     app:cardElevation="@dimen/_3sdp">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
@@ -22,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_sans_bold"
-            android:text="Completed Job Property"
+            android:text="On-Going Job Property"
             android:textColor="@color/purple_700"
             android:textSize="@dimen/_14ssp" />
 
@@ -30,59 +31,41 @@
             android:id="@+id/availableFor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_bold"
+            android:textColor="@color/black_shade_1"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="availableFor"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:text="Available For: "
             android:textSize="@dimen/_10sdp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/propertyType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_bold"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="Job Property"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:text="propertyType: "
             android:textSize="@dimen/_10sdp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/_5sdp"
-            android:drawablePadding="@dimen/_3sdp"
             android:fontFamily="@font/nunito_sans"
             android:text="Address"
-            android:textSize="@dimen/_10ssp" />
+            android:textSize="@dimen/_10sdp" />
 
-        <RelativeLayout
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/price"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/nunito_sans"
-                android:text="Price: 2000"
-                android:textColor="@color/black"
-                app:fontFamily="@font/nunito_sans_bold"
-                android:textSize="@dimen/_10ssp" />
-
-        </RelativeLayout>
-
-<!--        <com.google.android.material.textview.MaterialTextView-->
-<!--            android:id="@+id/markCompleted"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="@dimen/_8sdp"-->
-<!--            android:fontFamily="@font/nunito_sans_bold"-->
-<!--            android:paddingBottom="@dimen/_5sdp"-->
-<!--            android:background="@drawable/bid_dialog_border"-->
-<!--            android:layout_gravity="end"-->
-<!--            android:text="MARK AS : Completed"-->
-<!--            android:textColor="@color/green_700"-->
-<!--            android:textSize="@dimen/_10sdp" />-->
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:fontFamily="@font/nunito_sans_bold"
+            android:text="Price: $1000"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp" />
 
     </LinearLayout>
 
