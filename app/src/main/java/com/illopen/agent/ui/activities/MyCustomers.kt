@@ -52,8 +52,15 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
 
         coroutineScope.launch {
             try {
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
                 val response = ServiceApi.retrofitService.getAllCustomer(
-                    AppPreferences.getUserData(Params.UserId).toInt()
+                    AppPreferences.getUserData(Params.UserId).toInt(),map
                 )
             if (response.isSuccessful){
                 withContext(Dispatchers.Main){
@@ -122,7 +129,6 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
         coroutineScope.launch {
             try {
                 val data = HashMap<String,String>()
-//                data["id"] = userID.toString()
                 data["UserId"] = AppPreferences.getUserData(Params.UserId)
                 data["CustomerName"] = name
                 data["CustomerEmail"] = email

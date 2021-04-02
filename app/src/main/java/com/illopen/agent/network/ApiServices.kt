@@ -40,9 +40,8 @@ interface ApiKtService{
     @POST(CHANGE_PASSWORD)
     suspend fun changePassword(@Query("Type") Type : Int, @Body data: Map<String, String>) : Response<Any>
 
-    @FormUrlEncoded
     @POST(GETCUSTOMERS)
-    suspend fun getAllCustomer(@Field("userId") userId : Int) : Response<AllCustomerModel>
+    suspend fun getAllCustomer(@Query("UserId") UserId : Int, @Body data: Map<String, String>) : Response<AllCustomerModel>
 
     @POST(ADDCUSTOMER)
     suspend fun addCustomer(@Body data: Map<String, String>) : Response<AddCustomerModel>
@@ -189,6 +188,9 @@ interface ApiKtService{
     @POST(USER_DOCUMENT_TYPE)
     suspend fun getDocumentType(@Query("UserTypeMasterId") userTypeMasterId : Int,
                                 @Body data: Map<String, String>) : Response<UserDocumentTypeModel>
+
+    @POST(NOTIFICATION)
+    suspend fun notification(@Query("UserId") userId: Int, @Body data: Map<String, String>) : Response<NotificationModel>
 }
 
 object ServiceApi{
@@ -238,3 +240,4 @@ private const val USER_DOCUMENT_ALL = "userDocuments/UserDocuments_All"
 private const val USER_DOCUMENT_DELETE = "userDocuments/UserDocuments_Delete"
 private const val USER_DOCUMENT_INSERT = "userDocuments/UserDocuments_Upsert"
 private const val USER_DOCUMENT_TYPE = "documentMaster/DocumentMaster_All"
+private const val NOTIFICATION = "userNotifications/UserNotifications_All"

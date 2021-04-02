@@ -27,9 +27,12 @@ import com.illopen.agent.databinding.ActivityDocumentsBinding
 import com.illopen.agent.model.*
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
+import com.illopen.agent.utils.MediaLoader
 import com.illopen.agent.utils.Params
+import com.illopen.agent.utils.ProgressDialog
 import com.illopen.properybroker.utils.toast
 import com.yanzhenjie.album.Album
+import com.yanzhenjie.album.AlbumConfig
 import droidninja.filepicker.FilePickerBuilder
 import droidninja.filepicker.FilePickerConst
 import droidninja.filepicker.FilePickerConst.KEY_SELECTED_DOCS
@@ -46,7 +49,9 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityDocumentsBinding
 
-    private val TAG = "User Documents"
+    private val TAG = "UserDocument"
+
+    private lateinit var progressDialog: ProgressDialog
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -69,6 +74,14 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
         binding = ActivityDocumentsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Album.initialize(
+            AlbumConfig.newBuilder(this)
+                .setAlbumLoader(MediaLoader())
+                .build()
+        )
+
+        progressDialog = ProgressDialog(this)
+
         binding.title.setOnClickListener { onBackPressed() }
 
         getAllUserDocument()
@@ -84,25 +97,17 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
     }
 
     private fun createUserDocument() {
+        progressDialog.dialog.show()
         coroutineScope.launch {
             try {
+//                val documentRequest = MultipartBody.Part.createFormData(
+//                    "files", "${System.currentTimeMillis()}"
+//                            + ".${MimeTypeMap.getFileExtensionFromUrl(ContentUriUtils.getFilePath(this@Documents, docPaths[0]).toString())}",
+//                    File(ContentUriUtils.getFilePath(this@Documents, docPaths[0])!!).asRequestBody("multipart/form-data".toMediaTypeOrNull()))
 
                 val documentRequest = MultipartBody.Part.createFormData(
-                    "files", "${System.currentTimeMillis()}" +
-                            ".${
-                                MimeTypeMap.getFileExtensionFromUrl(
-                                    ContentUriUtils.getFilePath(
-                                        this@Documents,
-                                        docPaths[0]
-                                    ).toString()
-                                )
-                            }",
-                    File(
-                        ContentUriUtils.getFilePath(
-                            this@Documents,
-                            docPaths[0]
-                        )!!
-                    ).asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                    "files", "${System.currentTimeMillis()}",
+                    File(ContentUriUtils.getFilePath(this@Documents,docPaths[0])!!).asRequestBody("multipart/form-data".toMediaTypeOrNull())
                 )
 
                 val response = ServiceApi.retrofitService.uploadDocument(
@@ -112,19 +117,28 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
+                        progressDialog.dialog.dismiss()
+
                         Log.d(TAG, "UserDocumentUpload: ${response.code()}")
                         Log.d(TAG, "UserDocumentUpload:${response.body()}")
 
-                        toast("Successfully Document Uploaded")
+                        if (response.code() == 200){
+                            toast("Successfully Document Uploaded")
+                        }else{
+                            toast("please try again")
+                            Log.d(TAG, "please try again: ")
+                        }
                     }
                 } else {
                     withContext(Dispatchers.Main) {
                         Log.d(TAG, "something wrong")
+                        progressDialog.dialog.dismiss()
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Log.d(TAG, e.message.toString())
+                    progressDialog.dialog.dismiss()
                 }
             }
         }
@@ -153,8 +167,8 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
             .onResult {
                 filePath = it[0].path
                 confirmImageOrder(filePath)
-                Glide.with(this)
-                    .load(filePath)
+//                Glide.with(this)
+//                    .load(filePath)
 //                    .into(binding.profileImage)
                 Log.d(TAG, "openGallery: $filePath")
                 Log.d(TAG, "openGallery: ${Gson().toJson(it)}")
@@ -190,12 +204,12 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
     }
 
     private fun confirmImageOrder(filePath: String?) {
-
+        progressDialog.dialog.show()
         coroutineScope.launch {
             try {
 
                 val imageRequest = MultipartBody.Part.createFormData(
-                    "files", "${System.currentTimeMillis()}.jpg",
+                    "files", "${System.currentTimeMillis()}",
                     File(filePath!!).asRequestBody("multipart/form-data".toMediaTypeOrNull())
                 )
 
@@ -211,17 +225,25 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
+                        progressDialog.dialog.dismiss()
+                        if (response.code() == 200){
+                            toast(response.message().toString())
+                        }else{
+                            toast("please try again")
+                        }
                         Log.d(TAG, "imageUploadSuccess: ${response.code()}")
                         Log.d(TAG, "imageUploadSuccess:${response.body()}")
                     }
                 } else {
                     withContext(Dispatchers.Main) {
+                        progressDialog.dialog.dismiss()
                         Log.d(TAG, "error: ${response.code()}")
                         Log.d(TAG, "error: ${response.body()}")
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    progressDialog.dialog.dismiss()
                     Log.d(TAG, e.message.toString())
                 }
             }
@@ -318,15 +340,15 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                 .setSelectedFiles(docPaths)
                 .setActivityTheme(R.style.LibAppTheme)
                 .setActivityTitle("Please select doc")
-                .setImageSizeLimit(5) //Provide Size in MB
-                .setVideoSizeLimit(20) //                    .addFileSupport("ZIP", zips)
+//                .setImageSizeLimit(5) //Provide Size in MB
+//                .setVideoSizeLimit(20) //                    .addFileSupport("ZIP", zips)
                 //                    .addFileSupport("AAC", pdfs, R.drawable.pdf_blue)
                 .enableDocSupport(true)
                 .enableSelectAll(true)
                 .sortDocumentsBy(SortingTypes.NAME)
                 .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 .pickFile(this)
-            createUserDocument()
+                createUserDocument()
         }
 
         /*val intent = Intent()
@@ -352,21 +374,21 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
         startActivityForResult(intent, 101)
     }
 
-    private fun showSettingsDialog() {
-        val builder = MaterialAlertDialogBuilder(this)
-        builder.setTitle("Need Permissions")
-        builder.setMessage(
-            "This app needs permission to use this feature. You can grant them in app settings."
-        )
-        builder.setPositiveButton("GOTO SETTINGS") { dialog: DialogInterface, which: Int ->
-            dialog.cancel()
-            openSettings()
-        }
-        val negativeButton = builder.setNegativeButton(
-            "Cancel"
-        ) { dialog: DialogInterface, which: Int -> dialog.cancel() }
-        builder.show()
-    }
+//    private fun showSettingsDialog() {
+//        val builder = MaterialAlertDialogBuilder(this)
+//        builder.setTitle("Need Permissions")
+//        builder.setMessage(
+//            "This app needs permission to use this feature. You can grant them in app settings."
+//        )
+//        builder.setPositiveButton("GOTO SETTINGS") { dialog: DialogInterface, which: Int ->
+//            dialog.cancel()
+//            openSettings()
+//        }
+//        val negativeButton = builder.setNegativeButton(
+//            "Cancel"
+//        ) { dialog: DialogInterface, which: Int -> dialog.cancel() }
+//        builder.show()
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

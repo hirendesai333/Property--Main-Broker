@@ -1,5 +1,6 @@
 package com.illopen.agent.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -35,6 +36,7 @@ class DocumentsAdapter(var context: Context, var list: List<UserDocumentList>,
         return list.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
         if (currentItem.isApproved == 1) {
@@ -47,7 +49,7 @@ class DocumentsAdapter(var context: Context, var list: List<UserDocumentList>,
         holder.view.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("http://www.africau.edu/images/default/sample.pdf")
+                Uri.parse(currentItem.urlStr)
             )
             startActivity(context, browserIntent, null)
         }

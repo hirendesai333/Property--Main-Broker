@@ -103,11 +103,11 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun getLocationAccess() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.isMyLocationEnabled = true
         }
         else
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST)
     }
 
     @SuppressLint("MissingPermission")
@@ -126,8 +126,7 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
                     }
                 } else {
                     Toast.makeText(
-                        this,
-                        getString(LOCATION_PERMISSION_REQUEST),
+                        this, "LOCATION_PERMISSION_REQUEST",
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -192,7 +191,7 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
                     // For example: Update the location of user on server
                 }
             },
-            Looper.myLooper()
+            Looper.myLooper()!!
         )
     }
 }

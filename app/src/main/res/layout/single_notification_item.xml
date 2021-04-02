@@ -18,7 +18,7 @@
         android:fontFamily="@font/nunito_sans"
         android:text="message 1"
         android:textColor="@color/black"
-        android:textSize="@dimen/_14ssp" />
+        android:textSize="@dimen/_12sdp" />
 
     <TextView
         android:id="@+id/time"

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.illopen.agent.R
+import com.illopen.agent.adapters.AllJobLanguagesAdapter
 import com.illopen.agent.adapters.ChoosePropertyAdapter
 import com.illopen.agent.databinding.ActivityNewJob2Binding
 import com.illopen.agent.model.Value
@@ -22,9 +23,7 @@ import com.illopen.agent.utils.Params
 import com.illopen.properybroker.utils.toast
 import kotlinx.android.synthetic.main.activity_new_job2.*
 import kotlinx.coroutines.*
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
@@ -99,7 +98,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
 
             datePicker = DatePickerDialog(
                 this,
-                { view, year, monthOfYear, dayOfMonth ->
+                { _, _, monthOfYear, dayOfMonth ->
                     selectedDate =
                         year.toString() + "/" + (monthOfYear + 1).toString() + "/" + dayOfMonth.toString()
                     binding.date.text = selectedDate
@@ -120,7 +119,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
 
             timePicker = TimePickerDialog(
                 this,
-                { view, hourOfDay, minute ->
+                { _, hourOfDay, minute ->
                     selectedTime =
                         String.format("%d:%d", hourOfDay, minute)
                     binding.time.text = selectedTime
@@ -166,13 +165,9 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                         Log.d("getAllLanguages", response.code().toString())
                         Log.d("getAllLanguages", response.body().toString())
 
-                        toast("all job language list")
-
                         val list = response.body()!!.values!!
 
-//                        binding.userLanguageRv.adapter = AllUserLanguageAdapter(this@Profile, list)
-//                        binding.userLanguageRv.layoutManager =
-//                            LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
+                        binding.jobLanguage.adapter = AllJobLanguagesAdapter(this@NewJob, list)
                     }
 
                 } else {
@@ -190,9 +185,15 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
         coroutineScope.launch {
             try {
 
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
                 val response = ServiceApi.retrofitService.getAllCustomer(
-                    AppPreferences.getUserData(Params.UserId).toInt()
-                )
+                    AppPreferences.getUserData(Params.UserId).toInt(), map)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
