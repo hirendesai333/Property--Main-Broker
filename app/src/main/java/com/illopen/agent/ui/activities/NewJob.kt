@@ -130,7 +130,6 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
             )
             timePicker.show()
 
-
 //            materialTimePicker.show(supportFragmentManager, "Select Time")
 //
 //            materialTimePicker.addOnPositiveButtonClickListener {

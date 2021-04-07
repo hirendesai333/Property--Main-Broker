@@ -14,14 +14,13 @@
 
         <LinearLayout
             android:id="@+id/linearLayoutTabBar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_toStartOf="@+id/filter"
             android:background="@drawable/rounded_tab_rootbar"
             android:orientation="horizontal"
             android:padding="3dp">
@@ -53,7 +52,6 @@
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -71,6 +69,7 @@
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_5sdp"
+                android:visibility="gone"
                 android:text="Filter"
                 android:textColor="@color/purple_700"
                 android:textSize="@dimen/_12ssp"
@@ -78,25 +77,47 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:padding="@dimen/_3sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:background="@drawable/bid_dialog_border"
+            android:text="Search"
+            android:textColor="@color/green_700"
+            android:textSize="@dimen/_11sdp"
+            app:fontFamily="@font/nunito_sans_bold"/>
+
         <com.polyak.iconswitch.IconSwitch
             android:id="@+id/icon_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/filter"
-            android:layout_alignEnd="@id/filter"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_gravity="center_vertical"
             app:isw_icon_left="@drawable/ic_menu_24"
             app:isw_icon_right="@drawable/ic_location_24"
             app:isw_icon_size="@dimen/_12sdp"
             app:isw_thumb_color_left="@color/purple_700" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/upcomingJobs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:layout_marginTop="@dimen/_8sdp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>

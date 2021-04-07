@@ -106,7 +106,7 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
 //                    File(ContentUriUtils.getFilePath(this@Documents, docPaths[0])!!).asRequestBody("multipart/form-data".toMediaTypeOrNull()))
 
                 val documentRequest = MultipartBody.Part.createFormData(
-                    "files", "${System.currentTimeMillis()}",
+                    "files", "${System.currentTimeMillis()}.pdf",
                     File(ContentUriUtils.getFilePath(this@Documents,docPaths[0])!!).asRequestBody("multipart/form-data".toMediaTypeOrNull())
                 )
 
@@ -209,7 +209,7 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
             try {
 
                 val imageRequest = MultipartBody.Part.createFormData(
-                    "files", "${System.currentTimeMillis()}",
+                    "files", "${System.currentTimeMillis()}.jpg",
                     File(filePath!!).asRequestBody("multipart/form-data".toMediaTypeOrNull())
                 )
 
@@ -348,7 +348,7 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                 .sortDocumentsBy(SortingTypes.NAME)
                 .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 .pickFile(this)
-                createUserDocument()
+//                createUserDocument()
         }
 
         /*val intent = Intent()
@@ -400,6 +400,7 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
 //                       val fileUriProfile = data.data
                         docPaths = java.util.ArrayList()
                         docPaths.addAll(dataList)
+                        createUserDocument()
 //                        binding.pdf.text = ContentUriUtils.getFilePath(this, docPaths[0])
                     }
                 }

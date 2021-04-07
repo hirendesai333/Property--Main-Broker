@@ -1,6 +1,8 @@
 package com.illopen.agent.ui.fragments
 
+import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
@@ -16,6 +18,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.slider.RangeSlider
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.timepicker.MaterialTimePicker
 import com.illopen.agent.R
 import com.illopen.agent.adapters.CompletedJobDetailsAdapter
 import com.illopen.agent.adapters.CompletedJobsAdapter
@@ -46,6 +50,13 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
+    lateinit var timePicker: TimePickerDialog
+    lateinit var datePicker: DatePickerDialog
+
+    private lateinit var selectedDate: String
+    private lateinit var selectedTime: String
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = CompletedJobsFragmentBinding.bind(view)
@@ -66,7 +77,7 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
             getMyPostedCompletedJobs()
         }
 
-        binding.filter.setOnClickListener {
+        binding.search.setOnClickListener {
             showFilterDialog()
         }
     }
@@ -149,10 +160,11 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
         mDialog.setContentView(R.layout.filter_layout)
         mDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
-        val rangeSlider = mDialog.findViewById<RangeSlider>(R.id.rangeSlider)
         val startDate = mDialog.findViewById<TextView>(R.id.startDate)
         val endDate = mDialog.findViewById<TextView>(R.id.endDate)
-        val filter = mDialog.findViewById<Button>(R.id.filter)
+        val startTime = mDialog.findViewById<TextView>(R.id.timeFrom)
+        val endTime = mDialog.findViewById<TextView>(R.id.timeTo)
+        val filter = mDialog.findViewById<Button>(R.id.searchFilter)
 
         startDate.setOnClickListener {
             val builder = MaterialDatePicker.Builder.datePicker()
@@ -170,18 +182,101 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
             picker.show(requireActivity().supportFragmentManager, picker.toString())
         }
 
-        rangeSlider.setLabelFormatter { value: Float ->
-            val format = NumberFormat.getCurrencyInstance()
-            format.maximumFractionDigits = 0
-            format.currency = Currency.getInstance("USD")
-            format.format(value.toDouble())
+//        rangeSlider.setLabelFormatter { value: Float ->
+//            val format = NumberFormat.getCurrencyInstance()
+//            format.maximumFractionDigits = 0
+//            format.currency = Currency.getInstance("USD")
+//            format.format(value.toDouble())
+//        }
+
+        startTime.setOnClickListener {
+            val buider = MaterialTimePicker.Builder()
+
+            val now = Calendar.getInstance()
+            val hour = now.get(Calendar.HOUR_OF_DAY)
+            val min = now.get(Calendar.MINUTE)
+
+            timePicker = TimePickerDialog(
+                requireContext(),
+                { _, hourOfDay, minute ->
+                    selectedTime =
+                        String.format("%d:%d", hourOfDay, minute)
+                    startTime.text = selectedTime
+                },
+                hour,
+                min,
+                false
+            )
+            timePicker.show()
+        }
+
+        endTime.setOnClickListener {
+            val builder = MaterialTimePicker.Builder()
+
+            val now = Calendar.getInstance()
+            val hour = now.get(Calendar.HOUR_OF_DAY)
+            val min = now.get(Calendar.MINUTE)
+
+            timePicker = TimePickerDialog(
+                requireContext(),
+                { _, hourOfDay, minute ->
+                    selectedTime =
+                        String.format("%d:%d", hourOfDay, minute)
+                    endTime.text = selectedTime
+                },
+                hour,
+                min,
+                false
+            )
+            timePicker.show()
         }
 
         filter.setOnClickListener {
-            mDialog.dismiss()
+            val jobNo = mDialog.findViewById<TextView>(R.id.search).text.toString().trim()
+
+            if (jobNo.isEmpty()){
+                mDialog.findViewById<TextInputEditText>(R.id.search).error = "Field Can't be Empty"
+                mDialog.findViewById<TextInputEditText>(R.id.search).requestFocus()
+            }else{
+                Toast.makeText(context, "Search Data Success..", Toast.LENGTH_SHORT).show()
+                searchDataAPI(jobNo)
+                mDialog.dismiss()
+            }
+        }
+        mDialog.show()
+    }
+
+    private fun searchDataAPI(jobNo: String) {
+        coroutineScope.launch {
+            try {
+                val data = HashMap<String,String>()
+                data["JobNo"] = jobNo
+//                data["VisitDateFrom"] = ""
+//                data["VisitDateTo"] = ""
+//                data["VisitTimeFrom"] = ""
+//                data["VisitTimeTo"] = ""
+                val response = ServiceApi.retrofitService.searchJobNo(false,jobNo,data)
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+
+                        Log.d("searchData", response.code().toString())
+                        Log.d("searchData", response.body().toString())
+
+//                        val list: List<AssignedJobList> = response.body()!!.values!!
+//                        Log.d(TAG, "searchDataAPI: ${Gson().toJson(list)}")
+//                        binding.upcomingJobsRv.adapter = AllPropertyListAdapter(
+//                            Params.OTHER_NEW_JOBS, list,this@UpcomingJobsFragment)
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+            }
         }
 
-        mDialog.show()
     }
 
     override fun onDestroyView() {

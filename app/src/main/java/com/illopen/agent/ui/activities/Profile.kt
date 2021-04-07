@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.gson.Gson
 import com.illopen.agent.R
 import com.illopen.agent.adapters.AllCountryListAdapter
@@ -36,7 +39,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.regex.Pattern
 
-class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
+class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, OnMapReadyCallback {
 
     private lateinit var binding: ActivityProfileBinding
 
@@ -55,6 +58,9 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
     private var filePath = ""
     private lateinit var countryDialog: Dialog
 
+    private lateinit var mMap: GoogleMap
+    private val LOCATION_PERMISSION_REQUEST = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -65,6 +71,9 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
                 .setAlbumLoader(MediaLoader())
                 .build()
         )
+
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
 
         AppPreferences.initialize(this.applicationContext)
@@ -199,20 +208,18 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getUserLocation(
-                    AppPreferences.getUserData(Params.UserId).toInt(), map
-                )
+                val response = ServiceApi.retrofitService.getUserLocation(map)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
                         Log.d("getUserLocation", response.code().toString())
                         Log.d("getUserLocation", response.body().toString())
 
-                        val list = response.body()!!.values!!
+//                        val list = response.body()!!.values!!
 
-                        binding.userLocationRv.adapter = AllUserLocationAdapter(this@Profile, list)
-                        binding.userLocationRv.layoutManager =
-                            LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
+//                        binding.userLocationRv.adapter = AllUserLocationAdapter(this@Profile, list)
+//                        binding.userLocationRv.layoutManager =
+//                            LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
                     }
 
                 } else {
@@ -429,5 +436,19 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener {
     override fun onItemClick(itemPosition: Int, data: Country) {
         countryDialog.dismiss()
         binding.country.setText(data.country)
+    }
+
+    override fun onMapReady(googleMap : GoogleMap?) {
+        mMap = googleMap!!
+        setupLocationPermission()
+    }
+
+    private fun setupLocationPermission() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mMap.isMyLocationEnabled = true
+        }
+        else
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST)
     }
 }

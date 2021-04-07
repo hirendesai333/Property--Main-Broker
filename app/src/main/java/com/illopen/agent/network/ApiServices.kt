@@ -92,7 +92,7 @@ interface ApiKtService{
     suspend fun userLanguageUpdate(@Body data: Map<String, String>) : Response<Any>
 
     @POST(GETUSERLOCATION)
-    suspend fun getUserLocation(@Query("userId") userId: Int, @Body data: Map<String, String>) : Response<AllUserLocationModel>
+    suspend fun getUserLocation(@Body data: Map<String, String>) : Response<Any>
 
     @Multipart
     @POST(UPLOAD_PROFILE_PIC)
@@ -191,6 +191,11 @@ interface ApiKtService{
 
     @POST(NOTIFICATION)
     suspend fun notification(@Query("UserId") userId: Int, @Body data: Map<String, String>) : Response<NotificationModel>
+
+    @POST(SEARCHDATA)
+    suspend fun searchJobNo(@Query("AvailableJobsOnly")AvailableJobsOnly : Boolean,
+                            @Query("JobNo") JobNo : String,
+                            @Body data: Map<String, String>) : Response<AllAvalibleJobsModel>
 }
 
 object ServiceApi{
@@ -217,7 +222,7 @@ private const val GETSTATE = "stateMaster/StateMaster_All"
 private const val GETCITY = "cityMaster/CityMaster_All"
 private const val GETUSERLANGUAGE = "userLanguages/UserLanguages_All"
 private const val GETLANGUAGEUPDATE = "userLanguages/UserLanguages_Upsert"
-private const val GETUSERLOCATION = "userPreferedLocations/UserPreferedLocations_All"
+private const val GETUSERLOCATION = "userPreferedLocations/UserPreferedLocations_Upsert"
 private const val UPLOAD_PROFILE_PIC = "users/Users_ProfileUpdate"
 private const val GETNEWAVAILABLEJOBS = "jobs/Jobs_All"
 private const val GETNEWMYPOSTEDJOBS = "jobs/Jobs_All"
@@ -235,9 +240,10 @@ private const val JOBPROPERTYUPDATESHOWN = "jobs/JobProperty_UpdateAfterProperty
 private const val MARKASPROPERTYSTATUS = "jobs/Jobs_UpdateStatus"
 private const val CREATEJOB = "jobs/Jobs_Upsert"
 private const val JOBLANGUAGEAll = "languageMaster/LanguageMaster_All"
-private const val AVAILABLEMAPLOCATION = "jobs/Jobs_ViewDetailsByUserId"
+private const val AVAILABLEMAPLOCATION = "userPreferedLocations/UserPreferedLocations_All"
 private const val USER_DOCUMENT_ALL = "userDocuments/UserDocuments_All"
 private const val USER_DOCUMENT_DELETE = "userDocuments/UserDocuments_Delete"
 private const val USER_DOCUMENT_INSERT = "userDocuments/UserDocuments_Upsert"
 private const val USER_DOCUMENT_TYPE = "documentMaster/DocumentMaster_All"
 private const val NOTIFICATION = "userNotifications/UserNotifications_All"
+private const val SEARCHDATA = "jobs/Jobs_All"
