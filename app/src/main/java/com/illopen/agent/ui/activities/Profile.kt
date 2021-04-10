@@ -3,6 +3,7 @@ package com.illopen.agent.ui.activities
 import android.Manifest
 import android.app.Dialog
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.Circle
+import com.google.android.gms.maps.model.CircleOptions
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import com.illopen.agent.R
 import com.illopen.agent.adapters.AllCountryListAdapter
@@ -22,6 +28,8 @@ import com.illopen.agent.adapters.AllUserLanguageAdapter
 import com.illopen.agent.adapters.AllUserLocationAdapter
 import com.illopen.agent.databinding.ActivityProfileBinding
 import com.illopen.agent.model.Country
+import com.illopen.agent.model.MapDetailsList
+import com.illopen.agent.model.MyPostedJobsList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.MediaLoader
@@ -47,8 +55,6 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
 
     var countryId: Int = 0
 
-    private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
-
     var regex = "[A-Z0-9a-z]+([._%+-][A-Z0-9a-z]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
     var pattern = Pattern.compile(regex)
 
@@ -60,6 +66,8 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
 
     private lateinit var mMap: GoogleMap
     private val LOCATION_PERMISSION_REQUEST = 1
+
+    private var circle: Circle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +93,7 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
         binding.save.setOnClickListener {
             updateProfile()
             updateLanguage()
+            getUserLocation()
         }
 
         binding.country.setOnClickListener {
@@ -101,7 +110,6 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
 
         getUserProfile()
         getUserLanguage()
-        getUserLocation()
     }
 
     private fun updateLanguage() {
@@ -130,7 +138,7 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
     }
 
     private fun openGallery() {
-        Album.image(this) // Image selection.
+        Album.image(this)
             .multipleChoice()
             .camera(false)
             .columnCount(4)
@@ -215,11 +223,6 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
                         Log.d("getUserLocation", response.code().toString())
                         Log.d("getUserLocation", response.body().toString())
 
-//                        val list = response.body()!!.values!!
-
-//                        binding.userLocationRv.adapter = AllUserLocationAdapter(this@Profile, list)
-//                        binding.userLocationRv.layoutManager =
-//                            LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
                     }
 
                 } else {
@@ -447,8 +450,79 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.isMyLocationEnabled = true
+            mapLocationAPI()
         }
         else
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST)
+    }
+
+    private fun mapLocationAPI() {
+        coroutineScope.launch {
+            try {
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+                val response = ServiceApi.retrofitService.getMapLocation(
+                   AppPreferences.getUserData(Params.UserId).toInt(), map
+                )
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+                        Log.d("profileLocation", response.code().toString())
+                        Log.d("profileLocation", Gson().toJson(response.body()))
+
+                        val mapDetailsList : List<MapDetailsList> = response.body()!!.values!!
+                        mapDetailsList.forEachIndexed { index, mapDetailsList ->
+                            drawCircle(mapDetailsList.latitude!!.toDouble(),
+                            mapDetailsList.longitude!!.toDouble(),mapDetailsList.radius!!.toDouble())
+
+                            mMap.addMarker(MarkerOptions().position(
+                                LatLng(
+                                        mapDetailsList.latitude.toDouble(),
+                                        mapDetailsList.longitude.toDouble()
+                                    )
+                                )
+                            )
+
+                        }
+                        mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(
+                                    mapDetailsList[0].latitude!!.toDouble(),
+                                    mapDetailsList[0].longitude!!.toDouble())
+                            )
+                        )
+//                        mMap.addCircle(
+//                            CircleOptions()
+//                                .center(LatLng(mapDetailsList[0].latitude!!.toDouble(),
+//                                    mapDetailsList[0].longitude!!.toDouble()))
+//                                .radius(mapDetailsList[0].radius!!.toDouble())
+//                                .strokeWidth(1.0f)
+//                                .strokeColor(Color.RED)
+//                                .fillColor(Color.BLUE)
+//                        )
+
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
+
+    private fun drawCircle(latitude: Double, longitude: Double, radius: Double) {
+        val circleOp = CircleOptions()
+            .center(LatLng(latitude, longitude))
+            .radius(radius)
+            .strokeWidth(1.0f)
+            .strokeColor(Color.RED)
+            .fillColor(Color.BLUE)
+        circle?.remove() // Remove old circle.
+        circle = mMap.addCircle(circleOp) // Draw new circle.
     }
 }

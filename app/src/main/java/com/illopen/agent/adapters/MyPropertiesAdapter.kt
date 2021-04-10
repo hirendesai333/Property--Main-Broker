@@ -35,7 +35,10 @@ class MyPropertiesAdapter(var context: Context, var list: List<Values>, var item
         views.status.text = currentItem.isActive.toString()
 
         holder.binding.moreDetails.setOnClickListener {
-            context.startActivity(Intent(context, PropertyMoreDetails::class.java))
+            Intent(context,PropertyMoreDetails::class.java).apply {
+                putExtra("propertyName",currentItem.propertyName)
+                context.startActivity(this)
+            }
         }
 
         holder.binding.edit.setOnClickListener {

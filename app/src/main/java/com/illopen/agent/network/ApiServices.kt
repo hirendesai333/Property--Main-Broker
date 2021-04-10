@@ -193,9 +193,22 @@ interface ApiKtService{
     suspend fun notification(@Query("UserId") userId: Int, @Body data: Map<String, String>) : Response<NotificationModel>
 
     @POST(SEARCHDATA)
-    suspend fun searchJobNo(@Query("AvailableJobsOnly")AvailableJobsOnly : Boolean,
+    suspend fun searchNewJob(@Query("AvailableJobsOnly")AvailableJobsOnly : Boolean,
                             @Query("JobNo") JobNo : String,
                             @Body data: Map<String, String>) : Response<AllAvalibleJobsModel>
+
+    @POST(SEARCHDATA)
+    suspend fun searchOngoingJob(@Query("AvailableJobsOnly") availableJobs: Boolean,
+                              @Query("JobNo") JobNo: String,
+                                @Body data: Map<String, String>) : Response<OngoingMyPostedJobModel>
+
+    @POST(SEARCHDATA)
+    suspend fun searchCompleteJob(@Query("AvailableJobsOnly") availableJobs: Boolean,
+                                  @Query("JobNo") JobNo: String,
+                                  @Body data: Map<String, String>) : Response<AllCompletedJobsModel>
+
+    @POST(PROPERTYMOREDETAILS)
+    suspend fun propertyMoreDetails(@Body data: Map<String, String>) : Response<PropertyMoreDetailsModel>
 }
 
 object ServiceApi{
@@ -247,3 +260,4 @@ private const val USER_DOCUMENT_INSERT = "userDocuments/UserDocuments_Upsert"
 private const val USER_DOCUMENT_TYPE = "documentMaster/DocumentMaster_All"
 private const val NOTIFICATION = "userNotifications/UserNotifications_All"
 private const val SEARCHDATA = "jobs/Jobs_All"
+private const val PROPERTYMOREDETAILS = "propertyDetailMaster/PropertyDetailMaster_All"

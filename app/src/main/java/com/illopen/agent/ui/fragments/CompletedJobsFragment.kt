@@ -1,5 +1,6 @@
 package com.illopen.agent.ui.fragments
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
@@ -155,6 +156,7 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
         }
     }
 
+    @SuppressLint("CutPasteId")
     private fun showFilterDialog() {
         val mDialog = Dialog(requireContext(), R.style.Theme_PropertyMainBroker)
         mDialog.setContentView(R.layout.filter_layout)
@@ -255,17 +257,19 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
 //                data["VisitDateTo"] = ""
 //                data["VisitTimeFrom"] = ""
 //                data["VisitTimeTo"] = ""
-                val response = ServiceApi.retrofitService.searchJobNo(false,jobNo,data)
+                val response = ServiceApi.retrofitService.searchCompleteJob(false,jobNo,data)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
                         Log.d("searchData", response.code().toString())
                         Log.d("searchData", response.body().toString())
 
-//                        val list: List<AssignedJobList> = response.body()!!.values!!
-//                        Log.d(TAG, "searchDataAPI: ${Gson().toJson(list)}")
-//                        binding.upcomingJobsRv.adapter = AllPropertyListAdapter(
-//                            Params.OTHER_NEW_JOBS, list,this@UpcomingJobsFragment)
+                        val list : List<CompletedMyPostedJobsList> = response.body()!!.values!!
+
+                        binding.completedJobRv.adapter = CompletedJobsAdapter(
+                            Params.MY_POSTED_COMPLETED_JOBS,list,
+                            this@CompletedJobsFragment,
+                            this@CompletedJobsFragment)
                     }
                 } else {
                     withContext(Dispatchers.Main) {

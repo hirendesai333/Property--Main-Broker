@@ -253,17 +253,18 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
 //                data["VisitDateTo"] = ""
 //                data["VisitTimeFrom"] = ""
 //                data["VisitTimeTo"] = ""
-                val response = ServiceApi.retrofitService.searchJobNo(false,jobNo,data)
+                val response = ServiceApi.retrofitService.searchOngoingJob(false,jobNo,data)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
                         Log.d("searchData", response.code().toString())
                         Log.d("searchData", response.body().toString())
 
-//                        val list: List<AssignedJobList> = response.body()!!.values!!
-//                        Log.d(TAG, "searchDataAPI: ${Gson().toJson(list)}")
-//                        binding.upcomingJobsRv.adapter = AllPropertyListAdapter(
-//                            Params.OTHER_NEW_JOBS, list,this@UpcomingJobsFragment)
+                        val list : List<OngoingMyPostedJobList> = response.body()!!.values!!
+                        binding.upcomingJobsRv.adapter = UpComingMyPostedJobAdapter(
+                            Params.MY_POSTED_ONGOING_JOBS,list,
+                            this@UpcomingJobsFragment)
+
                     }
                 } else {
                     withContext(Dispatchers.Main) {

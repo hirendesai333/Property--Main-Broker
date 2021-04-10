@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.*
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.slider.RangeSlider
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.gson.Gson
@@ -27,10 +26,8 @@ import com.illopen.agent.adapters.AllPropertyListAdapter
 import com.illopen.agent.databinding.FragmentAllPropertyListBinding
 import com.illopen.agent.model.AvailableJobs
 import com.illopen.agent.model.MyPostedJobsList
-import com.illopen.agent.model.SearchByJobList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.ui.activities.JobsPropertyOnMap
-import com.illopen.agent.ui.activities.MyCustomers
 import com.illopen.agent.ui.activities.MyPostedJobDetails
 import com.illopen.agent.ui.activities.NewJobDetails
 import com.illopen.agent.utils.AppPreferences
@@ -312,7 +309,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
 //                data["VisitDateTo"] = ""
 //                data["VisitTimeFrom"] = ""
 //                data["VisitTimeTo"] = ""
-                val response = ServiceApi.retrofitService.searchJobNo(false,jobNo,data)
+                val response = ServiceApi.retrofitService.searchNewJob(false,jobNo,data)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
