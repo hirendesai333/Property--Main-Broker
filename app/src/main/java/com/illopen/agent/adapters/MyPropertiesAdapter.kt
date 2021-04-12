@@ -37,6 +37,7 @@ class MyPropertiesAdapter(var context: Context, var list: List<Values>, var item
         holder.binding.moreDetails.setOnClickListener {
             Intent(context,PropertyMoreDetails::class.java).apply {
                 putExtra("propertyName",currentItem.propertyName)
+                putExtra("PropertyMasterId",currentItem.id)
                 context.startActivity(this)
             }
         }

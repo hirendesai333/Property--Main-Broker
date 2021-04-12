@@ -33,7 +33,7 @@ class CompletedJobsAdapter(var from: String, var list: List<CompletedMyPostedJob
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
         holder.rating.text = currentItem.averageRatting.toString()
-        holder.jobStatus.text = currentItem.statusName
+//        holder.jobStatus.text = currentItem.statusName
         holder.createdDate.text = "Posted on: " + currentItem.createdDateStr
         holder.totalProperty.text = "Total Property: " + currentItem.totalProperty.toString()
 

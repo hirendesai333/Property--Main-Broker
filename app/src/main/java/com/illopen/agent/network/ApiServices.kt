@@ -208,7 +208,22 @@ interface ApiKtService{
                                   @Body data: Map<String, String>) : Response<AllCompletedJobsModel>
 
     @POST(PROPERTYMOREDETAILS)
-    suspend fun propertyMoreDetails(@Body data: Map<String, String>) : Response<PropertyMoreDetailsModel>
+    suspend fun propertyMoreDetailsAll(@Query("PropertyMasterId") PropertyMasterId : Int,
+                                    @Body data: Map<String, String>) : Response<PropertyMoreDetailsModel>
+
+    @POST(PROPERTYDETAILSTYPE)
+    suspend fun propertyDetailsType(@Body data: Map<String, String>) : Response<PropertyMoreDetailsTypeModel>
+
+    @POST(PROPERTYMOREDETAILSINSERT)
+    suspend fun propertyMoreDetailsInsert(@Body data: Map<String, String>) : Response<Any>
+
+    @POST(PROPERTYMOREDETAILSINSERT)
+    suspend fun updatePropertyMoreDetails(@Body data: Map<String, String>) : Response<Any>
+
+    @POST(PROPERTYMOREDETAILSDELETE)
+    suspend fun deletePropertyMoreDetails(@Query("Id") Id : Int,
+                                          @Query("DeletedBy") DeletedBy : Int) : Response<Any>
+
 }
 
 object ServiceApi{
@@ -260,4 +275,7 @@ private const val USER_DOCUMENT_INSERT = "userDocuments/UserDocuments_Upsert"
 private const val USER_DOCUMENT_TYPE = "documentMaster/DocumentMaster_All"
 private const val NOTIFICATION = "userNotifications/UserNotifications_All"
 private const val SEARCHDATA = "jobs/Jobs_All"
-private const val PROPERTYMOREDETAILS = "propertyDetailMaster/PropertyDetailMaster_All"
+private const val PROPERTYMOREDETAILS = "propertyDetails/PropertyDetails_All"
+private const val PROPERTYDETAILSTYPE = "propertyDetailMaster/PropertyDetailMaster_All"
+private const val PROPERTYMOREDETAILSINSERT = "propertyDetails/PropertyDetails_Upsert"
+private const val PROPERTYMOREDETAILSDELETE = "propertyDetails/PropertyDetails_Delete"

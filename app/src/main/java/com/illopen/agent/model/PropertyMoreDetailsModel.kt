@@ -29,10 +29,34 @@ data class PropertyMoreDetailsModel(
 )
 
 data class PropertyMoreDetailsList(
+    @JsonProperty("CreatedBy")
+    val createdBy: Int?,
+    @JsonProperty("CreatedDate")
+    val createdDate: String?,
+    @JsonProperty("CreatedDateStr")
+    val createdDateStr: String?,
+    @JsonProperty("DeletedBy")
+    val deletedBy: Int?,
+    @JsonProperty("DeletedDate")
+    val deletedDate: String?,
+    @JsonProperty("DeletedDateStr")
+    val deletedDateStr: String?,
     @JsonProperty("Id")
     val id: Int?,
     @JsonProperty("IsAmenity")
     val isAmenity: Int?,
-    @JsonProperty("Name")
-    val name: String?
+    @JsonProperty("PropertyDetailMasterId")
+    val propertyDetailMasterId: Int?,
+    @JsonProperty("PropertyDetailMasterName")
+    val propertyDetailMasterName: String?,
+    @JsonProperty("PropertyMasterId")
+    val propertyMasterId: Int?,
+    @JsonProperty("UpdatedBy")
+    val updatedBy: Int?,
+    @JsonProperty("UpdatedDate")
+    val updatedDate: String?,
+    @JsonProperty("UpdatedDateStr")
+    val updatedDateStr: String?,
+    @JsonProperty("Value")
+    val value: String?
 )

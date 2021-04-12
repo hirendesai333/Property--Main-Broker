@@ -8,8 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.databinding.SinglePropertyMoreDetailsBinding
 import com.illopen.agent.model.PropertyMoreDetailsList
+import com.illopen.agent.model.UserDocumentList
+import com.illopen.agent.model.Value
 
-class PropertyMoreDetailsAdapter(var context: Context, var list: List<PropertyMoreDetailsList>)
+class PropertyMoreDetailsAdapter(var context: Context, var list: List<PropertyMoreDetailsList>,
+                                 var itemClickListener : OnItemClickListener,
+                                 var itemClickEdit : OnItemEditClickListener)
     : RecyclerView.Adapter<PropertyMoreDetailsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -24,9 +28,18 @@ class PropertyMoreDetailsAdapter(var context: Context, var list: List<PropertyMo
         val views = holder.binding
         val currentItem = list[position]
 
-        views.propertyDetailName.text = currentItem.name.toString()
-//        views.price.text = currentItem.price
-//        views.date.text = currentItem.createddate
+        views.propertyDetailName.text = currentItem.propertyDetailMasterName.toString()
+        views.price.text = "Price: " + currentItem.value
+        views.date.text = currentItem.createdDateStr
+
+
+        views.delete.setOnClickListener {
+            itemClickListener.onDeleteProperty(position,list[position])
+        }
+
+        views.edit.setOnClickListener {
+            itemClickEdit.onItemEditClick(position,list[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -37,4 +50,11 @@ class PropertyMoreDetailsAdapter(var context: Context, var list: List<PropertyMo
         val binding = SinglePropertyMoreDetailsBinding.bind(itemView)
     }
 
+    interface OnItemClickListener{
+        fun onDeleteProperty(itemPosition : Int,data : PropertyMoreDetailsList)
+    }
+
+    interface OnItemEditClickListener {
+        fun onItemEditClick(itemPosition: Int, data: PropertyMoreDetailsList)
+    }
 }

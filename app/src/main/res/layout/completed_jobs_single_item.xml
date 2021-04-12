@@ -62,6 +62,7 @@
             android:layout_gravity="start"
             android:layout_marginTop="@dimen/_4sdp"
             android:paddingStart="@dimen/_7sdp"
+            android:visibility="gone"
             android:paddingEnd="@dimen/_7sdp"
             android:paddingBottom="@dimen/_4sdp"
             android:text="Job status: Completed"
