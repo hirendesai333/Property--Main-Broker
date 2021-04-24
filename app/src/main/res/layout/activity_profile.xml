@@ -30,6 +30,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:drawableStart="@drawable/ic_verified"
             android:drawablePadding="@dimen/_5sdp"
             android:gravity="center"
@@ -196,25 +197,39 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:weightSum="1"
                 android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardElevation="@dimen/_3sdp">
+
+                    <Spinner
+                        android:id="@+id/countrySpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_weight="1"
-                    android:hint="Country"
+                    android:hint="Mobile Number"
+                    android:layout_marginStart="@dimen/_5sdp"
                     app:boxBackgroundColor="@color/white"
                     app:hintTextColor="@color/green_700">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/country"
+                        android:id="@+id/number"
                         android:layout_width="match_parent"
-                        android:focusable="false"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="@dimen/_12sdp"
                         app:fontFamily="@font/nunito_sans" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -226,6 +241,47 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawablePadding="@dimen/_5sdp"
+                android:text="Preferred Location"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:fontFamily="@font/nunito_sans_bold" />
+
+            <RelativeLayout
+                android:id="@+id/profileLocation"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/corner_grey_background"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toStartOf="@+id/iv5"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Location"
+                    android:textSize="15dp" />
+
+
+                <ImageView
+                    android:id="@+id/iv5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_next" />
+
+            </RelativeLayout>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_5sdp"
                 android:text="Preferred Language"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp"
@@ -236,24 +292,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:drawablePadding="@dimen/_5sdp"
-                android:text="Preferred Location"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
-                app:fontFamily="@font/nunito_sans_bold" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                tools:context=".MapsActivity" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save"

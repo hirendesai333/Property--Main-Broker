@@ -32,7 +32,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom"
         android:layout_below="@+id/topBar"
         android:background="@drawable/top_corner_white_background"
         android:orientation="vertical"
@@ -381,49 +380,49 @@
 
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_5sdp">
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/bottom"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:paddingTop="@dimen/_5sdp"-->
+<!--        android:paddingBottom="@dimen/_5sdp">-->
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="Visit on:\n21st march 2021 @4:30 PM"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp"
-            app:fontFamily="@font/nunito_sans_semibold" />
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:id="@+id/time"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginStart="@dimen/_10sdp"-->
+<!--            android:layout_marginTop="@dimen/_5sdp"-->
+<!--            android:fontFamily="@font/nunito_sans"-->
+<!--            android:text="Visit on:\n21st march 2021 @4:30 PM"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/_10ssp"-->
+<!--            app:fontFamily="@font/nunito_sans_semibold" />-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/newJob"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:text="Start Job"
-            android:textSize="@dimen/_10ssp"
-            app:backgroundTint="@color/green_700" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/newJob"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginEnd="@dimen/_10sdp"-->
+<!--            android:text="Start Job"-->
+<!--            android:textSize="@dimen/_10ssp"-->
+<!--            app:backgroundTint="@color/green_700" />-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:drawableLeft="@drawable/ic_bid"
-            android:drawableTint="@color/ultra_light_grey"
-            android:text="Bid"
-            android:textSize="@dimen/_10ssp"
-            app:backgroundTint="@color/green_700" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/bid"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginEnd="@dimen/_10sdp"-->
+<!--            android:drawableLeft="@drawable/ic_bid"-->
+<!--            android:drawableTint="@color/ultra_light_grey"-->
+<!--            android:text="Bid"-->
+<!--            android:textSize="@dimen/_10ssp"-->
+<!--            app:backgroundTint="@color/green_700" />-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
 </RelativeLayout>

@@ -1,19 +1,17 @@
 package com.illopen.agent.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.illopen.agent.R
-import com.illopen.agent.model.PropertyImageModel
+import com.illopen.agent.databinding.SinglePropetyAddImageBinding
+import com.illopen.agent.model.PropertyImageList
 
-class ProperyImagesListAdapter(val list: ArrayList<PropertyImageModel>) :
+class ProperyImagesListAdapter(var context: Context, var list: List<PropertyImageList>, var itemDeleteClick : OnItemClickListener) :
     RecyclerView.Adapter<ProperyImagesListAdapter.ViewHolder>() {
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val propertyImage: ImageView = itemView.findViewById(R.id.propertyImage)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -27,8 +25,23 @@ class ProperyImagesListAdapter(val list: ArrayList<PropertyImageModel>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = list[position]
-//        holder.propertyImage.load(currentItem.image)
+
+        holder.binding.apply {
+
+            val currentItem = list[position]
+            propertyImage.load(currentItem.urlStr)
+
+            holder.binding.deleteImage.setOnClickListener {
+                itemDeleteClick.onItemDeleteClick(position, list[position])
+            }
+        }
     }
 
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = SinglePropetyAddImageBinding.bind(itemView)
+    }
+
+    interface OnItemClickListener{
+        fun onItemDeleteClick(itemPosition : Int, deleteImage : PropertyImageList)
+    }
 }

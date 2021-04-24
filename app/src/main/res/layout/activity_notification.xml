@@ -12,14 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="20dp">
+        android:padding="@dimen/_10sdp">
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
             android:gravity="center"
+            android:drawableStart="@drawable/ic_arrow_back"
+            android:drawableTint="@color/black"
+            android:drawablePadding="@dimen/_3sdp"
             android:text="Notifications"
             android:textColor="@color/black"
             android:textSize="20dp"

@@ -14,6 +14,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.illopen.agent.R
 import com.illopen.agent.adapters.AllJobLanguagesAdapter
 import com.illopen.agent.adapters.ChoosePropertyAdapter
+import com.illopen.agent.adapters.JobLanguagesAdapter
 import com.illopen.agent.databinding.ActivityNewJob2Binding
 import com.illopen.agent.model.Value
 import com.illopen.agent.model.Values
@@ -166,7 +167,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
 
                         val list = response.body()!!.values!!
 
-                        binding.jobLanguage.adapter = AllJobLanguagesAdapter(this@NewJob, list)
+                        binding.jobLanguage.adapter = JobLanguagesAdapter(this@NewJob, list)
                     }
 
                 } else {
@@ -341,7 +342,6 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
         selectedList.clear()
         selectedList.add(data.id.toString())
         for (i in selectedList.indices) {
-
             val jsonObject = JSONObject()
             jsonObject.put("PropertyMasterId", selectedList[i].toInt())
             propertyArray.put(jsonObject)

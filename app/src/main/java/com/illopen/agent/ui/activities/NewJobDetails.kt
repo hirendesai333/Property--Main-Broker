@@ -106,8 +106,7 @@ class NewJobDetails : AppCompatActivity(), OnJobPropertyClick {
         val view: View = LayoutInflater.from(this).inflate(R.layout.bid_layout_popup, null);
         val dialog = MaterialAlertDialogBuilder(
             this,
-            R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog
-        )
+            R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
             .setView(view)
             .setBackground(ColorDrawable(Color.TRANSPARENT))
             .create()
@@ -125,6 +124,7 @@ class NewJobDetails : AppCompatActivity(), OnJobPropertyClick {
         bidButton.setOnClickListener {
             val amount = bidAmount.text.toString().trim()
             val desc = description.text.toString().trim()
+
             if (amount.isNotEmpty()) {
                 bidingData(amount, desc, currentItem)
                 dialog.cancel()

@@ -35,6 +35,8 @@ class Notification : AppCompatActivity() {
 //        list.add(NotificationModel("New property added"))
 //        binding.notificationsRv.adapter = NotificationAdapter(list = list)
 
+        binding.title.setOnClickListener { onBackPressed() }
+
         getNotification()
     }
 

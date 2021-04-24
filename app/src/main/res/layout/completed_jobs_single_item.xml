@@ -245,6 +245,16 @@
 
         </RelativeLayout>
 
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/ratingBtn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:backgroundTint="@color/green_700"-->
+<!--            android:fontFamily="@font/nunito_sans_bold"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:text="Rating"-->
+<!--            android:textSize="@dimen/_10sdp" />-->
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -23,7 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import com.illopen.agent.R
 import com.illopen.agent.databinding.ActivityJobsPropertyOnMapBinding
-import com.illopen.agent.model.MapDetailsList
+import com.illopen.agent.model.ProfileMapList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.Params
@@ -34,11 +34,14 @@ import java.util.HashMap
 class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
 
     private val TAG = "JobsPropertyOnMap"
+
     private lateinit var binding: ActivityJobsPropertyOnMapBinding
+
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
+
     private lateinit var mMap: GoogleMap
-    private lateinit var mapDetailsList: List<MapDetailsList>
+    private lateinit var mapDetailsList: List<ProfileMapList>
 
     private val LOCATION_PERMISSION_REQUEST = 1
 

@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -31,6 +32,7 @@ import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.Params
 import com.illopen.agent.model.CompletedJobsAssignList
 import com.illopen.agent.model.CompletedMyPostedJobsList
+import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.ui.activities.CompletedJobAssignDetails
 import com.illopen.agent.ui.activities.CompletedJobDetails
 import com.illopen.properybroker.utils.toast
@@ -57,6 +59,7 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
     private lateinit var selectedDate: String
     private lateinit var selectedTime: String
 
+    private lateinit var ratingPopUp: Dialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -302,6 +305,7 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
 
         val intent = Intent(activity, CompletedJobDetails::class.java)
         intent.putExtra("CompletedMyPostedJob",currentItem.id.toString())
+        intent.putExtra("AssignedUserId",currentItem.assignedUserId.toString())
         intent.putExtra(Params.SUB_FROM,Params.MY_POSTED_COMPLETED_JOBS)
         startActivity(intent)
     }
@@ -351,5 +355,65 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
             }
         }
     }
+
+//    override fun onClickRating(position: Int, currentItem: CompletedMyPostedJobsList) {
+//        ratingPopUp = Dialog(requireContext(), R.style.Theme_PropertyMainBroker)
+//        ratingPopUp.setContentView(R.layout.agent_job_rating_popup)
+//        ratingPopUp.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+//
+//        val rating = ratingPopUp.findViewById<RatingBar>(R.id.ratingView)
+//        val review = ratingPopUp.findViewById<TextInputEditText>(R.id.review)
+//        val reviewBtn = ratingPopUp.findViewById<Button>(R.id.reviewBtn)
+//
+//        if (currentItem.jobRatting!! > 0) {
+//            rating.rating = currentItem.jobRatting.toFloat()
+//            review.setText(currentItem.jobReview.toString().trim())
+//            reviewBtn.text = "Update Review"
+//        }
+//
+//        reviewBtn.setOnClickListener {
+//            val ratings = rating.rating.toInt().toString()
+//            val reviews = review.text.toString().trim()
+//
+//            if (reviews.isNotEmpty()) {
+//                ratingAPI(ratings, reviews, currentItem)
+//                ratingPopUp.dismiss()
+//            } else {
+//                requireActivity().toast("Please enter review")
+//            }
+//        }
+//        ratingPopUp.show()
+//    }
+
+//    private fun ratingAPI(ratings: String, reviews: String, currentItem: CompletedMyPostedJobsList) {
+//        coroutineScope.launch {
+//            try {
+//                val data = HashMap<String, String>()
+//                data["JobId"] = currentItem.jobId.toString()
+//                data["RattingById"] = AppPreferences.getUserData(Params.UserId)
+//                data["RattingToId"] = currentItem.assignedUserId.toString()
+//                data["Ratting"] = ratings.toInt().toString()
+//                data["Review"] = reviews
+//
+//                val response = ServiceApi.retrofitService.userAgentRating(data)
+//                if (response.isSuccessful) {
+//                    withContext(Dispatchers.Main) {
+//
+//                        if (response.code() == 200) {
+//                            requireContext().toast("Review Submit Successfully")
+//                        } else {
+//                            requireContext().toast("something wrong")
+//                        }
+//                    }
+//                } else {
+//                    withContext(Dispatchers.Main) {
+//                        Log.d(TAG, "something wrong")
+//                    }
+//                }
+//            } catch (e: Exception) {
+//                Log.d(TAG, e.message.toString())
+//            }
+//        }
+//    }
 
 }

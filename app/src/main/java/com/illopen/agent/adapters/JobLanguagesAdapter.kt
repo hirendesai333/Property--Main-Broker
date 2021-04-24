@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.databinding.UserLanguageListBinding
 import com.illopen.agent.model.AllJobLanguageList
-import com.illopen.agent.model.SelectedLanguageModel
 
-class AllJobLanguagesAdapter(var context: Context, var list: ArrayList<SelectedLanguageModel>) : RecyclerView.Adapter<AllJobLanguagesAdapter.ViewHolder>() {
+class JobLanguagesAdapter(var context: Context,var list: List<AllJobLanguageList>) : RecyclerView.Adapter<JobLanguagesAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.user_language_list,parent,false)
         return ViewHolder(view)
     }
@@ -21,18 +23,14 @@ class AllJobLanguagesAdapter(var context: Context, var list: ArrayList<SelectedL
         val views = holder.binding
         val currentItem = list[position]
 
-        if (currentItem.isSelected!!) {
-            views.userLanguage.text = currentItem.languageName + " 1"
-        } else {
-            views.userLanguage.text = currentItem.languageName + " 0"
-        }
+        views.userLanguage.text = currentItem.name
     }
 
     override fun getItemCount(): Int {
-        return list.size
+      return list.size
     }
 
-    class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding  = UserLanguageListBinding.bind(itemView)
     }
 }

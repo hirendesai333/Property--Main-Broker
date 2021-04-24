@@ -34,20 +34,22 @@
                 android:textSize="@dimen/_14ssp" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Price"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/visitDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/nunito_sans"
                 android:text="Visit on: 21st march 2021"
-                android:textSize="@dimen/_10ssp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Client: Chirag Patel"
-                android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView

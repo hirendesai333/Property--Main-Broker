@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="Agent Job Rating"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp" />
+
+    <LinearLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:padding="@dimen/_5sdp"
+        android:orientation="vertical"
+        app:boxBackgroundColor="@color/white">
+
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/ratingView"
+            style="@style/Widget.AppCompat.RatingBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:numStars="5"
+            android:rating="4.5"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:hint="Review "
+        app:boxBackgroundColor="@color/white"
+        app:hintTextColor="@color/green_700">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:fontFamily="@font/nunito_sans" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/reviewBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:text="Submit Review"
+        app:backgroundTint="@color/green_700"
+        app:fontFamily="@font/nunito_sans_bold" />
+
+
+</LinearLayout>

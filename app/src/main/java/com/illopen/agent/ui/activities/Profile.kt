@@ -2,10 +2,13 @@ package com.illopen.agent.ui.activities
 
 import android.Manifest
 import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -13,23 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.bumptech.glide.Glide
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.Circle
-import com.google.android.gms.maps.model.CircleOptions
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
-import com.illopen.agent.R
-import com.illopen.agent.adapters.AllCountryListAdapter
-import com.illopen.agent.adapters.AllUserLanguageAdapter
-import com.illopen.agent.adapters.AllUserLocationAdapter
+import com.illopen.agent.adapters.AllJobLanguagesAdapter
 import com.illopen.agent.databinding.ActivityProfileBinding
+import com.illopen.agent.model.AllJobLanguageList
 import com.illopen.agent.model.Country
-import com.illopen.agent.model.MapDetailsList
-import com.illopen.agent.model.MyPostedJobsList
+import com.illopen.agent.model.PropertyTypeList
+import com.illopen.agent.model.SelectedLanguageModel
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.MediaLoader
@@ -38,16 +31,14 @@ import com.illopen.properybroker.utils.toast
 import com.yanzhenjie.album.Album
 import com.yanzhenjie.album.AlbumConfig
 import kotlinx.coroutines.*
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.regex.Pattern
 
-class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, OnMapReadyCallback {
+class Profile : AppCompatActivity(){
 
     private lateinit var binding: ActivityProfileBinding
 
@@ -63,11 +54,10 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
 
     private var filePath = ""
     private lateinit var countryDialog: Dialog
+    private var selectedLanguageList: ArrayList<SelectedLanguageModel> = ArrayList()
 
-    private lateinit var mMap: GoogleMap
-    private val LOCATION_PERMISSION_REQUEST = 1
-
-    private var circle: Circle? = null
+    private lateinit var countryAdapter: ArrayAdapter<String>
+    private var countryList : ArrayList<Country> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,10 +70,6 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
                 .build()
         )
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
-
         AppPreferences.initialize(this.applicationContext)
 
         binding.title.setOnClickListener {
@@ -93,12 +79,11 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
         binding.save.setOnClickListener {
             updateProfile()
             updateLanguage()
-            getUserLocation()
         }
 
-        binding.country.setOnClickListener {
-            allCountry()
-        }
+//        binding.country.setOnClickListener {
+//            allCountry()
+//        }
 
         binding.profileImage.setOnClickListener {
             setupPermissions()
@@ -108,12 +93,43 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
             setupPermissions()
         }
 
+        binding.profileLocation.setOnClickListener {
+            startActivity(Intent(this,ProfileMapActivity::class.java))
+        }
+
         getUserProfile()
         getUserLanguage()
+
+        countrySpinner()
     }
 
     private fun updateLanguage() {
-        //todo update language
+        coroutineScope.launch {
+            try {
+                val map = HashMap<String, String>()
+                map["Id"] = "0"
+                map["UserId"] = "0"
+                map["LanguageMasterId"] = ""
+                map["LanguageName"] = ""
+                map["UserName"] = ""
+
+                val response = ServiceApi.retrofitService.userLanguageUpdate(map)
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+
+                        Log.d("update_Language", response.code().toString())
+                        Log.d("update_Language", response.body().toString())
+
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+            }
+        }
     }
 
     private fun setupPermissions() {
@@ -204,40 +220,6 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
         }
     }
 
-    private fun getUserLocation() {
-
-        coroutineScope.launch {
-            try {
-
-                val map = HashMap<String, String>()
-                map["Offset"] = "0"
-                map["Limit"] = "0"
-                map["Page"] = "0"
-                map["PageSize"] = "0"
-                map["TotalCount"] = "0"
-
-                val response = ServiceApi.retrofitService.getUserLocation(map)
-                if (response.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-
-                        Log.d("getUserLocation", response.code().toString())
-                        Log.d("getUserLocation", response.body().toString())
-
-                    }
-
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Log.d(TAG, "something wrong")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.d(TAG, e.message.toString())
-            }
-        }
-
-    }
-
-
     private fun getUserLanguage() {
 
         coroutineScope.launch {
@@ -250,8 +232,47 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
+                val response = ServiceApi.retrofitService.getAllJobLang(
+                    map
+                )
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+
+                        Log.d("getUserLanguages", response.code().toString())
+                        Log.d("getUserLanguages", response.body().toString())
+
+                        selectedLanguageList.clear()
+                        val list = response.body()!!.values!!
+                        getAllLanguages(list)
+
+//                        binding.userLanguageRv.adapter = AllJobLanguagesAdapter(this@Profile, list)
+//                        binding.userLanguageRv.layoutManager = LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
+                    }
+
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
+
+    private fun getAllLanguages(allLanguageList: List<AllJobLanguageList>) {
+        coroutineScope.launch {
+            try {
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
                 val response = ServiceApi.retrofitService.getUserLanguage(
-                    AppPreferences.getUserData(Params.UserId).toInt(), map
+                    AppPreferences.getUserData(Params.UserId).toInt(),map
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
@@ -261,7 +282,35 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
 
                         val list = response.body()!!.values!!
 
-                        binding.userLanguageRv.adapter = AllUserLanguageAdapter(this@Profile, list)
+                        allLanguageList.forEachIndexed { index, allJobLanguageList ->
+                            list.forEachIndexed { index, userLanguage ->
+                                if (userLanguage.languageMasterId == allJobLanguageList.id) {
+                                    if (!selectedLanguageList.contains(userLanguage.languageMasterId)) {
+                                        selectedLanguageList.add(
+                                            SelectedLanguageModel(
+                                                userLanguage.languageMasterId,
+                                                userLanguage.languageName,
+                                                true
+                                            )
+                                        )
+                                    }
+                                } else {
+                                    if (!selectedLanguageList.contains(userLanguage.languageMasterId)) {
+                                        selectedLanguageList.add(
+                                            SelectedLanguageModel(
+                                                userLanguage.languageMasterId,
+                                                userLanguage.languageName,
+                                                false
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        Log.d(TAG, "selected langauges: ${Gson().toJson(selectedLanguageList)}")
+
+                        binding.userLanguageRv.adapter = AllJobLanguagesAdapter(this@Profile, selectedLanguageList)
                         binding.userLanguageRv.layoutManager = LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
                     }
 
@@ -277,16 +326,16 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
     }
 
 
-    private fun allCountry() {
-        countryDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
-        countryDialog.setContentView(R.layout.country_popup)
-        countryDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
-        val countryRecycler = countryDialog.findViewById<RecyclerView>(R.id.CountryListRv)
-        countryList(countryRecycler)
-        countryDialog.show()
-    }
+//    private fun allCountry() {
+//        countryDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
+//        countryDialog.setContentView(R.layout.country_popup)
+//        countryDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+//        val countryRecycler = countryDialog.findViewById<RecyclerView>(R.id.CountryListRv)
+//        countryList(countryRecycler)
+//        countryDialog.show()
+//    }
 
-    private fun countryList(recyclerView: RecyclerView) {
+    private fun countrySpinner() {
         coroutineScope.launch {
             try {
                 val map = HashMap<String, String>()
@@ -303,11 +352,30 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
                         Log.d("getCountryList", response.code().toString())
                         Log.d("getCountryList", response.body().toString())
 
-                        val list: List<Country> = response.body()!!.values!!
+                        countryList = response.body()?.values as ArrayList<Country>
 
-                        recyclerView.adapter =
-                            AllCountryListAdapter(this@Profile, list, this@Profile)
-                        recyclerView.layoutManager = LinearLayoutManager(this@Profile)
+                        val data : MutableList<String> = ArrayList()
+
+                        countryList.forEach {
+                            data.add(it.country.toString())
+                        }
+
+                        countryAdapter = object : ArrayAdapter<String>(this@Profile, android.R.layout.simple_list_item_1, data) {}
+                        binding.countrySpinner.adapter = countryAdapter
+
+                        binding.countrySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+
+                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                countryId = countryList[position].id!!.toInt()
+                                toast("Selected : " + countryList[position].country)
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                                TODO("Not yet implemented")
+                            }
+
+                        }
+
 
                     }
                 } else {
@@ -403,7 +471,8 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
                         binding.email.setText(response.email).toString().trim()
                         binding.companyName.setText(response.companyName).toString().trim()
                         binding.address.setText(response.address.toString().trim())
-                        binding.country.setText(response.countryName).toString().trim()
+//                        binding.countrySpinner = response.countryCode.toString().trim()
+                        binding.number.setText(response.phoneNumber).toString().trim()
                         countryId = response.countryId!!
                     }
                 } else {
@@ -436,93 +505,8 @@ class Profile : AppCompatActivity(), AllCountryListAdapter.OnItemClickListener, 
         }
     }
 
-    override fun onItemClick(itemPosition: Int, data: Country) {
-        countryDialog.dismiss()
-        binding.country.setText(data.country)
-    }
-
-    override fun onMapReady(googleMap : GoogleMap?) {
-        mMap = googleMap!!
-        setupLocationPermission()
-    }
-
-    private fun setupLocationPermission() {
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mMap.isMyLocationEnabled = true
-            mapLocationAPI()
-        }
-        else
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST)
-    }
-
-    private fun mapLocationAPI() {
-        coroutineScope.launch {
-            try {
-                val map = HashMap<String, String>()
-                map["Offset"] = "0"
-                map["Limit"] = "0"
-                map["Page"] = "0"
-                map["PageSize"] = "0"
-                map["TotalCount"] = "0"
-                val response = ServiceApi.retrofitService.getMapLocation(
-                   AppPreferences.getUserData(Params.UserId).toInt(), map
-                )
-                if (response.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-                        Log.d("profileLocation", response.code().toString())
-                        Log.d("profileLocation", Gson().toJson(response.body()))
-
-                        val mapDetailsList : List<MapDetailsList> = response.body()!!.values!!
-                        mapDetailsList.forEachIndexed { index, mapDetailsList ->
-                            drawCircle(mapDetailsList.latitude!!.toDouble(),
-                            mapDetailsList.longitude!!.toDouble(),mapDetailsList.radius!!.toDouble())
-
-                            mMap.addMarker(MarkerOptions().position(
-                                LatLng(
-                                        mapDetailsList.latitude.toDouble(),
-                                        mapDetailsList.longitude.toDouble()
-                                    )
-                                )
-                            )
-
-                        }
-                        mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(
-                                    mapDetailsList[0].latitude!!.toDouble(),
-                                    mapDetailsList[0].longitude!!.toDouble())
-                            )
-                        )
-//                        mMap.addCircle(
-//                            CircleOptions()
-//                                .center(LatLng(mapDetailsList[0].latitude!!.toDouble(),
-//                                    mapDetailsList[0].longitude!!.toDouble()))
-//                                .radius(mapDetailsList[0].radius!!.toDouble())
-//                                .strokeWidth(1.0f)
-//                                .strokeColor(Color.RED)
-//                                .fillColor(Color.BLUE)
-//                        )
-
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Log.d(TAG, "something wrong")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.d(TAG, e.message.toString())
-            }
-        }
-    }
-
-    private fun drawCircle(latitude: Double, longitude: Double, radius: Double) {
-        val circleOp = CircleOptions()
-            .center(LatLng(latitude, longitude))
-            .radius(radius)
-            .strokeWidth(1.0f)
-            .strokeColor(Color.RED)
-            .fillColor(Color.BLUE)
-        circle?.remove() // Remove old circle.
-        circle = mMap.addCircle(circleOp) // Draw new circle.
-    }
+//    override fun onItemClick(itemPosition: Int, data: Country) {
+//        countryDialog.dismiss()
+//        binding.country.setText(data.country)
+//    }
 }

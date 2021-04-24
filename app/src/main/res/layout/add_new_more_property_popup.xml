@@ -24,6 +24,38 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:orientation="vertical">
 
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="@dimen/_80sdp"-->
+<!--                android:layout_height="@dimen/_80sdp"-->
+<!--                android:layout_gravity="center">-->
+
+<!--                <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                    android:id="@+id/propertyImage"-->
+<!--                    android:layout_width="@dimen/_75sdp"-->
+<!--                    android:layout_height="@dimen/_75sdp"-->
+<!--                    android:src="@mipmap/user_profile"-->
+<!--                    app:civ_border_width="2dp"-->
+<!--                    app:civ_border_color="@color/black"/>-->
+
+<!--                <com.google.android.material.imageview.ShapeableImageView-->
+<!--                    android:id="@+id/editPic"-->
+<!--                    android:layout_width="@dimen/_16sdp"-->
+<!--                    android:layout_height="@dimen/_16sdp"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:backgroundTint="@color/black"-->
+<!--                    android:src="@drawable/ic_edit" />-->
+
+<!--            </RelativeLayout>-->
+
+<!--        </LinearLayout>-->
+
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

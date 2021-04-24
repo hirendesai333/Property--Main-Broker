@@ -11,7 +11,7 @@ import com.illopen.agent.databinding.CompletedJobItemBinding
 import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.ui.activities.PropertyDetail
 
-class CompletedJobDetailsAdapter(var context: Context,var list: List<JobPropertyList>)
+class CompletedJobDetailsAdapter(var context: Context, var list: List<JobPropertyList>, var itemClick : OnCompletedClick)
     : RecyclerView.Adapter<CompletedJobDetailsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -39,9 +39,15 @@ class CompletedJobDetailsAdapter(var context: Context,var list: List<JobProperty
             context.startActivity(intent)
         }
 
-//        view.markCompleted.setOnClickListener {
-//            onCompletedJobPropertyClick.onCompletedJobPropertyClick(currentItem)
-//        }
+        view.ratingBtn.setOnClickListener {
+            itemClick.onCompletedClick(position, list[position])
+        }
+
+        if (currentItem.review.isNullOrEmpty()){
+            view.ratingBtn.text = "Review"
+        }else{
+            view.ratingBtn.text = "Update Review"
+        }
 
     }
 
@@ -49,7 +55,7 @@ class CompletedJobDetailsAdapter(var context: Context,var list: List<JobProperty
         return list.size
     }
 
-//    interface OnCompletedJobPropertyClick{
-//        fun onCompletedJobPropertyClick(currentItem : JobPropertyList)
-//    }
+    interface OnCompletedClick{
+        fun onCompletedClick(position: Int,currentItem : JobPropertyList)
+    }
 }

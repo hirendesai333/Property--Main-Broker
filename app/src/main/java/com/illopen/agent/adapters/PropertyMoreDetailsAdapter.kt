@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.databinding.SinglePropertyMoreDetailsBinding
 import com.illopen.agent.model.PropertyMoreDetailsList
-import com.illopen.agent.model.UserDocumentList
-import com.illopen.agent.model.Value
 
 class PropertyMoreDetailsAdapter(var context: Context, var list: List<PropertyMoreDetailsList>,
                                  var itemClickListener : OnItemClickListener,

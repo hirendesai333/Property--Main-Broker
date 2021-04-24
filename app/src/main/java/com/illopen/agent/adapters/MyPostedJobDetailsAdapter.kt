@@ -35,9 +35,6 @@ class MyPostedJobDetailsAdapter(
             "Address: ${currentItem.propertyAddress}, ${currentItem.city}, ${currentItem.state}, ${currentItem.country} - ${currentItem.pincode}"
         holder.propertyType.text = "Property type: " + currentItem.propertyTypeName
 
-//        holder.agent.setOnClickListener {
-//            itemClickListener.onItemClick(position, list[position])
-//        }
 
         holder.rootLayout.setOnClickListener {
             val intent = Intent(context, PropertyDetail::class.java)

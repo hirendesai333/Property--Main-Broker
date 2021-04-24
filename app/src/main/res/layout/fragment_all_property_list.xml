@@ -93,7 +93,7 @@
             android:padding="@dimen/_3sdp"
             android:paddingStart="@dimen/_10sdp"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:background="@drawable/bid_dialog_border"
             android:text="Search"
@@ -117,7 +117,7 @@
         android:id="@+id/upcomingJobs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>

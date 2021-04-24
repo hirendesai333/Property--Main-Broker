@@ -3,7 +3,7 @@ package com.illopen.agent.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class MapViewDetailsModel(
+data class PropertyImageAllModel(
     @JsonProperty("IsOffsetProvided")
     val isOffsetProvided: Boolean?,
     @JsonProperty("IsPageProvided")
@@ -25,28 +25,24 @@ data class MapViewDetailsModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<MapDetailsList>?
+    val values: List<PropertyImageList>?
 )
 
-data class MapDetailsList(
-    @JsonProperty("CityMasterId")
-    val cityMasterId: Int?,
-    @JsonProperty("CityName")
-    val cityName: Any?,
-    @JsonProperty("FirstName")
-    val firstName: Any?,
+data class PropertyImageList(
+    @JsonProperty("CreatedBy")
+    val createdBy: Int?,
+    @JsonProperty("CreatedDate")
+    val createdDate: String?,
+    @JsonProperty("CreatedDateStr")
+    val createdDateStr: String?,
     @JsonProperty("Id")
     val id: Int?,
-    @JsonProperty("LastName")
-    val lastName: Any?,
-    @JsonProperty("Latitude")
-    val latitude: String?,
-    @JsonProperty("LocationName")
-    val locationName: Any?,
-    @JsonProperty("Longitude")
-    val longitude: String?,
-    @JsonProperty("Radius")
-    val radius: String?,
-    @JsonProperty("UserId")
-    val userId: Int?
+    @JsonProperty("PropertyMasterId")
+    val propertyMasterId: Int?,
+    @JsonProperty("PropertyName")
+    val propertyName: String?,
+    @JsonProperty("Url")
+    val url: String?,
+    @JsonProperty("UrlStr")
+    val urlStr: String?
 )

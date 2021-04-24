@@ -1,7 +1,9 @@
 package com.illopen.agent.ui.activities
 
+import android.Manifest
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +22,7 @@ import com.illopen.agent.databinding.ActivityAddPropertyBinding
 import com.illopen.agent.model.*
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
+import com.illopen.agent.utils.MediaLoader
 import com.illopen.agent.utils.Params
 import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
@@ -78,6 +81,7 @@ class AddProperty : AppCompatActivity() , AllCountryListAdapter.OnItemClickListe
             binding.activeButton.background =
                 ContextCompat.getDrawable(this, R.drawable.rounded_users_tabbar)
             binding.inactivateButton.setBackgroundColor(Color.TRANSPARENT)
+
 
         }
 
@@ -422,9 +426,14 @@ class AddProperty : AppCompatActivity() , AllCountryListAdapter.OnItemClickListe
                         Log.d("addNewProperty", response.code().toString())
                         Log.d("addNewProperty", response.body().toString())
 
-                        toast("New property added successfully")
-                        startActivity(Intent(this@AddProperty,MyProperties::class.java))
-                        finish()
+                        if (response.code() == 200){
+                            toast("New property added successfully")
+                            startActivity(Intent(this@AddProperty,MyProperties::class.java))
+                            finish()
+                        }else{
+                            // something wrong
+                        }
+
                     }
                 } else {
                     withContext(Dispatchers.Main) {

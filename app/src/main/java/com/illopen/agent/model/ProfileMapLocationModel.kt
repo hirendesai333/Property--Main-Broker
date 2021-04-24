@@ -3,7 +3,7 @@ package com.illopen.agent.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class AllJobLanguageModel(
+data class ProfileMapLocationModel(
     @JsonProperty("IsOffsetProvided")
     val isOffsetProvided: Boolean?,
     @JsonProperty("IsPageProvided")
@@ -25,12 +25,28 @@ data class AllJobLanguageModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: ArrayList<AllJobLanguageList>?
+    val values: List<ProfileMapList>?
 )
 
-data class AllJobLanguageList(
+data class ProfileMapList(
+    @JsonProperty("CityMasterId")
+    val cityMasterId: Int?,
+    @JsonProperty("CityName")
+    val cityName: Any?,
+    @JsonProperty("FirstName")
+    val firstName: Any?,
     @JsonProperty("Id")
     val id: Int?,
-    @JsonProperty("Name")
-    val name: String?
+    @JsonProperty("LastName")
+    val lastName: Any?,
+    @JsonProperty("Latitude")
+    val latitude: String?,
+    @JsonProperty("LocationName")
+    val locationName: Any?,
+    @JsonProperty("Longitude")
+    val longitude: String?,
+    @JsonProperty("Radius")
+    val radius: String?,
+    @JsonProperty("UserId")
+    val userId: Int?
 )

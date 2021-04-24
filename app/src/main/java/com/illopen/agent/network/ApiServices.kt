@@ -91,8 +91,8 @@ interface ApiKtService{
     @POST(GETLANGUAGEUPDATE)
     suspend fun userLanguageUpdate(@Body data: Map<String, String>) : Response<Any>
 
-    @POST(GETUSERLOCATION)
-    suspend fun getUserLocation(@Body data: Map<String, String>) : Response<Any>
+    @POST(INSERT_LOCATION)
+    suspend fun getUserLocationInsert(@Body data: Map<String, String>) : Response<Any>
 
     @Multipart
     @POST(UPLOAD_PROFILE_PIC)
@@ -171,7 +171,7 @@ interface ApiKtService{
     suspend fun getAllJobLang(@Body data: Map<String, String>) : Response<AllJobLanguageModel>
 
     @POST(AVAILABLEMAPLOCATION)
-    suspend fun getMapLocation(@Query("userId") userId: Int,@Body data: Map<String, String>) : Response<MapViewDetailsModel>
+    suspend fun getMapLocation(@Query("userId") userId: Int, @Body data: Map<String, String>) : Response<ProfileMapLocationModel>
 
     @POST(USER_DOCUMENT_ALL)
     suspend fun getUserAllDocuments(@Query("userId") userId: Int,@Body data: Map<String, String>) : Response<UserAllDocumentsModel>
@@ -224,6 +224,26 @@ interface ApiKtService{
     suspend fun deletePropertyMoreDetails(@Query("Id") Id : Int,
                                           @Query("DeletedBy") DeletedBy : Int) : Response<Any>
 
+    @POST(PROPERTYIMAGEALL)
+    suspend fun propertyImageAll(@Query("PropertyMasterId") PropertyMasterId : Int,
+                                 @Body data: Map<String, String>) : Response<PropertyImageAllModel>
+
+    @Multipart
+    @POST(PROPERTYIMAGE)
+    suspend fun propertyImageUpload(@Part("PropertyMasterId") PropertyMasterId : Int,
+                                    @Part files: MultipartBody.Part) : Response<Any>
+
+    @POST(PROPERTYIMAGEDELETE)
+    suspend fun propertyImageDelete(@Query("Id") id : Int) : Response<Any>
+
+//    @POST(PROPERTYIMAGEUPDATE)
+//    suspend fun propertyImageUpdate(@Body data: Map<String, String>) : Response<Any>
+
+    @POST(USERAGENTRATING)
+    suspend fun userAgentRating(@Body data: Map<String, String>) : Response<Any>
+
+    @POST(PROPERTY_ACTIVE_INACTIVE)
+    suspend fun propertyActiveInActive(@Query("Id") Id: Int) : Response<Any>
 }
 
 object ServiceApi{
@@ -232,7 +252,12 @@ object ServiceApi{
 
 private const val LOGIN = "users/Users_Login"
 private const val SIGNUP = "users/Users_Upsert"
+private const val GETUSERPROFILE = "users/Users_ById"
+private const val UPDATEPROFILE = "users/Users_Upsert"
 private const val CHANGE_PASSWORD = "users/Users_ChangePassword"
+private const val GETUSERLANGUAGE = "userLanguages/UserLanguages_All"
+private const val GETLANGUAGEUPDATE = "userLanguages/UserLanguages_Upsert"
+private const val UPLOAD_PROFILE_PIC = "users/Users_ProfileUpdate"
 private const val GETCUSTOMERS = "customerMaster/CustomerMaster_All"
 private const val ADDCUSTOMER = "customerMaster/CustomerMaster_Upsert"
 private const val UPDATECUSTOMER = "customerMaster/CustomerMaster_Upsert"
@@ -242,16 +267,11 @@ private const val UPDATEPROPERTY = "propertyMaster/PropertyMaster_Upsert"
 private const val GETPROPERTYDETAILS = "propertyMaster/PropertyMaster_ById"
 private const val GETPROPERTYTYPE = "propertyTypeMaster/PropertyTypeMaster_All"
 private const val GETAVALIBLEFOR = "availableForMaster/AvailableForMaster_All"
+private const val PROPERTY_ACTIVE_INACTIVE = "propertyMaster/PropertyMaster_ActInAct"
 private const val DELETEPROPERTY = "propertyMaster/PropertyMaster_Delete"
-private const val GETUSERPROFILE = "users/Users_ById"
-private const val UPDATEPROFILE = "users/Users_Upsert"
 private const val GETCOUNTRY = "countryMaster/CountryMaster_All"
 private const val GETSTATE = "stateMaster/StateMaster_All"
 private const val GETCITY = "cityMaster/CityMaster_All"
-private const val GETUSERLANGUAGE = "userLanguages/UserLanguages_All"
-private const val GETLANGUAGEUPDATE = "userLanguages/UserLanguages_Upsert"
-private const val GETUSERLOCATION = "userPreferedLocations/UserPreferedLocations_Upsert"
-private const val UPLOAD_PROFILE_PIC = "users/Users_ProfileUpdate"
 private const val GETNEWAVAILABLEJOBS = "jobs/Jobs_All"
 private const val GETNEWMYPOSTEDJOBS = "jobs/Jobs_All"
 private const val GETONGOINGJOBS = "jobs/Jobs_All"
@@ -269,13 +289,19 @@ private const val MARKASPROPERTYSTATUS = "jobs/Jobs_UpdateStatus"
 private const val CREATEJOB = "jobs/Jobs_Upsert"
 private const val JOBLANGUAGEAll = "languageMaster/LanguageMaster_All"
 private const val AVAILABLEMAPLOCATION = "userPreferedLocations/UserPreferedLocations_All"
+private const val INSERT_LOCATION = "userPreferedLocations/UserPreferedLocations_Upsert"
 private const val USER_DOCUMENT_ALL = "userDocuments/UserDocuments_All"
 private const val USER_DOCUMENT_DELETE = "userDocuments/UserDocuments_Delete"
 private const val USER_DOCUMENT_INSERT = "userDocuments/UserDocuments_Upsert"
 private const val USER_DOCUMENT_TYPE = "documentMaster/DocumentMaster_All"
 private const val NOTIFICATION = "userNotifications/UserNotifications_All"
 private const val SEARCHDATA = "jobs/Jobs_All"
-private const val PROPERTYMOREDETAILS = "propertyDetails/PropertyDetails_All"
-private const val PROPERTYDETAILSTYPE = "propertyDetailMaster/PropertyDetailMaster_All"
 private const val PROPERTYMOREDETAILSINSERT = "propertyDetails/PropertyDetails_Upsert"
 private const val PROPERTYMOREDETAILSDELETE = "propertyDetails/PropertyDetails_Delete"
+private const val PROPERTYIMAGE = "propertyImage/PropertyImage_Upsert"
+private const val PROPERTYIMAGEUPDATE = "propertyImage/PropertyImage_Update"
+private const val PROPERTYIMAGEDELETE = "propertyImage/PropertyImage_Delete"
+private const val PROPERTYMOREDETAILS = "propertyDetails/PropertyDetails_All"
+private const val PROPERTYDETAILSTYPE = "propertyDetailMaster/PropertyDetailMaster_All"
+private const val PROPERTYIMAGEALL = "propertyImage/PropertyImage_All"
+private const val USERAGENTRATING = "userRatting/UserRatting_Upsert"

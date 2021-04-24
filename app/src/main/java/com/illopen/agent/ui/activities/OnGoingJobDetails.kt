@@ -3,10 +3,15 @@ package com.illopen.agent.ui.activities
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.RatingBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -154,14 +159,37 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
         reviewPopup.setContentView(R.layout.job_property_review_popup)
         reviewPopup.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
-        reviewPopup.findViewById<Button>(R.id.btnReview).setOnClickListener {
+//        val view: View = LayoutInflater.from(this).inflate(R.layout.job_property_review_popup, null);
+//        val dialog = MaterialAlertDialogBuilder(
+//            this,
+//            R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
+//            .setView(view)
+//            .setBackground(ColorDrawable(Color.WHITE))
+//            .create()
 
-            val rating = reviewPopup.findViewById<RatingBar>(R.id.rating)
-            val review = reviewPopup.findViewById<TextInputEditText>(R.id.edtReview).text.toString().trim()
-            val note = reviewPopup.findViewById<TextInputEditText>(R.id.note).text.toString().trim()
+        val rating = reviewPopup.findViewById<RatingBar>(R.id.rating)
+        val review = reviewPopup.findViewById<TextInputEditText>(R.id.edtReview)
+        val note = reviewPopup.findViewById<TextInputEditText>(R.id.note)
+        val btnSave = reviewPopup.findViewById<Button>(R.id.btnReview)
 
-            if (review.isNotEmpty()){
-                addReviewPopup(rating,review,note,currentItem)
+        if (currentItem.rating!! > 0) {
+            rating.rating = currentItem.rating.toFloat()
+            review.setText(currentItem.review.toString())
+            note.setText(currentItem.note)
+            btnSave.text = "Update Review"
+        }
+
+        btnSave.setOnClickListener {
+
+//            val rating = reviewPopup.findViewById<RatingBar>(R.id.rating)
+//            val review = reviewPopup.findViewById<TextInputEditText>(R.id.edtReview).text.toString().trim()
+//            val note = reviewPopup.findViewById<TextInputEditText>(R.id.note).text.toString().trim()
+            val ratings = rating.rating.toInt().toString()
+            val reviews = review.text.toString().trim()
+            val notes = note.text.toString().trim()
+
+            if (reviews.isNotEmpty() && notes.isNotEmpty()){
+                addReviewPopup(ratings,reviews,notes,currentItem)
                 reviewPopup.dismiss()
             }else{
                 toast("Please enter review")
@@ -170,15 +198,15 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
         reviewPopup.show()
     }
 
-    private fun addReviewPopup(rating: RatingBar, review: String, note: String,currentItem: JobPropertyList) {
+    private fun addReviewPopup(rating: String, reviews: String, notes: String,currentItem: JobPropertyList) {
 
         coroutineScope.launch {
             try {
                 val data = HashMap<String,String>()
                 data["Id"] = currentItem.id.toString()
-                data["Rating"] = rating.rating.toString()
-                data["Review"] = review
-                data["Note"] = note
+                data["Rating"] = rating
+                data["Review"] = reviews
+                data["Note"] = notes
                 data["RatingBy"] = "5"
                 val response = ServiceApi.retrofitService.jobPropertyUpdateShown(data)
                 if (response.isSuccessful) {

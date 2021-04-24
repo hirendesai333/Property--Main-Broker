@@ -71,18 +71,15 @@
 
         </RelativeLayout>
 
-<!--        <com.google.android.material.textview.MaterialTextView-->
-<!--            android:id="@+id/markCompleted"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="@dimen/_8sdp"-->
-<!--            android:fontFamily="@font/nunito_sans_bold"-->
-<!--            android:paddingBottom="@dimen/_5sdp"-->
-<!--            android:background="@drawable/bid_dialog_border"-->
-<!--            android:layout_gravity="end"-->
-<!--            android:text="MARK AS : Completed"-->
-<!--            android:textColor="@color/green_700"-->
-<!--            android:textSize="@dimen/_10sdp" />-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ratingBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/green_700"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:layout_gravity="end"
+            android:text="Rating"
+            android:textSize="@dimen/_10sdp" />
 
     </LinearLayout>
 
