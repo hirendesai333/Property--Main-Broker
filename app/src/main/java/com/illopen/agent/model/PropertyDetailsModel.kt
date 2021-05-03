@@ -18,29 +18,37 @@ data class PropertyDetailsModel(
 
 data class PropertyDetails(
     @JsonProperty("AvailableFor")
-    val availableFor: Any?,
+    val availableFor: String?,
     @JsonProperty("AvailableForMasterId")
     val availableForMasterId: Int?,
     @JsonProperty("CityId")
     val cityId: Int?,
     @JsonProperty("CityName")
-    val cityName: Any?,
+    val cityName: String?,
     @JsonProperty("CountryId")
     val countryId: Int?,
     @JsonProperty("CountryName")
-    val countryName: Any?,
+    val countryName: String?,
     @JsonProperty("CreatedBy")
     val createdBy: Int?,
     @JsonProperty("CreatedDate")
     val createdDate: String?,
     @JsonProperty("CreatedDateStr")
     val createdDateStr: String?,
+    @JsonProperty("DeletedBy")
+    val deletedBy: Int?,
+    @JsonProperty("DeletedDate")
+    val deletedDate: String?,
+    @JsonProperty("DeletedDateStr")
+    val deletedDateStr: String?,
     @JsonProperty("FullName")
     val fullName: String?,
     @JsonProperty("Id")
     val id: Int?,
     @JsonProperty("IsActive")
     val isActive: Int?,
+    @JsonProperty("IsDeleted")
+    val isDeleted: Boolean?,
     @JsonProperty("Pincode")
     val pincode: String?,
     @JsonProperty("PropertyAddress")
@@ -56,13 +64,13 @@ data class PropertyDetails(
     @JsonProperty("PropertyPrice")
     val propertyPrice: String?,
     @JsonProperty("PropertyType")
-    val propertyType: Any?,
+    val propertyType: String?,
     @JsonProperty("PropertyTypeMasterId")
     val propertyTypeMasterId: Int?,
     @JsonProperty("StateId")
     val stateId: Int?,
     @JsonProperty("StateName")
-    val stateName: Any?,
+    val stateName: String?,
     @JsonProperty("UpdatedBy")
     val updatedBy: Int?,
     @JsonProperty("UpdatedDate")
@@ -72,3 +80,4 @@ data class PropertyDetails(
     @JsonProperty("UserId")
     val userId: Int?
 )
+

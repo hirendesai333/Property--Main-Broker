@@ -97,8 +97,6 @@ data class CompletedMyPostedJobsList(
     val id: Int?,
     @JsonProperty("JobBidId")
     val jobBidId: Int?,
-    @JsonProperty("JobId")
-    val jobId: Int?,
     @JsonProperty("JobLanguages")
     val jobLanguages: String?,
     @JsonProperty("JobNo")
@@ -109,8 +107,6 @@ data class CompletedMyPostedJobsList(
     val jobRatting: Int?,
     @JsonProperty("JobReview")
     val jobReview: Any?,
-    @JsonProperty("JobStatus")
-    val jobStatus: Any?,
     @JsonProperty("JobVisitingDate")
     val jobVisitingDate: String?,
     @JsonProperty("JobVisitingTime")
@@ -129,16 +125,10 @@ data class CompletedMyPostedJobsList(
     val propertyMasterId: Int?,
     @JsonProperty("PropertyName")
     val propertyName: Any?,
-    @JsonProperty("PropertyNote")
-    val propertyNote: Any?,
     @JsonProperty("PropertyNotes")
     val propertyNotes: Any?,
     @JsonProperty("PropertyPrice")
     val propertyPrice: Int?,
-    @JsonProperty("PropertyRating")
-    val propertyRating: Any?,
-    @JsonProperty("PropertyReview")
-    val propertyReview: Any?,
     @JsonProperty("PropertyTypeMasterId")
     val propertyTypeMasterId: Int?,
     @JsonProperty("Remarks")
@@ -180,9 +170,11 @@ data class CompletedMyPostedJobsList(
     @JsonProperty("UserPhoneNumber")
     val userPhoneNumber: String?,
     @JsonProperty("UserProfileUrl")
-    val userProfileUrl: String?,
+    val userProfileUrl: Any?,
     @JsonProperty("UserProfileUrlStr")
     val userProfileUrlStr: String?,
+    @JsonProperty("UserRattingId")
+    val userRattingId: Int?,
     @JsonProperty("VisitingDate")
     val visitingDate: Any?,
     @JsonProperty("VistingTime")

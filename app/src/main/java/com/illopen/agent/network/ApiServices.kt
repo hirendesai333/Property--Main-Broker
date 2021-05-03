@@ -83,7 +83,7 @@ interface ApiKtService{
     suspend fun getState(@Query("CountryId") userId: Int, @Body data: Map<String, String>) : Response<AllStateListModel>
 
     @POST(GETCITY)
-    suspend fun getCity(@Body data: Map<String, String>) : Response<AllCityModel>
+    suspend fun getCity(@Query("StateId") stateId : Int, @Body data: Map<String, String>) : Response<AllCityModel>
 
     @POST(GETUSERLANGUAGE)
     suspend fun getUserLanguage(@Query("userId") userId: Int, @Body data: Map<String, String>) : Response<AllUserLanguageModel>
@@ -108,10 +108,10 @@ interface ApiKtService{
     suspend fun getNewMyPostedJobs(@Query("userId") userId: Int,
                                     @Query("StatusMasterId") statusMasterId : Int,
                                     @Query("AvailableJobsOnly") availableJobs: Boolean,
-                                    @Body data: Map<String, String>) : Response<NewMyJobPostedModel>
+                                    @Body data: Map<String, String>) : Response<NewMyPostedJobModel>
 
     @POST(GETONGOINGJOBS)
-    suspend fun getOnGoingJobs(@Query("userId") userId: Int,
+    suspend fun onGoingMyPostedJobs(@Query("userId") userId : Int,
                                 @Query("StatusMasterId") statusMasterId: Int,
                                 @Query("AvailableJobsOnly") boolean: Boolean,
                                 @Body data: Map<String, String>) : Response<OngoingMyPostedJobModel>
@@ -124,7 +124,8 @@ interface ApiKtService{
 
     @POST(GETCOMPLETEDJOBSFORCompleted)
     suspend fun getAssignedCompletedJobs(@Query("StatusMasterId") statusMasterId : Int,
-                                 @Query("AssignedUserId") assignedUserId : Int,
+                                 @Query("AvailableJobsOnly") AvailableJobsOnly : Boolean,
+                                 @Query("AssignedUserId") assignedUserId: Int,
                                  @Body data: Map<String, String>) : Response<CompletedJobsAssignModel>
 
     @POST(GETCOMPLETEDJOBS)
@@ -186,8 +187,7 @@ interface ApiKtService{
                                @Part files: MultipartBody.Part): Response<UserDocumentInsertModel>
 
     @POST(USER_DOCUMENT_TYPE)
-    suspend fun getDocumentType(@Query("UserTypeMasterId") userTypeMasterId : Int,
-                                @Body data: Map<String, String>) : Response<UserDocumentTypeModel>
+    suspend fun getDocumentType(@Body data: Map<String, String>) : Response<UserDocumentTypeModel>
 
     @POST(NOTIFICATION)
     suspend fun notification(@Query("UserId") userId: Int, @Body data: Map<String, String>) : Response<NotificationModel>
@@ -244,6 +244,7 @@ interface ApiKtService{
 
     @POST(PROPERTY_ACTIVE_INACTIVE)
     suspend fun propertyActiveInActive(@Query("Id") Id: Int) : Response<Any>
+
 }
 
 object ServiceApi{

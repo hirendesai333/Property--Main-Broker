@@ -123,6 +123,7 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                         Log.d(TAG, "UserDocumentUpload:${response.body()}")
 
                         if (response.code() == 200){
+                            getAllUserDocument()
                             toast("Successfully Document Uploaded")
                         }else{
                             toast("please try again")
@@ -227,7 +228,8 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                     withContext(Dispatchers.Main) {
                         progressDialog.dialog.dismiss()
                         if (response.code() == 200){
-                            toast(response.message().toString())
+                            getAllUserDocument()
+                            toast("Image Upload Successful")
                         }else{
                             toast("please try again")
                         }
@@ -262,7 +264,7 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getDocumentType(
-                    AppPreferences.getUserData(Params.UserId).toInt(), map
+                    map
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
@@ -273,7 +275,6 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                         userDocumentList = response.body()?.values as ArrayList<DocumentTypeList>
 
                         val data: MutableList<String> = ArrayList()
-
                         userDocumentList.forEach {
                             data.add(it.name.toString())
                         }
@@ -283,7 +284,6 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                             android.R.layout.simple_list_item_1, data
                         ) {}
                         binding.docTypeSpinner.adapter = userDropDownAdapter
-
                         binding.docTypeSpinner.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {
 
@@ -476,8 +476,11 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                         Log.d("deleteDocument", response.code().toString())
                         Log.d("deleteDocument", response.body().toString())
 
-                        toast("Delete Document Successfully")
-                        finish()
+                        if (response.code() == 200) {
+                            getAllUserDocument()
+                            toast("Delete Document Successfully")
+                        }
+
                     }
                 } else {
                     withContext(Dispatchers.Main) {

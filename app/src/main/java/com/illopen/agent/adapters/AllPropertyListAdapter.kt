@@ -16,6 +16,8 @@ class AllPropertyListAdapter(
     : RecyclerView.Adapter<AllPropertyListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        val jobNo : TextView = itemView.findViewById(R.id.jobNo)
         val propertyName: TextView = itemView.findViewById(R.id.name)
         val postDate: TextView = itemView.findViewById(R.id.postDate)
         val date : TextView = itemView.findViewById(R.id.date)
@@ -37,6 +39,8 @@ class AllPropertyListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
+
+        holder.jobNo.text = "Job No: " + currentItem.jobNo.toString()
         holder.propertyName.text = currentItem.customerName
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime

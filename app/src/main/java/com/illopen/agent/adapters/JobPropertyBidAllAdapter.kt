@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.databinding.JobPropertyAllBidListBinding
-import com.illopen.agent.model.JobBidValue
+import com.illopen.agent.model.JobBidList
 
-class JobPropertyBidAllAdapter(var context: Context, var list: List<JobBidValue>
-    ,var itemClickListener : OnItemClickListener
-    ,var itemClick : OnPropertyShowClick) :
+class JobPropertyBidAllAdapter(var context: Context, var list: List<JobBidList>
+    ,var itemClickListener : OnItemClickListener) :
     RecyclerView.Adapter<JobPropertyBidAllAdapter.ViewHolder>() {
 
 
@@ -22,21 +21,21 @@ class JobPropertyBidAllAdapter(var context: Context, var list: List<JobBidValue>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currentItem = list[position]
         holder.binding.apply {
-            val currentItem = list[position]
             name.text = currentItem.userName.toString()
-            price.text = "Bid Amount: $" + currentItem.amount.toString()
+            email.text = "Email: "+ currentItem.userEmail.toString()
+            phone.text = "Phone Number: "+currentItem.userPhoneNumber.toString()
+            price.text = "Total Amount: $" + currentItem.totalAmount.toString()
             totalProperty.text = "Total Bid Property: ${currentItem.totalPropertyBid}/${currentItem.totalProperty}"
-//            propertyType.text = currentItem.note.toString()
-//            add.text = currentItem.propertyAddress.toString()
         }
 
         holder.binding.agentAssign.setOnClickListener {
-            itemClickListener.onItemClick(position, list[position])
+            itemClickListener.onAssignClick(position, list[position])
         }
 
         holder.binding.allBidPropertyShow.setOnClickListener {
-           itemClick.onEyePropertyClick(position,list[position])
+           itemClickListener.onEyePropertyClick(position,list[position])
         }
     }
 
@@ -49,10 +48,7 @@ class JobPropertyBidAllAdapter(var context: Context, var list: List<JobBidValue>
     }
 
     interface OnItemClickListener {
-        fun onItemClick(itemPosition: Int, data: JobBidValue)
-    }
-
-    interface OnPropertyShowClick{
-        fun onEyePropertyClick(itemPosition: Int, data: JobBidValue)
+        fun onAssignClick(itemPosition: Int, data: JobBidList)
+        fun onEyePropertyClick(itemPosition: Int, data: JobBidList)
     }
 }

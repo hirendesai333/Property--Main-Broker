@@ -10,17 +10,20 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.illopen.agent.R
 import com.illopen.agent.adapters.AllJobLanguagesAdapter
 import com.illopen.agent.adapters.ChoosePropertyAdapter
 import com.illopen.agent.adapters.JobLanguagesAdapter
 import com.illopen.agent.databinding.ActivityNewJob2Binding
+import com.illopen.agent.model.AllJobLanguageList
+import com.illopen.agent.model.AllPropertiesList
 import com.illopen.agent.model.Value
-import com.illopen.agent.model.Values
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.Params
+import com.illopen.agent.utils.ProgressDialog
 import com.illopen.properybroker.utils.toast
 import kotlinx.android.synthetic.main.activity_new_job2.*
 import kotlinx.coroutines.*
@@ -28,7 +31,10 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -40,6 +46,11 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
     private val TAG = "CreateNewJob"
 
     private var selectedList: ArrayList<String> = ArrayList()
+    private var selectedLanguageList: ArrayList<String> = ArrayList()
+
+    private lateinit var progressDialog: ProgressDialog
+
+    private var languageArray = JSONArray()
 
     private var propertyId: Int = 0
     private var customerId: Int = 0
@@ -65,8 +76,9 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
         setContentView(binding.root)
 
         AppPreferences.initialize(this.applicationContext)
+        progressDialog = ProgressDialog(this)
 
-        binding.backbtn.setOnClickListener { onBackPressed() }
+        binding.backBtn.setOnClickListener { onBackPressed() }
 
         binding.addNewProperty.setOnClickListener {
             Intent(this, MyProperties::class.java).apply {
@@ -109,6 +121,34 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                 day
             )
             datePicker.show()
+
+//            val noww = Date()
+//                val calendarMax = Calendar.getInstance()
+//                calendarMax.time = Date(noww.time + TimeUnit.DAYS.toMillis(3)) // Set max now + 3 days
+//                val maxDate = calendarMax.time
+//                SingleDateAndTimePickerDialog.Builder(this)
+//                    .bottomSheet()
+//                    .defaultDate(maxDate)
+//                    .mustBeOnFuture()
+//                    .curved()
+//                    .displayMinutes(false)
+//                    .displayHours(false)
+//                    .displayMonth(true)
+//                    .displayYears(true)
+//                    .displayDaysOfMonth(true)
+//                    .displayMonthNumbers(true)
+//                    .displayDays(false)
+//                    .title("Choose Date")
+//                    .listener {
+//                        // date format to show user
+//                        val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+//                        val selectedDate: String = dateFormat.format(it).toString()
+//                        val currentDate = Date()
+//                        val checkDate = dateFormat.parse(selectedDate)
+//                         selectedDate =  binding.date.setText(selectedDate)
+//                    }
+//                    .display()
+
         }
 
         binding.time.setOnClickListener {
@@ -137,9 +177,30 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
 //                binding.time.text = SimpleDateFormat("HH:mm").format(now.time)
 //            }
 
+//            SingleDateAndTimePickerDialog.Builder(this)
+//                .bottomSheet()
+//                .curved()
+//                .displayMinutes(true)
+//                .displayHours(true)
+//                .displayMonth(false)
+//                .displayYears(false)
+//                .displayDaysOfMonth(false)
+//                .displayMonthNumbers(false)
+//                .displayDays(false)
+//                .title("Choose time")
+//                .listener {
+//
+//                    val dateFormat: DateFormat = SimpleDateFormat("hh:mm aa")
+//                    val dateString: String = dateFormat.format(it).toString()
+//                    selectedTime = binding.time.setText(dateString).toString()
+//
+//                    val dateFormatNew: DateFormat = SimpleDateFormat("HH:mm:ss")
+//                    val dateStringToPass: String = dateFormatNew.format(it).toString()
+//                }
+//                .display()
         }
 
-        binding.propertySpinner.setOnClickListener {
+        binding.property.setOnClickListener {
             chooseProperty()
         }
 
@@ -193,7 +254,8 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getAllCustomer(
-                    AppPreferences.getUserData(Params.UserId).toInt(), map)
+                    AppPreferences.getUserData(Params.UserId).toInt(), map
+                )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
@@ -203,7 +265,6 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                         customerListValue = response.body()?.values as ArrayList<Value>
 
                         val data: MutableList<String> = ArrayList()
-
                         customerListValue.forEach {
                             data.add(it.customerName.toString())
                         }
@@ -214,7 +275,6 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                             data
                         ) {}
                         binding.customerSpinner.adapter = customerListAdapterSpinner
-
                         binding.customerSpinner.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {
 
@@ -225,7 +285,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                                     id: Long
                                 ) {
                                     customerId = customerListValue[position].id!!.toInt()
-                                    toast("Selected : " + customerListValue[position].customerName)
+//                                    toast("Selected : " + customerListValue[position].customerName)
                                 }
 
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -251,7 +311,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
         propertyDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
         val propertyRecycler = propertyDialog.findViewById<RecyclerView>(R.id.PropertyRv)
-        val button = propertyDialog.findViewById<Button>(R.id.btnCheckedItems)
+        val button = propertyDialog.findViewById<Button>(R.id.addPropertyBtn)
 
         button.setOnClickListener { propertyDialog.dismiss() }
         propertyList(propertyRecycler)
@@ -280,9 +340,8 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                         Log.d("PropertyType", response.code().toString())
                         Log.d("PropertyType", response.body().toString())
 
-                        val list: List<Values> = response.body()!!.values!!
-                        propertyRecycler!!.adapter =
-                            ChoosePropertyAdapter(this@NewJob, list, this@NewJob)
+                        val list: List<AllPropertiesList> = response.body()!!.values!!
+                        propertyRecycler!!.adapter = ChoosePropertyAdapter(this@NewJob, list, this@NewJob)
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -296,48 +355,62 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
     }
 
     private fun createNewJob() {
-        coroutineScope.launch {
-            try {
-                val jsonObject = JSONObject()
-                val json = JSONObject()
-                json.put("jobProperty", propertyArray)
-                json.put("UserId", AppPreferences.getUserData(Params.UserId).toInt())
-                json.put("PropertyMasterId", propertyId)
-                json.put("CustomerMasterId", customerId)
-                json.put("JobVisitingDate", selectedDate)
-                json.put("JobVisitingTime", selectedTime)
-                json.put("Remarks", "")
-                json.put("CreatedBy", 0)
-                json.put("UpdatedBy", 0)
-                json.put("JobLanguages", "guj")
-                jsonObject.put("data", json)
-                Log.d("createJob", json.toString())
 
-                val body = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
-                val response = ServiceApi.retrofitService.createJob(body)
+        val remark = binding.remark.text.toString().trim()
 
-                if (response.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-                        Log.d("createJob", response.code().toString())
-                        Log.d("createJob", response.body().toString())
+        if (remark.isEmpty()) {
+            binding.remark.error = "Remark is Required"
+        } else {
+            progressDialog.dialog.show()
+            coroutineScope.launch {
+                try {
+                    val jsonObject = JSONObject()
+                    val json = JSONObject()
+                    json.put("jobProperty", propertyArray)
+                    json.put("UserId", AppPreferences.getUserData(Params.UserId).toInt())
+                    json.put("PropertyMasterId", propertyId)
+                    json.put("CustomerMasterId", customerId)
+                    json.put("JobVisitingDate", selectedDate)
+                    json.put("JobVisitingTime", selectedTime)
+                    json.put("Remarks", remark)
+                    json.put("JobLanguages", "Gujarati")
+                    jsonObject.put("data", json)
+                    Log.d("createJob", json.toString())
 
-                        toast("Job Create Success")
+                    val body = json.toString().toRequestBody("application/json".toMediaTypeOrNull())
+                    val response = ServiceApi.retrofitService.createJob(body)
+
+                    if (response.isSuccessful) {
+                        withContext(Dispatchers.Main) {
+                            Log.d("createJob", response.code().toString())
+                            Log.d("createJob", response.body().toString())
+
+                            if (response.code() == 200) {
+                                toast("Job Create Success")
+                                finish()
+                            } else {
+                                toast("please try again")
+                            }
+                            progressDialog.dialog.dismiss()
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Log.d(TAG, "something wrong")
+                            Log.d(TAG, "createNewJob: ${response.code()}")
+                            Log.d(TAG, "createNewJob: ${response.errorBody()}")
+                            Log.d(TAG, "createNewJob: ${response.message()}")
+                            progressDialog.dialog.dismiss()
+                        }
                     }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Log.d(TAG, "something wrong")
-                        Log.d(TAG, "createNewJob: ${response.code()}")
-                        Log.d(TAG, "createNewJob: ${response.errorBody()}")
-                        Log.d(TAG, "createNewJob: ${response.message()}")
-                    }
+                } catch (e: Exception) {
+                    Log.d(TAG, e.message.toString())
+                    progressDialog.dialog.dismiss()
                 }
-            } catch (e: Exception) {
-                Log.d(TAG, e.message.toString())
             }
         }
     }
 
-    override fun onItemClick(itemPosition: Int, data: Values) {
+    override fun onItemClick(itemPosition: Int, data: AllPropertiesList) {
         propertyId = data.propertyTypeMasterId!!.toInt()
         selectedList.clear()
         selectedList.add(data.id.toString())
@@ -345,7 +418,18 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
             val jsonObject = JSONObject()
             jsonObject.put("PropertyMasterId", selectedList[i].toInt())
             propertyArray.put(jsonObject)
-            toast("Selected : ")
+            toast("Selected : " )
         }
     }
+
+//    override fun onItemClick(itemPosition: Int, language: AllJobLanguageList) {
+//        selectedLanguageList.clear()
+//        selectedLanguageList.add(language.id.toString())
+//        for (i in selectedLanguageList.indices) {
+//            val jsonObject = JSONObject()
+//            jsonObject.put("JobLanguages", selectedLanguageList[i].toInt())
+//            languageArray.put(jsonObject)
+//            toast("Selected : ")
+//        }
+//    }
 }

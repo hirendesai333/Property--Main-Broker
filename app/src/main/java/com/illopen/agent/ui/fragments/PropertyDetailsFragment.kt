@@ -16,6 +16,8 @@ import com.illopen.agent.databinding.FragmentPropertyDetailsBinding
 import com.illopen.agent.model.PropertyMoreDetailsList
 import com.illopen.agent.model.PropertyMoreDetailsTypeList
 import com.illopen.agent.network.ServiceApi
+import com.illopen.agent.utils.ProgressDialog
+import com.illopen.properybroker.utils.toast
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.*
 
@@ -26,6 +28,8 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
     private val TAG: String = "PropertyDetailsFragment"
     private var _binding: FragmentPropertyDetailsBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var progressDialog : ProgressDialog
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -44,6 +48,8 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPropertyDetailsBinding.bind(view)
+
+        progressDialog = ProgressDialog(requireContext())
 
         propertyTypeMasterId = activity?.intent!!.getIntExtra("PropertyMasterId",0)
 
@@ -94,6 +100,13 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
                         Log.d("Property_Inserted", response.code().toString())
                         Log.d("Property_Inserted", response.body().toString())
 
+                        if (response.code() == 200){
+                            propertyMoreDetailsAPI()
+                            requireActivity().toast("Property Inserted Successfully")
+                        }else{
+                            requireActivity().toast("something wrong")
+                        }
+
                     }
 
                 } else {
@@ -126,7 +139,6 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
                         Log.d("PropertyMoreDetails", response.body().toString())
 
                         val list: List<PropertyMoreDetailsList> = response.body()!!.values!!
-
                         binding.moreDetails.adapter = PropertyMoreDetailsAdapter(requireContext(), list,
                             this@PropertyDetailsFragment,this@PropertyDetailsFragment)
                     }
@@ -168,10 +180,16 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
-                        Log.d("delete_Property_More", response.code().toString())
-                        Log.d("delete_Property_More", response.body().toString())
+                        Log.d("delete_Property", response.code().toString())
+                        Log.d("delete_Property", response.body().toString())
 
-                        Toast.makeText(requireContext(),"Delete Property Details Successfully",Toast.LENGTH_SHORT)
+                        if (response.code() == 200){
+                            propertyMoreDetailsAPI()
+                            requireActivity().toast("Delete Property Details Successfully")
+                        }else{
+                            requireActivity().toast("something wrong")
+                        }
+
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -232,7 +250,6 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
                         propertyTypeList = response.body()?.values as ArrayList<PropertyMoreDetailsTypeList>
 
                         val data: MutableList<String> = ArrayList()
-
                         propertyTypeList.forEach {
                             data.add(it.name.toString())
                         }
@@ -251,7 +268,7 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
                                     position: Int, id: Long
                                 ) {
                                     propertyDetailMasterId  = propertyTypeList[position].id!!.toInt()
-                                    Toast.makeText(activity,"Selected : " + propertyTypeList[position].name,Toast.LENGTH_SHORT)
+                                    Toast.makeText(requireContext(),"Selected : ${propertyTypeList[position].name}",Toast.LENGTH_LONG).show()
                                 }
 
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -287,8 +304,13 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
                         Log.d("updateProperty", response.code().toString())
                         Log.d("updateProperty", response.body().toString())
 
-//                        startActivity(Intent(requireContext(),MyProperties::class.java))
-//                        finish()
+                        if (response.code() == 200){
+                            requireActivity().toast("update Successfully")
+                            propertyMoreDetailsAPI()
+                        }else{
+                            requireActivity().toast("something wrong")
+                        }
+
                     }
                 } else {
                     withContext(Dispatchers.Main) {

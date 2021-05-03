@@ -125,11 +125,11 @@ class NewJobDetails : AppCompatActivity(), OnJobPropertyClick {
             val amount = bidAmount.text.toString().trim()
             val desc = description.text.toString().trim()
 
-            if (amount.isNotEmpty()) {
+            if (amount.isNotEmpty() && desc.isNotEmpty()) {
                 bidingData(amount, desc, currentItem)
                 dialog.cancel()
             } else {
-                toast("Please enter bid amount")
+                toast("Please enter bid details")
             }
         }
 

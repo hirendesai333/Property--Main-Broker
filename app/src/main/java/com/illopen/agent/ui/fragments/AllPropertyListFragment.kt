@@ -25,7 +25,7 @@ import com.illopen.agent.adapters.AllMyPostedJobsAdapter
 import com.illopen.agent.adapters.AllPropertyListAdapter
 import com.illopen.agent.databinding.FragmentAllPropertyListBinding
 import com.illopen.agent.model.AvailableJobs
-import com.illopen.agent.model.MyPostedJobsList
+import com.illopen.agent.model.MyPostedJobList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.ui.activities.JobsPropertyOnMap
 import com.illopen.agent.ui.activities.MyPostedJobDetails
@@ -99,7 +99,6 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
         }
     }
 
-
     private fun getMyPostedJobs() {
         coroutineScope.launch {
             try {
@@ -115,7 +114,7 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
-                        val list: List<MyPostedJobsList> = response.body()!!.values!!
+                        val list: List<MyPostedJobList> = response.body()!!.values!!
                         if (list.isNotEmpty()) {
                             binding.upcomingJobs.adapter = AllMyPostedJobsAdapter(
                                 Params.MY_POSTED_JOBS,
@@ -154,16 +153,10 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
                     withContext(Dispatchers.Main) {
                         Log.d("getAvailableJobs", response.code().toString())
                         Log.d("getAvailableJobs", response.body().toString())
+
                         val list: List<AvailableJobs> = response.body()!!.values!!
-                        if (list.isNotEmpty()) {
-                            binding.upcomingJobs.adapter = AllPropertyListAdapter(
-                                Params.OTHER_NEW_JOBS,
-                                list,
-                                this@AllPropertyListFragment
-                            )
-                        } else {
-                            // no jobs found
-                        }
+                        binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.OTHER_NEW_JOBS,
+                                list, this@AllPropertyListFragment)
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -345,18 +338,21 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
         startActivity(intent)
     }
 
-    override fun onItemClick(itemPosition: Int, data: MyPostedJobsList) {
+    override fun onItemClick(itemPosition: Int, data: MyPostedJobList) {
         val intent = Intent(activity, MyPostedJobDetails::class.java)
         intent.putExtra("PostData", data.id.toString())
         intent.putExtra(Params.SUB_FROM, Params.MY_POSTED_JOBS)
         startActivity(intent)
     }
 
-    override fun onCallClick(itemPosition: Int, data: MyPostedJobsList) {
+    override fun onCallClick(itemPosition: Int, data: MyPostedJobList) {
         Intent(Intent.ACTION_CALL).apply {
-            setData(Uri.parse(data.userPhoneNumber))
+            setData(Uri.parse(data.userPhoneNumber.toString()))
             startActivity(this)
         }
+//        val intent = Intent(Intent.ACTION_CALL)
+//        intent.data = Uri.parse(data.userPhoneNumber)
+//        requireActivity().startActivity(intent)
     }
 
 }

@@ -28,7 +28,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_5sdp"
             android:layout_weight="1"
             android:hint="Full Name"
@@ -45,26 +44,26 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/_5sdp"-->
-<!--            android:layout_marginTop="@dimen/_10sdp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:hint="Last Name"-->
-<!--            app:boxBackgroundColor="@color/white"-->
-<!--            app:hintTextColor="@color/green_700">-->
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/_5sdp"-->
+        <!--            android:layout_marginTop="@dimen/_10sdp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:hint="Last Name"-->
+        <!--            app:boxBackgroundColor="@color/white"-->
+        <!--            app:hintTextColor="@color/green_700">-->
 
-<!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                android:id="@+id/updatelastName"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/_12ssp"-->
-<!--                app:fontFamily="@font/nunito_sans" />-->
+        <!--            <com.google.android.material.textfield.TextInputEditText-->
+        <!--                android:id="@+id/updatelastName"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textSize="@dimen/_12ssp"-->
+        <!--                app:fontFamily="@font/nunito_sans" />-->
 
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
     </LinearLayout>
 
@@ -89,26 +88,50 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_15sdp"
-        android:hint="Phone Number"
-        app:boxBackgroundColor="@color/white"
-        app:hintTextColor="@color/green_700">
+        android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/updatephone"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_2sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:cardElevation="@dimen/_3sdp">
+
+            <Spinner
+                android:id="@+id/countrySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp"
-            app:fontFamily="@font/nunito_sans" />
+            android:layout_marginStart="@dimen/_10sdp"
+            android:hint="Phone Number"
+            app:boxBackgroundColor="@color/white"
+            app:hintTextColor="@color/green_700">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/updatephone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                app:fontFamily="@font/nunito_sans" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/update"

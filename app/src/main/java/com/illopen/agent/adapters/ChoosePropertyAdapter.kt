@@ -8,9 +8,9 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
-import com.illopen.agent.model.Values
+import com.illopen.agent.model.AllPropertiesList
 
-class ChoosePropertyAdapter(var context: Context, var list: List<Values>, var itemClick : OnItemClickListener) :
+class ChoosePropertyAdapter(var context: Context, var list: List<AllPropertiesList>, var itemClick : OnItemClickListener) :
     RecyclerView.Adapter<ChoosePropertyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,7 +20,10 @@ class ChoosePropertyAdapter(var context: Context, var list: List<Values>, var it
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
-        holder.name.text = currentItem.propertyName.toString()
+
+        holder.propertyName.text = currentItem.propertyName.toString()
+        holder.address.text = "Address: " + currentItem.propertyAddress.toString()
+        holder.pincode.text = "Pincode: " + currentItem.pincode.toString()
 
         holder.checked.setOnCheckedChangeListener { buttonView, isChecked ->
             holder.checked.isChecked = isChecked
@@ -33,11 +36,13 @@ class ChoosePropertyAdapter(var context: Context, var list: List<Values>, var it
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val name : TextView = itemView.findViewById(R.id.property)
+        val propertyName : TextView = itemView.findViewById(R.id.property)
+        val address : TextView = itemView.findViewById(R.id.address)
+        val pincode : TextView = itemView.findViewById(R.id.pincode)
         val checked : CheckBox = itemView.findViewById(R.id.checkBox)
     }
 
     interface OnItemClickListener{
-        fun onItemClick(itemPosition : Int,data : Values)
+        fun onItemClick(itemPosition : Int,data : AllPropertiesList)
     }
 }

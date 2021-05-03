@@ -50,7 +50,6 @@
             android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/nunito_sans"
             android:text="Address"
@@ -60,7 +59,6 @@
             android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/_5sdp"
             app:fontFamily="@font/nunito_sans_bold"
             android:text="Price: $1000"
@@ -71,7 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="@dimen/_8sdp"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
@@ -84,16 +81,16 @@
                 android:textSize="@dimen/_8sdp"
                 app:backgroundTint="@color/green_700" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/mark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bid_dialog_border"
-                android:fontFamily="@font/nunito_sans_bold"
-                android:padding="@dimen/_7sdp"
-                android:text="MARK AS: SHOWN"
-                android:textColor="@color/green_700"
-                android:textSize="@dimen/_8sdp" />
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/mark"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/bid_dialog_border"-->
+<!--                android:fontFamily="@font/nunito_sans_bold"-->
+<!--                android:padding="@dimen/_7sdp"-->
+<!--                android:text="MARK AS: SHOWN"-->
+<!--                android:textColor="@color/green_700"-->
+<!--                android:textSize="@dimen/_8sdp" />-->
 
         </LinearLayout>
 

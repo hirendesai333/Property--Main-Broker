@@ -34,17 +34,17 @@ data class OngoingMyPostedJobList(
     @JsonProperty("AssignedCountryCode")
     val assignedCountryCode: Any?,
     @JsonProperty("AssignedPhoneNumber")
-    val assignedPhoneNumber: Any?,
+    val assignedPhoneNumber: String?,
     @JsonProperty("AssignedProfileUrl")
-    val assignedProfileUrl: Any?,
+    val assignedProfileUrl: String?,
     @JsonProperty("AssignedProfileUrlStr")
     val assignedProfileUrlStr: String?,
     @JsonProperty("AssignedUserEmail")
-    val assignedUserEmail: Any?,
+    val assignedUserEmail: String?,
     @JsonProperty("AssignedUserId")
     val assignedUserId: Int?,
     @JsonProperty("AssignedUserName")
-    val assignedUserName: Any?,
+    val assignedUserName: String?,
     @JsonProperty("AvailableForMasterId")
     val availableForMasterId: Int?,
     @JsonProperty("AvailableJobsOnly")
@@ -97,8 +97,6 @@ data class OngoingMyPostedJobList(
     val id: Int?,
     @JsonProperty("JobBidId")
     val jobBidId: Int?,
-    @JsonProperty("JobId")
-    val jobId: Int?,
     @JsonProperty("JobLanguages")
     val jobLanguages: String?,
     @JsonProperty("JobNo")
@@ -109,8 +107,6 @@ data class OngoingMyPostedJobList(
     val jobRatting: Int?,
     @JsonProperty("JobReview")
     val jobReview: Any?,
-    @JsonProperty("JobStatus")
-    val jobStatus: Any?,
     @JsonProperty("JobVisitingDate")
     val jobVisitingDate: String?,
     @JsonProperty("JobVisitingTime")
@@ -129,16 +125,10 @@ data class OngoingMyPostedJobList(
     val propertyMasterId: Int?,
     @JsonProperty("PropertyName")
     val propertyName: Any?,
-    @JsonProperty("PropertyNote")
-    val propertyNote: Any?,
     @JsonProperty("PropertyNotes")
     val propertyNotes: Any?,
     @JsonProperty("PropertyPrice")
     val propertyPrice: Int?,
-    @JsonProperty("PropertyRating")
-    val propertyRating: Any?,
-    @JsonProperty("PropertyReview")
-    val propertyReview: Any?,
     @JsonProperty("PropertyTypeMasterId")
     val propertyTypeMasterId: Int?,
     @JsonProperty("Remarks")
@@ -180,9 +170,11 @@ data class OngoingMyPostedJobList(
     @JsonProperty("UserPhoneNumber")
     val userPhoneNumber: String?,
     @JsonProperty("UserProfileUrl")
-    val userProfileUrl: String?,
+    val userProfileUrl: Any?,
     @JsonProperty("UserProfileUrlStr")
     val userProfileUrlStr: String?,
+    @JsonProperty("UserRattingId")
+    val userRattingId: Int?,
     @JsonProperty("VisitingDate")
     val visitingDate: Any?,
     @JsonProperty("VistingTime")

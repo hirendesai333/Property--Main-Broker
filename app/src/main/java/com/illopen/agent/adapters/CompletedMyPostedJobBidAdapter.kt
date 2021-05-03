@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.databinding.CompletedMypostedJobBidItemBinding
-import com.illopen.agent.databinding.JobPropertyAllBidListBinding
-import com.illopen.agent.model.JobBidValue
+import com.illopen.agent.model.JobBidList
 
-class CompletedMyPostedJobBidAdapter(var context: Context,var list: List<JobBidValue>,var itemClick : OnPropertyShowClick)
+class CompletedMyPostedJobBidAdapter(var context: Context,var list: List<JobBidList>,var itemClick : OnPropertyShowClick)
     : RecyclerView.Adapter<CompletedMyPostedJobBidAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,10 +21,10 @@ class CompletedMyPostedJobBidAdapter(var context: Context,var list: List<JobBidV
         holder.binding.apply {
             val currentItem = list[position]
             name.text = currentItem.userName.toString()
-            price.text = "Bid Amount: $" + currentItem.amount.toString()
+            price.text = "Bid Amount: $" + currentItem.totalAmount.toString()
+            email.text = "Email: " + currentItem.userEmail
+            phone.text = "Phone Number: " + currentItem.userPhoneNumber
             totalProperty.text = "Total Bid Property: ${currentItem.totalPropertyBid}/${currentItem.totalProperty}"
-//            propertyType.text = currentItem.note.toString()
-//            add.text = currentItem.propertyAddress.toString()
         }
 
         holder.binding.allBidPropertyShow.setOnClickListener {
@@ -42,7 +41,7 @@ class CompletedMyPostedJobBidAdapter(var context: Context,var list: List<JobBidV
     }
 
     interface OnPropertyShowClick{
-        fun onEyePropertyClick(itemPosition: Int, data: JobBidValue)
+        fun onEyePropertyClick(itemPosition: Int, data: JobBidList)
     }
 
 }

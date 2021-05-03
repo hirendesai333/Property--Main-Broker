@@ -3,6 +3,7 @@ package com.illopen.agent.ui.fragments
 import android.Manifest
 import android.app.Dialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -17,15 +18,13 @@ import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.illopen.agent.R
-import com.illopen.agent.adapters.MyPropertiesAdapter
 import com.illopen.agent.adapters.ProperyImagesListAdapter
 import com.illopen.agent.databinding.FragmentPropertyImageBinding
 import com.illopen.agent.model.PropertyImageList
-import com.illopen.agent.model.Values
 import com.illopen.agent.network.ServiceApi
-import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.MediaLoader
 import com.illopen.agent.utils.Params
+import com.illopen.agent.utils.ProgressDialog
 import com.illopen.properybroker.utils.toast
 import com.yanzhenjie.album.Album
 import com.yanzhenjie.album.AlbumConfig
@@ -52,9 +51,13 @@ class PropertyImageFragment : Fragment(R.layout.fragment_property_image) , Prope
 
     private var filePath = ""
 
+    private lateinit var progressDialog: ProgressDialog
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPropertyImageBinding.bind(view)
+
+        progressDialog = ProgressDialog(requireContext())
 
         Album.initialize(
             AlbumConfig.newBuilder(requireContext())
@@ -91,10 +94,16 @@ class PropertyImageFragment : Fragment(R.layout.fragment_property_image) , Prope
                         Log.d("getAllProperty", response.code().toString())
                         Log.d("getAllProperty",response.body().toString())
 
-                        val list : List<PropertyImageList> = response.body()!!.values!!
+                        if (response.code() == 200) {
+                            val list: List<PropertyImageList> = response.body()!!.values!!
+                            binding.imageList.adapter = ProperyImagesListAdapter(
+                                requireActivity(),
+                                list,
+                                this@PropertyImageFragment
+                            )
+                        }else{
 
-                        binding.imageList.adapter = ProperyImagesListAdapter(requireContext(),list,this@PropertyImageFragment)
-
+                        }
                     }
                 }else{
                     withContext(Dispatchers.Main){
@@ -151,6 +160,7 @@ class PropertyImageFragment : Fragment(R.layout.fragment_property_image) , Prope
     }
 
     private fun confirmImageOrder(filePath: String) {
+        progressDialog.dialog.show()
         val imageToBeUploaded = File(filePath)
         coroutineScope.launch {
             try {
@@ -165,17 +175,25 @@ class PropertyImageFragment : Fragment(R.layout.fragment_property_image) , Prope
                         Log.d(TAG, "propertyImage: ${response.code()}")
                         Log.d(TAG, "propertyImage:${response.body()}")
 
-                        Toast.makeText(requireContext(),"Successful Image Upload",Toast.LENGTH_LONG)
+                        if (response.code() == 200){
+                            propertyImageAPI()
+                            requireActivity().toast("Successful Image Upload")
+                        }else{
+
+                        }
+                        progressDialog.dialog.dismiss()
                     }
                 } else {
                     withContext(Dispatchers.Main) {
                         Log.d(TAG, "error: ${response.code()}")
                         Log.d(TAG, "error: ${response.body()}")
+                        progressDialog.dialog.dismiss()
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Log.d(TAG, "propertyImage: ${e.message}")
+                    progressDialog.dialog.dismiss()
                 }
             }
         }
@@ -197,6 +215,7 @@ class PropertyImageFragment : Fragment(R.layout.fragment_property_image) , Prope
     }
 
     private fun deletePropertyImage(deleteImage: PropertyImageList) {
+        progressDialog.dialog.show()
         coroutineScope.launch {
             try {
                 val response = ServiceApi.retrofitService.propertyImageDelete(
@@ -205,18 +224,28 @@ class PropertyImageFragment : Fragment(R.layout.fragment_property_image) , Prope
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
-                        Log.d("Property Image Deleted", response.code().toString())
-                        Log.d("Property Image Deleted", response.body().toString())
+                        Log.d("PropertyImageDeleted", response.code().toString())
+                        Log.d("PropertyImageDeleted", response.body().toString())
 
-                        Toast.makeText(requireContext(),"Delete Document Successfully",Toast.LENGTH_LONG)
+                        if (response.code() == 200){
+                            propertyImageAPI()
+                            requireActivity().toast("Delete Image Successfully")
+                        }else{
+                            requireActivity().toast("please try again..")
+                        }
+
+                        progressDialog.dialog.dismiss()
+
                     }
                 } else {
                     withContext(Dispatchers.Main) {
                         Log.d(TAG, "something wrong")
+                        progressDialog.dialog.dismiss()
                     }
                 }
             } catch (e: Exception) {
                 Log.d(TAG, e.message.toString())
+                progressDialog.dialog.dismiss()
             }
         }
     }

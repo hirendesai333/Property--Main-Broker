@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/blue_green_background"
     tools:context=".ui.activities.PropertyDetail">
 
@@ -15,12 +15,11 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:drawablePadding="@dimen/_5sdp"
             android:gravity="center"
-            android:text="Shivalik Shilp"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp"
             app:drawableStartCompat="@drawable/ic_arrow_back"
@@ -29,10 +28,31 @@
 
     </RelativeLayout>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imageCard"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_below="@id/topBar"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:cardElevation="@dimen/_6sdp">
+
+        <ImageView
+            android:id="@+id/propertyBanner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/property" />
+
+    </androidx.cardview.widget.CardView>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/topBar"
+        android:layout_below="@+id/imageCard"
         android:background="@drawable/top_corner_white_background"
         android:orientation="vertical"
         android:paddingTop="@dimen/_10sdp"
@@ -43,43 +63,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.chip.ChipGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_20sdp">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/roomType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3 BHK"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_8sdp"
-                    app:chipBackgroundColor="@color/green_700" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/roomSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1200 sqft"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_8sdp"
-                    app:chipBackgroundColor="@color/green_700" />
-
-            </com.google.android.material.chip.ChipGroup>
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/clientName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:fontFamily="@font/nunito_sans_semibold"
+                android:textStyle="bold"
+                android:fontFamily="@font/nunito_sans_bold"
                 android:text="Client: Chirag Patel"
                 android:textColor="@color/green_700"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_14sdp" />
 
             <LinearLayout
                 android:id="@+id/ratingBar"
@@ -111,82 +105,62 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/bidLayout"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/blue_green_background"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp">
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/bidLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/blue_green_background"-->
+<!--                android:paddingTop="@dimen/_10sdp"-->
+<!--                android:paddingBottom="@dimen/_10sdp">-->
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/totalBids"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:text="Total bids: 48"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    app:fontFamily="@font/nunito_sans_semibold" />
+<!--                <com.google.android.material.textview.MaterialTextView-->
+<!--                    android:id="@+id/totalBids"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="@dimen/_20sdp"-->
+<!--                    android:text="Total bids: 48"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/_12ssp"-->
+<!--                    app:fontFamily="@font/nunito_sans_semibold" />-->
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/allBids"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:text="ALL BIDS"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    android:transitionName="all_bids"
-                    app:fontFamily="@font/nunito_sans_bold" />
+<!--                <com.google.android.material.textview.MaterialTextView-->
+<!--                    android:id="@+id/allBids"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_marginEnd="@dimen/_20sdp"-->
+<!--                    android:text="ALL BIDS"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/_12ssp"-->
+<!--                    android:transitionName="all_bids"-->
+<!--                    app:fontFamily="@font/nunito_sans_bold" />-->
 
-            </RelativeLayout>
+<!--            </RelativeLayout>-->
 
-            <LinearLayout
-                android:id="@+id/assignedToLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/blue_green_background"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:visibility="visible">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/assignedToLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/blue_green_background"-->
+<!--                android:orientation="vertical"-->
+<!--                android:paddingTop="@dimen/_5sdp"-->
+<!--                android:paddingBottom="@dimen/_5sdp"-->
+<!--                android:visibility="visible">-->
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:text="Assigned To: Rudra Pvt Ltd."
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    app:fontFamily="@font/nunito_sans_semibold" />
+<!--                <com.google.android.material.textview.MaterialTextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/_20sdp"-->
+<!--                    android:text="Assigned To: Rudra Pvt Ltd."-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/_12ssp"-->
+<!--                    app:fontFamily="@font/nunito_sans_semibold" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/bidAmountLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/blue_green_background"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                android:visibility="visible">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/bidOriginalAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:text="Bid amount: $1500"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    app:fontFamily="@font/nunito_sans_semibold" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -223,7 +197,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
-                    android:text="Available for: "
+                    android:text="Available for:   "
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11ssp" />
 
@@ -248,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
-                    android:text="Price: "
+                    android:text="Price:                "
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11ssp" />
 
@@ -263,79 +237,31 @@
 
             </LinearLayout>
 
-            <com.google.android.material.textview.MaterialTextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="About the space"
-                android:textColor="@color/purple_500"
-                android:textSize="@dimen/_11ssp" />
+                android:orientation="horizontal">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:text="With elegant infrastructure &amp; amenities, Shivalik Shilp is a place that is conductive for your business growth. Shivalik Shilp offers flexibility to its clients with well- decorated entrances &amp; lobbies. Being located at Iscon Cross Road, Shivalik Shilp has a plethora of location advantages."
-                android:textSize="@dimen/_11ssp" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:text="Address:          "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:text="Project Location"
-                android:textColor="@color/purple_500"
-                android:textSize="@dimen/_11ssp" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:text="Ahmedabad"
+                    android:textSize="@dimen/_11ssp" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="359dp"
-                android:layout_height="135dp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/map" />
+            </LinearLayout>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:text="Amenities"
-                android:textColor="@color/purple_500"
-                android:textSize="@dimen/_11ssp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:drawableStart="@drawable/ic_kitchen"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableTint="@color/green_700"
-                android:fontFamily="@font/nunito_sans"
-                android:gravity="center_vertical"
-                android:text="Kitchen"
-                android:textSize="@dimen/_9ssp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:drawableStart="@drawable/ic_bathroom"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableTint="@color/green_700"
-                android:fontFamily="@font/nunito_sans"
-                android:gravity="center_vertical"
-                android:text="Bathroom"
-                android:textSize="@dimen/_9ssp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -356,25 +282,96 @@
                 android:text="This is sample note about property"
                 android:textSize="@dimen/_11ssp" />
 
+
             <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Remarks"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="Select Amenities"
                 android:textColor="@color/purple_500"
                 android:textSize="@dimen/_11ssp" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/remark"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/amenitiesRv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:text="This is sample remarks about property"
-                android:textSize="@dimen/_11ssp" />
+                android:layout_marginTop="@dimen/_4sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_height="match_parent"/>
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/amities"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/_20sdp"-->
+<!--                android:layout_marginTop="@dimen/_4sdp"-->
+<!--                android:layout_marginEnd="@dimen/_20sdp"-->
+<!--                android:drawableStart="@drawable/ic_kitchen"-->
+<!--                android:drawablePadding="@dimen/_5sdp"-->
+<!--                android:drawableTint="@color/green_700"-->
+<!--                android:fontFamily="@font/nunito_sans"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="Kitchen"-->
+<!--                android:textSize="@dimen/_9ssp" />-->
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/amities1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/_20sdp"-->
+<!--                android:layout_marginTop="@dimen/_4sdp"-->
+<!--                android:layout_marginEnd="@dimen/_20sdp"-->
+<!--                android:drawableStart="@drawable/ic_bathroom"-->
+<!--                android:drawablePadding="@dimen/_5sdp"-->
+<!--                android:drawableTint="@color/green_700"-->
+<!--                android:fontFamily="@font/nunito_sans"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="Bathroom"-->
+<!--                android:textSize="@dimen/_9ssp" />-->
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/_20sdp"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:text="Remarks"-->
+<!--                android:textColor="@color/purple_500"-->
+<!--                android:textSize="@dimen/_11ssp" />-->
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/remark"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/_20sdp"-->
+<!--                android:layout_marginTop="@dimen/_5sdp"-->
+<!--                android:layout_marginEnd="@dimen/_15sdp"-->
+<!--                android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                android:text="This is sample remarks about property"-->
+<!--                android:textSize="@dimen/_11ssp" />-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/bidAmountLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:background="@drawable/blue_green_background"-->
+<!--                android:orientation="vertical"-->
+<!--                android:paddingTop="@dimen/_5sdp"-->
+<!--                android:paddingBottom="@dimen/_5sdp">-->
+
+<!--                <com.google.android.material.textview.MaterialTextView-->
+<!--                    android:id="@+id/bidOriginalAmount"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Bid amount: $1500"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:textSize="@dimen/_12ssp"-->
+<!--                    app:fontFamily="@font/nunito_sans_semibold" />-->
+
+<!--            </LinearLayout>-->
 
         </LinearLayout>
 

@@ -10,8 +10,9 @@ import com.illopen.agent.R
 import com.illopen.agent.databinding.CompletedJobItemBinding
 import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.ui.activities.PropertyDetail
+import kotlinx.android.synthetic.main.job_property_review_popup.view.*
 
-class CompletedJobDetailsAdapter(var context: Context, var list: List<JobPropertyList>, var itemClick : OnCompletedClick)
+class CompletedJobDetailsAdapter(var context: Context, var list: List<JobPropertyList>)
     : RecyclerView.Adapter<CompletedJobDetailsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -32,30 +33,19 @@ class CompletedJobDetailsAdapter(var context: Context, var list: List<JobPropert
         view.availableFor.text = "Available for: " + currentItem.availableForMasterName
         view.propertyType.text = "Property type: " + currentItem.propertyTypeName
         view.price.text = "Price: $" + currentItem.propertyPrice
-
+        view.propertyRating.rating = currentItem.rating!!.toFloat()
+//        view.review.text = "Review: " + currentItem.review
+//        view.note.text = "Note: " + currentItem.note
         view.rootLayout.setOnClickListener {
             val intent =  Intent(context, PropertyDetail::class.java)
             intent.putExtra("propertyMasterId",currentItem.propertyMasterId.toString())
             context.startActivity(intent)
         }
 
-        view.ratingBtn.setOnClickListener {
-            itemClick.onCompletedClick(position, list[position])
-        }
-
-        if (currentItem.review.isNullOrEmpty()){
-            view.ratingBtn.text = "Review"
-        }else{
-            view.ratingBtn.text = "Update Review"
-        }
 
     }
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-    interface OnCompletedClick{
-        fun onCompletedClick(position: Int,currentItem : JobPropertyList)
     }
 }

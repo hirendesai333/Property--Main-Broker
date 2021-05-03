@@ -5,12 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back"
+            app:tint="@color/design_default_color_primary" />
+
+    </RelativeLayout>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageCard"
         android:layout_alignBottom="@+id/imageCard"
-        android:layout_marginStart="@dimen/_110sdp"
+        android:layout_marginStart="@dimen/_120sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_20sdp"
@@ -21,7 +39,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_10sdp"
-            android:gravity="center"
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
@@ -34,6 +51,25 @@
                 android:textSize="@dimen/_14ssp" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/propertyType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="propertyType"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/availableFor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="availableFor"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,12 +80,23 @@
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/visitDate"
+                android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/nunito_sans"
-                android:text="Visit on: 21st march 2021"
+                android:text="address: Amd"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Note: "
+                android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -57,31 +104,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_sans"
-                android:text="Must show amenities:"
+                android:text="Select amenities:"
+                android:textColor="@color/purple_500"
                 android:textSize="@dimen/_10ssp" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/emities"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:drawableStart="@drawable/ic_kitchen"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableTint="@color/green_700"
                 android:fontFamily="@font/nunito_sans"
                 android:gravity="center_vertical"
-                android:text="Kitchen"
+                android:textColor="@color/black"
+                android:text="Parking : 12"
                 android:textSize="@dimen/_9ssp" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/emities1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:drawableStart="@drawable/ic_bathroom"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableTint="@color/green_700"
+                android:textColor="@color/black"
                 android:fontFamily="@font/nunito_sans"
                 android:gravity="center_vertical"
-                android:text="Bathroom"
+                android:text="Gym : 100"
                 android:textSize="@dimen/_9ssp" />
 
         </LinearLayout>
@@ -90,23 +136,23 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"
-        android:layout_width="@dimen/_130sdp"
-        android:layout_height="@dimen/_180sdp"
-        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_250sdp"
+        android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_below="@id/topBar"
+        android:layout_marginBottom="@dimen/_8sdp"
         app:cardCornerRadius="@dimen/_12sdp"
         app:cardElevation="@dimen/_6sdp">
 
         <ImageView
             android:id="@+id/propertyBanner"
-            android:layout_width="@dimen/_130sdp"
-            android:layout_height="@dimen/_180sdp"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_250sdp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@mipmap/property" />
 
     </androidx.cardview.widget.CardView>
-
 
 </RelativeLayout>

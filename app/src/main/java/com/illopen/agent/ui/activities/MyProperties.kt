@@ -1,4 +1,4 @@
- package com.illopen.agent.ui.activities
+package com.illopen.agent.ui.activities
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -8,18 +8,21 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.illopen.agent.adapters.MyPropertiesAdapter
 import com.illopen.agent.databinding.ActivityMyPropertiesBinding
-import com.illopen.agent.model.Values
+import com.illopen.agent.model.AllPropertiesList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.Params
+import com.illopen.agent.utils.ProgressDialog
 import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
 
- class MyProperties : AppCompatActivity(),MyPropertiesAdapter.OnItemClickListner {
+class MyProperties : AppCompatActivity(), MyPropertiesAdapter.OnItemClickListner {
 
     lateinit var binding: ActivityMyPropertiesBinding
 
     private val TAG = "MyProperties"
+
+    private lateinit var progressDialog: ProgressDialog
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -30,6 +33,7 @@ import kotlinx.coroutines.*
         setContentView(binding.root)
 
         AppPreferences.initialize(this.applicationContext)
+        progressDialog = ProgressDialog(this)
 
         binding.title.setOnClickListener {
             onBackPressed()
@@ -37,7 +41,7 @@ import kotlinx.coroutines.*
 
         binding.addNew.setOnClickListener {
             Intent(this, AddProperty::class.java).apply {
-                putExtra("poropertyId", "0")
+                putExtra("propertyId", "0")
                 putExtra("from", "new")
                 startActivity(this)
             }
@@ -47,6 +51,7 @@ import kotlinx.coroutines.*
     }
 
     private fun getAllProperties() {
+        progressDialog.dialog.show()
         coroutineScope.launch {
             try {
 
@@ -58,67 +63,83 @@ import kotlinx.coroutines.*
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getAllProperties(
-                    AppPreferences.getUserData(Params.UserId).toInt(),map
+                    AppPreferences.getUserData(Params.UserId).toInt(), map
                 )
-                if (response.isSuccessful){
-                    withContext(Dispatchers.Main){
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
 
                         Log.d("getAllProperty", response.code().toString())
-                        Log.d("getAllProperty",response.body().toString())
+                        Log.d("getAllProperty", response.body().toString())
 
-                        val list : List<Values> = response.body()!!.values!!
+                        if (response.code() == 200) {
+                            val list: List<AllPropertiesList> = response.body()!!.values!!
+                            binding.myPropertiesRv.adapter =
+                                MyPropertiesAdapter(this@MyProperties, list, this@MyProperties)
+                        } else {
 
-                        binding.myPropertiesRv.adapter = MyPropertiesAdapter(this@MyProperties,list,this@MyProperties)
+                        }
+                        progressDialog.dialog.dismiss()
 
                     }
-                }else{
-                    withContext(Dispatchers.Main){
+                } else {
+                    withContext(Dispatchers.Main) {
                         Log.d(TAG, "something wrong")
+                        progressDialog.dialog.dismiss()
                     }
                 }
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, e.message.toString())
+                progressDialog.dialog.dismiss()
             }
         }
     }
 
-     private fun deleteProperty(data: Values) {
-         coroutineScope.launch {
-             try {
-                 val response = ServiceApi.retrofitService.deleteProperty(
-                     data.id!!
-                 )
+    private fun deleteProperty(data: AllPropertiesList) {
+        progressDialog.dialog.show()
+        coroutineScope.launch {
+            try {
+                val response = ServiceApi.retrofitService.deleteProperty(
+                    data.id!!
+                )
 
-                 if (response.isSuccessful){
-                     withContext(Dispatchers.Main){
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
 
-                         Log.d("deleteProperty", response.code().toString())
-                         Log.d("deleteProperty", response.body().toString())
+                        Log.d("deleteProperty", response.code().toString())
+                        Log.d("deleteProperty", response.body().toString())
 
-                         toast("Delete Property Successfully")
-                         startActivity(Intent(this@MyProperties,MyProperties::class.java))
-                         finish()
-                     }
-                 }else{
-                     withContext(Dispatchers.Main){
-                         Log.d(TAG, "Property not deleted ")
-                     }
-                 }
-             }catch (e : Exception){
-                 Log.d(TAG, e.message.toString())
-             }
-         }
-     }
+                        if (response.code() == 200) {
+                            getAllProperties()
+                            toast("Delete Property Successfully")
+                            startActivity(Intent(this@MyProperties, MyProperties::class.java))
+                            finish()
+                        } else {
+                            toast("property not deleted")
+                        }
+                        progressDialog.dialog.dismiss()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "Property not deleted ")
+                        progressDialog.dialog.dismiss()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+                progressDialog.dialog.dismiss()
+            }
+        }
+    }
 
-     override fun onItemClick(position: Int, data: Values) {
-         val builder = AlertDialog.Builder(this)
-         builder.setTitle("Are You Sure Delete!")
-         builder.setPositiveButton("YES") { dialogInterface: DialogInterface, i: Int ->
-             deleteProperty(data)
-         }
-         builder.setNegativeButton("NO") { dialogInterface: DialogInterface, i: Int ->
-             dialogInterface.dismiss()
-         }
-         builder.show()
-     }
- }
+    override fun onItemClick(position: Int, data: AllPropertiesList) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Are You Sure Delete!")
+        builder.setPositiveButton("YES") { dialogInterface: DialogInterface, i: Int ->
+            deleteProperty(data)
+        }
+        builder.setNegativeButton("NO") { dialogInterface: DialogInterface, i: Int ->
+            dialogInterface.dismiss()
+        }
+        builder.show()
+    }
+}

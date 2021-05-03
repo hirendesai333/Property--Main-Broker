@@ -13,7 +13,7 @@ import com.illopen.agent.model.JobPropertyList
 import com.illopen.agent.ui.activities.PropertyDetail
 
 class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>,
-                        var onGoingJobReviewClick: JobPropertyReviewClick, var onGoingJobMarkClick : JobPropertyMarkClick)
+                        var onGoingJobReviewClick: JobPropertyReviewClick)
     : RecyclerView.Adapter<OnGoingJobAdapter.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -22,7 +22,7 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>,
         val price : TextView = itemView.findViewById(R.id.price)
         val propertyType : TextView = itemView.findViewById(R.id.propertyType)
         val address : TextView = itemView.findViewById(R.id.address)
-        val mark : TextView = itemView.findViewById(R.id.mark)
+//        val mark : TextView = itemView.findViewById(R.id.mark)
         val review : TextView = itemView.findViewById(R.id.review)
         val rootLayout : CardView = itemView.findViewById(R.id.rootLayout)
     }
@@ -61,15 +61,15 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>,
             onGoingJobReviewClick.onGoingJobReviewClick(position,list[position])
         }
 
-        if (currentItem.review.isNullOrEmpty()) {
-            holder.review.text = "Review"
-        } else {
+        if (currentItem.rating!! > 0) {
             holder.review.text = "Update Review"
+        } else {
+            holder.review.text = "Review"
         }
 
-        holder.mark.setOnClickListener {
-            onGoingJobMarkClick.onGoingJobMarkClick(position,list[position])
-        }
+//        holder.mark.setOnClickListener {
+//            onGoingJobMarkClick.onGoingJobMarkClick(position,list[position])
+//        }
     }
 
     override fun getItemCount(): Int {
@@ -78,9 +78,5 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>,
 
     interface JobPropertyReviewClick{
         fun onGoingJobReviewClick(position: Int,currentItem : JobPropertyList)
-    }
-
-    interface JobPropertyMarkClick{
-        fun onGoingJobMarkClick(position: Int,currentItem : JobPropertyList)
     }
 }

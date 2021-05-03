@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.databinding.SingleMyPropertyBinding
-import com.illopen.agent.model.Values
+import com.illopen.agent.model.AllPropertiesList
 import com.illopen.agent.ui.activities.AddProperty
 import com.illopen.agent.ui.activities.PropertyMoreDetails
 
-class MyPropertiesAdapter(var context: Context, var list: List<Values>, var itemClickListener : OnItemClickListner)
+class MyPropertiesAdapter(var context: Context, var list: List<AllPropertiesList>, var itemClickListener : OnItemClickListner)
     : RecyclerView.Adapter<MyPropertiesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,7 +44,7 @@ class MyPropertiesAdapter(var context: Context, var list: List<Values>, var item
 
         holder.binding.edit.setOnClickListener {
             Intent(context, AddProperty::class.java).apply {
-                putExtra("poropertyId", currentItem.id.toString())
+                putExtra("propertyId", currentItem.id.toString())
                 putExtra("from", "edit")
                 context.startActivity(this)
             }
@@ -60,7 +60,7 @@ class MyPropertiesAdapter(var context: Context, var list: List<Values>, var item
     }
 
     interface OnItemClickListner{
-        fun onItemClick(position: Int, data : Values)
+        fun onItemClick(position: Int, data : AllPropertiesList)
     }
 
 }

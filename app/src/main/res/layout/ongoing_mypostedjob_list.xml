@@ -13,34 +13,35 @@
     app:cardCornerRadius="@dimen/_12sdp"
     app:cardElevation="@dimen/_3sdp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:orientation="vertical">
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="end"-->
+    <!--        android:layout_marginTop="@dimen/_10sdp"-->
+    <!--        android:orientation="vertical">-->
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/assignName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:fontFamily="@font/nunito_sans"
-            android:text="Kaushik Raval"
-            android:textColor="@color/purple_700"
-            android:textSize="@dimen/_14sdp" />
+    <!--        <com.google.android.material.textview.MaterialTextView-->
+    <!--            android:id="@+id/assignName"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="end"-->
+    <!--            android:fontFamily="@font/nunito_sans"-->
+    <!--            android:text="Kaushik Raval"-->
+    <!--            android:textColor="@color/purple_700"-->
+    <!--            android:textSize="@dimen/_14sdp" />-->
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/assignPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="+91 8200657814"
-            android:textColor="@color/purple_700"
-            android:textSize="@dimen/_8sdp" />
+    <!--        <com.google.android.material.textview.MaterialTextView-->
+    <!--            android:id="@+id/assignPhone"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="end"-->
+    <!--            android:layout_marginTop="@dimen/_3sdp"-->
+    <!--            android:fontFamily="@font/nunito_sans"-->
+    <!--            android:text="+91 8200657814"-->
+    <!--            android:textColor="@color/purple_700"-->
+    <!--            android:textSize="@dimen/_8sdp" />-->
 
-    </LinearLayout>
+    <!--    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,46 +49,53 @@
         android:layout_margin="@dimen/_8sdp"
         android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/jobNo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_semibold"
-            android:text="Shivalik Shilp"
-            android:textColor="@color/purple_700"
-            android:textSize="@dimen/_14sdp" />
+            android:text="job No: 20210426/4"
+            android:textSize="@dimen/_10sdp" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/phone"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:drawablePadding="@dimen/_2sdp"
-            android:fontFamily="@font/nunito_sans"
-            android:text="8200657814"
-            android:textColor="@color/purple_700"
-            android:textSize="@dimen/_9sdp" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="Shivalik Shilp"
+                android:textColor="@color/purple_700"
+                android:textSize="@dimen/_14sdp" />
+
+            <ImageView
+                android:id="@+id/call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/name"
+                android:backgroundTint="@color/purple_700"
+                android:src="@drawable/ic_call" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp">
 
-            <!--            <com.google.android.material.textview.MaterialTextView-->
-            <!--                android:id="@+id/assignTo"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_alignParentEnd="true"-->
-            <!--                android:layout_centerVertical="true"-->
-            <!--                android:layout_marginStart="@dimen/_10sdp"-->
-            <!--                android:layout_toEndOf="@+id/jobStatus"-->
-            <!--                android:drawablePadding="@dimen/_3sdp"-->
-            <!--                android:fontFamily="@font/nunito_sans_bold"-->
-            <!--                android:gravity="end"-->
-            <!--                android:textColor="@color/purple_700"-->
-            <!--                android:maxLines="1"-->
-            <!--                android:text="To: Rudra Pvt Ltd."-->
-            <!--                android:textSize="@dimen/_12sdp" />-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/assignTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:maxLines="1"
+                android:text="Assign To: Mohit Shah"
+                android:textSize="@dimen/_11sdp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/jobStatus"
@@ -102,6 +110,37 @@
                 android:text="Job status: Started"
                 android:textColor="@color/green_700"
                 android:textSize="@dimen/_10ssp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp">
+
+        <TextView
+            android:id="@+id/bidAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_11sdp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:text="Bid Amount: $1999"/>
+
+            <TextView
+                android:id="@+id/assignPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:maxLines="1"
+                android:text="+91 987654321"
+                android:textSize="@dimen/_11sdp" />
+
 
         </RelativeLayout>
 
@@ -208,7 +247,6 @@
                 android:textSize="@dimen/_8ssp" />
 
         </RelativeLayout>
-
 
 
     </LinearLayout>

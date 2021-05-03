@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_2sdp"
+    android:weightSum="1"
+    android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/property"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Property type: "
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/propertyValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="199"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp" />
+
+</LinearLayout>

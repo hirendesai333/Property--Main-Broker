@@ -22,36 +22,19 @@
         android:id="@+id/PropertyRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/addPropertyBtn"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-
-    <RelativeLayout
-        android:id="@+id/bottomPricingLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#F2F2F7">
 
         <com.google.android.material.button.MaterialButton
             app:backgroundTint="@color/green_700"
-            android:id="@+id/btnCheckedItems"
+            android:id="@+id/addPropertyBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_margin="5dp"
+            android:layout_alignParentBottom="true"
             android:text="Add Property"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp" />
-
-    </RelativeLayout>
-<!--    <Button-->
-<!--        android:id="@+id/btnCheckedItems"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:textAppearance="?android:textAppearanceMedium"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:text="Add Property"/>-->
 
 </RelativeLayout>

@@ -74,17 +74,35 @@
 
         </RelativeLayout>
 
-<!--        <com.google.android.material.textview.MaterialTextView-->
-<!--            android:id="@+id/markCompleted"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="@dimen/_7sdp"-->
-<!--            android:fontFamily="@font/nunito_sans_bold"-->
-<!--            android:paddingBottom="@dimen/_4sdp"-->
-<!--            android:maxLines="1"-->
-<!--            android:layout_gravity="end"-->
-<!--            android:text="Price: "-->
-<!--            android:textSize="@dimen/_10sdp" />-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:text="Rating: "
+                android:textColor="@color/purple_700"
+                app:fontFamily="@font/nunito_sans" />
+
+            <RatingBar
+                android:id="@+id/propertyRating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="4.5"
+                android:stepSize="0.1" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

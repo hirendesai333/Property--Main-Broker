@@ -41,8 +41,10 @@ import java.text.NumberFormat
 import java.util.*
 
 
-class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), CompletedJobsAdapter.OnCompletedJobClick
-    ,MyCompletedJobsAdapter.OnCompletedAssignClickListener, CompletedJobsAdapter.OnMarkerClick {
+class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment),
+    CompletedJobsAdapter.OnCompletedJobClick,
+    MyCompletedJobsAdapter.OnCompletedAssignClickListener,
+    CompletedJobsAdapter.OnMarkerClick, CompletedJobsAdapter.OnClickRating {
 
     private var _binding: CompletedJobsFragmentBinding? = null
     private val binding get() = _binding!!
@@ -98,16 +100,15 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getAssignedCompletedJobs(
-                    3,2,map
+                    3,false,AppPreferences.getUserData(Params.UserId).toInt(),map
                 )
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
 
-                        Log.d("MY_COMPLETED_JOBS", response.code().toString())
-                        Log.d("MY_COMPLETED_JOBS",response.body().toString())
+                        Log.d("Completed Assign Job", response.code().toString())
+                        Log.d("Completed Assign Job",response.body().toString())
 
                         val list : List<CompletedJobsAssignList> = response.body()!!.values!!
-
                         binding.completedJobRv.adapter = MyCompletedJobsAdapter(Params.MY_COMPLETED_JOBS, list,this@CompletedJobsFragment)
 
                     }
@@ -145,7 +146,10 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
 
                         val list : List<CompletedMyPostedJobsList> = response.body()!!.values!!
 
-                        binding.completedJobRv.adapter = CompletedJobsAdapter(Params.MY_POSTED_COMPLETED_JOBS,list,this@CompletedJobsFragment,
+                        binding.completedJobRv.adapter = CompletedJobsAdapter(
+                            Params.MY_POSTED_COMPLETED_JOBS,list,
+                            this@CompletedJobsFragment,
+                            this@CompletedJobsFragment,
                             this@CompletedJobsFragment)
                     }
                 }else{
@@ -272,6 +276,7 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
                         binding.completedJobRv.adapter = CompletedJobsAdapter(
                             Params.MY_POSTED_COMPLETED_JOBS,list,
                             this@CompletedJobsFragment,
+                            this@CompletedJobsFragment,
                             this@CompletedJobsFragment)
                     }
                 } else {
@@ -344,6 +349,13 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
 
                         Log.d("Mark Completed Property", response.code().toString())
                         Log.d("Mark CompletedProperty", response.body().toString())
+
+                        if (response.code() == 200){
+                            getMyPostedCompletedJobs()
+                            requireActivity().toast("Completed Job Successfully")
+                        }else{
+
+                        }
                     }
                 }else{
                     withContext(Dispatchers.Main){
@@ -356,64 +368,65 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment), Comple
         }
     }
 
-//    override fun onClickRating(position: Int, currentItem: CompletedMyPostedJobsList) {
-//        ratingPopUp = Dialog(requireContext(), R.style.Theme_PropertyMainBroker)
-//        ratingPopUp.setContentView(R.layout.agent_job_rating_popup)
-//        ratingPopUp.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
-//
-//        val rating = ratingPopUp.findViewById<RatingBar>(R.id.ratingView)
-//        val review = ratingPopUp.findViewById<TextInputEditText>(R.id.review)
-//        val reviewBtn = ratingPopUp.findViewById<Button>(R.id.reviewBtn)
-//
-//        if (currentItem.jobRatting!! > 0) {
-//            rating.rating = currentItem.jobRatting.toFloat()
-//            review.setText(currentItem.jobReview.toString().trim())
-//            reviewBtn.text = "Update Review"
-//        }
-//
-//        reviewBtn.setOnClickListener {
-//            val ratings = rating.rating.toInt().toString()
-//            val reviews = review.text.toString().trim()
-//
-//            if (reviews.isNotEmpty()) {
-//                ratingAPI(ratings, reviews, currentItem)
-//                ratingPopUp.dismiss()
-//            } else {
-//                requireActivity().toast("Please enter review")
-//            }
-//        }
-//        ratingPopUp.show()
-//    }
+    override fun onClickRating(position: Int, currentItem: CompletedMyPostedJobsList) {
+        ratingPopUp = Dialog(requireContext(), R.style.Theme_PropertyMainBroker)
+        ratingPopUp.setContentView(R.layout.agent_job_rating_popup)
+        ratingPopUp.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
-//    private fun ratingAPI(ratings: String, reviews: String, currentItem: CompletedMyPostedJobsList) {
-//        coroutineScope.launch {
-//            try {
-//                val data = HashMap<String, String>()
-//                data["JobId"] = currentItem.jobId.toString()
-//                data["RattingById"] = AppPreferences.getUserData(Params.UserId)
-//                data["RattingToId"] = currentItem.assignedUserId.toString()
-//                data["Ratting"] = ratings.toInt().toString()
-//                data["Review"] = reviews
-//
-//                val response = ServiceApi.retrofitService.userAgentRating(data)
-//                if (response.isSuccessful) {
-//                    withContext(Dispatchers.Main) {
-//
-//                        if (response.code() == 200) {
-//                            requireContext().toast("Review Submit Successfully")
-//                        } else {
-//                            requireContext().toast("something wrong")
-//                        }
-//                    }
-//                } else {
-//                    withContext(Dispatchers.Main) {
-//                        Log.d(TAG, "something wrong")
-//                    }
-//                }
-//            } catch (e: Exception) {
-//                Log.d(TAG, e.message.toString())
-//            }
-//        }
-//    }
+        val rating = ratingPopUp.findViewById<RatingBar>(R.id.ratingView)
+        val review = ratingPopUp.findViewById<TextInputEditText>(R.id.review)
+        val reviewBtn = ratingPopUp.findViewById<Button>(R.id.reviewBtn)
+
+        if (currentItem.jobRatting!! > 0) {
+            rating.rating = currentItem.jobRatting.toFloat()
+            review.setText(currentItem.jobReview.toString().trim())
+            reviewBtn.text = "Update Review"
+        }
+
+        reviewBtn.setOnClickListener {
+            val ratings = rating.rating.toInt().toString()
+            val reviews = review.text.toString().trim()
+
+            if (reviews.isNotEmpty()) {
+                ratingAPI(ratings, reviews, currentItem)
+                ratingPopUp.dismiss()
+            } else {
+                requireActivity().toast("Please enter review")
+            }
+        }
+        ratingPopUp.show()
+    }
+
+    private fun ratingAPI(ratings: String, reviews: String, currentItem: CompletedMyPostedJobsList) {
+        coroutineScope.launch {
+            try {
+                val data = HashMap<String, String>()
+                data["JobId"] = currentItem.id.toString()
+                data["RattingById"] = AppPreferences.getUserData(Params.UserId)
+                data["RattingToId"] = currentItem.assignedUserId.toString()
+                data["Ratting"] = ratings.toInt().toString()
+                data["Review"] = reviews
+
+                val response = ServiceApi.retrofitService.userAgentRating(data)
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+
+                        if (response.code() == 200) {
+                            getMyPostedCompletedJobs()
+                            requireContext().toast("Review Submit Successfully")
+                        } else {
+                            requireContext().toast("something wrong")
+                        }
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
 
 }

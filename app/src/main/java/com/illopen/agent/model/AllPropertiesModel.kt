@@ -25,10 +25,10 @@ data class AllPropertiesModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<Values>?
+    val values: List<AllPropertiesList>?
 )
 
-data class Values(
+data class AllPropertiesList(
     @JsonProperty("AvailableFor")
     val availableFor: String?,
     @JsonProperty("AvailableForMasterId")
@@ -47,26 +47,32 @@ data class Values(
     val createdDate: String?,
     @JsonProperty("CreatedDateStr")
     val createdDateStr: String?,
+    @JsonProperty("DeletedBy")
+    val deletedBy: Int?,
+    @JsonProperty("DeletedDate")
+    val deletedDate: String?,
+    @JsonProperty("DeletedDateStr")
+    val deletedDateStr: String?,
     @JsonProperty("FullName")
     val fullName: String?,
-    @JsonProperty("HouseNo")
-    val houseNo: Any?,
     @JsonProperty("Id")
     val id: Int?,
     @JsonProperty("IsActive")
     val isActive: Int?,
+    @JsonProperty("IsDeleted")
+    val isDeleted: Boolean?,
     @JsonProperty("Pincode")
     val pincode: String?,
     @JsonProperty("PropertyAddress")
     val propertyAddress: String?,
     @JsonProperty("PropertyLatitude")
-    val propertyLatitude: String?,
+    val propertyLatitude: Any?,
     @JsonProperty("PropertyLongitude")
-    val propertyLongitude: String?,
+    val propertyLongitude: Any?,
     @JsonProperty("PropertyName")
     val propertyName: String?,
     @JsonProperty("PropertyNotes")
-    val propertyNotes: String?,
+    val propertyNotes: Any?,
     @JsonProperty("PropertyPrice")
     val propertyPrice: String?,
     @JsonProperty("PropertyType")

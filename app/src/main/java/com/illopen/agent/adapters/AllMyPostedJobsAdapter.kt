@@ -10,9 +10,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
-import com.illopen.agent.model.MyPostedJobsList
+import com.illopen.agent.model.MyPostedJobList
 
-class AllMyPostedJobsAdapter(var from: String,var list: List<MyPostedJobsList>,var itemClickListener : OnItemClickListener)
+class AllMyPostedJobsAdapter(var from: String, var list: List<MyPostedJobList>, var itemClickListener : OnItemClickListener)
     : RecyclerView.Adapter<AllMyPostedJobsAdapter.ViewHolder>()
 {
 
@@ -23,6 +23,8 @@ class AllMyPostedJobsAdapter(var from: String,var list: List<MyPostedJobsList>,v
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
+
+        holder.jobNo.text = "Job No: " + currentItem.jobNo.toString()
         holder.propertyName.text = currentItem.customerName
         holder.lowBid.text = "Lowest $" + currentItem.lowestBid.toString()
         holder.highBid.text = "Highest $" + currentItem.highestBid.toString()
@@ -33,6 +35,7 @@ class AllMyPostedJobsAdapter(var from: String,var list: List<MyPostedJobsList>,v
         holder.rootLayout.setOnClickListener {
             itemClickListener.onItemClick(position,list[position])
         }
+
         holder.call.setOnClickListener {
             itemClickListener.onCallClick(position,list[position])
         }
@@ -43,6 +46,7 @@ class AllMyPostedJobsAdapter(var from: String,var list: List<MyPostedJobsList>,v
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+        val jobNo : TextView = itemView.findViewById(R.id.jobNo)
         val propertyName: TextView = itemView.findViewById(R.id.title)
         val date : TextView = itemView.findViewById(R.id.date)
         val time : TextView = itemView.findViewById(R.id.time)
@@ -55,8 +59,8 @@ class AllMyPostedJobsAdapter(var from: String,var list: List<MyPostedJobsList>,v
     }
 
     interface OnItemClickListener{
-        fun onItemClick(itemPosition : Int,data : MyPostedJobsList)
-        fun onCallClick(itemPosition : Int,data : MyPostedJobsList)
+        fun onItemClick(itemPosition : Int,data : MyPostedJobList)
+        fun onCallClick(itemPosition : Int,data : MyPostedJobList)
     }
 
 }

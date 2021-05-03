@@ -29,7 +29,7 @@ class MyPostedJobDetailsAdapter(
         val currentItem = list[position]
 
         holder.name.text = currentItem.propertyName
-        holder.availableFor.text = "Available for: " + currentItem.propertyName
+        holder.availableFor.text = "Available for: " + currentItem.availableForMasterName
         holder.price.text = "Price: $" + currentItem.propertyPrice
         holder.address.text =
             "Address: ${currentItem.propertyAddress}, ${currentItem.city}, ${currentItem.state}, ${currentItem.country} - ${currentItem.pincode}"

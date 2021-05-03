@@ -42,26 +42,27 @@
 
         </RelativeLayout>
 
-        <!--        <com.google.android.material.textview.MaterialTextView-->
-        <!--            android:id="@+id/propertyType"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="@dimen/_5sdp"-->
-        <!--            android:fontFamily="@font/nunito_sans_bold"-->
-        <!--            android:text="Job Property Bid"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:textSize="@dimen/_10sdp" />-->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:text="Email"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp" />
 
-        <!--        <com.google.android.material.textview.MaterialTextView-->
-        <!--            android:id="@+id/add"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="@dimen/_5sdp"-->
-        <!--            android:drawablePadding="@dimen/_3sdp"-->
-        <!--            android:fontFamily="@font/nunito_sans"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:text="Address"-->
-        <!--            android:textSize="@dimen/_10ssp" />-->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:drawablePadding="@dimen/_3sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:textColor="@color/black"
+            android:text="Phone"
+            android:textSize="@dimen/_10ssp" />
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/price"
@@ -69,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/nunito_sans_bold"
-            android:text="Price : 00"
+            android:text="Total Amount : 00"
             app:fontFamily="@font/nunito_sans_bold"
             android:layout_marginTop="@dimen/_8sdp"
             android:textColor="@color/black"

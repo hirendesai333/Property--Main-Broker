@@ -23,7 +23,11 @@ class MyCompletedJobsAdapter(var from: String, var list: List<CompletedJobsAssig
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
 
+        holder.jobNo.text = "Job No: " + currentItem.jobNo.toString()
         holder.propertyName.text = currentItem.userName
+        holder.postedBy.text = "Posted By: " + currentItem.userName
+        holder.assignBy.text = "Don By: " + currentItem.assignedUserName
+        holder.assignPhone.text = currentItem.assignedPhoneNumber
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
         holder.rating.text = currentItem.jobRatting.toString()
@@ -42,7 +46,11 @@ class MyCompletedJobsAdapter(var from: String, var list: List<CompletedJobsAssig
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
+        val jobNo : TextView = itemView.findViewById(R.id.jobNo)
         val propertyName: TextView = itemView.findViewById(R.id.name)
+        val assignBy : TextView = itemView.findViewById(R.id.assignBy)
+        val postedBy: TextView = itemView.findViewById(R.id.postedBy)
+        val assignPhone: TextView = itemView.findViewById(R.id.postedPhone)
         val date : TextView = itemView.findViewById(R.id.date)
         val time : TextView = itemView.findViewById(R.id.time)
         val postDate : TextView = itemView.findViewById(R.id.postDate)

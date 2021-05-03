@@ -25,10 +25,10 @@ data class AllJobBidResponseModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<JobBidValue>?
+    val values: List<JobBidList>?
 )
 
-data class JobBidValue(
+data class JobBidList(
     @JsonProperty("Amount")
     val amount: Int?,
     @JsonProperty("AvailableFor")

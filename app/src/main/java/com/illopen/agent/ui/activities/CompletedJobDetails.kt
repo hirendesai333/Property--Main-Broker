@@ -19,7 +19,7 @@ import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
 import java.util.HashMap
 
-class CompletedJobDetails : AppCompatActivity(), CompletedJobDetailsAdapter.OnCompletedClick {
+class CompletedJobDetails : AppCompatActivity(){
 
     private lateinit var binding: ActivityCompletedJobDetailsBinding
 
@@ -78,8 +78,7 @@ class CompletedJobDetails : AppCompatActivity(), CompletedJobDetailsAdapter.OnCo
                         val list: List<JobPropertyList> = response.body()!!.values!!
 
                         binding.completedJobProperty.adapter = CompletedJobDetailsAdapter(
-                            this@CompletedJobDetails, list,
-                            this@CompletedJobDetails
+                            this@CompletedJobDetails, list
                         )
 
                     }
@@ -94,63 +93,63 @@ class CompletedJobDetails : AppCompatActivity(), CompletedJobDetailsAdapter.OnCo
         }
     }
 
-    override fun onCompletedClick(position: Int, currentItem: JobPropertyList) {
-        ratingPopUp = Dialog(this, R.style.Theme_PropertyMainBroker)
-        ratingPopUp.setContentView(R.layout.agent_job_rating_popup)
-        ratingPopUp.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+//    override fun onCompletedClick(position: Int, currentItem: JobPropertyList) {
+//        ratingPopUp = Dialog(this, R.style.Theme_PropertyMainBroker)
+//        ratingPopUp.setContentView(R.layout.agent_job_rating_popup)
+//        ratingPopUp.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+//
+//        val rating = ratingPopUp.findViewById<RatingBar>(R.id.ratingView)
+//        val review = ratingPopUp.findViewById<TextInputEditText>(R.id.review)
+//        val reviewBtn = ratingPopUp.findViewById<Button>(R.id.reviewBtn)
+//
+//        if (currentItem.rating!! > 0) {
+//            rating.rating = currentItem.rating.toFloat()
+//            review.setText(currentItem.review.toString().trim())
+//            reviewBtn.text = "Update Review"
+//        }
+//
+//        reviewBtn.setOnClickListener {
+//            val ratings = rating.rating.toInt().toString()
+//            val reviews = review.text.toString().trim()
+//
+//            if (reviews.isNotEmpty()) {
+//                ratingAPI(ratings, reviews, currentItem)
+//                ratingPopUp.dismiss()
+//            } else {
+//                toast("Please enter review")
+//            }
+//        }
+//        ratingPopUp.show()
+//    }
 
-        val rating = ratingPopUp.findViewById<RatingBar>(R.id.ratingView)
-        val review = ratingPopUp.findViewById<TextInputEditText>(R.id.review)
-        val reviewBtn = ratingPopUp.findViewById<Button>(R.id.reviewBtn)
-
-        if (currentItem.rating!! > 0) {
-            rating.rating = currentItem.rating.toFloat()
-            review.setText(currentItem.review.toString().trim())
-            reviewBtn.text = "Update Review"
-        }
-
-        reviewBtn.setOnClickListener {
-            val ratings = rating.rating.toInt().toString()
-            val reviews = review.text.toString().trim()
-
-            if (reviews.isNotEmpty()) {
-                ratingAPI(ratings, reviews, currentItem)
-                ratingPopUp.dismiss()
-            } else {
-                toast("Please enter review")
-            }
-        }
-        ratingPopUp.show()
-    }
-
-    private fun ratingAPI(ratings: String, reviews: String, currentItem: JobPropertyList) {
-        coroutineScope.launch {
-            try {
-                val data = HashMap<String, String>()
-                data["JobId"] = jobId
-                data["RattingById"] = AppPreferences.getUserData(Params.UserId)
-                data["RattingToId"] = assignJobId
-                data["Ratting"] = ratings
-                data["Review"] = reviews
-
-                val response = ServiceApi.retrofitService.userAgentRating(data)
-                if (response.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-
-                        if (response.code() == 200) {
-                            toast("Review Submit Successfully")
-                        } else {
-                            toast("something wrong")
-                        }
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Log.d(TAG, "something wrong")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.d(TAG, e.message.toString())
-            }
-        }
-    }
+//    private fun ratingAPI(ratings: String, reviews: String, currentItem: JobPropertyList) {
+//        coroutineScope.launch {
+//            try {
+//                val data = HashMap<String, String>()
+//                data["JobId"] = jobId
+//                data["RattingById"] = AppPreferences.getUserData(Params.UserId)
+//                data["RattingToId"] = assignJobId
+//                data["Ratting"] = ratings
+//                data["Review"] = reviews
+//
+//                val response = ServiceApi.retrofitService.userAgentRating(data)
+//                if (response.isSuccessful) {
+//                    withContext(Dispatchers.Main) {
+//
+//                        if (response.code() == 200) {
+//                            toast("Review Submit Successfully")
+//                        } else {
+//                            toast("something wrong")
+//                        }
+//                    }
+//                } else {
+//                    withContext(Dispatchers.Main) {
+//                        Log.d(TAG, "something wrong")
+//                    }
+//                }
+//            } catch (e: Exception) {
+//                Log.d(TAG, e.message.toString())
+//            }
+//        }
+//    }
 }

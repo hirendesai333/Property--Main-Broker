@@ -17,8 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_10sdp"
-        android:gravity="center"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/jobNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10sdp"
+            android:text="job No: 20210426/4"/>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -91,53 +98,48 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/postedBy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_toStartOf="@+id/ratingLayout"
-                android:drawablePadding="@dimen/_3sdp"
-                android:fontFamily="@font/nunito_sans"
-                android:text="To: Rudra Pvt Ltd."
-                android:textSize="@dimen/_10ssp" />
-
-            <LinearLayout
-                android:id="@+id/ratingLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:orientation="horizontal">
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:drawablePadding="@dimen/_3sdp"
+                android:maxLines="1"
+                android:text="Done By: Chirag Patel"
+                android:textSize="@dimen/_11sdp" />
+
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/_3sdp"
-                    android:fontFamily="@font/nunito_sans"
-                    android:gravity="center_vertical"
-                    android:text="Job Rating: "
-                    android:textColor="@color/green_700"
-                    android:textSize="@dimen/_10ssp" />
-
-                <androidx.appcompat.widget.AppCompatRatingBar
-                    style="@style/Widget.AppCompat.RatingBar.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:numStars="1"
-                    android:rating="1" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/myRating"
+                    android:id="@+id/ratingBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/_3sdp"
+                    android:layout_toEndOf="@id/postedBy"
                     android:fontFamily="@font/nunito_sans"
-                    android:gravity="center_vertical"
-                    android:text="4.8"
+                    android:gravity="end"
+                    android:visibility="invisible"
+                    android:text="Job Rating"
                     android:textColor="@color/green_700"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_11sdp" />
 
-            </LinearLayout>
+<!--                <androidx.appcompat.widget.AppCompatRatingBar-->
+<!--                    style="@style/Widget.AppCompat.RatingBar.Small"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:numStars="1"-->
+<!--                    android:rating="1" />-->
+
+<!--                <com.google.android.material.textview.MaterialTextView-->
+<!--                    android:id="@+id/myRating"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:drawablePadding="@dimen/_3sdp"-->
+<!--                    android:fontFamily="@font/nunito_sans"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:text="4.8"-->
+<!--                    android:textColor="@color/green_700"-->
+<!--                    android:textSize="@dimen/_10ssp" />-->
+
 
         </RelativeLayout>
 
@@ -214,6 +216,36 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/assignTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:maxLines="1"
+                android:text="Assign To: Kaushik Raval"
+                android:textSize="@dimen/_10sdp" />
+
+            <TextView
+                android:id="@+id/assignPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_toEndOf="@id/assignTo"
+                android:gravity="end"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:maxLines="1"
+                android:text="+91 987654321"
+                android:textSize="@dimen/_10sdp" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"

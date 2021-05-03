@@ -28,6 +28,7 @@ class CompletedJobAssignDetailsAdapter(var context: Context, var list: List<JobP
         view.address.text = "Address: " + currentItem.propertyAddress
         view.availableFor.text = "Available for: " + currentItem.availableForMasterName
         view.propertyType.text = "Property type: " + currentItem.propertyTypeName
+        view.propertyRating.rating = currentItem.rating!!.toFloat()
         view.price.text = "Price: $" + currentItem.propertyPrice
 
         view.rootLayout.setOnClickListener {

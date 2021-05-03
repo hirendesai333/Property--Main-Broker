@@ -7,14 +7,14 @@
     tools:context=".ui.activities.NewJob">
 
     <RelativeLayout
-        android:id="@+id/topbar"
+        android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:padding="15dp">
 
         <ImageView
-            android:id="@+id/backbtn"
+            android:id="@+id/backBtn"
             android:layout_width="20dp"
             android:layout_height="15dp"
             android:layout_alignParentStart="true"
@@ -33,15 +33,15 @@
 
     </RelativeLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/createJob"
-        android:layout_below="@+id/topbar">
+        android:layout_above="@+id/createNewJob"
+        android:layout_below="@+id/topBar">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
@@ -65,7 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:text="Choose Property"
+                        android:text="Choose Customer"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_15ssp" />
 
@@ -76,24 +76,22 @@
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:background="@drawable/corner_grey_background">
 
-                        <TextView
-                            android:id="@+id/propertySpinner"
+                        <Spinner
+                            android:id="@+id/customerSpinner"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/_3sdp"
-                            android:text="Select Property" />
+                            android:layout_height="wrap_content" />
 
                     </RelativeLayout>
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/addNewProperty"
+                        android:id="@+id/addNewCustomer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginEnd="@dimen/_17sdp"
                         android:fontFamily="@font/nunito_sans_bold"
                         android:gravity="end"
-                        android:text="Can't find? Add New Property"
+                        android:text="Can't find? Add New Customer"
                         android:textColor="@color/green_700"
                         android:textSize="@dimen/_8ssp"
                         app:fontFamily="@font/nunito_sans_semibold" />
@@ -124,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:fontFamily="@font/nunito_sans_semibold"
-                        android:text="Choose Customer"
+                        android:text="Choose Property"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_15ssp" />
 
@@ -135,21 +133,23 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:background="@drawable/corner_grey_background">
 
-                        <Spinner
-                            android:id="@+id/customerSpinner"
+                        <TextView
+                            android:id="@+id/property"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_3sdp"
+                            android:text="Select Property" />
 
                     </RelativeLayout>
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/addNewCustomer"
+                        android:id="@+id/addNewProperty"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_17sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/nunito_sans_bold"
-                        android:text="Can't find? Add New Customer"
+                        android:text="Can't find? Add New Property"
                         android:textColor="@color/green_700"
                         android:textSize="@dimen/_8ssp"
                         app:fontFamily="@font/nunito_sans_semibold" />
@@ -265,11 +265,28 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/bid_dialog_border"
+                android:gravity="top|start"
+                android:lines="4"
+                android:maxLines="3"
+                android:textSize="@dimen/_12sdp"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:singleLine="false"
+                android:hint="Enter Remark" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:orientation="vertical">
@@ -277,152 +294,34 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
                     android:fontFamily="@font/nunito_sans_semibold"
                     android:text="Job Languages"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/jobLanguage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/jobLanguage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+    </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/createNewJob"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:fontFamily="@font/nunito_sans_semibold"
+        android:text="Create new job"
+        android:textSize="@dimen/_10sdp" />
 
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.App.CardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_weight="1"
-                app:cardElevation="@dimen/_2sdp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_5sdp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_sans"
-                        android:text="Property Type"
-                        android:textSize="@dimen/_10ssp" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:text="Bunglow"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.App.CardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_weight="1"
-                app:cardElevation="@dimen/_2sdp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_5sdp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_sans"
-                        android:text="Available For"
-                        android:textSize="@dimen/_10ssp" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:text="Rent"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.App.CardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_weight="1"
-                app:cardElevation="@dimen/_2sdp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_5sdp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_sans"
-                        android:text="Price"
-                        android:textSize="@dimen/_10ssp" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:fontFamily="@font/nunito_sans_semibold"
-                        android:text="$1000"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
-
-<Button
-android:fontFamily="@font/nunito_sans_semibold"
-android:id="@+id/createNewJob"
-android:layout_alignParentBottom="true"
-android:layout_centerHorizontal="true"
-android:layout_height="wrap_content"
-android:layout_width="wrap_content"
-android:text="Create a new job"
-android:textSize="13sp" />
-
-    </RelativeLayout>
+</RelativeLayout>

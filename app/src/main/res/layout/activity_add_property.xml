@@ -115,75 +115,133 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_weight="1"
-                    android:hint="Country"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintTextColor="@color/green_700">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/country"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:editable="false"
-                        android:textSize="@dimen/_12ssp"
-                        app:fontFamily="@font/nunito_sans" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:hint="State"
-                    app:boxBackgroundColor="@color/white"
-                    app:hintTextColor="@color/green_700">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/state"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:editable="false"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp"
-                        app:fontFamily="@font/nunito_sans" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:hint="City"
-                app:boxBackgroundColor="@color/white"
-                app:hintTextColor="@color/green_700">
+                android:text="Country" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/city"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_3sdp">
+
+                <Spinner
+                    android:id="@+id/countrySpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
-                    app:fontFamily="@font/nunito_sans" />
+                    android:layout_height="wrap_content" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="State" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_3sdp">
+
+                <Spinner
+                    android:id="@+id/stateSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="City" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_3sdp">
+
+                <Spinner
+                    android:id="@+id/citySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!--                <com.google.android.material.textfield.TextInputLayout-->
+            <!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="@dimen/_10sdp"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:hint="Country"-->
+            <!--                    app:boxBackgroundColor="@color/white"-->
+            <!--                    app:hintTextColor="@color/green_700">-->
+
+            <!--                    <com.google.android.material.textfield.TextInputEditText-->
+            <!--                        android:id="@+id/country"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:textColor="@color/black"-->
+            <!--                        android:editable="false"-->
+            <!--                        android:textSize="@dimen/_12ssp"-->
+            <!--                        app:fontFamily="@font/nunito_sans" />-->
+
+            <!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+            <!--                <com.google.android.material.textfield.TextInputLayout-->
+            <!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="@dimen/_10sdp"-->
+            <!--                    android:layout_marginStart="@dimen/_5sdp"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:hint="State"-->
+            <!--                    app:boxBackgroundColor="@color/white"-->
+            <!--                    app:hintTextColor="@color/green_700">-->
+
+            <!--                    <com.google.android.material.textfield.TextInputEditText-->
+            <!--                        android:id="@+id/state"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:editable="false"-->
+            <!--                        android:textColor="@color/black"-->
+            <!--                        android:textSize="@dimen/_12ssp"-->
+            <!--                        app:fontFamily="@font/nunito_sans" />-->
+
+            <!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:hint="City"-->
+<!--                app:boxBackgroundColor="@color/white"-->
+<!--                app:hintTextColor="@color/green_700">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/city"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:editable="false"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="@dimen/_12ssp"-->
+<!--                    app:fontFamily="@font/nunito_sans" />-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <TextView
                 android:layout_width="match_parent"
@@ -202,7 +260,7 @@
                 <Spinner
                     android:id="@+id/propertyType"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -223,7 +281,7 @@
                 <Spinner
                     android:id="@+id/availableFor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -269,6 +327,26 @@
                     android:textSize="12sp" />
 
             </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="Property Note"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="@color/green_700">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:inputType="textMultiLine"
+                    android:textSize="@dimen/_12sdp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

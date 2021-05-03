@@ -25,17 +25,20 @@ import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.ui.fragments.UpcomingJobsFragment
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.Params
+import com.illopen.agent.utils.ProgressDialog
 import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
 import java.util.HashMap
 
-class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMarkClick,OnGoingJobAdapter.JobPropertyReviewClick {
+class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyReviewClick {
 
     private lateinit var binding: ActivityOnGoingJobDetailsBinding
 
     private val TAG = "OnGoingJobDetails"
 
     private lateinit var jobId: String
+
+    private lateinit var progressDialog: ProgressDialog
 
     private lateinit var reviewPopup : Dialog
 
@@ -48,7 +51,7 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
         setContentView(binding.root)
 
         jobId = intent.getStringExtra("OnGoingData")!!
-
+        progressDialog = ProgressDialog(this)
         getOnGoingJobProperty()
 
 //        binding.allJobBid.setOnClickListener {
@@ -57,10 +60,15 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
 //            startActivity(intent)
 //        }
 
+        binding.mark.setOnClickListener {
+            markAsShownProperty()
+        }
+
         binding.title.setOnClickListener { onBackPressed() }
     }
 
     private fun getOnGoingJobProperty() {
+        progressDialog.dialog.show()
         coroutineScope.launch {
             try {
                 val map = HashMap<String, String>()
@@ -79,49 +87,49 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
                         Log.d("getOnGoingJobProperty", response.body().toString())
 
                         val list : List<JobPropertyList> = response.body()!!.values!!
-
-                        if (list.isNotEmpty()){
                             binding.onGoingJobProperty.adapter = OnGoingJobAdapter(this@OnGoingJobDetails,list,
-                                this@OnGoingJobDetails,this@OnGoingJobDetails)
-                        }else{
-                            // no property found
-                        }
+                                this@OnGoingJobDetails)
+
+                        progressDialog.dialog.dismiss()
                     }
                 }else{
                     withContext(Dispatchers.Main){
                         Log.d(TAG, "something wrong")
+                        progressDialog.dialog.dismiss()
                     }
                 }
             }catch (e : Exception){
                 Log.d(TAG, e.message.toString())
+                progressDialog.dialog.dismiss()
             }
         }
 
     }
 
-    override fun onGoingJobMarkClick(position: Int, currentItem: JobPropertyList) {
-
-        if (currentItem.review.isNullOrEmpty()){
-                toast("Please Review the Property To Change The Job Status!!")
-            }else{
+    private fun markAsShownProperty() {
+//        if (){
+//            toast("Please Review All the Property")
+//        }else{
+//
+//        }
 
             val builder = MaterialAlertDialogBuilder(this)
             builder.setTitle("Are You Sure ?")
             builder.setMessage("Are You Sure Mark This Property!!")
             builder.setPositiveButton("Yes, do it!") { dialogInterface: DialogInterface, i: Int ->
-
-            marked()
-            dialogInterface.dismiss()
+                marked()
+                dialogInterface.dismiss()
             }
 
             builder.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
                 dialogInterface.dismiss()
             }
             builder.show()
-        }
     }
 
+
     private fun marked() {
+        progressDialog.dialog.show()
         coroutineScope.launch {
             try {
                 val response = ServiceApi.retrofitService.markJobPropertyStatus(
@@ -137,35 +145,39 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
 
                         if (response.code() == 200){
                             toast("Marked Property Successfully")
+                            finish()
                         }else{
-                            //not marked
+                            toast("something wrong")
                         }
-
+                        progressDialog.dialog.dismiss()
                     }
                 }else{
                     withContext(Dispatchers.Main){
                         Log.d(TAG, "something wrong ")
+                        progressDialog.dialog.dismiss()
                     }
                 }
             }catch (e : Exception){
                 Log.d(TAG, e.message.toString())
+                progressDialog.dialog.dismiss()
             }
         }
     }
 
     override fun onGoingJobReviewClick(position: Int, currentItem: JobPropertyList) {
 
+//        for (i in currentItem.rating.toString().indices){
+//
+//            if (currentItem.review!!.isEmpty()){
+//                toast("Please Enter All Reviews")
+//            }else{
+//                toast("All Property Review Done")
+//            }
+//        }
+
         reviewPopup = Dialog(this, R.style.Theme_PropertyMainBroker)
         reviewPopup.setContentView(R.layout.job_property_review_popup)
         reviewPopup.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
-
-//        val view: View = LayoutInflater.from(this).inflate(R.layout.job_property_review_popup, null);
-//        val dialog = MaterialAlertDialogBuilder(
-//            this,
-//            R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog)
-//            .setView(view)
-//            .setBackground(ColorDrawable(Color.WHITE))
-//            .create()
 
         val rating = reviewPopup.findViewById<RatingBar>(R.id.rating)
         val review = reviewPopup.findViewById<TextInputEditText>(R.id.edtReview)
@@ -181,9 +193,6 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
 
         btnSave.setOnClickListener {
 
-//            val rating = reviewPopup.findViewById<RatingBar>(R.id.rating)
-//            val review = reviewPopup.findViewById<TextInputEditText>(R.id.edtReview).text.toString().trim()
-//            val note = reviewPopup.findViewById<TextInputEditText>(R.id.note).text.toString().trim()
             val ratings = rating.rating.toInt().toString()
             val reviews = review.text.toString().trim()
             val notes = note.text.toString().trim()
@@ -212,7 +221,12 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyMark
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
-                        toast("Review Submit Successfully")
+                        if (response.code() == 200) {
+                            getOnGoingJobProperty()
+                            toast("Review Submit Successfully")
+                        }else{
+                            toast("something wrong")
+                        }
                     }
                 } else {
                     withContext(Dispatchers.Main) {

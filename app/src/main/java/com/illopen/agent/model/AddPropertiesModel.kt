@@ -11,12 +11,12 @@ data class AddPropertiesModel(
     @JsonProperty("IsValid")
     val isValid: Boolean?,
     @JsonProperty("Item")
-    val items: Itemss?,
+    val item: AddPropertiesItem?,
     @JsonProperty("Message")
     val message: String?
 )
 
-data class Itemss(
+data class AddPropertiesItem(
     @JsonProperty("AvailableFor")
     val availableFor: Any?,
     @JsonProperty("AvailableForMasterId")
@@ -35,22 +35,28 @@ data class Itemss(
     val createdDate: String?,
     @JsonProperty("CreatedDateStr")
     val createdDateStr: String?,
+    @JsonProperty("DeletedBy")
+    val deletedBy: Int?,
+    @JsonProperty("DeletedDate")
+    val deletedDate: String?,
+    @JsonProperty("DeletedDateStr")
+    val deletedDateStr: String?,
     @JsonProperty("FullName")
     val fullName: String?,
-    @JsonProperty("HouseNo")
-    val houseNo: Any?,
     @JsonProperty("Id")
     val id: Int?,
     @JsonProperty("IsActive")
     val isActive: Int?,
+    @JsonProperty("IsDeleted")
+    val isDeleted: Boolean?,
     @JsonProperty("Pincode")
     val pincode: String?,
     @JsonProperty("PropertyAddress")
     val propertyAddress: String?,
     @JsonProperty("PropertyLatitude")
-    val propertyLatitude: String?,
+    val propertyLatitude: Any?,
     @JsonProperty("PropertyLongitude")
-    val propertyLongitude: String?,
+    val propertyLongitude: Any?,
     @JsonProperty("PropertyName")
     val propertyName: String?,
     @JsonProperty("PropertyNotes")
@@ -74,4 +80,3 @@ data class Itemss(
     @JsonProperty("UserId")
     val userId: Int?
 )
-

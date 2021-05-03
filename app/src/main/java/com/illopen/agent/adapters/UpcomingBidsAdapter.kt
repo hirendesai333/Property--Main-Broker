@@ -14,13 +14,16 @@ class UpcomingBidsAdapter(var from: String, var list: List<AssignedJobList>, var
     RecyclerView.Adapter<UpcomingBidsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        val jobNo : TextView = itemView.findViewById(R.id.jobNo)
         val propertyName: TextView = itemView.findViewById(R.id.name)
         val time : TextView = itemView.findViewById(R.id.time)
         val date : TextView = itemView.findViewById(R.id.date)
         val created : TextView = itemView.findViewById(R.id.postDate)
+        val postedBy : TextView = itemView.findViewById(R.id.assignTo)
         val totalProperty : TextView = itemView.findViewById(R.id.totalProperty)
         val jobStatus: TextView = itemView.findViewById(R.id.jobStatus)
-        val phone : TextView = itemView.findViewById(R.id.phone)
+        val phone : TextView = itemView.findViewById(R.id.assignPhone)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
     }
 
@@ -36,32 +39,19 @@ class UpcomingBidsAdapter(var from: String, var list: List<AssignedJobList>, var
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
-//        if (from == Params.JOB_ASSIGN_TO_ME) {
-//            holder.assignTo.visibility = View.GONE
-//            holder.assignPhone.visibility = View.GONE
-//
-//        } else {
-//
-//            holder.assignTo.visibility = View.VISIBLE
-//            holder.assignPhone.visibility = View.VISIBLE
-//            holder.assignTo.text = currentItem.assignedUserName
-//            holder.assignPhone.text = currentItem.assignedPhoneNumber
-//        }
-        holder.propertyName.text = currentItem.userName
+
+        holder.jobNo.text = "Job No: " + currentItem.jobNo.toString()
+        holder.propertyName.text = currentItem.userName.toString()
         holder.jobStatus.text = currentItem.statusName
         holder.date.text = currentItem.jobVisitingDate
         holder.created.text = "Posted on: " + currentItem.createdDateStr
         holder.time.text = currentItem.jobVisitingTime
-        holder.totalProperty.text = "Total Property: " + currentItem.totalProperty.toString()
-        holder.phone.text = currentItem.customerPhoneNumber
+        holder.totalProperty.text = "Total Property: " + currentItem.totalProperty
+        holder.postedBy.text = "Posted By: " + currentItem.userName.toString()
+        holder.phone.text = currentItem.userPhoneNumber
 
         holder.rootLayout.setOnClickListener {
             onPropertyClick.onGoingClick(currentItem)
         }
-//        if (currentItem.jobStatus == 1) {
-//            holder.jobStatus.text = "Job status: Started"
-//        } else {
-//            holder.jobStatus.text = "Job status: Yet To Start"
-//        }
     }
 }

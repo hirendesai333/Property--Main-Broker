@@ -3,7 +3,7 @@ package com.illopen.agent.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class NewMyJobPostedModel(
+data class NewMyPostedJobModel(
     @JsonProperty("IsOffsetProvided")
     val isOffsetProvided: Boolean?,
     @JsonProperty("IsPageProvided")
@@ -25,10 +25,10 @@ data class NewMyJobPostedModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<MyPostedJobsList>?
+    val values: List<MyPostedJobList>?
 )
 
-data class MyPostedJobsList(
+data class MyPostedJobList(
     @JsonProperty("AgentCodePhone")
     val agentCodePhone: String?,
     @JsonProperty("AssignedCountryCode")
@@ -97,8 +97,6 @@ data class MyPostedJobsList(
     val id: Int?,
     @JsonProperty("JobBidId")
     val jobBidId: Int?,
-    @JsonProperty("JobId")
-    val jobId: Int?,
     @JsonProperty("JobLanguages")
     val jobLanguages: String?,
     @JsonProperty("JobNo")
@@ -109,8 +107,6 @@ data class MyPostedJobsList(
     val jobRatting: Int?,
     @JsonProperty("JobReview")
     val jobReview: Any?,
-    @JsonProperty("JobStatus")
-    val jobStatus: Any?,
     @JsonProperty("JobVisitingDate")
     val jobVisitingDate: String?,
     @JsonProperty("JobVisitingTime")
@@ -129,16 +125,10 @@ data class MyPostedJobsList(
     val propertyMasterId: Int?,
     @JsonProperty("PropertyName")
     val propertyName: Any?,
-    @JsonProperty("PropertyNote")
-    val propertyNote: Any?,
     @JsonProperty("PropertyNotes")
     val propertyNotes: Any?,
     @JsonProperty("PropertyPrice")
     val propertyPrice: Int?,
-    @JsonProperty("PropertyRating")
-    val propertyRating: Any?,
-    @JsonProperty("PropertyReview")
-    val propertyReview: Any?,
     @JsonProperty("PropertyTypeMasterId")
     val propertyTypeMasterId: Int?,
     @JsonProperty("Remarks")
@@ -183,6 +173,8 @@ data class MyPostedJobsList(
     val userProfileUrl: String?,
     @JsonProperty("UserProfileUrlStr")
     val userProfileUrlStr: String?,
+    @JsonProperty("UserRattingId")
+    val userRattingId: Int?,
     @JsonProperty("VisitingDate")
     val visitingDate: Any?,
     @JsonProperty("VistingTime")

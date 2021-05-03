@@ -206,6 +206,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     app:cardCornerRadius="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     app:cardElevation="@dimen/_3sdp">
 
                     <Spinner

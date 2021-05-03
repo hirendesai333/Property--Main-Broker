@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.model.DocumentsModel
 import com.illopen.agent.model.UserDocumentList
-import com.illopen.agent.model.Values
 
 class DocumentsAdapter(var context: Context, var list: List<UserDocumentList>,
                        var documentClick : OnItemClickListener)

@@ -1,5 +1,6 @@
 package com.illopen.agent.adapters
 
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,8 @@ import com.illopen.agent.model.JobPropertyList
 
 class CompletedJobsAdapter(var from: String, var list: List<CompletedMyPostedJobsList>,
                            var onPropertyClick: OnCompletedJobClick,
-                           var markerClick : OnMarkerClick) :
+                           var markerClick : OnMarkerClick,
+                            var onRatingClick : OnClickRating) :
     RecyclerView.Adapter<CompletedJobsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,12 +31,13 @@ class CompletedJobsAdapter(var from: String, var list: List<CompletedMyPostedJob
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
 
-//        holder.postedBy.text = "To: Rudra Pvt Ltd."
+        holder.jobNo.text = "Job No: " + currentItem.jobNo.toString()
+        holder.postedBy.text = "Don By: " + currentItem.assignedUserName
         holder.propertyName.text = currentItem.userName
+        holder.assignBy.text = "Assign To: " + currentItem.assignedUserName
+        holder.assignPhone.text = currentItem.assignedPhoneNumber
         holder.date.text = currentItem.jobVisitingDate
         holder.time.text = currentItem.jobVisitingTime
-        holder.rating.text = currentItem.jobRatting.toString()
-//        holder.jobStatus.text = currentItem.statusName
         holder.createdDate.text = "Posted on: " + currentItem.createdDateStr
         holder.totalProperty.text = "Total Property: " + currentItem.totalProperty.toString()
 
@@ -46,36 +49,41 @@ class CompletedJobsAdapter(var from: String, var list: List<CompletedMyPostedJob
             markerClick.onCompletedMarkerClick(currentItem)
         }
 
-//        holder.ratingBtn.setOnClickListener {
-//            reviewItemClick.onClickRating(position, list[position])
-//        }
+        holder.ratingBar.setOnClickListener {
+            onRatingClick.onClickRating(position, list[position])
+        }
 
-//        if (currentItem.jobRatting!! > 0){
-//            holder.ratingBtn.text = "Update Review"
-//        }else{
-//            holder.ratingBtn.text = "Review"
-//        }
+        if (currentItem.jobRatting!! > 0){
+            holder.ratingBar.text = "Update Review"
+        }else{
+            holder.ratingBar.text = "Review"
+        }
 
         if (currentItem.statusMasterId!! > 3){
             holder.markedCompleted.text = "Completed Job"
+            holder.ratingBar.visibility = View.VISIBLE
         }else{
             holder.markedCompleted.text = "Mark As: Completed "
+            holder.ratingBar.visibility = View.GONE
         }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        val jobNo : TextView = itemView.findViewById(R.id.jobNo)
         val propertyName: TextView = itemView.findViewById(R.id.name)
         val date : TextView = itemView.findViewById(R.id.date)
         val time : TextView = itemView.findViewById(R.id.time)
         val createdDate : TextView = itemView.findViewById(R.id.postDate)
         val totalProperty : TextView = itemView.findViewById(R.id.totalProperty)
         val rootLayout: CardView = itemView.findViewById(R.id.rootLayout)
-//        val postedBy: TextView = itemView.findViewById(R.id.postedBy)
+        val postedBy: TextView = itemView.findViewById(R.id.postedBy)
+        val assignBy: TextView = itemView.findViewById(R.id.assignTo)
+        val assignPhone: TextView = itemView.findViewById(R.id.assignPhone)
         val jobStatus : TextView = itemView.findViewById(R.id.jobStatus)
         val markedCompleted : TextView = itemView.findViewById(R.id.markCompleted)
-        val ratingLayout: LinearLayout = itemView.findViewById(R.id.ratingLayout)
-        val rating : TextView = itemView.findViewById(R.id.myRating)
-//        val ratingBtn : Button = itemView.findViewById(R.id.ratingBtn)
+//        val rating : TextView = itemView.findViewById(R.id.myRating)
+        val ratingBar : TextView = itemView.findViewById(R.id.ratingBar)
     }
 
     interface OnCompletedJobClick {
@@ -86,7 +94,7 @@ class CompletedJobsAdapter(var from: String, var list: List<CompletedMyPostedJob
         fun onCompletedMarkerClick(currentItem : CompletedMyPostedJobsList)
     }
 
-//    interface OnClickRating{
-//        fun onClickRating(position: Int,currentItem : CompletedMyPostedJobsList)
-//    }
+    interface OnClickRating{
+        fun onClickRating(position: Int,currentItem : CompletedMyPostedJobsList)
+    }
 }

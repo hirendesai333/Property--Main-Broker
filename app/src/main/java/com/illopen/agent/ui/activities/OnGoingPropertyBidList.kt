@@ -3,12 +3,9 @@ package com.illopen.agent.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.illopen.agent.R
-import com.illopen.agent.adapters.JobPropertyBidAllAdapter
 import com.illopen.agent.adapters.OnGoingPropertyBidListAdapter
-import com.illopen.agent.databinding.ActivityAllJobPropertyBidListBinding
 import com.illopen.agent.databinding.ActivityOnGoingPropertyBidListBinding
-import com.illopen.agent.model.JobBidValue
+import com.illopen.agent.model.JobBidList
 import com.illopen.agent.network.ServiceApi
 import kotlinx.coroutines.*
 import java.util.HashMap
@@ -57,7 +54,7 @@ class OnGoingPropertyBidList : AppCompatActivity() {
                         Log.d("JobPropertyBidList", response.code().toString())
                         Log.d("JobPropertyBidList", response.body().toString())
 
-                        val list : List<JobBidValue> = response.body()!!.values!!
+                        val list : List<JobBidList> = response.body()!!.values!!
                         if (list.isNotEmpty()) {
                             binding.ongoingPropertyList.adapter = OnGoingPropertyBidListAdapter(this@OnGoingPropertyBidList, list)
                         } else {

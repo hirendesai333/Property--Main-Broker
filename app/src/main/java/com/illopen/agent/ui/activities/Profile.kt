@@ -27,6 +27,7 @@ import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.MediaLoader
 import com.illopen.agent.utils.Params
+import com.illopen.agent.utils.ProgressDialog
 import com.illopen.properybroker.utils.toast
 import com.yanzhenjie.album.Album
 import com.yanzhenjie.album.AlbumConfig
@@ -45,6 +46,8 @@ class Profile : AppCompatActivity(){
     private val TAG = "UserProfile"
 
     var countryId: Int = 0
+
+    private lateinit var progressDialog: ProgressDialog
 
     var regex = "[A-Z0-9a-z]+([._%+-][A-Z0-9a-z]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
     var pattern = Pattern.compile(regex)
@@ -71,6 +74,7 @@ class Profile : AppCompatActivity(){
         )
 
         AppPreferences.initialize(this.applicationContext)
+        progressDialog = ProgressDialog(this)
 
         binding.title.setOnClickListener {
             onBackPressed()
@@ -355,9 +359,8 @@ class Profile : AppCompatActivity(){
                         countryList = response.body()?.values as ArrayList<Country>
 
                         val data : MutableList<String> = ArrayList()
-
                         countryList.forEach {
-                            data.add(it.country.toString())
+                            data.add(it.code.toString())
                         }
 
                         countryAdapter = object : ArrayAdapter<String>(this@Profile, android.R.layout.simple_list_item_1, data) {}
@@ -451,7 +454,7 @@ class Profile : AppCompatActivity(){
     }
 
     private fun getUserProfile() {
-
+        progressDialog.dialog.show()
         coroutineScope.launch {
             try {
                 val response = ServiceApi.retrofitService.getUserProfile(
@@ -474,14 +477,18 @@ class Profile : AppCompatActivity(){
 //                        binding.countrySpinner = response.countryCode.toString().trim()
                         binding.number.setText(response.phoneNumber).toString().trim()
                         countryId = response.countryId!!
+
+                        progressDialog.dialog.dismiss()
                     }
                 } else {
                     withContext(Dispatchers.Main) {
                         Log.d(TAG, "something wrong")
+                        progressDialog.dialog.dismiss()
                     }
                 }
             } catch (e: Exception) {
                 Log.d(TAG, e.message.toString())
+                progressDialog.dialog.dismiss()
             }
         }
 

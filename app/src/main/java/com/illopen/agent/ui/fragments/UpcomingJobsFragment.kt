@@ -89,7 +89,7 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getOnGoingJobs(
+                val response = ServiceApi.retrofitService.onGoingMyPostedJobs(
                     AppPreferences.getUserData(Params.UserId).toInt(),2,false,map
                 )
                 if (response.isSuccessful){
@@ -127,7 +127,7 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getOnGoingJobsAssigned(
-                    2,false,2,map
+                    2,false, AppPreferences.getUserData(Params.UserId).toInt(),map
                 )
                 if (response.isSuccessful){
                     withContext(Dispatchers.Main){
@@ -136,9 +136,7 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
                         Log.d("getAssignedJob",response.body().toString())
 
                         val list : List<AssignedJobList> = response.body()!!.values!!
-
                         binding.upcomingJobsRv.adapter = UpcomingBidsAdapter(Params.JOB_ASSIGN_TO_ME, list, this@UpcomingJobsFragment)
-
                     }
                 }else{
                     withContext(Dispatchers.Main){
@@ -146,7 +144,7 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
                     }
                 }
             }catch (e : Exception){
-                Log.d("getOngoingAssignedJob", e.message.toString())
+                Log.d("getAssignedJob", e.message.toString())
             }
         }
     }
