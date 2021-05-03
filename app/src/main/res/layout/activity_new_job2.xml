@@ -219,7 +219,7 @@
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:fontFamily="@font/nunito_sans"
-                                android:text="2020/12/20"
+                                android:text="Choose date"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10ssp"
                                 app:fontFamily="@font/nunito_sans_semibold" />
@@ -252,7 +252,7 @@
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:fontFamily="@font/nunito_sans"
-                                android:text="12:30 PM"
+                                android:text="Choose time"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10ssp"
                                 app:fontFamily="@font/nunito_sans_semibold" />

@@ -10,10 +10,9 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.gson.Gson
 import com.illopen.agent.R
-import com.illopen.agent.adapters.AllJobLanguagesAdapter
 import com.illopen.agent.adapters.ChoosePropertyAdapter
 import com.illopen.agent.adapters.JobLanguagesAdapter
 import com.illopen.agent.databinding.ActivityNewJob2Binding
@@ -31,15 +30,12 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
+class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, JobLanguagesAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityNewJob2Binding
 
@@ -228,7 +224,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
 
                         val list = response.body()!!.values!!
 
-                        binding.jobLanguage.adapter = JobLanguagesAdapter(this@NewJob, list)
+                        binding.jobLanguage.adapter = JobLanguagesAdapter(this@NewJob, list, this@NewJob)
                     }
 
                 } else {
@@ -341,7 +337,8 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                         Log.d("PropertyType", response.body().toString())
 
                         val list: List<AllPropertiesList> = response.body()!!.values!!
-                        propertyRecycler!!.adapter = ChoosePropertyAdapter(this@NewJob, list, this@NewJob)
+                        propertyRecycler!!.adapter =
+                            ChoosePropertyAdapter(this@NewJob, list, this@NewJob)
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -373,7 +370,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
                     json.put("JobVisitingDate", selectedDate)
                     json.put("JobVisitingTime", selectedTime)
                     json.put("Remarks", remark)
-                    json.put("JobLanguages", "Gujarati")
+                    json.put("JobLanguages", selectedLanguageList.joinToString(separator = ","))
                     jsonObject.put("data", json)
                     Log.d("createJob", json.toString())
 
@@ -418,18 +415,19 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener {
             val jsonObject = JSONObject()
             jsonObject.put("PropertyMasterId", selectedList[i].toInt())
             propertyArray.put(jsonObject)
-            toast("Selected : " )
+            toast("Selected : ")
         }
     }
 
-//    override fun onItemClick(itemPosition: Int, language: AllJobLanguageList) {
-//        selectedLanguageList.clear()
-//        selectedLanguageList.add(language.id.toString())
-//        for (i in selectedLanguageList.indices) {
-//            val jsonObject = JSONObject()
-//            jsonObject.put("JobLanguages", selectedLanguageList[i].toInt())
-//            languageArray.put(jsonObject)
-//            toast("Selected : ")
-//        }
-//    }
+    override fun onItemClick(itemPosition: Int, language: AllJobLanguageList) {
+        if (selectedLanguageList.size > 0) {
+            if (selectedLanguageList.contains(language.name!!)) {
+                selectedLanguageList.remove(language.name)
+            } else {
+                selectedLanguageList.add(language.name)
+            }
+        } else {
+            selectedLanguageList.add(language.name!!)
+        }
+    }
 }

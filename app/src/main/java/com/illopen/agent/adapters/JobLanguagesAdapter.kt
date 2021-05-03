@@ -9,7 +9,8 @@ import com.illopen.agent.R
 import com.illopen.agent.databinding.UserLanguageListBinding
 import com.illopen.agent.model.AllJobLanguageList
 
-class JobLanguagesAdapter(var context: Context,var list: List<AllJobLanguageList>)
+class JobLanguagesAdapter(var context: Context,var list: List<AllJobLanguageList>,
+val itemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<JobLanguagesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -26,9 +27,9 @@ class JobLanguagesAdapter(var context: Context,var list: List<AllJobLanguageList
 
         views.userLanguage.text = currentItem.name
 
-//        views.userLanguage.setOnClickListener {
-//            itemClick.onItemClick(position,list[position])
-//        }
+        views.userLanguage.setOnClickListener {
+            itemClickListener.onItemClick(position,list[position])
+        }
     }
 
     override fun getItemCount(): Int {
