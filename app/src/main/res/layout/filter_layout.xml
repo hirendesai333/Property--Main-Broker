@@ -25,159 +25,11 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Job No :">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--            <androidx.appcompat.widget.AppCompatTextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:fontFamily="@font/nunito_sans_bold"-->
-            <!--                android:text="Property Type"-->
-            <!--                android:textSize="14sp" />-->
-
-            <!--            <RadioGroup-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:orientation="horizontal">-->
-
-            <!--                <androidx.appcompat.widget.AppCompatRadioButton-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_weight="1"-->
-            <!--                    android:fontFamily="@font/nunito_sans"-->
-            <!--                    android:text="Bunglow"-->
-            <!--                    android:textSize="13sp" />-->
-
-            <!--                <androidx.appcompat.widget.AppCompatRadioButton-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_weight="1"-->
-            <!--                    android:fontFamily="@font/nunito_sans"-->
-            <!--                    android:text="Apartment"-->
-            <!--                    android:textSize="13sp" />-->
-
-            <!--                <androidx.appcompat.widget.AppCompatRadioButton-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_weight="1"-->
-            <!--                    android:fontFamily="@font/nunito_sans"-->
-            <!--                    android:text="Pent-House"-->
-            <!--                    android:textSize="13sp" />-->
-
-            <!--                <androidx.appcompat.widget.AppCompatRadioButton-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_weight="1"-->
-            <!--                    android:fontFamily="@font/nunito_sans"-->
-            <!--                    android:text="Villa"-->
-            <!--                    android:textSize="13sp" />-->
-
-            <!--            </RadioGroup>-->
-
-            <!--            <View-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="1dp"-->
-            <!--                android:layout_marginTop="10dp"-->
-            <!--                android:layout_marginBottom="10dp"-->
-            <!--                android:background="@color/light_grey" />-->
-
-            <!--            <LinearLayout-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:orientation="horizontal">-->
-
-            <!--                <androidx.appcompat.widget.AppCompatTextView-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_gravity="center_vertical"-->
-            <!--                    android:fontFamily="@font/nunito_sans_bold"-->
-            <!--                    android:text="Available For: "-->
-            <!--                    android:textSize="14sp" />-->
-
-            <!--                <RadioGroup-->
-            <!--                    android:id="@+id/saleRentRG"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginStart="@dimen/_10sdp"-->
-            <!--                    android:orientation="horizontal">-->
-
-            <!--                    <androidx.appcompat.widget.AppCompatRadioButton-->
-            <!--                        android:id="@+id/sale"-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:layout_weight="1"-->
-            <!--                        android:fontFamily="@font/nunito_sans"-->
-            <!--                        android:text="Sale"-->
-            <!--                        android:textSize="13sp" />-->
-
-            <!--                    <androidx.appcompat.widget.AppCompatRadioButton-->
-            <!--                        android:id="@+id/rent"-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:layout_weight="1"-->
-            <!--                        android:fontFamily="@font/nunito_sans"-->
-            <!--                        android:text="Rent"-->
-            <!--                        android:textSize="13sp" />-->
-
-            <!--                </RadioGroup>-->
-
-            <!--            </LinearLayout>-->
-
-            <!--            <View-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="1dp"-->
-            <!--                android:layout_marginTop="10dp"-->
-            <!--                android:layout_marginBottom="10dp"-->
-            <!--                android:background="@color/light_grey" />-->
-
-            <!--            <LinearLayout-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:visibility="gone"-->
-            <!--                android:orientation="vertical">-->
-
-            <!--                <androidx.appcompat.widget.AppCompatTextView-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_gravity="center_vertical"-->
-            <!--                    android:fontFamily="@font/nunito_sans_bold"-->
-            <!--                    android:text="Price Range: "-->
-            <!--                    android:textSize="14sp" />-->
-
-            <!--                <com.google.android.material.slider.RangeSlider-->
-            <!--                    android:id="@+id/rangeSlider"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:stepSize="1000.0"-->
-            <!--                    android:valueFrom="0.0"-->
-            <!--                    android:valueTo="5000000.0"-->
-            <!--                    app:values="@array/initial_slider_values" />-->
-
-            <!--            </LinearLayout>-->
-
-            <!--            <View-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="1dp"-->
-            <!--                android:layout_marginTop="10dp"-->
-            <!--                android:layout_marginBottom="10dp"-->
-            <!--                android:background="@color/light_grey" />-->
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:gravity="center"
                 android:fontFamily="@font/nunito_sans_bold"
                 android:text="Visit Date :"
                 android:textSize="14sp" />
@@ -206,7 +58,8 @@
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_15sdp"
                     android:paddingBottom="@dimen/_8sdp"
-                    android:text="Date From"
+                    android:textColor="@color/black"
+                    android:hint="Date From"
                     android:textSize="13sp"
                     app:drawableTint="@color/purple_700" />
 
@@ -224,10 +77,11 @@
                     android:fontFamily="@font/nunito_sans_bold"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_15sdp"
+                    android:textColor="@color/black"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_15sdp"
                     android:paddingBottom="@dimen/_8sdp"
-                    android:text="Date To :"
+                    android:hint="Date To :"
                     android:textSize="13sp"
                     app:drawableTint="@color/purple_700" />
 
@@ -237,6 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:gravity="center"
                 android:fontFamily="@font/nunito_sans_bold"
                 android:text="Visit Time :"
                 android:textSize="14sp" />
@@ -262,10 +117,11 @@
                     android:fontFamily="@font/nunito_sans_bold"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_15sdp"
+                    android:textColor="@color/black"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_15sdp"
                     android:paddingBottom="@dimen/_8sdp"
-                    android:text="Time From"
+                    android:hint="Time From"
                     android:textSize="13sp"
                     app:drawableTint="@color/purple_700" />
 
@@ -286,23 +142,57 @@
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_15sdp"
                     android:paddingBottom="@dimen/_8sdp"
-                    android:text="Time To"
+                    android:textColor="@color/black"
+                    android:hint="Time To"
                     android:textSize="13sp"
                     app:drawableTint="@color/purple_700" />
 
             </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/searchFilter"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/_15sdp"
-                android:backgroundTint="@color/green_700"
+                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:fontFamily="@font/nunito_sans_semibold"
-                android:text="Search"
-                android:textSize="@dimen/_11sdp" />
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:padding="@dimen/_5sdp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/searchFilter"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_users_tabbar"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Search"
+                    android:textColor="@color/white" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:background="@drawable/rounded_users_tabbar"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="clear"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/searchFilter"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:layout_marginBottom="@dimen/_15sdp"-->
+<!--                android:backgroundTint="@color/green_700"-->
+<!--                android:layout_marginTop="@dimen/_20sdp"-->
+<!--                android:fontFamily="@font/nunito_sans_semibold"-->
+<!--                android:text="Search"-->
+<!--                android:textSize="@dimen/_11sdp" />-->
 
         </LinearLayout>
 

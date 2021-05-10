@@ -25,7 +25,7 @@ data class AllCompletedJobsModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<CompletedMyPostedJobsList>?
+    val values: ArrayList<CompletedMyPostedJobsList>?
 )
 
 data class CompletedMyPostedJobsList(

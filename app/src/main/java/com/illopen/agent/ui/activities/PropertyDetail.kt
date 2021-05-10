@@ -8,6 +8,8 @@ import android.util.Log
 import android.util.Pair
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.illopen.agent.adapters.PropertyDetailsAmenitiesAdapter
 import com.illopen.agent.adapters.ProperyImagesListAdapter
 import com.illopen.agent.databinding.ActivityPropertyDetailBinding
@@ -17,6 +19,7 @@ import com.illopen.agent.model.PropertyMoreDetailsList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.Params
 import kotlinx.coroutines.*
+import java.util.ArrayList
 
 class PropertyDetail : AppCompatActivity() {
 
@@ -42,7 +45,7 @@ class PropertyDetail : AppCompatActivity() {
         getJobPropertyDetails()
 
         propertyDetailsAmenities()
-//        propertyDetailImage()
+        propertyDetailImage()
     }
 
     private fun propertyDetailsAmenities() {
@@ -87,40 +90,49 @@ class PropertyDetail : AppCompatActivity() {
         }
     }
 
-//    private fun propertyDetailImage() {
-//        coroutineScope.launch {
-//            try {
-//
-//                val map = HashMap<String, String>()
-//                map["Offset"] = "0"
-//                map["Limit"] = "0"
-//                map["Page"] = "0"
-//                map["PageSize"] = "0"
-//                map["TotalCount"] = "0"
-//
-//                val response = ServiceApi.retrofitService.propertyImageAll(
-//                    propertyId.toInt(),map
-//                )
-//                if (response.isSuccessful){
-//                    withContext(Dispatchers.Main){
-//
-//                        Log.d("propertyDetailImage", response.code().toString())
-//                        Log.d("propertyDetailImage",response.body().toString())
-//
+    private fun propertyDetailImage() {
+        coroutineScope.launch {
+            try {
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.propertyImageAll(
+                    propertyId.toInt(),map
+                )
+                if (response.isSuccessful){
+                    withContext(Dispatchers.Main){
+
+                        Log.d("propertyDetailImage", response.code().toString())
+                        Log.d("propertyDetailImage",response.body().toString())
+
 //                        val list : List<PropertyImageList> = response.body()!!.values!!
-////                        binding.amenitiesRv.adapter = PropertyDetailsAmenitiesAdapter(this@PropertyDetail,list)
-////                        binding.propertyBanner.load(response.body()!!.values!![0].url)
-//                    }
-//                }else{
-//                    withContext(Dispatchers.Main){
-//                        Log.d(TAG, "something wrong")
-//                    }
-//                }
-//            }catch (e : Exception){
-//                Log.d(TAG, e.message.toString())
-//            }
-//        }
-//    }
+//                        binding.amenitiesRv.adapter = PropertyDetailsAmenitiesAdapter(this@PropertyDetail,list)
+//                        binding.propertyBanner.load(response.body()!!.values!![0].url)
+
+                        val sliderModel = ArrayList<SlideModel>()
+                        val imageList: List<PropertyImageList> = response.body()!!.values!!
+
+                        for (i in imageList.indices) {
+                            sliderModel.add(SlideModel(imageList[i].urlStr, ScaleTypes.FIT))
+                            binding.imageSlider.setImageList(sliderModel)
+                        }
+
+                    }
+                }else{
+                    withContext(Dispatchers.Main){
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            }catch (e : Exception){
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
 
     private fun getJobPropertyDetails() {
         coroutineScope.launch {

@@ -1,5 +1,6 @@
 package com.illopen.agent.ui.activities
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
@@ -10,8 +11,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.gson.Gson
 import com.illopen.agent.R
 import com.illopen.agent.adapters.ChoosePropertyAdapter
 import com.illopen.agent.adapters.JobLanguagesAdapter
@@ -30,12 +31,16 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, JobLanguagesAdapter.OnItemClickListener {
+class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener,
+    JobLanguagesAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityNewJob2Binding
 
@@ -46,18 +51,13 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, J
 
     private lateinit var progressDialog: ProgressDialog
 
-    private var languageArray = JSONArray()
-
     private var propertyId: Int = 0
     private var customerId: Int = 0
 
     private lateinit var propertyDialog: Dialog
 
-    private lateinit var selectedDate: String
-    private lateinit var selectedTime: String
-
-    lateinit var timePicker: TimePickerDialog
-    lateinit var datePicker: DatePickerDialog
+    private var selectedDate: String = ""
+    private var selectedTime: String = ""
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -66,6 +66,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, J
     private lateinit var customerListAdapterSpinner: ArrayAdapter<String>
     private var propertyArray = JSONArray()
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewJob2Binding.inflate(layoutInflater)
@@ -94,106 +95,50 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, J
 
         binding.date.setOnClickListener {
 
-            val builder = MaterialDatePicker.Builder.datePicker()
-            val now = Calendar.getInstance()
-            val year = now.get(Calendar.YEAR)
-            val month = now.get(Calendar.MONTH)
-            val day = now.get(Calendar.DAY_OF_MONTH)
-
-
-//            builder.setSelection(now.timeInMillis)
-//            picker.show(supportFragmentManager, picker.toString())
-//            picker.addOnPositiveButtonClickListener { binding.date.text = (picker.headerText) }
-
-            datePicker = DatePickerDialog(
-                this,
-                { _, _, monthOfYear, dayOfMonth ->
-                    selectedDate =
-                        year.toString() + "/" + (monthOfYear + 1).toString() + "/" + dayOfMonth.toString()
+            val now = Date()
+            val calendarMax = Calendar.getInstance()
+            calendarMax.time = Date(now.time)
+            val maxDate = calendarMax.time
+            SingleDateAndTimePickerDialog.Builder(this)
+                .defaultDate(maxDate)
+                .mustBeOnFuture()
+                .curved()
+                .displayMinutes(false)
+                .displayHours(false)
+                .displayMonth(true)
+                .displayYears(true)
+                .displayDaysOfMonth(true)
+                .displayMonthNumbers(true)
+                .displayDays(false)
+                .title("Select Date")
+                .listener {
+                    val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                    selectedDate = dateFormat.format(it).toString()
                     binding.date.text = selectedDate
-                },
-                year,
-                month,
-                day
-            )
-            datePicker.show()
-
-//            val noww = Date()
-//                val calendarMax = Calendar.getInstance()
-//                calendarMax.time = Date(noww.time + TimeUnit.DAYS.toMillis(3)) // Set max now + 3 days
-//                val maxDate = calendarMax.time
-//                SingleDateAndTimePickerDialog.Builder(this)
-//                    .bottomSheet()
-//                    .defaultDate(maxDate)
-//                    .mustBeOnFuture()
-//                    .curved()
-//                    .displayMinutes(false)
-//                    .displayHours(false)
-//                    .displayMonth(true)
-//                    .displayYears(true)
-//                    .displayDaysOfMonth(true)
-//                    .displayMonthNumbers(true)
-//                    .displayDays(false)
-//                    .title("Choose Date")
-//                    .listener {
-//                        // date format to show user
-//                        val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-//                        val selectedDate: String = dateFormat.format(it).toString()
-//                        val currentDate = Date()
-//                        val checkDate = dateFormat.parse(selectedDate)
-//                         selectedDate =  binding.date.setText(selectedDate)
-//                    }
-//                    .display()
+                }
+                .display()
 
         }
 
         binding.time.setOnClickListener {
 
-//            val materialTimePicker = MaterialTimePicker.Builder().setTimeFormat(TimeFormat.CLOCK_12H).build()
-            val now = Calendar.getInstance()
-            val hour = now.get(Calendar.HOUR_OF_DAY)
-            val min = now.get(Calendar.MINUTE)
-
-            timePicker = TimePickerDialog(
-                this,
-                { _, hourOfDay, minute ->
-                    selectedTime =
-                        String.format("%d:%d", hourOfDay, minute)
+            SingleDateAndTimePickerDialog.Builder(this)
+                .curved()
+                .displayMinutes(true)
+                .displayHours(true)
+                .displayMinutes(true)
+                .displayMonth(false)
+                .displayYears(false)
+                .displayDaysOfMonth(false)
+                .displayMonthNumbers(false)
+                .displayDays(false)
+                .title("Select time")
+                .listener {
+                    val dateFormat: DateFormat = SimpleDateFormat("hh:mm aa", Locale.US)
+                    selectedTime = dateFormat.format(it).toString()
                     binding.time.text = selectedTime
-                },
-                hour,
-                min,
-                false
-            )
-            timePicker.show()
-
-//            materialTimePicker.show(supportFragmentManager, "Select Time")
-//
-//            materialTimePicker.addOnPositiveButtonClickListener {
-//                binding.time.text = SimpleDateFormat("HH:mm").format(now.time)
-//            }
-
-//            SingleDateAndTimePickerDialog.Builder(this)
-//                .bottomSheet()
-//                .curved()
-//                .displayMinutes(true)
-//                .displayHours(true)
-//                .displayMonth(false)
-//                .displayYears(false)
-//                .displayDaysOfMonth(false)
-//                .displayMonthNumbers(false)
-//                .displayDays(false)
-//                .title("Choose time")
-//                .listener {
-//
-//                    val dateFormat: DateFormat = SimpleDateFormat("hh:mm aa")
-//                    val dateString: String = dateFormat.format(it).toString()
-//                    selectedTime = binding.time.setText(dateString).toString()
-//
-//                    val dateFormatNew: DateFormat = SimpleDateFormat("HH:mm:ss")
-//                    val dateStringToPass: String = dateFormatNew.format(it).toString()
-//                }
-//                .display()
+                }
+                .display()
         }
 
         binding.property.setOnClickListener {
@@ -224,7 +169,8 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, J
 
                         val list = response.body()!!.values!!
 
-                        binding.jobLanguage.adapter = JobLanguagesAdapter(this@NewJob, list, this@NewJob)
+                        binding.jobLanguage.adapter =
+                            JobLanguagesAdapter(this@NewJob, list, this@NewJob)
                     }
 
                 } else {
@@ -261,6 +207,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, J
                         customerListValue = response.body()?.values as ArrayList<Value>
 
                         val data: MutableList<String> = ArrayList()
+//                        data.add(-1,"Select Customer")
                         customerListValue.forEach {
                             data.add(it.customerName.toString())
                         }
@@ -281,7 +228,13 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, J
                                     id: Long
                                 ) {
                                     customerId = customerListValue[position].id!!.toInt()
-//                                    toast("Selected : " + customerListValue[position].customerName)
+                                    toast("Selected : " + customerListValue[position].customerName)
+
+//                                    if (position != -1){
+//
+//                                    }else{
+//
+//                                    }
                                 }
 
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -352,11 +305,20 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, J
     }
 
     private fun createNewJob() {
+        val remark = binding.remarks.text.toString().trim()
 
-        val remark = binding.remark.text.toString().trim()
-
-        if (remark.isEmpty()) {
-            binding.remark.error = "Remark is Required"
+        if (customerId == 0) {
+            toast("please select customer")
+        } else if (propertyId == 0) {
+            toast("please select property")
+        } else if (selectedDate.isEmpty()) {
+            toast("please select date")
+        } else if (selectedTime.isEmpty()) {
+            toast("please select Time")
+        } else if (remark.isEmpty()) {
+            toast("please enter Remark")
+        } else if (selectedLanguageList.size == 0) {
+            toast("please select language")
         } else {
             progressDialog.dialog.show()
             coroutineScope.launch {
@@ -388,6 +350,7 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, J
                             } else {
                                 toast("please try again")
                             }
+
                             progressDialog.dialog.dismiss()
                         }
                     } else {
@@ -407,27 +370,27 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener, J
         }
     }
 
-    override fun onItemClick(itemPosition: Int, data: AllPropertiesList) {
-        propertyId = data.propertyTypeMasterId!!.toInt()
-        selectedList.clear()
-        selectedList.add(data.id.toString())
-        for (i in selectedList.indices) {
-            val jsonObject = JSONObject()
-            jsonObject.put("PropertyMasterId", selectedList[i].toInt())
-            propertyArray.put(jsonObject)
-            toast("Selected : ")
-        }
-    }
-
-    override fun onItemClick(itemPosition: Int, language: AllJobLanguageList) {
-        if (selectedLanguageList.size > 0) {
-            if (selectedLanguageList.contains(language.name!!)) {
-                selectedLanguageList.remove(language.name)
-            } else {
-                selectedLanguageList.add(language.name)
+        override fun onItemClick(itemPosition: Int, data: AllPropertiesList) {
+            propertyId = data.propertyTypeMasterId!!.toInt()
+            selectedList.clear()
+            selectedList.add(data.id.toString())
+            for (i in selectedList.indices) {
+                val jsonObject = JSONObject()
+                jsonObject.put("PropertyMasterId", selectedList[i].toInt())
+                propertyArray.put(jsonObject)
+                toast("Selected : ")
             }
-        } else {
-            selectedLanguageList.add(language.name!!)
+        }
+
+        override fun onItemClick(itemPosition: Int, language: AllJobLanguageList) {
+            if (selectedLanguageList.size > 0) {
+                if (selectedLanguageList.contains(language.name!!)) {
+                    selectedLanguageList.remove(language.name)
+                } else {
+                    selectedLanguageList.add(language.name)
+                }
+            } else {
+                selectedLanguageList.add(language.name!!)
+            }
         }
     }
-}

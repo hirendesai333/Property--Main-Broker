@@ -22,7 +22,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import com.illopen.agent.R
+import com.illopen.agent.adapters.AllMyPostedJobsAdapter
+import com.illopen.agent.adapters.MapDetailsPropertyAdapter
 import com.illopen.agent.databinding.ActivityJobsPropertyOnMapBinding
+import com.illopen.agent.model.MyPostedJobList
 import com.illopen.agent.model.ProfileMapList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
@@ -53,6 +56,35 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        getPropertyDetails()
+    }
+
+    private fun getPropertyDetails() {
+        coroutineScope.launch {
+            try {
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.getAllJobLang(map
+                )
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+                        val list = response.body()!!.values!!
+                        binding.details.adapter = MapDetailsPropertyAdapter(this@JobsPropertyOnMap,list)
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+            }
+        }
     }
 
     private fun getMapLocation() {
@@ -73,7 +105,9 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
                         Log.d("JobPropertyLocation", Gson().toJson(response.body()))
                         mapDetailsList = response.body()!!.values!!
                         mapDetailsList.forEachIndexed { index, mapDetailsList ->
-                            mMap.addMarker(MarkerOptions().position(LatLng(
+                            mMap.addMarker(
+                                MarkerOptions().position(
+                                    LatLng(
                                         mapDetailsList.latitude!!.toDouble(),
                                         mapDetailsList.longitude!!.toDouble()
                                     )
@@ -81,7 +115,9 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
                             )
                         }
                         mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(
+                        mMap.moveCamera(
+                            CameraUpdateFactory.newLatLng(
+                                LatLng(
                                     mapDetailsList[0].latitude!!.toDouble(),
                                     mapDetailsList[0].longitude!!.toDouble()
                                 )
@@ -105,12 +141,19 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun getLocationAccess() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             mMap.isMyLocationEnabled = true
             getMapLocation()
-        }
-        else
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST)
+        } else
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST
+            )
     }
 
 //    @SuppressLint("MissingPermission")

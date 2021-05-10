@@ -39,39 +39,39 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/dashBoard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/corner_grey_background"
-                android:padding="15dp">
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/dashBoard"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="25dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="25dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:background="@drawable/corner_grey_background"-->
+<!--                android:padding="15dp">-->
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_toStartOf="@+id/iv5"
-                    android:fontFamily="@font/nunito_sans"
-                    android:text="Dashboard"
-                    android:textColor="@color/purple_700"
-                    android:textSize="15dp" />
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_toStartOf="@+id/iv5"-->
+<!--                    android:fontFamily="@font/nunito_sans"-->
+<!--                    android:text="Dashboard"-->
+<!--                    android:textColor="@color/purple_700"-->
+<!--                    android:textSize="15dp" />-->
 
 
-                <ImageView
-                    android:id="@+id/iv5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/ic_next" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/iv5"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginEnd="8dp"-->
+<!--                    android:src="@drawable/ic_next" />-->
 
-            </RelativeLayout>
+<!--            </RelativeLayout>-->
 
             <RelativeLayout
                 android:id="@+id/profile"
@@ -98,6 +98,40 @@
 
                 <ImageView
                     android:id="@+id/iv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_next" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/Location"
+                android:layout_width="match_parent"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corner_grey_background"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toStartOf="@+id/iv7"
+                    android:fontFamily="@font/nunito_sans"
+                    android:textColor="@color/purple_700"
+                    android:text="Location"
+                    android:textSize="15dp" />
+
+
+                <ImageView
+                    android:id="@+id/iv7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

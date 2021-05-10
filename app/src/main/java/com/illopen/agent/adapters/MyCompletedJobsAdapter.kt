@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
+import com.illopen.agent.model.AvailableJobs
 import com.illopen.agent.model.CompletedJobsAssignList
 
-class MyCompletedJobsAdapter(var from: String, var list: List<CompletedJobsAssignList>, var itemClickListener : OnCompletedAssignClickListener)
+class MyCompletedJobsAdapter(var from: String, var list: ArrayList<CompletedJobsAssignList>, var itemClickListener : OnCompletedAssignClickListener)
     : RecyclerView.Adapter<MyCompletedJobsAdapter.ViewHolder>() {
 
 
@@ -63,5 +64,10 @@ class MyCompletedJobsAdapter(var from: String, var list: List<CompletedJobsAssig
 
     interface OnCompletedAssignClickListener{
         fun onItemClick(itemPosition : Int,data : CompletedJobsAssignList)
+    }
+
+    fun updateList(ItemList: ArrayList<CompletedJobsAssignList>){
+        list = ItemList
+        notifyDataSetChanged()
     }
 }

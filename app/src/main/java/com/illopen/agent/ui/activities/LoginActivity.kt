@@ -189,6 +189,19 @@ class LoginActivity : AppCompatActivity() {
                                     Params.ProfileUrl,
                                     response.body()!!.item!!.profileUrl.toString()
                                 )
+                                AppPreferences.setUserData(
+                                    Params.FullName,
+                                    response.body()!!.item!!.fullName.toString()
+                                )
+                                AppPreferences.setUserData(
+                                    Params.FirstName,
+                                    response.body()!!.item!!.firstName.toString()
+                                )
+                                AppPreferences.setUserData(
+                                    Params.LastName,
+                                    response.body()!!.item!!.lastName.toString()
+                                )
+
                             } else {
                                 toast("Please Enter Valid Email & Password")
                             }

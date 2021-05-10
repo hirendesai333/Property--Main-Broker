@@ -8,17 +8,16 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
 import com.google.android.gms.maps.*
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.gson.Gson
 import com.illopen.agent.R
 import com.illopen.agent.adapters.AllMyPostedJobsAdapter
@@ -30,13 +29,18 @@ import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.ui.activities.JobsPropertyOnMap
 import com.illopen.agent.ui.activities.MyPostedJobDetails
 import com.illopen.agent.ui.activities.NewJobDetails
+import com.illopen.agent.ui.activities.Notification
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.Params
+import com.illopen.agent.utils.ProgressDialog
+import com.illopen.properybroker.utils.toast
 import com.polyak.iconswitch.IconSwitch
 import kotlinx.android.synthetic.main.fragment_all_property_list.*
 import kotlinx.coroutines.*
-import java.text.NumberFormat
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
     AllPropertyListAdapter.OnNewJobsClick, AllMyPostedJobsAdapter.OnItemClickListener {
@@ -49,18 +53,30 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
-    lateinit var timePicker: TimePickerDialog
-    lateinit var datePicker: DatePickerDialog
+    private var startDateSelect: String = ""
+    private var endDateSelect: String = ""
+    private var startTimeSelect: String = ""
+    private var endTimeSelect: String = ""
 
-    private lateinit var selectedDate: String
-    private lateinit var selectedTime: String
+    private lateinit var progressDialog: ProgressDialog
+
+    private lateinit var availableJobAdapter: AllPropertyListAdapter
+    private lateinit var postedJobAdapter: AllMyPostedJobsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentAllPropertyListBinding.bind(view)
 
+        progressDialog = ProgressDialog(requireContext())
+
         binding.filter.setOnClickListener {
             showFilterDialog()
+        }
+
+        binding.notification.setOnClickListener {
+            Intent(requireContext(),Notification::class.java).apply {
+                startActivity(this)
+            }
         }
 
         getAllAvailableJobs()
@@ -82,6 +98,20 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
         }
 
         switchListToMap()
+    }
+
+    private fun availableFilterList(filterItem: String, list: List<AvailableJobs>) {
+
+        val tempList: ArrayList<AvailableJobs> = ArrayList()
+
+        for (i in list) {
+
+            if (filterItem in i.jobNo.toString() || filterItem.toLowerCase() in i.customerName!!.toLowerCase()) {
+                tempList.add(i)
+            }
+        }
+        availableJobAdapter.updateList(tempList)
+
     }
 
     private fun switchListToMap() {
@@ -114,17 +144,40 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
-                        val list: List<MyPostedJobList> = response.body()!!.values!!
-                        if (list.isNotEmpty()) {
-                            binding.upcomingJobs.adapter = AllMyPostedJobsAdapter(
-                                Params.MY_POSTED_JOBS,
-                                list,
-                                this@AllPropertyListFragment
-                            )
-                        } else {
-                            // no jobs found
-                        }
 
+                        val list: ArrayList<MyPostedJobList> = response.body()!!.values!!
+                        postedJobAdapter = AllMyPostedJobsAdapter(
+                            Params.MY_POSTED_JOBS, list, this@AllPropertyListFragment
+                        )
+                        binding.upcomingJobs.adapter = postedJobAdapter
+
+                        binding.searchBar.addTextChangedListener(object : TextWatcher {
+                            override fun beforeTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                count: Int,
+                                after: Int
+                            ) {
+
+                            }
+
+                            override fun onTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                before: Int,
+                                count: Int
+                            ) {
+
+                            }
+
+                            override fun afterTextChanged(s: Editable?) {
+                                if (s.toString().isNotEmpty()) {
+                                    postedFilterList(s.toString(), list)
+                                } else {
+                                    postedJobAdapter.updateList(list)
+                                }
+                            }
+                        })
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -135,6 +188,18 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
                 Log.d(TAG, e.message.toString())
             }
         }
+    }
+
+    private fun postedFilterList(filterItem: String, list: List<MyPostedJobList>) {
+        val tempList: ArrayList<MyPostedJobList> = ArrayList()
+
+        for (i in list) {
+
+            if (filterItem in i.jobNo.toString() || filterItem.toLowerCase() in i.customerName!!.toLowerCase()) {
+                tempList.add(i)
+            }
+        }
+        postedJobAdapter.updateList(tempList)
     }
 
     private fun getAllAvailableJobs() {
@@ -154,9 +219,43 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
                         Log.d("getAvailableJobs", response.code().toString())
                         Log.d("getAvailableJobs", response.body().toString())
 
-                        val list: List<AvailableJobs> = response.body()!!.values!!
-                        binding.upcomingJobs.adapter = AllPropertyListAdapter(Params.OTHER_NEW_JOBS,
-                                list, this@AllPropertyListFragment)
+
+                        val list: ArrayList<AvailableJobs> = response.body()!!.values!!
+                        availableJobAdapter = AllPropertyListAdapter(
+                            Params.OTHER_NEW_JOBS,
+                            list, this@AllPropertyListFragment
+                        )
+                        binding.upcomingJobs.adapter = availableJobAdapter
+
+
+                        binding.searchBar.addTextChangedListener(object : TextWatcher {
+                            override fun beforeTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                count: Int,
+                                after: Int
+                            ) {
+
+                            }
+
+                            override fun onTextChanged(
+                                s: CharSequence?,
+                                start: Int,
+                                before: Int,
+                                count: Int
+                            ) {
+
+                            }
+
+                            override fun afterTextChanged(s: Editable?) {
+                                if (s.toString().isNotEmpty()) {
+                                    availableFilterList(s.toString(), list)
+                                } else {
+                                    availableJobAdapter.updateList(list)
+                                }
+                            }
+
+                        })
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -182,145 +281,307 @@ class AllPropertyListFragment : Fragment(R.layout.fragment_all_property_list),
         val endTime = mDialog.findViewById<TextView>(R.id.timeTo)
         val filter = mDialog.findViewById<Button>(R.id.searchFilter)
 
-
         startDate.setOnClickListener {
-            val builder = MaterialDatePicker.Builder.datePicker()
-//            val picker = builder.build()
-//            val now = Calendar.getInstance()
-//            builder.setSelection(now.timeInMillis)
-//            picker.show(requireActivity().supportFragmentManager, picker.toString())
 
-            val now = Calendar.getInstance()
-            val year = now.get(Calendar.YEAR)
-            val month = now.get(Calendar.MONTH)
-            val day = now.get(Calendar.DAY_OF_MONTH)
+//            val now = Date()
+//            val calendar = Calendar.getInstance()
+//            calendar.time = Date(now.time)
+//            val date = calendar.time
+//            SingleDateAndTimePickerDialog.Builder(activity)
+//                .defaultDate(date)
+//                .mustBeOnFuture()
+//                .curved()
+//                .displayMinutes(false)
+//                .displayHours(false)
+//                .displayMonth(true)
+//                .displayYears(true)
+//                .displayDaysOfMonth(true)
+//                .displayMonthNumbers(true)
+//                .displayDays(false)
+//                .title("Select Date")
+//                .listener {
+//                    val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+//                    startDateSelect = dateFormat.format(it).toString()
+//                    startDate.text = startDateSelect
+//                }
+//                .display()
 
-            datePicker = DatePickerDialog(
-                requireContext(),
-                { _, _, monthOfYear, dayOfMonth ->
-                    selectedDate =
-                        year.toString() + "/" + (monthOfYear + 1).toString() + "/" + dayOfMonth.toString()
-                            startDate.text = selectedDate
-                },
-                year,
-                month,
-                day
-            )
-            datePicker.show()
+                val c = Calendar.getInstance()
+                val year = c.get(Calendar.YEAR)
+                val month = c.get(Calendar.MONTH)
+                val day = c.get(Calendar.DAY_OF_MONTH)
+
+                val dpd = DatePickerDialog(
+                    requireContext(),
+                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                        var selectedMonthh = (monthOfYear + 1).toString()
+                        if (selectedMonthh.toInt() < 10) {
+                            selectedMonthh = "0$selectedMonthh"
+                        }
+                        startDateSelect = "$year/$selectedMonthh/$dayOfMonth"
+                        startDate.run {
+                            setText(startDateSelect)
+                        }
+                    },
+                    year,
+                    month,
+                    day
+                )
+                dpd.show()
         }
 
         endDate.setOnClickListener {
-//            val builder = MaterialDatePicker.Builder.datePicker()
-//            val picker = builder.build()
-//            val now = Calendar.getInstance()
-//            builder.setSelection(now.timeInMillis)
-//            picker.show(requireActivity().supportFragmentManager, picker.toString())
+//            val now = Date()
+//            val calendar = Calendar.getInstance()
+//            calendar.time = Date(now.time)
+//            val date = calendar.time
+//            SingleDateAndTimePickerDialog.Builder(requireContext())
+//                .defaultDate(date)
+//                .mustBeOnFuture()
+//                .curved()
+//                .displayMinutes(false)
+//                .displayHours(false)
+//                .displayMonth(true)
+//                .displayYears(true)
+//                .displayDaysOfMonth(true)
+//                .displayMonthNumbers(true)
+//                .displayDays(false)
+//                .title("Select Date")
+//                .listener {
+//                    val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+//                    endDateSelect = dateFormat.format(it).toString()
+//                    endDate.text = endDateSelect
+//                }
+//                .display()
 
-            val now = Calendar.getInstance()
-            val year = now.get(Calendar.YEAR)
-            val month = now.get(Calendar.MONTH)
-            val day = now.get(Calendar.DAY_OF_MONTH)
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
 
-            datePicker = DatePickerDialog(
+            val dpd = DatePickerDialog(
                 requireContext(),
-                { _, _, monthOfYear, dayOfMonth ->
-                    selectedDate =
-                        year.toString() + "/" + (monthOfYear + 1).toString() + "/" + dayOfMonth.toString()
-                    endDate.text = selectedDate
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    var selectedMonthh = (monthOfYear + 1).toString()
+                    if (selectedMonthh.toInt() < 10) {
+                        selectedMonthh = "0$selectedMonthh"
+                    }
+                    endDateSelect = "$year/$selectedMonthh/$dayOfMonth"
+                    endDate.run {
+                        setText(endDateSelect)
+                    }
                 },
                 year,
                 month,
                 day
             )
-            datePicker.show()
+            dpd.show()
         }
 
         startTime.setOnClickListener {
-            val buider = MaterialTimePicker.Builder()
+
+//            SingleDateAndTimePickerDialog.Builder(requireContext())
+//                .curved()
+//                .displayMinutes(true)
+//                .displayHours(true)
+//                .displayMinutes(true)
+//                .displayMonth(false)
+//                .displayYears(false)
+//                .displayDaysOfMonth(false)
+//                .displayMonthNumbers(false)
+//                .displayDays(false)
+//                .title("Select time")
+//                .listener {
+//                    val dateFormat: DateFormat = SimpleDateFormat("hh:mm aa", Locale.US)
+//                    startTimeSelect = dateFormat.format(it).toString()
+//                    startTime.text = startTimeSelect
+//                }
+//                .display()
 
             val now = Calendar.getInstance()
             val hour = now.get(Calendar.HOUR_OF_DAY)
             val min = now.get(Calendar.MINUTE)
 
-            timePicker = TimePickerDialog(
+            val timePicker = TimePickerDialog(
                 requireContext(),
-                { _, hourOfDay, minute ->
-                    selectedTime =
-                        String.format("%d:%d", hourOfDay, minute)
-                    startTime.text = selectedTime
+                { view, hourOfDay, minute ->
+
+                    val datetime = Calendar.getInstance()
+                    datetime.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                    datetime.set(Calendar.MINUTE, minute)
+
+                    val timeFormatAmPm = SimpleDateFormat("hh:mm aa", Locale.US)
+                    val timeFormat24Hours = SimpleDateFormat("HH:mm")
+
+                    val dateFormat : String = timeFormatAmPm.format(datetime.time)
+                    startTimeSelect = dateFormat
+
+                    startTime.text = when (view.is24HourView) {
+                        true -> timeFormat24Hours.format(datetime.time)
+                        false -> timeFormatAmPm.format(datetime.time)
+                    }
+
                 },
                 hour,
                 min,
                 false
             )
             timePicker.show()
+
         }
 
         endTime.setOnClickListener {
-            val builder = MaterialTimePicker.Builder()
+
+//            SingleDateAndTimePickerDialog.Builder(requireContext())
+//                .curved()
+//                .displayMinutes(true)
+//                .displayHours(true)
+//                .displayMinutes(true)
+//                .displayMonth(false)
+//                .displayYears(false)
+//                .displayDaysOfMonth(false)
+//                .displayMonthNumbers(false)
+//                .displayDays(false)
+//                .title("Select time")
+//                .listener {
+//                    val dateFormat: DateFormat = SimpleDateFormat("hh:mm aa", Locale.US)
+//                    endTimeSelect = dateFormat.format(it).toString()
+//                    endTime.text = endTimeSelect
+//                }
+//                .display()
 
             val now = Calendar.getInstance()
             val hour = now.get(Calendar.HOUR_OF_DAY)
             val min = now.get(Calendar.MINUTE)
 
-            timePicker = TimePickerDialog(
+            val timePicker = TimePickerDialog(
                 requireContext(),
-                { _, hourOfDay, minute ->
-                    selectedTime =
-                        String.format("%d:%d", hourOfDay, minute)
-                    endTime.text = selectedTime
+                { view, hourOfDay, minute ->
+
+                    val datetime = Calendar.getInstance()
+                    datetime.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                    datetime.set(Calendar.MINUTE, minute)
+
+                    val timeFormatAmPm = SimpleDateFormat("hh:mm aa", Locale.US)
+                    val timeFormat24Hours = SimpleDateFormat("HH:mm")
+
+                    val dateFormat : String = timeFormatAmPm.format(datetime.time)
+                    endDateSelect = dateFormat
+
+                    endTime.text = when (view.is24HourView) {
+                        true -> timeFormat24Hours.format(datetime.time)
+                        false -> timeFormatAmPm.format(datetime.time)
+                    }
+
                 },
                 hour,
                 min,
                 false
             )
             timePicker.show()
+
         }
 
         filter.setOnClickListener {
 
-            val jobNo = mDialog.findViewById<TextView>(R.id.search).text.toString().trim()
-
-            if (jobNo.isEmpty()){
-                mDialog.findViewById<TextInputEditText>(R.id.search).error = "Field Can't be Empty"
-                mDialog.findViewById<TextInputEditText>(R.id.search).requestFocus()
-            }else{
-                Toast.makeText(context, "Search Data Success..", Toast.LENGTH_SHORT).show()
-                searchDataAPI(jobNo)
+            if (startDateSelect.isEmpty()) {
+                requireActivity().toast("please select start date")
+            } else if (endDateSelect.isEmpty()) {
+                requireActivity().toast("please select end date")
+            } else {
+                searchAvailableDataAPI()
+                searchPostedDataAPI()
                 mDialog.dismiss()
             }
         }
         mDialog.show()
     }
 
-    private fun searchDataAPI(jobNo : String) {
+    private fun searchPostedDataAPI() {
+        progressDialog.dialog.show()
         coroutineScope.launch {
             try {
-                val data = HashMap<String,String>()
-                data["JobNo"] = jobNo
-//                data["VisitDateFrom"] = ""
-//                data["VisitDateTo"] = ""
-//                data["VisitTimeFrom"] = ""
-//                data["VisitTimeTo"] = ""
-                val response = ServiceApi.retrofitService.searchNewJob(false,jobNo,data)
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.searchNewPostedJob(1,false,startDateSelect,
+                    endDateSelect,startTimeSelect,endTimeSelect,map)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
                         Log.d("searchData", response.code().toString())
                         Log.d("searchData", response.body().toString())
 
-                        val list: List<AvailableJobs> = response.body()!!.values!!
-                        Log.d(TAG, "searchDataAPI: ${Gson().toJson(list)}")
-                         binding.upcomingJobs.adapter = AllPropertyListAdapter(
-                                Params.OTHER_NEW_JOBS, list,this@AllPropertyListFragment)
+                        if (response.code() == 200){
+                            requireActivity().toast("Searching..")
+                        }else{
+                            requireActivity().toast("No data found")
+                        }
+                        val list: ArrayList<AvailableJobs> = response.body()!!.values!!
+                        binding.upcomingJobs.adapter = AllPropertyListAdapter(
+                            Params.OTHER_NEW_JOBS, list, this@AllPropertyListFragment)
+
+                        progressDialog.dialog.dismiss()
                     }
                 } else {
                     withContext(Dispatchers.Main) {
                         Log.d(TAG, "something wrong")
+                        progressDialog.dialog.dismiss()
                     }
                 }
             } catch (e: Exception) {
                 Log.d(TAG, e.message.toString())
+                progressDialog.dialog.dismiss()
+            }
+        }
+
+    }
+
+    private fun searchAvailableDataAPI() {
+        progressDialog.dialog.show()
+        coroutineScope.launch {
+            try {
+
+                val map = HashMap<String, String>()
+                map["Offset"] = "0"
+                map["Limit"] = "0"
+                map["Page"] = "0"
+                map["PageSize"] = "0"
+                map["TotalCount"] = "0"
+
+                val response = ServiceApi.retrofitService.searchNewJob(false,startDateSelect,
+                    endDateSelect,startTimeSelect,endTimeSelect,map)
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+
+                        Log.d("searchData", response.code().toString())
+                        Log.d("searchData", response.body().toString())
+
+                        if (response.code() == 200){
+                            requireActivity().toast("Searching..")
+                        }else{
+                            requireActivity().toast("No data found")
+                        }
+                        val list: ArrayList<AvailableJobs> = response.body()!!.values!!
+                        binding.upcomingJobs.adapter = AllPropertyListAdapter(
+                            Params.OTHER_NEW_JOBS, list, this@AllPropertyListFragment)
+
+                        progressDialog.dialog.dismiss()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                        progressDialog.dialog.dismiss()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+                progressDialog.dialog.dismiss()
             }
         }
 

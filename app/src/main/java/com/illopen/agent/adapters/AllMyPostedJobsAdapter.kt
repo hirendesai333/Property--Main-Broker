@@ -10,9 +10,10 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
+import com.illopen.agent.model.AvailableJobs
 import com.illopen.agent.model.MyPostedJobList
 
-class AllMyPostedJobsAdapter(var from: String, var list: List<MyPostedJobList>, var itemClickListener : OnItemClickListener)
+class AllMyPostedJobsAdapter(var from: String, var list: ArrayList<MyPostedJobList>, var itemClickListener : OnItemClickListener)
     : RecyclerView.Adapter<AllMyPostedJobsAdapter.ViewHolder>()
 {
 
@@ -61,6 +62,11 @@ class AllMyPostedJobsAdapter(var from: String, var list: List<MyPostedJobList>, 
     interface OnItemClickListener{
         fun onItemClick(itemPosition : Int,data : MyPostedJobList)
         fun onCallClick(itemPosition : Int,data : MyPostedJobList)
+    }
+
+    fun updateList(ItemList: ArrayList<MyPostedJobList>){
+        list = ItemList
+        notifyDataSetChanged()
     }
 
 }

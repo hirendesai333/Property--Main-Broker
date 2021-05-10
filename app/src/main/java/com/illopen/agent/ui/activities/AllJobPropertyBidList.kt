@@ -71,14 +71,9 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
                         Log.d("allJobPropertyBidList", response.body().toString())
 
                         val list : List<JobBidList> = response.body()!!.values!!
-                        if (list.isNotEmpty()) {
                             binding.allBidProperty.adapter =
                                 JobPropertyBidAllAdapter(this@AllJobPropertyBidList, list,
                                     this@AllJobPropertyBidList)
-                        } else {
-                            // no bids found
-                        }
-
                     }
                 }else{
                     withContext(Dispatchers.Main){
@@ -133,6 +128,9 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
 
                         if (response.code() == 200) {
                             toast("Job Assigned Successfully")
+                            startActivity(Intent(this@AllJobPropertyBidList,AllPropertyListFragment::class.java))
+                            allJobPropertyBid()
+                            finish()
                         }else{
                             toast("Job Not Assigned")
                         }

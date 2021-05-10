@@ -31,7 +31,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"
         android:layout_width="@dimen/_300sdp"
-        android:layout_height="@dimen/_200sdp"
+        android:layout_height="@dimen/_190sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_below="@id/topBar"
@@ -39,13 +39,12 @@
         app:cardCornerRadius="@dimen/_12sdp"
         app:cardElevation="@dimen/_6sdp">
 
-        <ImageView
-            android:id="@+id/propertyBanner"
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/image_slider"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/property" />
+            android:layout_height="match_parent"
+            app:iss_delay="0"
+            app:iss_period="1000" />
 
     </androidx.cardview.widget.CardView>
 

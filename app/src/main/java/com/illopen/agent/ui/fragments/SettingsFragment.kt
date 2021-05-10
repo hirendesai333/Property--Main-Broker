@@ -72,17 +72,24 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
         }
 
-        binding.dashBoard.setOnClickListener {
-            Intent(activity, Dashboard::class.java).apply {
-                startActivity(this)
-            }
-        }
+//        binding.dashBoard.setOnClickListener {
+//            Intent(activity, Dashboard::class.java).apply {
+//                startActivity(this)
+//            }
+//        }
 
         binding.changePass.setOnClickListener {
             Intent(activity, ChangePassword::class.java).apply {
                 startActivity(this)
             }
         }
+
+        binding.Location.setOnClickListener {
+           Intent(activity, ProfileMapActivity::class.java).apply {
+               startActivity(this)
+           }
+        }
+
     }
 
     override fun onDestroyView() {

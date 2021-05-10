@@ -48,7 +48,7 @@ class ProfileMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private val LOCATION_PERMISSION_REQUEST = 1
 
-    private var circle: Circle? = null
+    private lateinit var circle: Circle
 
     private lateinit var mapDialog : Dialog
 
@@ -145,6 +145,7 @@ class ProfileMapActivity : AppCompatActivity(), OnMapReadyCallback {
         ) {
             mMap.isMyLocationEnabled = true
             mapLocationAPI()
+
         } else
             ActivityCompat.requestPermissions(
                 this,
@@ -258,15 +259,6 @@ class ProfileMapActivity : AppCompatActivity(), OnMapReadyCallback {
                                 )
                             )
                         )
-//                        mMap.addCircle(
-//                            CircleOptions()
-//                                .center(LatLng(mapDetailsList[0].latitude!!.toDouble(),
-//                                    mapDetailsList[0].longitude!!.toDouble()))
-//                                .radius(mapDetailsList[0].radius!!.toDouble())
-//                                .strokeWidth(1.0f)
-//                                .strokeColor(Color.RED)
-//                                .fillColor(Color.BLUE)
-//                        )
 
                     }
                 } else {
@@ -283,10 +275,10 @@ class ProfileMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun drawCircle(latitude: Double, longitude: Double, radius: Double) {
         val circleOp = CircleOptions()
             .center(LatLng(latitude, longitude))
-            .radius(radius)
-            .strokeWidth(1.0f)
+            .radius(radius * 1609.34)
+            .strokeWidth(2.0f)
             .strokeColor(Color.RED)
             .fillColor(Color.BLUE)
-        circle = mMap.addCircle(circleOp) // Draw new circle.
+        circle = mMap.addCircle(circleOp)
     }
 }

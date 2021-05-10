@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
+import com.illopen.agent.model.MyPostedJobList
 import com.illopen.agent.model.OngoingMyPostedJobList
 
 class UpComingMyPostedJobAdapter(var from : String, var list: List<OngoingMyPostedJobList>, var itemClick : OnMyPostedJobClick)
@@ -71,5 +72,10 @@ class UpComingMyPostedJobAdapter(var from : String, var list: List<OngoingMyPost
 
     interface OnMyPostedJobClick{
         fun onMyPostedClick(position: Int,currentItem : OngoingMyPostedJobList)
+    }
+
+    fun updateList(ItemList: ArrayList<OngoingMyPostedJobList>){
+        list = ItemList
+        notifyDataSetChanged()
     }
 }

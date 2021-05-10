@@ -3,18 +3,11 @@ package com.illopen.agent.ui.activities
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.RatingBar
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.illopen.agent.R
@@ -30,7 +23,7 @@ import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
 import java.util.HashMap
 
-class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyReviewClick {
+class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyReviewClick {
 
     private lateinit var binding: ActivityOnGoingJobDetailsBinding
 
@@ -40,7 +33,9 @@ class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyRevie
 
     private lateinit var progressDialog: ProgressDialog
 
-    private lateinit var reviewPopup : Dialog
+    private lateinit var reviewPopup: Dialog
+
+    private var isPropertyShown: Boolean = false
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -61,7 +56,12 @@ class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyRevie
 //        }
 
         binding.mark.setOnClickListener {
-            markAsShownProperty()
+            if (isPropertyShown) {
+                toast("All Property Review Done")
+                markAsShownProperty()
+            } else {
+                toast("First Review All The Properties")
+            }
         }
 
         binding.title.setOnClickListener { onBackPressed() }
@@ -78,27 +78,42 @@ class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyRevie
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getJobProperty(jobId.toInt(),AppPreferences.getUserData(Params.UserId).toInt(),map)
+                val response = ServiceApi.retrofitService.getJobProperty(
+                    jobId.toInt(),
+                    AppPreferences.getUserData(Params.UserId).toInt(),
+                    map
+                )
 
-                if (response.isSuccessful){
-                    withContext(Dispatchers.Main){
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
 
                         Log.d("getOnGoingJobProperty", response.code().toString())
                         Log.d("getOnGoingJobProperty", response.body().toString())
 
-                        val list : List<JobPropertyList> = response.body()!!.values!!
-                            binding.onGoingJobProperty.adapter = OnGoingJobAdapter(this@OnGoingJobDetails,list,
-                                this@OnGoingJobDetails)
+                        val list: List<JobPropertyList> = response.body()!!.values!!
+                        binding.onGoingJobProperty.adapter = OnGoingJobAdapter(
+                            this@OnGoingJobDetails, list,
+                            this@OnGoingJobDetails
+                        )
 
+                        for (i in list.indices) {
+
+                            if (list[i].rating == 0) {
+                                isPropertyShown = false
+                                break
+                            } else {
+                                isPropertyShown = true
+                            }
+                        }
                         progressDialog.dialog.dismiss()
                     }
-                }else{
-                    withContext(Dispatchers.Main){
+                } else {
+                    withContext(Dispatchers.Main) {
                         Log.d(TAG, "something wrong")
                         progressDialog.dialog.dismiss()
                     }
                 }
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, e.message.toString())
                 progressDialog.dialog.dismiss()
             }
@@ -107,24 +122,27 @@ class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyRevie
     }
 
     private fun markAsShownProperty() {
-//        if (){
-//            toast("Please Review All the Property")
-//        }else{
-//
+
+//        for (i in list.indices) {
+//            if (list[i].rating!! > 0) {
+//                toast("Please Review All the Property")
+//            } else {
+//                toast("all review success")
+//            }
 //        }
 
-            val builder = MaterialAlertDialogBuilder(this)
-            builder.setTitle("Are You Sure ?")
-            builder.setMessage("Are You Sure Mark This Property!!")
-            builder.setPositiveButton("Yes, do it!") { dialogInterface: DialogInterface, i: Int ->
-                marked()
-                dialogInterface.dismiss()
-            }
+        val builder = MaterialAlertDialogBuilder(this)
+        builder.setTitle("Are You Sure ?")
+        builder.setMessage("Are You Sure Mark This Property!!")
+        builder.setPositiveButton("Yes, do it!") { dialogInterface: DialogInterface, i: Int ->
+            marked()
+            dialogInterface.dismiss()
+        }
 
-            builder.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
-                dialogInterface.dismiss()
-            }
-            builder.show()
+        builder.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
+            dialogInterface.dismiss()
+        }
+        builder.show()
     }
 
 
@@ -133,31 +151,32 @@ class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyRevie
         coroutineScope.launch {
             try {
                 val response = ServiceApi.retrofitService.markJobPropertyStatus(
-                   jobId.toInt(),
-                   3
+                    jobId.toInt(),
+                    3
                 )
 
-                if (response.isSuccessful){
-                    withContext(Dispatchers.Main){
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
 
                         Log.d("MarkProperty", response.code().toString())
                         Log.d("MarkProperty", response.body().toString())
 
-                        if (response.code() == 200){
+                        if (response.code() == 200) {
                             toast("Marked Property Successfully")
+                            startActivity(Intent(this@OnGoingJobDetails, UpcomingJobsFragment::class.java))
                             finish()
-                        }else{
+                        } else {
                             toast("something wrong")
                         }
                         progressDialog.dialog.dismiss()
                     }
-                }else{
-                    withContext(Dispatchers.Main){
+                } else {
+                    withContext(Dispatchers.Main) {
                         Log.d(TAG, "something wrong ")
                         progressDialog.dialog.dismiss()
                     }
                 }
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, e.message.toString())
                 progressDialog.dialog.dismiss()
             }
@@ -168,7 +187,7 @@ class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyRevie
 
 //        for (i in currentItem.rating.toString().indices){
 //
-//            if (currentItem.review!!.isEmpty()){
+//            if (currentItem.rating!! == 0){
 //                toast("Please Enter All Reviews")
 //            }else{
 //                toast("All Property Review Done")
@@ -187,7 +206,7 @@ class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyRevie
         if (currentItem.rating!! > 0) {
             rating.rating = currentItem.rating.toFloat()
             review.setText(currentItem.review.toString())
-            note.setText(currentItem.note)
+            note.setText(currentItem.note.toString())
             btnSave.text = "Update Review"
         }
 
@@ -197,21 +216,26 @@ class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyRevie
             val reviews = review.text.toString().trim()
             val notes = note.text.toString().trim()
 
-            if (reviews.isNotEmpty() && notes.isNotEmpty()){
-                addReviewPopup(ratings,reviews,notes,currentItem)
+            if (reviews.isNotEmpty() && notes.isNotEmpty()) {
+                addReviewPopup(ratings, reviews, notes, currentItem)
                 reviewPopup.dismiss()
-            }else{
+            } else {
                 toast("Please enter review")
             }
         }
         reviewPopup.show()
     }
 
-    private fun addReviewPopup(rating: String, reviews: String, notes: String,currentItem: JobPropertyList) {
+    private fun addReviewPopup(
+        rating: String,
+        reviews: String,
+        notes: String,
+        currentItem: JobPropertyList
+    ) {
 
         coroutineScope.launch {
             try {
-                val data = HashMap<String,String>()
+                val data = HashMap<String, String>()
                 data["Id"] = currentItem.id.toString()
                 data["Rating"] = rating
                 data["Review"] = reviews
@@ -224,7 +248,7 @@ class OnGoingJobDetails : AppCompatActivity(),OnGoingJobAdapter.JobPropertyRevie
                         if (response.code() == 200) {
                             getOnGoingJobProperty()
                             toast("Review Submit Successfully")
-                        }else{
+                        } else {
                             toast("something wrong")
                         }
                     }

@@ -76,7 +76,7 @@
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:background="@drawable/corner_grey_background">
 
-                        <Spinner
+                        <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/customerSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -136,8 +136,9 @@
                         <TextView
                             android:id="@+id/property"
                             android:layout_width="match_parent"
+                            android:textColor="@color/black"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_3sdp"
+                            android:padding="@dimen/_5sdp"
                             android:text="Select Property" />
 
                     </RelativeLayout>
@@ -266,7 +267,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/remark"
+                android:id="@+id/remarks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
@@ -279,7 +280,6 @@
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingTop="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:singleLine="false"
                 android:hint="Enter Remark" />
 
             <LinearLayout

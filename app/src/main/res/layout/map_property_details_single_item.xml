@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.App.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_8sdp"
+    android:layout_marginTop="@dimen/_3sdp"
+    android:layout_marginEnd="@dimen/_8sdp"
+    android:layout_marginBottom="@dimen/_3sdp"
+    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardElevation="@dimen/_6sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/_5sdp"
+        android:padding="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_5sdp"
+        android:paddingTop="@dimen/_10sdp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:text="Shivalik Shilp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="USA"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            app:drawableStartCompat="@drawable/ic_location"
+            app:drawableTint="@color/purple_500"
+            app:fontFamily="@font/nunito_sans" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:background="@drawable/right_grey_background"
+                android:orientation="vertical"
+                android:padding="@dimen/_4sdp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_3sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Property Type"
+                    android:textSize="@dimen/_10ssp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/propertyType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Retail"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    app:fontFamily="@font/nunito_sans_semibold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/right_grey_background"
+                android:orientation="vertical"
+                android:padding="@dimen/_4sdp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_3sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Available For"
+                    android:textSize="@dimen/_10ssp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/avalibleForSale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Sale"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp"
+                    app:fontFamily="@font/nunito_sans_semibold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:background="@drawable/right_grey_background"
+                android:orientation="vertical"
+                android:padding="@dimen/_4sdp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_3sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Status"
+                    android:textSize="@dimen/_10ssp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Active"
+                    android:textColor="@color/green_700"
+                    android:textSize="@dimen/_10ssp"
+                    app:fontFamily="@font/nunito_sans_semibold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

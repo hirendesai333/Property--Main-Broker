@@ -27,7 +27,7 @@ data class AllAvalibleJobsModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<AvailableJobs>?
+    val values: ArrayList<AvailableJobs>?
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)

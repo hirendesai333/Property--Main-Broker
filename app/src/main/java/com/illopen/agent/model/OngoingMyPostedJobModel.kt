@@ -25,7 +25,7 @@ data class OngoingMyPostedJobModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<OngoingMyPostedJobList>?
+    val values: ArrayList<OngoingMyPostedJobList>?
 )
 
 data class OngoingMyPostedJobList(

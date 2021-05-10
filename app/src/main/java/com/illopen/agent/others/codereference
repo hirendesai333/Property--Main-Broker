@@ -1,0 +1,27 @@
+//profile.kt //
+
+ allLanguageList.forEachIndexed { index, allJobLanguageList ->
+                            list.forEachIndexed { index, userLanguage ->
+                                if (userLanguage.languageMasterId == allJobLanguageList.id) {
+                                    if (!selectedLanguageList.contains(userLanguage.languageMasterId)) {
+                                        selectedLanguageList.add(
+                                            SelectedLanguageModel(
+                                                userLanguage.languageMasterId,
+                                                userLanguage.languageName,
+                                                true
+                                            )
+                                        )
+                                    }
+                                } else {
+                                    if (!selectedLanguageList.contains(userLanguage.languageMasterId)) {
+                                        selectedLanguageList.add(
+                                            SelectedLanguageModel(
+                                                userLanguage.languageMasterId,
+                                                userLanguage.languageName,
+                                                false
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }

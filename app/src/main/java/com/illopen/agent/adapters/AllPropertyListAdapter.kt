@@ -12,7 +12,7 @@ import com.illopen.agent.model.AvailableJobs
 
 class AllPropertyListAdapter(
     var from: String,
-    var list: List<AvailableJobs>, var onPropertyClick: OnNewJobsClick)
+    var list: ArrayList<AvailableJobs>, var onPropertyClick: OnNewJobsClick)
     : RecyclerView.Adapter<AllPropertyListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,4 +56,8 @@ class AllPropertyListAdapter(
         fun onNewJobsClick(position: Int,currentItem: AvailableJobs)
     }
 
+    fun updateList(ItemList: ArrayList<AvailableJobs>){
+        list = ItemList
+        notifyDataSetChanged()
+    }
 }

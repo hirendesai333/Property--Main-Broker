@@ -89,7 +89,7 @@ interface ApiKtService{
     suspend fun getUserLanguage(@Query("userId") userId: Int, @Body data: Map<String, String>) : Response<AllUserLanguageModel>
 
     @POST(GETLANGUAGEUPDATE)
-    suspend fun userLanguageUpdate(@Body data: Map<String, String>) : Response<Any>
+    suspend fun userLanguageUpdate(@Body data : ArrayList<sendLanguageData>) : Response<Any>
 
     @POST(INSERT_LOCATION)
     suspend fun getUserLocationInsert(@Body data: Map<String, String>) : Response<Any>
@@ -194,18 +194,58 @@ interface ApiKtService{
 
     @POST(SEARCHDATA)
     suspend fun searchNewJob(@Query("AvailableJobsOnly")AvailableJobsOnly : Boolean,
-                            @Query("JobNo") JobNo : String,
+                             @Query("VisitDateFrom") VisitDateFrom : String,
+                             @Query("VisitDateTo") VisitDateTo : String,
+                             @Query("VisitTimeFrom") VisitTimeFrom : String,
+                             @Query("VisitTimeTo") VisitTimeTo : String,
                             @Body data: Map<String, String>) : Response<AllAvalibleJobsModel>
 
     @POST(SEARCHDATA)
-    suspend fun searchOngoingJob(@Query("AvailableJobsOnly") availableJobs: Boolean,
-                              @Query("JobNo") JobNo: String,
-                                @Body data: Map<String, String>) : Response<OngoingMyPostedJobModel>
+    suspend fun searchNewPostedJob(@Query("StatusMasterId") StatusMasterId : Int,
+                             @Query("AvailableJobsOnly")AvailableJobsOnly : Boolean,
+                             @Query("VisitDateFrom") VisitDateFrom : String,
+                             @Query("VisitDateTo") VisitDateTo : String,
+                             @Query("VisitTimeFrom") VisitTimeFrom : String,
+                             @Query("VisitTimeTo") VisitTimeTo : String,
+                             @Body data: Map<String, String>) : Response<AllAvalibleJobsModel>
 
     @POST(SEARCHDATA)
-    suspend fun searchCompleteJob(@Query("AvailableJobsOnly") availableJobs: Boolean,
-                                  @Query("JobNo") JobNo: String,
+    suspend fun searchOngoingJob(@Query("StatusMasterId") StatusMasterId : Int,
+                                 @Query("AvailableJobsOnly") availableJobs: Boolean,
+                                 @Query("VisitDateFrom") VisitDateFrom : String,
+                                 @Query("VisitDateTo") VisitDateTo : String,
+                                 @Query("VisitTimeFrom") VisitTimeFrom : String,
+                                 @Query("VisitTimeTo") VisitTimeTo : String,
+                                @Body data: Map<String, String>) : Response<AllAssignedJobModel>
+
+    @POST(SEARCHDATA)
+    suspend fun searchPostedOngoingJob(@Query("UserId") UserId : Int,
+                                 @Query("StatusMasterId") StatusMasterId : Int,
+                                 @Query("AvailableJobsOnly") availableJobs: Boolean,
+                                 @Query("VisitDateFrom") VisitDateFrom : String,
+                                 @Query("VisitDateTo") VisitDateTo : String,
+                                 @Query("VisitTimeFrom") VisitTimeFrom : String,
+                                 @Query("VisitTimeTo") VisitTimeTo : String,
+                                 @Body data: Map<String, String>) : Response<OngoingMyPostedJobModel>
+
+    @POST(SEARCHDATA)
+    suspend fun searchCompleteJob(@Query("UserId") UserId : Int,
+                                  @Query("StatusMasterId")StatusMasterId : Int,
+                                  @Query("AvailableJobsOnly") availableJobs: Boolean,
+                                  @Query("VisitDateFrom") VisitDateFrom : String,
+                                  @Query("VisitDateTo") VisitDateTo : String,
+                                  @Query("VisitTimeFrom") VisitTimeFrom : String,
+                                  @Query("VisitTimeTo") VisitTimeTo : String,
                                   @Body data: Map<String, String>) : Response<AllCompletedJobsModel>
+
+    @POST(SEARCHDATA)
+    suspend fun searchCompleteAssignJob(@Query("StatusMasterId")StatusMasterId : Int,
+                                  @Query("AvailableJobsOnly") availableJobs: Boolean,
+                                  @Query("VisitDateFrom") VisitDateFrom : String,
+                                  @Query("VisitDateTo") VisitDateTo : String,
+                                  @Query("VisitTimeFrom") VisitTimeFrom : String,
+                                  @Query("VisitTimeTo") VisitTimeTo : String,
+                                  @Body data: Map<String, String>) : Response<CompletedJobsAssignModel>
 
     @POST(PROPERTYMOREDETAILS)
     suspend fun propertyMoreDetailsAll(@Query("PropertyMasterId") PropertyMasterId : Int,

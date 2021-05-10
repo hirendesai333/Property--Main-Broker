@@ -2,7 +2,6 @@ package com.illopen.agent.ui.activities
 
 import android.Manifest
 import android.app.Dialog
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -21,8 +19,8 @@ import com.illopen.agent.adapters.AllJobLanguagesAdapter
 import com.illopen.agent.databinding.ActivityProfileBinding
 import com.illopen.agent.model.AllJobLanguageList
 import com.illopen.agent.model.Country
-import com.illopen.agent.model.PropertyTypeList
 import com.illopen.agent.model.SelectedLanguageModel
+import com.illopen.agent.model.sendLanguageData
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.MediaLoader
@@ -38,6 +36,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.regex.Pattern
+import kotlin.math.log
 
 class Profile : AppCompatActivity(){
 
@@ -97,10 +96,6 @@ class Profile : AppCompatActivity(){
             setupPermissions()
         }
 
-        binding.profileLocation.setOnClickListener {
-            startActivity(Intent(this,ProfileMapActivity::class.java))
-        }
-
         getUserProfile()
         getUserLanguage()
 
@@ -110,14 +105,16 @@ class Profile : AppCompatActivity(){
     private fun updateLanguage() {
         coroutineScope.launch {
             try {
-                val map = HashMap<String, String>()
-                map["Id"] = "0"
-                map["UserId"] = "0"
-                map["LanguageMasterId"] = ""
-                map["LanguageName"] = ""
-                map["UserName"] = ""
+//                val map = HashMap<String, String>()
+//                map["Id"] = "0"
+//                map["UserId"] = "0"
+//                map["LanguageMasterId"] = ""
+//                map["LanguageName"] = ""
+//                map["UserName"] = ""
 
-                val response = ServiceApi.retrofitService.userLanguageUpdate(map)
+                val selectedLanguage = getSelect()
+
+                val response = ServiceApi.retrofitService.userLanguageUpdate(selectedLanguage as ArrayList<sendLanguageData>)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
@@ -134,6 +131,38 @@ class Profile : AppCompatActivity(){
                 Log.d(TAG, e.message.toString())
             }
         }
+    }
+
+    private fun getSelect(): Any {
+
+        val tempList: ArrayList<sendLanguageData> = ArrayList()
+
+        val userId = AppPreferences.getUserData(Params.UserId)
+        val fullName = AppPreferences.getUserData(Params.FullName)
+
+        Log.d(TAG, "userID" + userId + fullName)
+
+        for(data in selectedLanguageList){
+            if (data.isSelected == true){
+
+                tempList.add(sendLanguageData(userId.toInt(),data.id!!.toInt(),data.languageName.toString(),fullName))
+                Log.d(TAG, "getSelect: " + data.toString())
+            }
+        }
+        Log.d(TAG, "data: " + tempList.toString())
+        return tempList
+    }
+
+    fun selectArray(getData : SelectedLanguageModel, isSelected : Boolean){
+
+        for(data in selectedLanguageList){
+
+            if(data.languageName.equals(getData.languageName.toString())){
+                data.isSelected=isSelected
+            }
+        }
+
+        Log.e(TAG,"selected array :" + selectedLanguageList.size)
     }
 
     private fun setupPermissions() {
@@ -247,7 +276,12 @@ class Profile : AppCompatActivity(){
 
                         selectedLanguageList.clear()
                         val list = response.body()!!.values!!
+
+                        for (i in list){
+                            selectedLanguageList.add(SelectedLanguageModel(i.id,i.name,false))
+                        }
                         getAllLanguages(list)
+                        Log.d("data", selectedLanguageList.toString())
 
 //                        binding.userLanguageRv.adapter = AllJobLanguagesAdapter(this@Profile, list)
 //                        binding.userLanguageRv.layoutManager = LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
@@ -286,35 +320,23 @@ class Profile : AppCompatActivity(){
 
                         val list = response.body()!!.values!!
 
-                        allLanguageList.forEachIndexed { index, allJobLanguageList ->
-                            list.forEachIndexed { index, userLanguage ->
-                                if (userLanguage.languageMasterId == allJobLanguageList.id) {
-                                    if (!selectedLanguageList.contains(userLanguage.languageMasterId)) {
-                                        selectedLanguageList.add(
-                                            SelectedLanguageModel(
-                                                userLanguage.languageMasterId,
-                                                userLanguage.languageName,
-                                                true
-                                            )
-                                        )
+                        for(data in selectedLanguageList){
+                            for(laung in list){
+
+                                if(data.languageName.equals(laung.languageName)){
+                                        data.isSelected = true
                                     }
-                                } else {
-                                    if (!selectedLanguageList.contains(userLanguage.languageMasterId)) {
-                                        selectedLanguageList.add(
-                                            SelectedLanguageModel(
-                                                userLanguage.languageMasterId,
-                                                userLanguage.languageName,
-                                                false
-                                            )
-                                        )
-                                    }
-                                }
                             }
                         }
 
+//                        for (i in selectedLanguageList){
+//                            if (i.id.toString().contains(selectedLanguageList))
+//                            selectedLanguageList.add(SelectedLanguageModel(i.id,i.languageName,false))
+//                        }
+
                         Log.d(TAG, "selected langauges: ${Gson().toJson(selectedLanguageList)}")
 
-                        binding.userLanguageRv.adapter = AllJobLanguagesAdapter(this@Profile, selectedLanguageList)
+                        binding.userLanguageRv.adapter = AllJobLanguagesAdapter(this@Profile, selectedLanguageList,applicationContext,this@Profile)
                         binding.userLanguageRv.layoutManager = LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
                     }
 
@@ -398,6 +420,7 @@ class Profile : AppCompatActivity(){
         val lastName = binding.lastName.text.toString().trim()
         val email = binding.email.text.toString().trim()
         val companyName = binding.companyName.text.toString().trim()
+        val number = binding.number.text.toString().trim()
         val address = binding.address.text.toString().trim()
 
         if (firstName.isEmpty()){
@@ -415,9 +438,12 @@ class Profile : AppCompatActivity(){
         }else if (companyName.isEmpty()) {
             binding.companyName.error = "Field Can't be Empty"
             binding.companyName.requestFocus()
-        }else if(address.isEmpty()){
+        }else if(address.isEmpty()) {
             binding.address.error = "Field Can't be Empty"
             binding.address.requestFocus()
+        }else if(number.isEmpty()){
+            binding.number.error = "Field Can't be Empty"
+            binding.number.requestFocus()
         }else {
             coroutineScope.launch {
                 try {
@@ -430,7 +456,7 @@ class Profile : AppCompatActivity(){
                     map["Email"] = email
                     map["CountryId"] = countryId.toString()
                     map["Address"] = address
-                    map["PhoneNumber"] = AppPreferences.getUserData(Params.MobileNumber)
+                    map["PhoneNumber"] = number
                     Log.d(TAG, "updateProfile: ${Gson().toJson(map)}")
                     val response = ServiceApi.retrofitService.updateUserProfile(map)
                     if (response.isSuccessful) {

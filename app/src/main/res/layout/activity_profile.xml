@@ -240,49 +240,8 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:drawablePadding="@dimen/_5sdp"
-                android:text="Preferred Location"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
-                app:fontFamily="@font/nunito_sans_bold" />
-
-            <RelativeLayout
-                android:id="@+id/profileLocation"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/corner_grey_background"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_toStartOf="@+id/iv5"
-                    android:fontFamily="@font/nunito_sans"
-                    android:text="Location"
-                    android:textSize="15dp" />
-
-
-                <ImageView
-                    android:id="@+id/iv5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/ic_next" />
-
-            </RelativeLayout>
-
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_5sdp"
                 android:text="Preferred Language"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp"

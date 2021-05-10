@@ -328,25 +328,20 @@
 
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:hint="Property Note"
-                app:boxBackgroundColor="@color/white"
-                app:hintTextColor="@color/green_700">
-
-                <com.google.android.material.textfield.TextInputEditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/note"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/nunito_sans"
-                    android:inputType="textMultiLine"
-                    android:textSize="@dimen/_12sdp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:background="@drawable/bid_dialog_border"
+                    android:gravity="top|start"
+                    android:lines="4"
+                    android:maxLines="3"
+                    android:textSize="@dimen/_12sdp"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:singleLine="false"
+                    android:hint="Enter Note" />
 
         </LinearLayout>
 

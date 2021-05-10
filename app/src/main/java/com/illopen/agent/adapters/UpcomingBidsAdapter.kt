@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.model.AssignedJobList
 import com.illopen.agent.listeners.OnGoingClick
+import com.illopen.agent.model.AvailableJobs
 
-class UpcomingBidsAdapter(var from: String, var list: List<AssignedJobList>, var onPropertyClick: OnGoingClick) :
+class UpcomingBidsAdapter(var from: String, var list: ArrayList<AssignedJobList>, var onPropertyClick: OnGoingClick) :
     RecyclerView.Adapter<UpcomingBidsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -53,5 +54,10 @@ class UpcomingBidsAdapter(var from: String, var list: List<AssignedJobList>, var
         holder.rootLayout.setOnClickListener {
             onPropertyClick.onGoingClick(currentItem)
         }
+    }
+
+    fun updateList(ItemList: ArrayList<AssignedJobList>){
+        list = ItemList
+        notifyDataSetChanged()
     }
 }

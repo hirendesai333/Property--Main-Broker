@@ -29,16 +29,20 @@ data class JobPropertyModel(
 )
 
 data class JobPropertyList(
+    @JsonProperty("AssignedUserId")
+    val assignedUserId: Int?,
     @JsonProperty("AvailableForMasterId")
     val availableForMasterId: Int?,
     @JsonProperty("AvailableForMasterName")
     val availableForMasterName: String?,
+    @JsonProperty("AvailableJobsOnly")
+    val availableJobsOnly: Boolean?,
     @JsonProperty("BidAmount")
-    val bidAmount: Double?,
+    val bidAmount: Int?,
     @JsonProperty("BidNote")
     val bidNote: String?,
     @JsonProperty("City")
-    val city: Any?,
+    val city: String?,
     @JsonProperty("CityId")
     val cityId: Int?,
     @JsonProperty("Country")
@@ -55,10 +59,12 @@ data class JobPropertyList(
     val id: Int?,
     @JsonProperty("JobId")
     val jobId: Int?,
+    @JsonProperty("JobNo")
+    val jobNo: Any?,
     @JsonProperty("JobPropertyBidId")
     val jobPropertyBidId: Int?,
     @JsonProperty("Note")
-    val note: String?,
+    val note: Any?,
     @JsonProperty("Pincode")
     val pincode: String?,
     @JsonProperty("PropertyAddress")
@@ -78,15 +84,17 @@ data class JobPropertyList(
     @JsonProperty("PropertyTypeName")
     val propertyTypeName: String?,
     @JsonProperty("Rating")
-    val rating: Double?,
+    val rating: Int?,
     @JsonProperty("RatingBy")
     val ratingBy: Int?,
     @JsonProperty("Review")
-    val review: String?,
+    val review: Any?,
     @JsonProperty("State")
-    val state: Any?,
+    val state: String?,
     @JsonProperty("StateId")
     val stateId: Int?,
+    @JsonProperty("StatusMasterId")
+    val statusMasterId: Int?,
     @JsonProperty("UpdatedBy")
     val updatedBy: Int?,
     @JsonProperty("UpdatedDate")
@@ -96,3 +104,4 @@ data class JobPropertyList(
     @JsonProperty("UserId")
     val userId: Int?
 )
+

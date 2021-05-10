@@ -10,10 +10,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
+import com.illopen.agent.model.CompletedJobsAssignList
 import com.illopen.agent.model.CompletedMyPostedJobsList
 import com.illopen.agent.model.JobPropertyList
 
-class CompletedJobsAdapter(var from: String, var list: List<CompletedMyPostedJobsList>,
+class CompletedJobsAdapter(var from: String, var list: ArrayList<CompletedMyPostedJobsList>,
                            var onPropertyClick: OnCompletedJobClick,
                            var markerClick : OnMarkerClick,
                             var onRatingClick : OnClickRating) :
@@ -96,5 +97,10 @@ class CompletedJobsAdapter(var from: String, var list: List<CompletedMyPostedJob
 
     interface OnClickRating{
         fun onClickRating(position: Int,currentItem : CompletedMyPostedJobsList)
+    }
+
+    fun updateList(ItemList : ArrayList<CompletedMyPostedJobsList>){
+        list = ItemList
+        notifyDataSetChanged()
     }
 }
