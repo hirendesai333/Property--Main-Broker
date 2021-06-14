@@ -163,18 +163,18 @@
                     android:textColor="@color/purple_700"
                     android:textSize="15dp" />
 
-                <TextView
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_toEndOf="@+id/notiTitle"
-                    android:background="@drawable/notification_circle"
-                    android:fontFamily="@font/nunito_sans_bold"
-                    android:gravity="center"
-                    android:text="2"
-                    android:textColor="@color/white"
-                    android:textSize="11dp" />
+<!--                <TextView-->
+<!--                    android:layout_width="@dimen/_18sdp"-->
+<!--                    android:layout_height="@dimen/_18sdp"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_toEndOf="@+id/notiTitle"-->
+<!--                    android:background="@drawable/notification_circle"-->
+<!--                    android:fontFamily="@font/nunito_sans_bold"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="2"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="11dp" />-->
 
                 <ImageView
                     android:id="@+id/iv2"

@@ -291,8 +291,8 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
                                     parent: AdapterView<*>?, view: View?,
                                     position: Int, id: Long
                                 ) {
-                                    userTypeMasterId = userDocumentList[position].id!!.toInt()
-                                    toast("Selected : " + userDocumentList[position].name)
+                                    userTypeMasterId = userDocumentList[position].id!!
+//                                    toast("Selected : " + userDocumentList[position].name)
                                 }
 
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -448,7 +448,6 @@ class Documents : AppCompatActivity(), DocumentsAdapter.OnItemClickListener {
     }
 
     override fun onDocumentClick(itemPosition: Int, document: UserDocumentList) {
-        //todo here delete id and delete by same id's so issue in api side//
         val dialog = MaterialAlertDialogBuilder(this)
         dialog.setTitle("DELETE")
         dialog.setMessage("Are You Sure You Want to Delete?")

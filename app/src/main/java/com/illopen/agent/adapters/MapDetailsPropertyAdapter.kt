@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.databinding.MapPropertyDetailsSingleItemBinding
-import com.illopen.agent.model.AllJobLanguageList
+import com.illopen.agent.model.PropertyMapAllList
 
-class MapDetailsPropertyAdapter(var context: Context, var list: ArrayList<AllJobLanguageList>) :
+class MapDetailsPropertyAdapter(var context: Context, var list: List<PropertyMapAllList>) :
     RecyclerView.Adapter<MapDetailsPropertyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,7 +22,10 @@ class MapDetailsPropertyAdapter(var context: Context, var list: ArrayList<AllJob
         val currentItem = list[position]
 
         views.apply {
-            name.text = currentItem.name
+            name.text = currentItem.propertyName
+            location.text = currentItem.country
+            propertyType.text = currentItem.propertyTypeName
+            availableFor.text = currentItem.availableForMasterName
         }
 
     }

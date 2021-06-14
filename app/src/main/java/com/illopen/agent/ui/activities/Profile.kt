@@ -17,10 +17,7 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.illopen.agent.adapters.AllJobLanguagesAdapter
 import com.illopen.agent.databinding.ActivityProfileBinding
-import com.illopen.agent.model.AllJobLanguageList
-import com.illopen.agent.model.Country
-import com.illopen.agent.model.SelectedLanguageModel
-import com.illopen.agent.model.sendLanguageData
+import com.illopen.agent.model.*
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.MediaLoader
@@ -36,30 +33,31 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.regex.Pattern
-import kotlin.math.log
 
-class Profile : AppCompatActivity(){
+class Profile : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
 
     private val TAG = "UserProfile"
 
-    var countryId: Int = 0
-
     private lateinit var progressDialog: ProgressDialog
 
-    var regex = "[A-Z0-9a-z]+([._%+-][A-Z0-9a-z]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+    var regex =
+        "[A-Z0-9a-z]+([._%+-][A-Z0-9a-z]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
     var pattern = Pattern.compile(regex)
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
     private var filePath = ""
-    private lateinit var countryDialog: Dialog
-    private var selectedLanguageList: ArrayList<SelectedLanguageModel> = ArrayList()
 
+    private var selectedLanguageList: ArrayList<SelectedLanguageModel> = ArrayList()
+    private var selectedUserLanguages: ArrayList<SelectedUserLanguageModel> = ArrayList()
+
+    private var countryId: Int = 0
     private lateinit var countryAdapter: ArrayAdapter<String>
-    private var countryList : ArrayList<Country> = ArrayList()
+    private var countryList: ArrayList<Country> = ArrayList()
+    val langPass: ArrayList<SelectedLanguageModel> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,22 +103,15 @@ class Profile : AppCompatActivity(){
     private fun updateLanguage() {
         coroutineScope.launch {
             try {
-//                val map = HashMap<String, String>()
-//                map["Id"] = "0"
-//                map["UserId"] = "0"
-//                map["LanguageMasterId"] = ""
-//                map["LanguageName"] = ""
-//                map["UserName"] = ""
-
-                val selectedLanguage = getSelect()
-
-                val response = ServiceApi.retrofitService.userLanguageUpdate(selectedLanguage as ArrayList<sendLanguageData>)
+                val response =
+                    ServiceApi.retrofitService.userLanguageUpdate(langPass)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
 
                         Log.d("update_Language", response.code().toString())
                         Log.d("update_Language", response.body().toString())
 
+                        toast("Successful Language Update..")
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -133,36 +124,19 @@ class Profile : AppCompatActivity(){
         }
     }
 
-    private fun getSelect(): Any {
+    fun selectArray(getData: SelectedLanguageModel) {
 
-        val tempList: ArrayList<sendLanguageData> = ArrayList()
-
-        val userId = AppPreferences.getUserData(Params.UserId)
-        val fullName = AppPreferences.getUserData(Params.FullName)
-
-        Log.d(TAG, "userID" + userId + fullName)
-
-        for(data in selectedLanguageList){
-            if (data.isSelected == true){
-
-                tempList.add(sendLanguageData(userId.toInt(),data.id!!.toInt(),data.languageName.toString(),fullName))
-                Log.d(TAG, "getSelect: " + data.toString())
-            }
-        }
-        Log.d(TAG, "data: " + tempList.toString())
-        return tempList
-    }
-
-    fun selectArray(getData : SelectedLanguageModel, isSelected : Boolean){
-
-        for(data in selectedLanguageList){
-
-            if(data.languageName.equals(getData.languageName.toString())){
-                data.isSelected=isSelected
+        langPass.addAll(selectedLanguageList)
+        selectedLanguageList.forEachIndexed { index, selectedLanguageModel ->
+            if (getData.Id == langPass[index].Id) {
+                langPass.removeAt(index)
+            } else {
+                langPass.add(selectedLanguageModel)
             }
         }
 
-        Log.e(TAG,"selected array :" + selectedLanguageList.size)
+        Log.e(TAG, "selected array :" + selectedLanguageList.size)
+        Log.e(TAG, "selected array :" + Gson().toJson(langPass))
     }
 
     private fun setupPermissions() {
@@ -211,25 +185,13 @@ class Profile : AppCompatActivity(){
         val imageToBeUploaded = File(filePath)
         coroutineScope.launch {
             try {
-                /*val rbcustomerid =
-                    RequestBody.create(
-                        MediaType.parse("text/plain"),
-                        AppPreferences.getUserData(Params.UserId)
-                    )*/
-                val rbcustomerid = AppPreferences.getUserData(Params.UserId).toRequestBody("text/plain".toMediaTypeOrNull())
-                val requestFile = MultipartBody.Part.createFormData("Files", "${System.currentTimeMillis()}.png",
-                    File(filePath).asRequestBody("multipart/form-data".toMediaTypeOrNull()))
-                /*val requestFile =
-                    RequestBody.create(
-                        MediaType.parse("multipart/form-data"),
-                        imageToBeUploaded
-                    )*/
-                /*val imageRequest =
-                    MultipartBody.Part.createFormData(
-                        "Files",
-                        "${System.currentTimeMillis()}.png",
-                        requestFile
-                    )*/
+                val rbcustomerid = AppPreferences.getUserData(Params.UserId)
+                    .toRequestBody("text/plain".toMediaTypeOrNull())
+                val requestFile = MultipartBody.Part.createFormData(
+                    "Files", "${System.currentTimeMillis()}.png",
+                    File(filePath).asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                )
+
                 val response = ServiceApi.retrofitService.uploadProfilePic(
                     rbcustomerid,
                     requestFile
@@ -277,9 +239,10 @@ class Profile : AppCompatActivity(){
                         selectedLanguageList.clear()
                         val list = response.body()!!.values!!
 
-                        for (i in list){
-                            selectedLanguageList.add(SelectedLanguageModel(i.id,i.name,false))
-                        }
+                        /*for (i in list) {
+                            selectedLanguageList.add(SelectedLanguageModel(i.id, i.name, false))
+                        }*/
+
                         getAllLanguages(list)
                         Log.d("data", selectedLanguageList.toString())
 
@@ -310,7 +273,7 @@ class Profile : AppCompatActivity(){
                 map["TotalCount"] = "0"
 
                 val response = ServiceApi.retrofitService.getUserLanguage(
-                    AppPreferences.getUserData(Params.UserId).toInt(),map
+                    AppPreferences.getUserData(Params.UserId).toInt(), map
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
@@ -320,24 +283,30 @@ class Profile : AppCompatActivity(){
 
                         val list = response.body()!!.values!!
 
-                        for(data in selectedLanguageList){
-                            for(laung in list){
-
-                                if(data.languageName.equals(laung.languageName)){
-                                        data.isSelected = true
-                                    }
-                            }
+                        list.forEachIndexed { index, userLanguage ->
+                            selectedLanguageList.add(
+                                SelectedLanguageModel(userLanguage.id,
+                            userLanguage.userId, userLanguage.languageMasterId, userLanguage.languageName, userLanguage.userName)
+                            )
                         }
 
+//                        selectedLanguageList.addAll(list)
+
 //                        for (i in selectedLanguageList){
-//                            if (i.id.toString().contains(selectedLanguageList))
+//                            if (allLanguageList.contains())
 //                            selectedLanguageList.add(SelectedLanguageModel(i.id,i.languageName,false))
 //                        }
 
                         Log.d(TAG, "selected langauges: ${Gson().toJson(selectedLanguageList)}")
 
-                        binding.userLanguageRv.adapter = AllJobLanguagesAdapter(this@Profile, selectedLanguageList,applicationContext,this@Profile)
-                        binding.userLanguageRv.layoutManager = LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
+                        binding.userLanguageRv.adapter = AllJobLanguagesAdapter(
+                            this@Profile,
+                            selectedLanguageList,
+                            applicationContext,
+                            this@Profile
+                        )
+                        binding.userLanguageRv.layoutManager =
+                            LinearLayoutManager(this@Profile, LinearLayoutManager.HORIZONTAL, false)
                     }
 
                 } else {
@@ -380,27 +349,35 @@ class Profile : AppCompatActivity(){
 
                         countryList = response.body()?.values as ArrayList<Country>
 
-                        val data : MutableList<String> = ArrayList()
+                        val data: MutableList<String> = ArrayList()
                         countryList.forEach {
                             data.add(it.code.toString())
                         }
 
-                        countryAdapter = object : ArrayAdapter<String>(this@Profile, android.R.layout.simple_list_item_1, data) {}
+                        countryAdapter = object : ArrayAdapter<String>(
+                            this@Profile,
+                            android.R.layout.simple_list_item_1,
+                            data
+                        ) {}
+
                         binding.countrySpinner.adapter = countryAdapter
+                        binding.countrySpinner.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
 
-                        binding.countrySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>?,
+                                    view: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    countryId = countryList[position].id!!
+                                }
 
-                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                                countryId = countryList[position].id!!.toInt()
-                                toast("Selected : " + countryList[position].country)
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                                }
+
                             }
-
-                            override fun onNothingSelected(parent: AdapterView<*>?) {
-                                TODO("Not yet implemented")
-                            }
-
-                        }
-
 
                     }
                 } else {
@@ -423,28 +400,28 @@ class Profile : AppCompatActivity(){
         val number = binding.number.text.toString().trim()
         val address = binding.address.text.toString().trim()
 
-        if (firstName.isEmpty()){
+        if (firstName.isEmpty()) {
             binding.firstName.error = "Field Can't be Empty"
             binding.firstName.requestFocus()
         } else if (lastName.isEmpty()) {
             binding.lastName.error = "Field Can't be Empty"
             binding.lastName.requestFocus()
-        }else if (email.isEmpty()) {
+        } else if (email.isEmpty()) {
             binding.email.error = "Field Can't be Empty"
             binding.email.requestFocus()
-        }else if (!pattern.matcher(email).matches()){
+        } else if (!pattern.matcher(email).matches()) {
             binding.email.error = "Invalid Email"
             binding.email.requestFocus()
-        }else if (companyName.isEmpty()) {
+        } else if (companyName.isEmpty()) {
             binding.companyName.error = "Field Can't be Empty"
             binding.companyName.requestFocus()
-        }else if(address.isEmpty()) {
+        } else if (address.isEmpty()) {
             binding.address.error = "Field Can't be Empty"
             binding.address.requestFocus()
-        }else if(number.isEmpty()){
+        } else if (number.isEmpty()) {
             binding.number.error = "Field Can't be Empty"
             binding.number.requestFocus()
-        }else {
+        } else {
             coroutineScope.launch {
                 try {
                     val map = HashMap<String, String>()
@@ -492,17 +469,23 @@ class Profile : AppCompatActivity(){
                         Log.d("getUserProfile", response.code().toString())
                         Log.d("getUserProfile", response.body().toString())
 
-                        val response = response.body()!!.item!!
+                        val data = response.body()!!.item!!
 
-                        binding.profileImage.load("http://realestateapi.lamproskids.com/" + response.profileUrl)
-                        binding.firstName.setText(response.firstName).toString().trim()
-                        binding.lastName.setText(response.lastName).toString().trim()
-                        binding.email.setText(response.email).toString().trim()
-                        binding.companyName.setText(response.companyName).toString().trim()
-                        binding.address.setText(response.address.toString().trim())
-//                        binding.countrySpinner = response.countryCode.toString().trim()
-                        binding.number.setText(response.phoneNumber).toString().trim()
-                        countryId = response.countryId!!
+                        binding.profileImage.load("http://realestateapi.lamproskids.com/" + data.profileUrl)
+                        binding.firstName.setText(data.firstName).toString().trim()
+                        binding.lastName.setText(data.lastName).toString().trim()
+                        binding.email.setText(data.email).toString().trim()
+                        binding.companyName.setText(data.companyName).toString().trim()
+                        binding.address.setText(data.address.toString().trim())
+                        binding.number.setText(data.phoneNumber).toString().trim()
+
+
+                        countryList.forEachIndexed { index, countryList ->
+                            if (countryList.id == data.countryId) {
+                                binding.countrySpinner.setSelection(countryAdapter.getPosition(countryList.code))
+                                return@forEachIndexed
+                            }
+                        }
 
                         progressDialog.dialog.dismiss()
                     }

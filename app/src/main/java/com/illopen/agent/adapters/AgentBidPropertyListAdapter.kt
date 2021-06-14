@@ -26,8 +26,9 @@ class AgentBidPropertyListAdapter(var context: Context, var list: List<JobProper
             name.text = currentItem.propertyName
             address.text = "Address: " + currentItem.propertyAddress
             price.text = "Bid Amount: $" + currentItem.bidAmount
-            propertyType.text = "propertyType: " + currentItem.propertyTypeName
+            propertyType.text = "Property Type: " + currentItem.propertyTypeName
             availableFor.text = "AvailableFor: " + currentItem.availableForMasterName
+            pincode.text = "Pincode: " + currentItem.pincode
         }
     }
 

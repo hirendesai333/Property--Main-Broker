@@ -1,9 +1,11 @@
 package com.illopen.agent.adapters
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.illopen.agent.R
 import com.illopen.agent.databinding.UserLanguageListBinding
@@ -31,18 +33,22 @@ class AllJobLanguagesAdapter(
         val views = holder.binding
         val currentItem = list[position]
 
-        if (currentItem.isSelected!!) {
-            views.userLanguage.text = currentItem.languageName + " 1"
-        } else {
-            views.userLanguage.text = currentItem.languageName + " 0"
-        }
+//        if (currentItem.isSelected!!) {
+//            views.userLanguage.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.purple_700))
+//            views.userLanguage.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.white)))
+//            views.userLanguage.text = currentItem.languageName
+//        } else {
+//            views.userLanguage.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.light_grey))
+//            views.userLanguage.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.black)))
+//            views.userLanguage.text = currentItem.languageName
+//        }
 
         views.userLanguage.setOnClickListener { view ->
             if (view.userLanguage.isSelected) {
-                (applicationContext as Profile).selectArray(currentItem,true)
+                (applicationContext as Profile).selectArray(currentItem)
             } else {
                 if (view.userLanguage.isSelected) {
-                    (applicationContext as Profile).selectArray(currentItem,false)
+                    (applicationContext as Profile).selectArray(currentItem)
                 }
             }
         }

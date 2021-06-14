@@ -27,6 +27,9 @@ class JobPropertyBidAllAdapter(var context: Context, var list: List<JobBidList>
             email.text = "Email: "+ currentItem.userEmail.toString()
             phone.text = "Phone Number: "+currentItem.userPhoneNumber.toString()
             price.text = "Total Amount: $" + currentItem.totalAmount.toString()
+            rating.rating =  currentItem.userAverageRating!!.toFloat()
+            textRating.text = currentItem.userAverageRating.toString()
+            totalRating.text = " (${currentItem.userTotalRating})"
             totalProperty.text = "Total Bid Property: ${currentItem.totalPropertyBid}/${currentItem.totalProperty}"
         }
 

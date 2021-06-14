@@ -36,14 +36,12 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
 
     lateinit var propertyName: String
 
-    private var propertyTypeMasterId : Int = 0
 
-    lateinit var mDialog : Dialog
-
+    private var propertyDetailId : Int = 0
     private var propertyTypeList: ArrayList<PropertyMoreDetailsTypeList> = ArrayList()
-    private lateinit var userDropDownAdapter: ArrayAdapter<String>
+    private lateinit var propertyAdapter: ArrayAdapter<String>
 
-    private var propertyDetailMasterId : Int = 0
+    private var propertyTypeMasterId : Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,25 +56,46 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
         binding.addNew.setOnClickListener {
             addProperty()
         }
+
+        spinnerPropertyType()
     }
 
 
     private fun addProperty() {
-        mDialog = Dialog(requireContext(), R.style.Theme_PropertyMainBroker)
+        val mDialog = Dialog(requireContext(), R.style.Theme_PropertyMainBroker)
         mDialog.setContentView(R.layout.add_new_more_property_popup)
         mDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
-        spinnerPropertyType(mDialog)
+        val spinner = mDialog.findViewById<Spinner>(R.id.TypeSpinner)
+        val price = mDialog.findViewById<TextInputEditText>(R.id.price)
+        val save = mDialog.findViewById<Button>(R.id.save)
 
-        mDialog.findViewById<Button>(R.id.save).setOnClickListener {
-            val price = mDialog.findViewById<TextInputEditText>(R.id.price).text.toString().trim()
+        spinner.adapter = propertyAdapter
 
-            if (price.isEmpty()) {
+        spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, view: View?,
+                    position: Int, id: Long
+                ) {
+                    propertyDetailId  = propertyTypeList[position].id!!.toInt()
+//                    Toast.makeText(requireContext(),"Selected : ${propertyTypeList[position].name}",Toast.LENGTH_LONG).show()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    //nothing select code
+                }
+            }
+
+        save.setOnClickListener {
+            val pricee = price.text.toString().trim()
+
+            if (pricee.isEmpty()) {
                 mDialog.findViewById<TextInputEditText>(R.id.price).error = "Field Can't be Empty"
                 mDialog.findViewById<TextInputEditText>(R.id.price).requestFocus()
             } else {
-                Toast.makeText(requireContext(), "Added New Property Details..", Toast.LENGTH_SHORT).show()
-                addNewPropertyAPI(price)
+                addNewPropertyAPI(pricee)
                 mDialog.dismiss()
             }
         }
@@ -90,7 +109,7 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
                 val map = HashMap<String, String>()
 //                map["Id"] = "0"
                 map["PropertyMasterId"] = propertyTypeMasterId.toString()
-                map["PropertyDetailMasterId"] = propertyDetailMasterId.toString()
+                map["PropertyDetailMasterId"] = propertyDetailId.toString()
                 map["Value"] = price
 
                 val response = ServiceApi.retrofitService.propertyMoreDetailsInsert(map)
@@ -103,6 +122,7 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
                         if (response.code() == 200){
                             propertyMoreDetailsAPI()
                             requireActivity().toast("Property Inserted Successfully")
+//                            Toast.makeText(requireContext(), "Added New Property Details..", Toast.LENGTH_SHORT).show()
                         }else{
                             requireActivity().toast("something wrong")
                         }
@@ -155,7 +175,6 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
     }
 
     override fun onDeleteProperty(itemPosition: Int, data: PropertyMoreDetailsList) {
-        //todo here delete id and delete by same id's so issue in api side//
         val dialog = MaterialAlertDialogBuilder(requireContext())
         dialog.setTitle("DELETE")
         dialog.setMessage("Are You Sure You Want to Delete?")
@@ -210,25 +229,48 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
         val spinner = mDialog.findViewById<Spinner>(R.id.TypeSpinner)
         val price = mDialog.findViewById<TextInputEditText>(R.id.price)
 
-        spinnerPropertyType(mDialog)
-
-        spinner?.selectedItem.toString()
         price?.setText(data.value)
+        spinner.adapter = propertyAdapter
 
-        mDialog.show()
+        spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, view: View?,
+                    position: Int, id: Long
+                ) {
+                    propertyDetailId  = propertyTypeList[position].id!!.toInt()
+//                    Toast.makeText(requireContext(),"Selected : ${propertyTypeList[position].name}",Toast.LENGTH_LONG).show()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    //nothing select code
+                }
+            }
+
+        var spinnerindex : Int = 0
+        propertyTypeList.forEachIndexed { index, propertyTypeList ->
+            if (propertyTypeList.id == data.propertyDetailMasterId){
+                spinnerindex = index
+                return@forEachIndexed
+            }
+
+        }
+        spinner.setSelection(spinnerindex,true)
 
         mDialog.findViewById<MaterialButton>(R.id.save).setOnClickListener {
 
             val typeSpinner = spinner.selectedItem.toString()
             val value = price.text.toString().trim()
 
-            Toast.makeText(requireContext(), "Update Property..", Toast.LENGTH_SHORT).show()
             updateProperty(typeSpinner,value,data)
             mDialog.dismiss()
         }
+
+        mDialog.show()
     }
 
-    private fun spinnerPropertyType(mDialog: Dialog) {
+    private fun spinnerPropertyType() {
         coroutineScope.launch {
             try {
 
@@ -254,27 +296,10 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
                             data.add(it.name.toString())
                         }
 
-                        userDropDownAdapter = object : ArrayAdapter<String>(
+                        propertyAdapter = object : ArrayAdapter<String>(
                             requireContext(),
                             android.R.layout.simple_list_item_1, data
                         ) {}
-                        mDialog.findViewById<Spinner>(R.id.TypeSpinner).adapter = userDropDownAdapter
-
-                        mDialog.findViewById<Spinner>(R.id.TypeSpinner).onItemSelectedListener =
-                            object : AdapterView.OnItemSelectedListener {
-
-                                override fun onItemSelected(
-                                    parent: AdapterView<*>?, view: View?,
-                                    position: Int, id: Long
-                                ) {
-                                    propertyDetailMasterId  = propertyTypeList[position].id!!.toInt()
-                                    Toast.makeText(requireContext(),"Selected : ${propertyTypeList[position].name}",Toast.LENGTH_LONG).show()
-                                }
-
-                                override fun onNothingSelected(parent: AdapterView<*>?) {
-                                    //nothing select code
-                                }
-                            }
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -294,7 +319,7 @@ class PropertyDetailsFragment : Fragment(R.layout.fragment_property_details) ,
                 val map = HashMap<String,String>()
                 map["Id"] = data.id.toString()
                 map["PropertyMasterId"] = propertyTypeMasterId.toString()
-                map["PropertyDetailMasterId"] = propertyDetailMasterId.toString()
+                map["PropertyDetailMasterId"] = propertyDetailId.toString()
                 map["Value"] = value
 
                 val response = ServiceApi.retrofitService.updatePropertyMoreDetails(map)

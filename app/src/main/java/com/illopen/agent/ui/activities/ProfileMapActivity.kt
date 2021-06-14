@@ -2,7 +2,6 @@ package com.illopen.agent.ui.activities
 
 import android.Manifest
 import android.app.Dialog
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
@@ -50,7 +49,7 @@ class ProfileMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var circle: Circle
 
-    private lateinit var mapDialog : Dialog
+    private lateinit var mapDialog: Dialog
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
@@ -69,7 +68,11 @@ class ProfileMapActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap!!
         setupLocationPermission()
         mMap.setOnMapClickListener(OnMapClickListener { point ->
-            Toast.makeText(this,point.latitude.toString() + ", " + point.longitude, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                point.latitude.toString() + ", " + point.longitude,
+                Toast.LENGTH_SHORT
+            ).show()
 
             onMapClickPopUp(point)
         })
@@ -79,15 +82,18 @@ class ProfileMapActivity : AppCompatActivity(), OnMapReadyCallback {
         mapDialog = Dialog(this)
         mapDialog.setContentView(R.layout.map_insert_location_popup)
 
-        mapDialog.findViewById<TextView>(R.id.latitude).text = "Latitude : " + point.latitude.toString()
-        mapDialog.findViewById<TextView>(R.id.longitude).text = "Longitude : " + point.longitude.toString()
+        mapDialog.findViewById<TextView>(R.id.latitude).text =
+            "Latitude : " + point.latitude.toString()
+        mapDialog.findViewById<TextView>(R.id.longitude).text =
+            "Longitude : " + point.longitude.toString()
 
         mapDialog.findViewById<Button>(R.id.save).setOnClickListener {
 
-            val radius = mapDialog.findViewById<TextInputEditText>(R.id.edtRadius).text.toString().trim()
+            val radius =
+                mapDialog.findViewById<TextInputEditText>(R.id.edtRadius).text.toString().trim()
 
             if (radius.isNotEmpty()) {
-                getUserLocation(radius,point)
+                getUserLocation(radius, point)
                 mapDialog.dismiss()
             } else {
                 toast("Please enter radius")
@@ -114,11 +120,10 @@ class ProfileMapActivity : AppCompatActivity(), OnMapReadyCallback {
                         Log.d("Insert_Location", response.code().toString())
                         Log.d("Insert_Location", response.body().toString())
 
-                        if (response.code() == 200){
+                        if (response.code() == 200) {
                             toast("Location Inserted Successfully")
-                            startActivity(Intent(this@ProfileMapActivity,Profile::class.java))
                             finish()
-                        }else{
+                        } else {
                             toast("something wrong")
                         }
 
@@ -260,7 +265,42 @@ class ProfileMapActivity : AppCompatActivity(), OnMapReadyCallback {
                             )
                         )
 
+                        mMap.setOnMarkerClickListener(GoogleMap.OnMarkerClickListener {
+                            deleteMarker(mapDetailsList)
+                            true
+                        })
                     }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Log.d(TAG, "something wrong")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.message.toString())
+            }
+        }
+    }
+
+    private fun deleteMarker(mapDetailsList: List<ProfileMapList>) {
+        coroutineScope.launch {
+            try {
+
+                val response = ServiceApi.retrofitService.userLocationDelete(mapDetailsList[0].id!!)
+                if (response.isSuccessful) {
+                    withContext(Dispatchers.Main) {
+
+                        Log.d("Delete_Location", response.code().toString())
+                        Log.d("Delete_Location", response.body().toString())
+
+                        if (response.code() == 200) {
+                            toast("Location Delete Successfully")
+                            finish()
+                        } else {
+                            toast("something wrong")
+                        }
+
+                    }
+
                 } else {
                     withContext(Dispatchers.Main) {
                         Log.d(TAG, "something wrong")
@@ -276,9 +316,8 @@ class ProfileMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val circleOp = CircleOptions()
             .center(LatLng(latitude, longitude))
             .radius(radius * 1609.34)
-            .strokeWidth(2.0f)
-            .strokeColor(Color.RED)
-            .fillColor(Color.BLUE)
+            .strokeWidth(3.0f)
+            .strokeColor(Color.BLUE)
         circle = mMap.addCircle(circleOp)
     }
 }

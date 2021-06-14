@@ -66,33 +66,43 @@
             android:textSize="@dimen/_10sdp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:orientation="horizontal">
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/review"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/bidAmount"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:text="Review"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_8sdp"
-                app:backgroundTint="@color/green_700" />
+                app:fontFamily="@font/nunito_sans_bold"
+                android:text="Bid Amount: $1000"
+                android:textSize="@dimen/_10sdp" />
 
-<!--            <com.google.android.material.textview.MaterialTextView-->
-<!--                android:id="@+id/mark"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@drawable/bid_dialog_border"-->
-<!--                android:fontFamily="@font/nunito_sans_bold"-->
-<!--                android:padding="@dimen/_7sdp"-->
-<!--                android:text="MARK AS: SHOWN"-->
-<!--                android:textColor="@color/green_700"-->
-<!--                android:textSize="@dimen/_8sdp" />-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                app:fontFamily="@font/nunito_sans_bold"
+                android:text="Note : test desc"
+                android:textSize="@dimen/_10sdp" />
+
+
 
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:text="Review"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_gravity="end"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8sdp"
+            app:backgroundTint="@color/green_700" />
 
     </LinearLayout>
 

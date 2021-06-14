@@ -68,7 +68,7 @@ interface ApiKtService{
     suspend fun  getAllAvailableProperty(@Query("search") userId: Int, @Body data: Map<String, String>) : Response<AllAvailablePropertyModel>
 
     @POST(DELETEPROPERTY)
-    suspend fun deleteProperty(@Query("id") Id : Int) : Response<Any>
+    suspend fun deleteProperty(@Query("id") Id : Int, @Query("DeletedBy") DeletedBy : Int) : Response<Any>
 
     @POST(GETUSERPROFILE)
     suspend fun getUserProfile(@Query("id") userId : Int) : Response<UserProfileModel>
@@ -89,10 +89,13 @@ interface ApiKtService{
     suspend fun getUserLanguage(@Query("userId") userId: Int, @Body data: Map<String, String>) : Response<AllUserLanguageModel>
 
     @POST(GETLANGUAGEUPDATE)
-    suspend fun userLanguageUpdate(@Body data : ArrayList<sendLanguageData>) : Response<Any>
+    suspend fun userLanguageUpdate(@Body data : ArrayList<SelectedLanguageModel>) : Response<Any>
 
     @POST(INSERT_LOCATION)
     suspend fun getUserLocationInsert(@Body data: Map<String, String>) : Response<Any>
+
+    @POST(DELETE_LOCATION)
+    suspend fun userLocationDelete(@Query("UserId") UserId : Int) : Response<Any>
 
     @Multipart
     @POST(UPLOAD_PROFILE_PIC)
@@ -283,7 +286,13 @@ interface ApiKtService{
     suspend fun userAgentRating(@Body data: Map<String, String>) : Response<Any>
 
     @POST(PROPERTY_ACTIVE_INACTIVE)
-    suspend fun propertyActiveInActive(@Query("Id") Id: Int) : Response<Any>
+    suspend fun propertyActiveInActive(@Query("Id") Id: Int) : Response<PropertyActiveInActiveModel>
+
+    @POST(JOB_PROPERTY_MAP_ALL)
+    suspend fun jobPropertyMapAll(@Query("UserId") UserId: Int,
+                                  @Query("StatusMasterId") StatusMasterId : Int,
+                                  @Query("AvailableJobsOnly") AvailableJobsOnly : Boolean,
+                                  @Body data: Map<String, String>) : Response<JobPropertyMapAllModel>
 
 }
 
@@ -331,6 +340,7 @@ private const val CREATEJOB = "jobs/Jobs_Upsert"
 private const val JOBLANGUAGEAll = "languageMaster/LanguageMaster_All"
 private const val AVAILABLEMAPLOCATION = "userPreferedLocations/UserPreferedLocations_All"
 private const val INSERT_LOCATION = "userPreferedLocations/UserPreferedLocations_Upsert"
+private const val DELETE_LOCATION = "userPreferedLocations/UserPreferedLocations_Delete"
 private const val USER_DOCUMENT_ALL = "userDocuments/UserDocuments_All"
 private const val USER_DOCUMENT_DELETE = "userDocuments/UserDocuments_Delete"
 private const val USER_DOCUMENT_INSERT = "userDocuments/UserDocuments_Upsert"
@@ -346,3 +356,4 @@ private const val PROPERTYMOREDETAILS = "propertyDetails/PropertyDetails_All"
 private const val PROPERTYDETAILSTYPE = "propertyDetailMaster/PropertyDetailMaster_All"
 private const val PROPERTYIMAGEALL = "propertyImage/PropertyImage_All"
 private const val USERAGENTRATING = "userRatting/UserRatting_Upsert"
+private const val JOB_PROPERTY_MAP_ALL = "jobs/JobProperty_MapAll"

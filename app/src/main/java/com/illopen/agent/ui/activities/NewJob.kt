@@ -96,9 +96,9 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener,
         binding.date.setOnClickListener {
 
             val now = Date()
-            val calendarMax = Calendar.getInstance()
-            calendarMax.time = Date(now.time)
-            val maxDate = calendarMax.time
+            val calendar = Calendar.getInstance()
+            calendar.time = Date(now.time)
+            val maxDate = calendar.time
             SingleDateAndTimePickerDialog.Builder(this)
                 .defaultDate(maxDate)
                 .mustBeOnFuture()
@@ -227,14 +227,8 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener,
                                     position: Int,
                                     id: Long
                                 ) {
-                                    customerId = customerListValue[position].id!!.toInt()
-                                    toast("Selected : " + customerListValue[position].customerName)
-
-//                                    if (position != -1){
-//
-//                                    }else{
-//
-//                                    }
+                                    customerId = customerListValue[position].id!!
+//                                    toast("Selected : " + customerListValue[position].customerName)
                                 }
 
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -290,6 +284,9 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener,
                         Log.d("PropertyType", response.body().toString())
 
                         val list: List<AllPropertiesList> = response.body()!!.values!!
+
+                        Collections.reverse(list)
+
                         propertyRecycler!!.adapter =
                             ChoosePropertyAdapter(this@NewJob, list, this@NewJob)
                     }
@@ -371,14 +368,13 @@ class NewJob : AppCompatActivity(), ChoosePropertyAdapter.OnItemClickListener,
     }
 
         override fun onItemClick(itemPosition: Int, data: AllPropertiesList) {
-            propertyId = data.propertyTypeMasterId!!.toInt()
-            selectedList.clear()
+            propertyId = data.propertyTypeMasterId!!
             selectedList.add(data.id.toString())
             for (i in selectedList.indices) {
                 val jsonObject = JSONObject()
                 jsonObject.put("PropertyMasterId", selectedList[i].toInt())
                 propertyArray.put(jsonObject)
-                toast("Selected : ")
+                toast("Selected : " + selectedList)
             }
         }
 

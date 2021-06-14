@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PropertyMainBroker"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activities.ProfileMapActivity"></activity>
+        <activity android:name=".ui.activities.ProfileMapActivity"/>
         <activity android:name=".ui.activities.ChangePassword" />
         <activity android:name=".ui.activities.CompletedJobBidList" />
         <activity android:name=".ui.activities.CompletedJobAssignDetails" />

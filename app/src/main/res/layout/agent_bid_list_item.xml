@@ -38,6 +38,17 @@
             android:textSize="@dimen/_10ssp" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/pincode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:textColor="@color/black_shade_1"
+            android:drawablePadding="@dimen/_3sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:text="PinCode: 383001"
+            android:textSize="@dimen/_10ssp" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/propertyType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +56,7 @@
             android:textColor="@color/black_shade_1"
             android:layout_marginTop="@dimen/_8sdp"
             android:fontFamily="@font/nunito_sans"
-            android:text="propertyType"
+            android:text="Property Type"
             android:textSize="@dimen/_10ssp" />
 
         <RelativeLayout

@@ -57,7 +57,6 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyRevi
 
         binding.mark.setOnClickListener {
             if (isPropertyShown) {
-                toast("All Property Review Done")
                 markAsShownProperty()
             } else {
                 toast("First Review All The Properties")
@@ -123,14 +122,6 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyRevi
 
     private fun markAsShownProperty() {
 
-//        for (i in list.indices) {
-//            if (list[i].rating!! > 0) {
-//                toast("Please Review All the Property")
-//            } else {
-//                toast("all review success")
-//            }
-//        }
-
         val builder = MaterialAlertDialogBuilder(this)
         builder.setTitle("Are You Sure ?")
         builder.setMessage("Are You Sure Mark This Property!!")
@@ -163,8 +154,8 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyRevi
 
                         if (response.code() == 200) {
                             toast("Marked Property Successfully")
-                            startActivity(Intent(this@OnGoingJobDetails, UpcomingJobsFragment::class.java))
-                            finish()
+//                            startActivity(Intent(this@OnGoingJobDetails, UpcomingJobsFragment::class.java))
+//                            finish()
                         } else {
                             toast("something wrong")
                         }
@@ -184,15 +175,6 @@ class OnGoingJobDetails : AppCompatActivity(), OnGoingJobAdapter.JobPropertyRevi
     }
 
     override fun onGoingJobReviewClick(position: Int, currentItem: JobPropertyList) {
-
-//        for (i in currentItem.rating.toString().indices){
-//
-//            if (currentItem.rating!! == 0){
-//                toast("Please Enter All Reviews")
-//            }else{
-//                toast("All Property Review Done")
-//            }
-//        }
 
         reviewPopup = Dialog(this, R.style.Theme_PropertyMainBroker)
         reviewPopup.setContentView(R.layout.job_property_review_popup)

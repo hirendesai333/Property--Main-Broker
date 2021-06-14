@@ -147,9 +147,9 @@ class PropertyImageFragment : Fragment(R.layout.fragment_property_image) , Prope
             .onResult {
                 filePath = it[0].path
                 confirmImageOrder(filePath)
-                Glide.with(this)
-                    .load(filePath)
-                    .into(binding.propertyImage)
+//                Glide.with(this)
+//                    .load(filePath)
+//                    .into(binding.propertyImage)
                 Log.d(TAG, "openGallery: ${filePath}")
                 Log.d(TAG, "openGallery: ${Gson().toJson(it)}")
             }

@@ -65,8 +65,7 @@ class CompletedJobBidList : AppCompatActivity(),
                             CompletedMyPostedJobBidAdapter(
                                 this@CompletedJobBidList,
                                 list,
-                                this@CompletedJobBidList
-                            )
+                                this@CompletedJobBidList)
 
                     }
                 } else {

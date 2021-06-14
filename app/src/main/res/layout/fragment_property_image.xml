@@ -19,18 +19,27 @@
             app:cardCornerRadius="@dimen/_6sdp">
 
             <RelativeLayout
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_width="@dimen/_75sdp"
+                android:layout_height="@dimen/_75sdp"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/_10sdp">
+                android:layout_margin="@dimen/_8sdp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/propertyImage"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
-                    android:src="@mipmap/user_profile"
+                    android:src="@mipmap/gallery"
                     app:civ_border_color="@color/black"
                     app:civ_border_width="2dp" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/editPic"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:backgroundTint="@color/black"
+                    android:src="@drawable/ic_edit" />
 
             </RelativeLayout>
 

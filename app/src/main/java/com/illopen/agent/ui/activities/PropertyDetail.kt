@@ -153,7 +153,7 @@ class PropertyDetail : AppCompatActivity() {
                         binding.clientName.text = response.body()!!.item!!.propertyName.toString()
                         binding.propertyType.text = response.body()!!.item!!.propertyType.toString()
                         binding.availableFor.text = response.body()!!.item!!.availableFor.toString()
-                        binding.price.text = response.body()!!.item!!.propertyPrice.toString()
+                        binding.price.text = "$" + response.body()!!.item!!.propertyPrice.toString()
                         binding.notes.text = response.body()!!.item!!.propertyNotes.toString()
                         binding.address.text = response.body()!!.item!!.propertyAddress.toString()
                     }

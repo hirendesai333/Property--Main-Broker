@@ -502,16 +502,6 @@ class CompletedJobsFragment : Fragment(R.layout.completed_jobs_fragment),
     }
 
     override fun onCompletedJobsClick(currentItem: CompletedMyPostedJobsList) {
-//        Intent(activity, CompletedJobDetails::class.java).apply {
-//            putExtra("CompletedJob", currentItem.id.toString())
-//            putExtra(Params.FROM, Params.COMPLETED_JOBS_FRAGMENT)
-//            if (otherNewJobs) {
-//                putExtra(Params.SUB_FROM, Params.MY_COMPLETED_JOBS)
-//            } else {
-//                putExtra(Params.SUB_FROM, Params.MY_POSTED_COMPLETED_JOBS)
-//            }
-//            startActivity(this)
-//        }
 
         val intent = Intent(activity, CompletedJobDetails::class.java)
         intent.putExtra("CompletedMyPostedJob", currentItem.id.toString())

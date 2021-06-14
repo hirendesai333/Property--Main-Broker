@@ -101,6 +101,47 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RatingBar
+                android:id="@+id/rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="4.5"
+                android:stepSize="0.1" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="4.8"
+                android:gravity="center_vertical"
+                android:textColor="@color/green_700"
+                android:textSize="@dimen/_10ssp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/totalRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_sans"
+                android:text=" (5)"
+                android:gravity="center_vertical"
+                android:textColor="@color/green_700"
+                android:textSize="@dimen/_10ssp" />
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

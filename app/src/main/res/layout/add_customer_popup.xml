@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
+                android:inputType="textPersonName"
                 app:fontFamily="@font/nunito_sans" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,6 +84,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
+            android:inputType="textEmailAddress"
             app:fontFamily="@font/nunito_sans" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -125,6 +127,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
+                android:inputType="number"
+                android:maxLength="10"
                 app:fontFamily="@font/nunito_sans" />
 
         </com.google.android.material.textfield.TextInputLayout>

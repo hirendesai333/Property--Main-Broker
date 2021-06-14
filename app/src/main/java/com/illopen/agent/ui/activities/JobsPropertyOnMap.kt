@@ -3,6 +3,7 @@ package com.illopen.agent.ui.activities
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
@@ -18,6 +19,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.Circle
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
@@ -27,6 +30,7 @@ import com.illopen.agent.adapters.MapDetailsPropertyAdapter
 import com.illopen.agent.databinding.ActivityJobsPropertyOnMapBinding
 import com.illopen.agent.model.MyPostedJobList
 import com.illopen.agent.model.ProfileMapList
+import com.illopen.agent.model.PropertyMapAllList
 import com.illopen.agent.network.ServiceApi
 import com.illopen.agent.utils.AppPreferences
 import com.illopen.agent.utils.Params
@@ -44,7 +48,6 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
     private lateinit var mMap: GoogleMap
-    private lateinit var mapDetailsList: List<ProfileMapList>
 
     private val LOCATION_PERMISSION_REQUEST = 1
 
@@ -69,12 +72,13 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
 
-                val response = ServiceApi.retrofitService.getAllJobLang(map
+                val response = ServiceApi.retrofitService.jobPropertyMapAll(AppPreferences.getUserData(Params.UserId).toInt(),
+                    1, true, map
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
                         val list = response.body()!!.values!!
-                        binding.details.adapter = MapDetailsPropertyAdapter(this@JobsPropertyOnMap,list)
+                        binding.propertyDetailsRv.adapter = MapDetailsPropertyAdapter(this@JobsPropertyOnMap,list)
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -96,20 +100,23 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
                 map["Page"] = "0"
                 map["PageSize"] = "0"
                 map["TotalCount"] = "0"
-                val response = ServiceApi.retrofitService.getMapLocation(
-                    AppPreferences.getUserData(Params.UserId).toInt(), map
+
+                val response = ServiceApi.retrofitService.jobPropertyMapAll(
+                    AppPreferences.getUserData(Params.UserId).toInt(),1,true, map
                 )
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
+
                         Log.d("JobPropertyLocation", response.code().toString())
                         Log.d("JobPropertyLocation", Gson().toJson(response.body()))
-                        mapDetailsList = response.body()!!.values!!
+
+                       val mapDetailsList : List<PropertyMapAllList> = response.body()!!.values!!
                         mapDetailsList.forEachIndexed { index, mapDetailsList ->
                             mMap.addMarker(
                                 MarkerOptions().position(
                                     LatLng(
-                                        mapDetailsList.latitude!!.toDouble(),
-                                        mapDetailsList.longitude!!.toDouble()
+                                        mapDetailsList.propertyLatitude!!.toDouble(),
+                                        mapDetailsList.propertyLongitude!!.toDouble()
                                     )
                                 )
                             )
@@ -118,8 +125,8 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
                         mMap.moveCamera(
                             CameraUpdateFactory.newLatLng(
                                 LatLng(
-                                    mapDetailsList[0].latitude!!.toDouble(),
-                                    mapDetailsList[0].longitude!!.toDouble()
+                                    mapDetailsList[0].propertyLatitude!!.toDouble(),
+                                    mapDetailsList[0].propertyLongitude!!.toDouble()
                                 )
                             )
                         )
@@ -156,27 +163,27 @@ class JobsPropertyOnMap : AppCompatActivity(), OnMapReadyCallback {
             )
     }
 
-//    @SuppressLint("MissingPermission")
-//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        when (requestCode) {
-//            LOCATION_PERMISSION_REQUEST -> {
-//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    when {
-//                        PermissionUtils.isLocationEnabled(this) -> {
-//                            setUpLocationListener()
-//                        }
-//                        else -> {
-//                            PermissionUtils.showGPSNotEnabledDialog(this)
-//                        }
-//                    }
-//                } else {
-//                    Toast.makeText(
-//                        this, "LOCATION_PERMISSION_REQUEST", Toast.LENGTH_LONG).show()
-//                }
-//            }
-//        }
-//    }
+    @SuppressLint("MissingPermission")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    when {
+                        PermissionUtils.isLocationEnabled(this) -> {
+                            setUpLocationListener()
+                        }
+                        else -> {
+                            PermissionUtils.showGPSNotEnabledDialog(this)
+                        }
+                    }
+                } else {
+                    Toast.makeText(
+                        this, "LOCATION_PERMISSION_REQUEST", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
 
     override fun onStart() {
         super.onStart()

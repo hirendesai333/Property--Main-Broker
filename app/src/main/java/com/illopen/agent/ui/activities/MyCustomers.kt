@@ -21,6 +21,7 @@ import com.illopen.agent.utils.Params
 import com.illopen.agent.utils.ProgressDialog
 import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
+import okhttp3.internal.notify
 import java.util.regex.Pattern
 
 class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener {
@@ -32,15 +33,16 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
     private lateinit var progressDialog: ProgressDialog
 
     var regex =
-        "[A-Z0-9a-z]+([._%+-][A-Z0-9a-z]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+        "[A-Z0-9a-z]+([._%+-]{1}[A-Z0-9a-z]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{3,3})$"
     var pattern = Pattern.compile(regex)
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Default)
 
+    private var countryId: Int = 0
     private lateinit var countryAdapter: ArrayAdapter<String>
-    private var countryList: ArrayList<Country> = ArrayList()
-    var countryId: Int = 0
+    private var countryList: ArrayList<Country> = arrayListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,10 +58,13 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
 
         binding.title.setOnClickListener { onBackPressed() }
 
+        countrySpinner()
+
         getCustomer()
     }
 
-    private fun countrySpinner(mDialog: Dialog) {
+    @SuppressLint("CutPasteId")
+    private fun countrySpinner() {
         coroutineScope.launch {
             try {
                 val map = HashMap<String, String>()
@@ -88,28 +93,6 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
                             android.R.layout.simple_list_item_1,
                             data
                         ) {}
-                        mDialog.findViewById<Spinner>(R.id.countrySpinner).adapter = countryAdapter
-
-                        mDialog.findViewById<Spinner>(R.id.countrySpinner).onItemSelectedListener =
-                            object : AdapterView.OnItemSelectedListener {
-
-                                override fun onItemSelected(
-                                    parent: AdapterView<*>?,
-                                    view: View?,
-                                    position: Int,
-                                    id: Long
-                                ) {
-                                    countryId = countryList[position].id!!.toInt()
-//                                toast("Selected : " + countryList[position].code)
-                                }
-
-                                override fun onNothingSelected(parent: AdapterView<*>?) {
-                                    TODO("Not yet implemented")
-                                }
-
-                            }
-
-
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -170,13 +153,31 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
         mDialog.setContentView(R.layout.add_customer_popup)
         mDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
-        countrySpinner(mDialog)
+        val save = mDialog.findViewById<Button>(R.id.add)
+        val countrySpinner = mDialog.findViewById<Spinner>(R.id.countrySpinner)
 
-        mDialog.show()
+        countrySpinner.adapter = countryAdapter
 
-        mDialog.findViewById<Button>(R.id.add).setOnClickListener {
-            val name =
-                mDialog.findViewById<TextInputEditText>(R.id.firstName).text.toString().trim()
+        countrySpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    countryId = countryList[position].id!!
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+            }
+
+        save.setOnClickListener {
+            val name = mDialog.findViewById<TextInputEditText>(R.id.firstName).text.toString().trim()
             val email = mDialog.findViewById<TextInputEditText>(R.id.emailid).text.toString().trim()
             val phone = mDialog.findViewById<TextInputEditText>(R.id.phone).text.toString().trim()
 
@@ -201,6 +202,8 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
                 mDialog.dismiss()
             }
         }
+
+        mDialog.show()
 
     }
 
@@ -245,32 +248,78 @@ class MyCustomers : AppCompatActivity(), MyCustomersAdapter.OnItemClickListener 
     }
 
     override fun onItemClick(itemPosition: Int, data: Value) {
-        val mDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
-        mDialog.setContentView(R.layout.update_customer_popup)
-        mDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
+        val updateDialog = Dialog(this, R.style.Theme_PropertyMainBroker)
+        updateDialog.setContentView(R.layout.update_customer_popup)
+        updateDialog.window!!.setWindowAnimations(R.style.Theme_PropertyMainBroker_Slide)
 
-        val tvFirstName = mDialog.findViewById<TextInputEditText>(R.id.updatefirstName)
-        val tvEmail = mDialog.findViewById<TextInputEditText>(R.id.updateemailid)
-        val tvPhone = mDialog.findViewById<TextInputEditText>(R.id.updatephone)
-
+        val tvFirstName = updateDialog.findViewById<TextInputEditText>(R.id.updatefirstName)
+        val tvEmail = updateDialog.findViewById<TextInputEditText>(R.id.updateemailid)
+        val tvPhone = updateDialog.findViewById<TextInputEditText>(R.id.updatephone)
+        val countrySpinner = updateDialog.findViewById<Spinner>(R.id.countrySpinner)
 
         tvFirstName?.setText(data.customerName)
         tvEmail?.setText(data.customerEmail)
-        tvPhone?.setText(data.phoneNumber)
+        tvPhone?.setText(data.customerPhoneNumber)
 
-        countrySpinner(mDialog)
+        countrySpinner.adapter = countryAdapter
 
-        mDialog.show()
+        countrySpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
 
-        mDialog.findViewById<Button>(R.id.update).setOnClickListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    countryId = countryList[position].id!!
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+            }
+
+        var spinnerindex : Int = 0
+
+        countryList.forEachIndexed { index, countryList ->
+            if (countryList.id == data.customerCountryCode){
+                spinnerindex = index
+                return@forEachIndexed
+            }
+
+        }
+        countrySpinner.setSelection(spinnerindex,true)
+
+        updateDialog.findViewById<Button>(R.id.update).setOnClickListener {
             val name = tvFirstName.text.toString().trim()
             val email = tvEmail.text.toString().trim()
             val phone = tvPhone.text.toString().trim()
 
-            updateCustomer(name, email, phone, data)
-            mDialog.dismiss()
+            if (name.isEmpty()) {
+                tvFirstName.error = "Field Can't be Empty"
+                tvFirstName.requestFocus()
+            } else if (email.isEmpty()) {
+                tvEmail.error = "Field Can't be Empty"
+                tvEmail.requestFocus()
+            } else if (!pattern.matcher(email).matches()) {
+                tvEmail.error = "Invalid Email"
+                tvEmail.requestFocus()
+            } else if (phone.isEmpty()) {
+                tvPhone.error = "Field Can't be Empty"
+                tvPhone.requestFocus()
+            } else if (phone.length < 10) {
+                tvPhone.error = "Invalid Number"
+                tvPhone.requestFocus()
+            } else {
+
+                updateCustomer(name, email, phone, data)
+                updateDialog.dismiss()
+            }
         }
 
+        updateDialog.show()
     }
 
     private fun updateCustomer(name: String, email: String, phone: String, data: Value) {

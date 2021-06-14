@@ -22,7 +22,7 @@ class PropertyDetailsAmenitiesAdapter(var context: Context, var list: List<Prope
         holder.binding.apply {
             val currentItem = list[position]
             property.text =   currentItem.propertyDetailMasterName + " :"
-            propertyValue.text = currentItem.value
+            propertyValue.text = "$"+currentItem.value
         }
     }
 

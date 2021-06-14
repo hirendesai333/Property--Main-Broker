@@ -491,16 +491,6 @@ class UpcomingJobsFragment : Fragment(R.layout.fragment_upcoming_jobs), OnGoingC
     }
 
     override fun onGoingClick(currentItem: AssignedJobList) {
-//        Intent(activity, OnGoingJobDetails::class.java).apply {
-//            putExtra("OnGoingData", currentItem.id.toString())
-//            putExtra(Params.FROM, Params.ONGOING_JOBS_FRAGMENT)
-//            if (otherNewJobs) {
-//                putExtra(Params.SUB_FROM, Params.JOB_ASSIGN_TO_ME)
-//            } else {
-//                putExtra(Params.SUB_FROM, Params.MY_POSTED_ONGOING_JOBS)
-//            }
-//            startActivity(this)
-//        }
 
         val intent = Intent(activity, OnGoingJobDetails::class.java)
         intent.putExtra("OnGoingData", currentItem.id.toString())

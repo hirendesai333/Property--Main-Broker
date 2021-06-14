@@ -95,21 +95,19 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
         val title = agentPopupDialog.findViewById<TextView>(R.id.title)
         val amount = agentPopupDialog.findViewById<TextView>(R.id.amount)
 
-
         title.text = data.userName.toString()
-        amount.text = "Total Amount: "+ data.totalAmount.toString()
+        amount.text = "Total Amount:  $" + data.totalAmount.toString()
 
         val acceptBtn = agentPopupDialog.findViewById<Button>(R.id.accept)
         val rejectBtn = agentPopupDialog.findViewById<Button>(R.id.reject)
 
         acceptBtn.setOnClickListener {
-            agentPopupDialog.cancel()
             agentPopup(data)
-            Log.d(TAG, "onItemClick: $data")
+            agentPopupDialog.dismiss()
         }
 
         rejectBtn.setOnClickListener {
-            agentPopupDialog.cancel()
+            agentPopupDialog.dismiss()
         }
 
         agentPopupDialog.show()
@@ -128,9 +126,7 @@ class AllJobPropertyBidList : AppCompatActivity() , JobPropertyBidAllAdapter.OnI
 
                         if (response.code() == 200) {
                             toast("Job Assigned Successfully")
-                            startActivity(Intent(this@AllJobPropertyBidList,AllPropertyListFragment::class.java))
                             allJobPropertyBid()
-                            finish()
                         }else{
                             toast("Job Not Assigned")
                         }

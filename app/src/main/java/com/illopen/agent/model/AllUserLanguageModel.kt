@@ -25,7 +25,7 @@ data class AllUserLanguageModel(
     @JsonProperty("TotalRecords")
     val totalRecords: Int?,
     @JsonProperty("Values")
-    val values: List<UserLanguage>?
+    val values: ArrayList<UserLanguage>?
 )
 
 data class UserLanguage(

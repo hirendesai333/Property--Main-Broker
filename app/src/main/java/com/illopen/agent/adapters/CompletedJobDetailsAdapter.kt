@@ -34,8 +34,9 @@ class CompletedJobDetailsAdapter(var context: Context, var list: List<JobPropert
         view.propertyType.text = "Property type: " + currentItem.propertyTypeName
         view.price.text = "Price: $" + currentItem.propertyPrice
         view.propertyRating.rating = currentItem.rating!!.toFloat()
-//        view.review.text = "Review: " + currentItem.review
-//        view.note.text = "Note: " + currentItem.note
+        view.review.text = "Review: " + currentItem.review
+        view.note.text = "Note: " + currentItem.note
+
         view.rootLayout.setOnClickListener {
             val intent =  Intent(context, PropertyDetail::class.java)
             intent.putExtra("propertyMasterId",currentItem.propertyMasterId.toString())

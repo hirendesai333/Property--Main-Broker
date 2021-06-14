@@ -27,12 +27,21 @@
             android:textSize="@dimen/_14ssp" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/availableFor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:text="Job Property: "
+            android:textSize="@dimen/_10sdp" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/propertyType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:fontFamily="@font/nunito_sans_bold"
-            android:text="Job Property"
+            android:text="Property Type: "
             android:textSize="@dimen/_10sdp" />
 
         <com.google.android.material.textview.MaterialTextView

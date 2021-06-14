@@ -15,6 +15,8 @@ import com.illopen.agent.utils.Params
 import com.illopen.agent.utils.ProgressDialog
 import com.illopen.properybroker.utils.toast
 import kotlinx.coroutines.*
+import java.util.*
+import kotlin.collections.HashMap
 
 class MyProperties : AppCompatActivity(), MyPropertiesAdapter.OnItemClickListner {
 
@@ -73,8 +75,13 @@ class MyProperties : AppCompatActivity(), MyPropertiesAdapter.OnItemClickListner
 
                         if (response.code() == 200) {
                             val list: List<AllPropertiesList> = response.body()!!.values!!
+
+                            Collections.reverse(list)
+
                             binding.myPropertiesRv.adapter =
                                 MyPropertiesAdapter(this@MyProperties, list, this@MyProperties)
+
+
                         } else {
 
                         }
@@ -99,7 +106,7 @@ class MyProperties : AppCompatActivity(), MyPropertiesAdapter.OnItemClickListner
         coroutineScope.launch {
             try {
                 val response = ServiceApi.retrofitService.deleteProperty(
-                    data.id!!
+                    data.id!!, data.id!!
                 )
 
                 if (response.isSuccessful) {

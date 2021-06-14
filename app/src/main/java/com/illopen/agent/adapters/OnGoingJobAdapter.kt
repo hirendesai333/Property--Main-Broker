@@ -25,6 +25,9 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>,
 //        val mark : TextView = itemView.findViewById(R.id.mark)
         val review : TextView = itemView.findViewById(R.id.review)
         val rootLayout : CardView = itemView.findViewById(R.id.rootLayout)
+
+        val bidAmount : TextView = itemView.findViewById(R.id.bidAmount)
+        val bidNote : TextView = itemView.findViewById(R.id.note)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,6 +53,8 @@ class OnGoingJobAdapter(var context: Context,var list : List<JobPropertyList>,
         holder.price.text = "Price: $" + currentItem.propertyPrice
         holder.address.text = "Address: " + currentItem.propertyAddress
         holder.propertyType.text = "Property type: " + currentItem.propertyTypeName
+        holder.bidAmount.text = "Bid Amount: " + currentItem.bidAmount
+        holder.bidNote.text = "Note: " + currentItem.bidNote
 
         holder.rootLayout.setOnClickListener {
             val intent =  Intent(context, PropertyDetail::class.java)

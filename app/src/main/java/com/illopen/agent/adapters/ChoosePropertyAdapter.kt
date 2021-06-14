@@ -25,10 +25,22 @@ class ChoosePropertyAdapter(var context: Context, var list: List<AllPropertiesLi
         holder.address.text = "Address: " + currentItem.propertyAddress.toString()
         holder.pincode.text = "Pincode: " + currentItem.pincode.toString()
 
+        holder.checked.setOnCheckedChangeListener(null)
+//        holder.checked.setOnCheckedChangeListener { buttonView, isChecked ->
+//            holder.checked.isChecked = isChecked
+//            itemClick.onItemClick(position,list[position])
+//        }
+
         holder.checked.setOnCheckedChangeListener { buttonView, isChecked ->
-            holder.checked.isChecked = isChecked
-            itemClick.onItemClick(position,list[position])
+            if (isChecked) {
+                holder.checked.isChecked = true
+                itemClick.onItemClick(position, list[position])
+            }else{
+                holder.checked.isChecked = false
+                itemClick.onItemClick(position, list[position])
+            }
         }
+
     }
 
     override fun getItemCount(): Int {

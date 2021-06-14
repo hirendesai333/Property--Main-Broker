@@ -26,9 +26,11 @@ class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> ,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = list[position]
         holder.name.text = currentItem.propertyName
-        holder.address.text = "Address: " + currentItem.propertyAddress
-        holder.propertyType.text = "Type: " + currentItem.propertyTypeName
+        holder.availableFor.text = "Available For: " + currentItem.availableForMasterName
+        holder.propertyType.text = "Property Type: " + currentItem.propertyTypeName
+        holder.address.text = "Address: ${currentItem.propertyAddress}, ${currentItem.city}, ${currentItem.state}, ${currentItem.country} - ${currentItem.pincode}"
         holder.price.text = "Price: $" + currentItem.propertyPrice
+
         holder.bid.setOnClickListener {
             onJobPropertyClick.onJobPropertyClick(currentItem)
         }
@@ -54,6 +56,7 @@ class JobPropertyAdapter(var context: Context,var list : List<JobPropertyList> ,
         val address: TextView = itemView.findViewById(R.id.address)
         val propertyType :TextView = itemView.findViewById(R.id.propertyType)
         val price :TextView = itemView.findViewById(R.id.price)
+        val availableFor :TextView = itemView.findViewById(R.id.availableFor)
         val bid : Button = itemView.findViewById(R.id.bidding)
         val rootLayout : CardView = itemView.findViewById(R.id.rootLayout)
     }
